@@ -72,7 +72,7 @@
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">view</span>: &#123;</div><div class="line">    <span class="attr">defaultViewEngine</span>: <span class="string">'nunjucks'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>如果根据文件后缀没有找到对应的模板引擎，会使用默认的模板引擎进行渲染。对于只使用一种模板引擎的应用，建议配置此选项。</p>
 <h3 id="defaultextension"><a class="markdown-anchor" href="#defaultextension">#</a> defaultExtension</h3>
-<p>一般在调用 render 时需要指定文件路径，如果配置了 defaultExtension 可以省略后缀。</p>
+<p>一般在调用 render 时的第一个参数需要包含文件后缀，如果配置了 defaultExtension 可以省略后缀。</p>
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">view</span>: &#123;</div><div class="line">    <span class="attr">defaultExtension</span>: <span class="string">'.nj'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// render app/view/home.nj</span></div><div class="line">ctx.render(<span class="string">'home'</span>);</div></pre></td></tr></table></figure></p>
 <h2 id="渲染页面"><a class="markdown-anchor" href="#渲染页面">#</a> 渲染页面</h2>
 <p>框架在 Context 上提供了 3 个接口，返回值均为 Promise:</p>
