@@ -69,7 +69,7 @@
 <p><strong>配置项以及区分各运行环境的配置，请查看<a href="./config.html">配置</a>章节。</strong></p>
 <h2 id="框架默认中间件"><a class="markdown-anchor" href="#框架默认中间件">#</a> 框架默认中间件</h2>
 <p>除了应用层引入中间件之外，框架自身和其他的插件也会引入许多中间件。所有的这些自带中间件的配置项都通过在配置中修改中间件同名配置项进行修改，例如<a href="https://github.com/eggjs/egg/tree/master/app/middleware" target="_blank" rel="external">框架自带的中间件</a>中有一个 bodyParser 中间件（框架的加载器会将文件名中的各种分隔符都修改成驼峰形式的变量名），我们想要修改 bodyParser 的配置，只需要在 <code>config/config.default.js</code> 中编写</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">bodyParser</span>: &#123;</div><div class="line">    <span class="attr">jsonLimit</span>: <span class="string">'10m'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">bodyParser</span>: &#123;</div><div class="line">    <span class="attr">jsonLimit</span>: <span class="string">'10mb'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p><strong>注意：框架和插件引入的中间件会在应用层配置的中间件之前，框架默认中间件不能被应用层中间件覆盖，如果应用层有自定义同名中间件，在启动时会报错。</strong></p>
 <h2 id="router-中使用中间件"><a class="markdown-anchor" href="#router-中使用中间件">#</a> router 中使用中间件</h2>
 <p>应用层定义的中间件和框架默认中间件都会被加载器加载，并挂载到 <code>app.middlewares</code> 上（注意：此处为复数，因为 <code>app.middleware</code> 在 Koa 中另有用处），所以应用层定义的中间件可以不通过配置引入，而是在 router 中引入，从而只对对应的路由生效。</p>

@@ -142,7 +142,7 @@
 <li>如果解析成功，body 一定会是一个 Object（可能是一个数组）。</li>
 </ul>
 <p>一般来说我们最经常调整的配置项就是变更解析时允许的最大长度，可以在 <code>config/config.default.js</code> 中覆盖框架的默认值</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">bodyParser</span>: &#123;</div><div class="line">    <span class="attr">jsonLimit</span>: <span class="string">'1m'</span>,</div><div class="line">    <span class="attr">formLimit</span>: <span class="string">'1m'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">bodyParser</span>: &#123;</div><div class="line">    <span class="attr">jsonLimit</span>: <span class="string">'1mb'</span>,</div><div class="line">    <span class="attr">formLimit</span>: <span class="string">'1mb'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>如果用户的请求 body 超过了我们配置的解析最大长度，会抛出一个状态码为 <code>413</code> 的异常，如果用户请求的 body 解析失败（错误的 JSON），会抛出一个状态码为 <code>400</code> 的异常。</p>
 <p><strong>注意：在调整 bodyParser 支持的 body 长度时，如果我们应用前面还有一层反向代理（Nginx），可能也需要调整它的配置，确保反向代理也支持同样长度的请求 body。</strong></p>
 <h3 id="获取上传的文件"><a class="markdown-anchor" href="#获取上传的文件">#</a> 获取上传的文件</h3>
