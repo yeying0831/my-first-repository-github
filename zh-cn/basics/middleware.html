@@ -98,7 +98,7 @@
 <h3 id="enable"><a class="markdown-anchor" href="#enable">#</a> enable</h3>
 <p>如果我们的应用并不需要默认的 bodyParser 中间件来进行请求体的解析，此时我们可以通过配置 enable 为 false 来关闭它</p>
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">bodyParser</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">false</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<h3 id="match-ignore"><a class="markdown-anchor" href="#match-ignore">#</a> match &amp; ignore</h3>
+<h3 id="match-和-ignore"><a class="markdown-anchor" href="#match-和-ignore">#</a> match 和 ignore</h3>
 <p>match 和 ignore 支持的参数都一样，只是作用完全相反，match 和 ignore 不允许同时配置。</p>
 <p>如果我们想让 gzip 只针对 <code>/static</code> 前缀开头的 url 请求开启，我们可以配置 match 选项</p>
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">gzip</span>: &#123;</div><div class="line">    <span class="attr">match</span>: <span class="string">'/static'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>

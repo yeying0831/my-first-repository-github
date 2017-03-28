@@ -72,11 +72,13 @@
 <p>框架的安全插件是默认开启的，如果我们想关闭其中一些安全防范，直接设置该项的 <code>enable</code> 属性为 false 即可。例如关闭 xframe 防范：</p>
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">xframe</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">false</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <h3 id="match-和-ignore"><a class="markdown-anchor" href="#match-和-ignore">#</a> match 和 ignore</h3>
-<p>如果只想开启针对某一路径，则配置 match 选项，例如只针对 <code>/example</code> 开启 CSP</p>
+<p>match 和 ignore 使用方法和格式与<a href="../basics/middleware.html#match%E5%92%8Cignore">中间件通用配置</a>一致。</p>
+<p>如果只想开启针对某一路径，则配置 match 选项，例如只针对 <code>/example</code> 开启 CSP：</p>
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">csp</span>: &#123;</div><div class="line">    <span class="attr">match</span>: <span class="string">'/example'</span>,</div><div class="line">    <span class="attr">policy</span>: &#123;</div><div class="line">      <span class="comment">//...</span></div><div class="line">    &#125;,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <p>如果需要针对某一路径忽略某安全选项，则配置 ignore 选项，例如针对 <code>/example</code> 关闭 xframe，以便合作商户能够嵌入我们的页面：</p>
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">csp</span>: &#123;</div><div class="line">    <span class="attr">ignore</span>: <span class="string">'/example'</span>,</div><div class="line">    <span class="attr">xframe</span>: &#123;</div><div class="line">      <span class="comment">//...</span></div><div class="line">    &#125;,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p><strong>注意：不能同时存在 match 和 ignore ，否则会报错。</strong></p>
+<p>如果要针对内部 ip 关闭部分安全防范：</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">csrf</span>: &#123;</div><div class="line">    <span class="comment">// 判断是否需要 ignore 的方法，请求上下文 context 作为第一个参数</span></div><div class="line">    ignore: <span class="function"><span class="params">ctx</span> =&gt;</span> isInnerIp(ctx.ip),</div><div class="line">  &#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>下面我们会针对具体的场景，来讲解如何使用框架提供的安全方案进行 Web 安全防范。</p>
 <h2 id="安全威胁xss的防范"><a class="markdown-anchor" href="#安全威胁xss的防范">#</a> 安全威胁<code>XSS</code>的防范</h2>
 <p><a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)" target="_blank" rel="external">XSS</a>（cross-site scripting跨域脚本攻击）攻击是最常见的 Web 攻击，其重点是『跨域』和『客户端执行』。</p>
