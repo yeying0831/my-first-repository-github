@@ -87,6 +87,13 @@ is a <a href="../basics/controller.html">controller</a> and <a href="../basics/r
 <p>For more infomation about directory structure, see <a href="../basics/structure.html">Directory Structure</a>.</p>
 <p>Now you can start up the Web Server and see your application in action.</p>
 <p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ npm run dev</div><div class="line">$ open localhost:7001</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>Note：</p>
+<ul>
+<li>You could write <code>Controller</code> with <code>class</code> or <code>exports</code> style, see more detail at <a href="../basics/controller.html">Controller</a>.</li>
+<li>And <code>Config</code> could write with <code>module.exports</code> or <code>exports</code> style, see more detail at <a href="https://nodejs.org/api/modules.html#modules_exports_shortcut" target="_blank" rel="external">Node.js modules docs</a>.</li>
+</ul>
+</blockquote>
 <h3 id="add-static-assets"><a class="markdown-anchor" href="#add-static-assets">#</a> Add Static Assets</h3>
 <p>Egg has a built-in plugin called <a href="https://github.com/eggjs/egg-static" target="_blank" rel="external">static</a>.
 In production, it is recommended that you deploy static assets to CDN instead of using this plugin.</p>

@@ -80,6 +80,13 @@
 <p>完整的目录结构规范参见<a href="../basics/structure.html">目录结构</a>。</p>
 <p>好，现在可以启动应用来体验下</p>
 <p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ npm run dev</div><div class="line">$ open localhost:7001</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注意：</p>
+<ul>
+<li>Controller 有 <code>class</code> 和 <code>exports</code> 两种编写方式，本文示范的是前者，你可能需要参考 <a href="../basics/controller.html">Controller</a> 文档。</li>
+<li>Config 也有 <code>module.exports</code> 和 <code>exports</code> 的写法，具体参考 <a href="https://nodejs.org/api/modules.html#modules_exports_shortcut" target="_blank" rel="external">Node.js modules 文档</a>。</li>
+</ul>
+</blockquote>
 <h3 id="静态资源"><a class="markdown-anchor" href="#静态资源">#</a> 静态资源</h3>
 <p>Egg 内置了 <a href="https://github.com/eggjs/egg-static" target="_blank" rel="external">static</a> 插件，线上环境建议部署到 CDN，无需该插件。</p>
 <p>static 插件默认映射 <code>/public/* -&gt; app/public/*</code> 目录</p>
