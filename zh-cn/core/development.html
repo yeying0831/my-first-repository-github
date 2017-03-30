@@ -74,16 +74,19 @@
 <h3 id="运行特定用例文件"><a class="markdown-anchor" href="#运行特定用例文件">#</a> 运行特定用例文件</h3>
 <p>运行 <code>npm test</code> 时会自动执行 test 目录下的以 <code>.test.js</code> 结尾的文件（默认 <a href="https://www.npmjs.com/package/glob" target="_blank" rel="external">glob</a> 匹配规则 <code>test/**/*.test.js</code> ）。</p>
 <p>我们在编写用例时往往想单独执行正在编写的用例，可以通过以下方式指定特定用例文件：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">TESTS=<span class="built_in">test</span>/x.test.js npm <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ TESTS=<span class="built_in">test</span>/x.test.js npm <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
 <p>支持 <a href="https://www.npmjs.com/package/glob" target="_blank" rel="external">glob</a> 规则。</p>
 <h3 id="指定-reporter"><a class="markdown-anchor" href="#指定-reporter">#</a> 指定 reporter</h3>
 <p>Mocha 支持多种形式的 reporter，默认使用 <code>spec</code> reporter。</p>
 <p>可以手动设置 <code>TEST_REPORTER</code> 环境变量来指定 reporter，例如使用 <code>dot</code>：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">TEST_REPORTER=dot npm <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ TEST_REPORTER=dot npm <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
 <p><img src="https://cloud.githubusercontent.com/assets/156269/21849809/a6fe6df8-d842-11e6-8507-20da63bc8b62.png" alt="image"></p>
 <h3 id="指定用例超时时间"><a class="markdown-anchor" href="#指定用例超时时间">#</a> 指定用例超时时间</h3>
 <p>默认执行超时时间为 30 秒。我们也可以手动指定超时时间（单位毫秒），例如设置为 5 秒：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">TEST_TIMEOUT=5000 egg-bin <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ TEST_TIMEOUT=5000 npm <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<h3 id="通过-argv-方式传参"><a class="markdown-anchor" href="#通过-argv-方式传参">#</a> 通过 argv 方式传参</h3>
+<p><code>egg-bin test</code> 除了环境变量方式，也支持直接传参，支持 mocha 的所有参数，参见：<a href="https://mochajs.org/#usage" target="_blank" rel="external">mocha usage</a> 。</p>
+<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="comment"># npm 传递参数需额外加一个 `--`，参见 https://docs.npmjs.com/cli/run-script</span></div><div class="line">$ npm <span class="built_in">test</span> -- --help</div><div class="line">$</div><div class="line">$ <span class="comment"># 等同于 `TESTS=test/**/test.js npm test`，受限于 bash，最好加上双引号</span></div><div class="line">$ npm <span class="built_in">test</span> <span class="string">"test/**/test.js"</span></div><div class="line">$</div><div class="line">$ <span class="comment"># 等同于 `TEST_REPORTER=dot npm test`</span></div><div class="line">$ npm <span class="built_in">test</span> -- --reporter=dot</div><div class="line">$</div><div class="line">$ <span class="comment"># 支持 mocha 的参数，如 grep / require 等</span></div><div class="line">$ npm <span class="built_in">test</span> -- -t 30000 --grep=<span class="string">"should GET"</span></div></pre></td></tr></table></figure></p>
 <h2 id="代码覆盖率"><a class="markdown-anchor" href="#代码覆盖率">#</a> 代码覆盖率</h2>
 <p>egg-bin 已经内置了 <a href="https://github.com/gotwarlost/istanbul" target="_blank" rel="external">istanbul</a> 来支持单元测试自动生成代码覆盖率报告。</p>
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
@@ -96,13 +99,13 @@
 <p>和 <code>test</code> 命令一样，<code>cov</code> 命令执行时，应用也是以 <code>env: unittest</code> 启动的，读取的配置也是 <code>config.default.js</code> 和 <code>config.unittest.js</code> 合并的结果。</p>
 <h3 id="忽略指定文件"><a class="markdown-anchor" href="#忽略指定文件">#</a> 忽略指定文件</h3>
 <p>对于某些不需要跑测试覆盖率的文件，可以通过 <code>COV_EXCLUDES</code> 环境变量指定：</p>
-<p><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"cov"</span>: <span class="string">"COV_EXCLUDES=app/plugins/c* egg-bin cov"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ COV_EXCLUDES=app/plugins/c* npm run cov</div><div class="line">$ <span class="comment"># 或者传参方式</span></div><div class="line">$ npm run cov -- --x=app/plugins/c*</div></pre></td></tr></table></figure></p>
 <h2 id="调试"><a class="markdown-anchor" href="#调试">#</a> 调试</h2>
 <h3 id="使用-egg-bin-调试"><a class="markdown-anchor" href="#使用-egg-bin-调试">#</a> 使用 egg-bin 调试</h3>
 <h4 id="添加命令-3"><a class="markdown-anchor" href="#添加命令-3">#</a> 添加命令</h4>
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
 <p><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin debug"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这样我们就可以通过 <code>npm run debug</code> 命令调试应用。</p>
+<p>这样我们就可以通过 <code>npm run debug</code> 命令通过 <code>V8 Inspector port</code> 调试应用。</p>
 <h4 id="环境配置-4"><a class="markdown-anchor" href="#环境配置-4">#</a> 环境配置</h4>
 <p>执行 <code>debug</code> 命令时，应用也是以 <code>env: local</code> 启动的，读取的配置是 <code>config.default.js</code> 和 <code>config.local.js</code> 合并的结果。</p>
 <h4 id="开始调试"><a class="markdown-anchor" href="#开始调试">#</a> 开始调试</h4>
@@ -117,10 +120,18 @@
 <p>我们可以通过 <code>DEBUG</code> 环境变量选择开启指定的调试代码，方便观测执行过程。</p>
 <p>（调试模块和日志模块不要混淆，而且日志模块也有很多功能，这里所说的日志都是调试信息。）</p>
 <p>开启所有模块的日志：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">DEBUG=* npm run dev</div></pre></td></tr></table></figure></p>
+<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ DEBUG=* npm run dev</div></pre></td></tr></table></figure></p>
 <p>开启指定模块的日志：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">DEBUG=egg* npm run dev</div></pre></td></tr></table></figure></p>
+<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ DEBUG=egg* npm run dev</div></pre></td></tr></table></figure></p>
 <p>单元测试也可以用 <code>DEBUG=* npm test</code> 来查看测试用例运行的详细日志。</p>
+<h3 id="使用-webstorm-进行调试"><a class="markdown-anchor" href="#使用-webstorm-进行调试">#</a> 使用 WebStorm 进行调试</h3>
+<p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
+<p><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin dev $NODE_DEBUG_OPTION"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>目前 WebStorm 还不支持 <code>--inspect</code> 故不能使用 <code>egg-bin debug</code>，暂时使用 <code>egg-bin dev --debug</code> 的方式。</p>
+</blockquote>
+<p>使用 WebStorm 的 npm 调试启动即可：</p>
+<p><img src="https://cloud.githubusercontent.com/assets/227713/24495078/9bf8aaa2-1566-11e7-8dbd-2def56f904d3.png" alt=""></p>
 <h2 id="更多"><a class="markdown-anchor" href="#更多">#</a> 更多</h2>
 <p>如果想了解更多本地开发相关的内容，例如为你的团队定制一个本地开发工具，请参考 <a href="https://github.com/eggjs/egg-bin" target="_blank" rel="external">egg-bin</a>。</p>
 
