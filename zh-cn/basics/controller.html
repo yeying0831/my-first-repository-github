@@ -108,7 +108,7 @@
 <p>在服务端处理完这个请求后，会发送一个 HTTP 响应给客户端</p>
 <p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">HTTP/1.1 201 Created</div><div class="line">Content-Type: application/json; charset=utf-8</div><div class="line">Content-Length: 8</div><div class="line">Date: Mon, 09 Jan 2017 08:40:28 GMT</div><div class="line">Connection: keep-alive</div><div class="line"></div><div class="line">&#123;&quot;id&quot;: 1&#125;</div></pre></td></tr></table></figure></p>
 <p>第一行中也包含了三段，其中我们常用的主要是<a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes" target="_blank" rel="external">响应状态码</a>，这个例子中它的值是 201，它的含义是在服务端成功创建了一条资源。</p>
-<p>和请求一样，从第二行开始到下一个空行之间都是响应头，这里的 Content-Type, Content-Length 表示这个响应的格式是 JSON，长度为 8 个字符。</p>
+<p>和请求一样，从第二行开始到下一个空行之间都是响应头，这里的 Content-Type, Content-Length 表示这个响应的格式是 JSON，长度为 8 个字节。</p>
 <p>最后剩下的部分就是这次响应真正的内容。</p>
 <h2 id="获取-http-请求参数"><a class="markdown-anchor" href="#获取-http-请求参数">#</a> 获取 HTTP 请求参数</h2>
 <p>从上面的 HTTP 请求示例中可以看到，有好多地方可以放用户的请求数据，框架通过在 Controller 上绑定的 Context 实例，提供了许多便捷方法和属性获取用户通过 HTTP 请求发送过来的参数。</p>
