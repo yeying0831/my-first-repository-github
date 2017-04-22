@@ -94,7 +94,7 @@
 <h3 id="agent-logger"><a class="markdown-anchor" href="#agent-logger">#</a> Agent Logger</h3>
 <p>在开发框架和插件时有时会需要在 Agent 进程运行代码，这时使用 <code>agent.coreLogger</code>。</p>
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// agent.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">agent</span> =&gt;</span> &#123;</div><div class="line">  agent.logger.debug(<span class="string">'debug info'</span>);</div><div class="line">  agent.logger.info(<span class="string">'启动耗时 %d ms'</span>, <span class="built_in">Date</span>.now() - start);</div><div class="line">  agent.logger.warn(<span class="string">'warning!'</span>);</div><div class="line"></div><div class="line">  agent.logger.error(someErrorObj);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>如需详细了解 Agent 进程，请参考<a href="../advanced/cluster.html">多进程模型</a>。</p>
+<p>如需详细了解 Agent 进程，请参考<a href="./cluster-and-ipc.html">多进程模型</a>。</p>
 <h2 id="日志文件编码"><a class="markdown-anchor" href="#日志文件编码">#</a> 日志文件编码</h2>
 <p>默认编码为 <code>utf-8</code>，可通过如下方式覆盖：</p>
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/config.$&#123;env&#125;.js</span></div><div class="line">exports.logger = &#123;</div><div class="line">  <span class="attr">encoding</span>: <span class="string">'gbk'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
