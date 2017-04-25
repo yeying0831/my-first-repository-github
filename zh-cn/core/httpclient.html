@@ -193,7 +193,7 @@ Stream 实际会以 <code>Transfer-Encoding: chunked</code> 传输编码格式�
 <p>允许我们通过 <code>formatRedirectUrl</code> 自定义实现 302、301 等跳转 url 拼接， 默认是 <code>url.resolve(from, to)</code>。</p>
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">ctx.curl(url, &#123;</div><div class="line">  <span class="attr">formatRedirectUrl</span>: <span class="function">(<span class="params"><span class="keyword">from</span>, to</span>) =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 例如可在这里修正跳转不正确的 url</span></div><div class="line">    <span class="keyword">if</span> (to === <span class="string">'//foo/'</span>) &#123;</div><div class="line">      to = <span class="string">'/foo'</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> url.resolve(<span class="keyword">from</span>, to);</div><div class="line">  &#125;,</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
 <h3 id="beforerequest-functionoptions"><a class="markdown-anchor" href="#beforerequest-functionoptions">#</a> <code>beforeRequest: Function(options)</code></h3>
-<p>HttpClient 在请求正在发送之前，会尝试调用 <code>beforeRequest</code> 钩子，允许我们在这里对请求参数做最后一次修改。</p>
+<p>HttpClient 在请求正式发送之前，会尝试调用 <code>beforeRequest</code> 钩子，允许我们在这里对请求参数做最后一次修改。</p>
 <p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">ctx.curl(url, &#123;</div><div class="line">  <span class="attr">beforeRequest</span>: <span class="function"><span class="params">options</span> =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 例如我们可以设置全局请求 id，方便日志跟踪</span></div><div class="line">    options.headers[<span class="string">'x-request-id'</span>] = uuid.v1();</div><div class="line">  &#125;,</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
 <h3 id="streaming-boolean"><a class="markdown-anchor" href="#streaming-boolean">#</a> <code>streaming: Boolean</code></h3>
 <p>是否直接返回响应流，默认为 <code>false</code>。
@@ -251,7 +251,7 @@ Stream 实际会以 <code>Transfer-Encoding: chunked</code> 传输编码格式�
 <ul>
 <li>异常名称：<code>ResponseError, code: ECONNRESET</code></li>
 <li>出现场景：通常是服务端主动断开 socket 连接，导致 HTTP 请求链路异常。</li>
-<li>排查建议：请确保当时服务端是否发生网络异常。</li>
+<li>排查建议：请检查当时服务端是否发生网络异常。</li>
 </ul>
 <h3 id="服务不可达"><a class="markdown-anchor" href="#服务不可达">#</a> 服务不可达</h3>
 <ul>
