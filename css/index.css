@@ -1462,6 +1462,34 @@ aside li {
   min-height: 400px;
   padding: 50px 50px 50px 270px;
 }
+.page-main article h2,
+.page-main article h3,
+.page-main article h4,
+.page-main article h5,
+.page-main article h6 {
+  position: static;
+}
+.page-main article h2 a.markdown-anchor,
+.page-main article h3 a.markdown-anchor,
+.page-main article h4 a.markdown-anchor,
+.page-main article h5 a.markdown-anchor,
+.page-main article h6 a.markdown-anchor {
+  position: relative;
+  height: 25px;
+  margin-right: -25px;
+  display: inline-block;
+}
+.page-main article h2:before,
+.page-main article h3:before,
+.page-main article h4:before,
+.page-main article h5:before,
+.page-main article h6:before {
+  content: '';
+  display: block;
+  margin-top: -76px;
+  height: 76px;
+  visibility: hidden;
+}
 .mobile-menu {
   display: none;
 }
