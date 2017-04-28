@@ -77,6 +77,7 @@
 <li><code>this.app</code>: 当前应用 <a href="./extend.html#application">Application</a> 对象的实例，通过它我们可以拿到框架提供的全局对象和方法。</li>
 <li><code>this.service</code>：应用定义的 <a href="./service.html">Service</a>，通过它我们可以访问到抽象出的业务层，等价于 <code>this.ctx.service</code> 。</li>
 <li><code>this.config</code>：应用运行时的<a href="./config.html">配置项</a>。</li>
+<li><code>this.logger</code>：logger 对象，上面有四个方法（<code>debug</code>，<code>info</code>，<code>warn</code>，<code>error</code>），分别代表打印四个不同级别的日志，使用方法和效果与 <a href="../core/logger.html#context-logger">context logger</a> 中介绍的一样，但是通过这个 logger 对象记录的日志，在日志前面会加上打印该日志的文件路径，以便快速定位日志打印位置。</li>
 </ul>
 <h4 id="自定义-controller-基类"><a class="markdown-anchor" href="#自定义-controller-基类">#</a> 自定义 Controller 基类</h4>
 <p>按照类的方式编写 Controller，不仅可以让我们更好的对 Controller 层代码进行抽象（例如将一些统一的处理抽象成一些私有方法），还可以通过自定义 Controller 基类的方式封装应用中常用的方法。</p>

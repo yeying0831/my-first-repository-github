@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>AgentWorkerLoader - Documentation</title>
+    <title>lib/core/base_context_class.js - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -39,221 +39,67 @@
 
 <div id="main">
     
-    <h1 class="page-title">AgentWorkerLoader</h1>
+    <h1 class="page-title">lib/core/base_context_class.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        <h2>
-        AgentWorkerLoader
-        </h2>
-        
-            <div class="class-description"><p>Agent worker process loader</p></div>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-
-    
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="AgentWorkerLoader"><span class="type-signature"></span>new AgentWorkerLoader<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_loader_agent_worker_loader.js.html">lib/loader/agent_worker_loader.js</a>, <a href="lib_loader_agent_worker_loader.js.html#line9">line 9</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-    <dt class="tag-see">See:</dt>
-    <dd class="tag-see">
-        <ul>
-            <li><a href="https://github.com/eggjs/egg-loader">https://github.com/eggjs/egg-loader</a></li>
-        </ul>
-    </dd>
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-    </div>
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
-            
-
-    
-
-    <h4 class="name" id="loadConfig"><span class="type-signature"></span>loadConfig<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    <p>loadPlugin first, then loadConfig</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_loader_agent_worker_loader.js.html">lib/loader/agent_worker_loader.js</a>, <a href="lib_loader_agent_worker_loader.js.html#line14">line 14</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-    
-
-    
-
-    
-</article>
-
-</section>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
+
+const BaseContextLogger = require('./base_context_logger');
+
+const LOGGER = Symbol('BaseContextClass#logger');
+
+/**
+ * BaseContextClass is a base class that can be extended,
+ * it's instantiated in context level,
+ * {@link Helper}, {@link Service} is extending it.
+ */
+class BaseContextClass {
+
+  /**
+   * @constructor
+   * @param {Context} ctx - context instance
+   * @since 1.0.0
+   */
+  constructor(ctx) {
+    /**
+     * @member {Context} BaseContextClass#ctx
+     * @since 1.0.0
+     */
+    this.ctx = ctx;
+    /**
+     * @member {Application} BaseContextClass#app
+     * @since 1.0.0
+     */
+    this.app = ctx.app;
+    /**
+     * @member {Config} BaseContextClass#config
+     * @since 1.0.0
+     */
+    this.config = ctx.app.config;
+    /**
+     * @member {Service} BaseContextClass#service
+     * @since 1.0.0
+     */
+    this.service = ctx.service;
+  }
+
+  get logger() {
+    if (!this[LOGGER]) this[LOGGER] = new BaseContextLogger(this.ctx, this.pathName);
+    return this[LOGGER];
+  }
+}
+
+module.exports = BaseContextClass;
+</code></pre>
+        </article>
+    </section>
 
 
 
