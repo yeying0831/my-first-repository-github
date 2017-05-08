@@ -50,7 +50,7 @@
     <p>在<a href="./development.html">本地开发</a>时，我们使用 <code>egg-bin dev</code> 来启动服务，但是在部署应用的时候不可以这样使用。因为 <code>egg-bin dev</code> 会针对本地开发做很多处理，而生产运行需要一个更加简单稳定的方式。所以本章主要讲解如何部署你的应用。</p>
 <p>一般从源码代码到真正运行，我们会拆分成构建和部署两步，可以做到<strong>一次构建多次部署</strong>。</p>
 <h2 id="构建"><a class="markdown-anchor" href="#构建">#</a> 构建</h2>
-<p>Javascript 语言本身不需要编译的，构建过程主要是下载依赖。但如果使用 Typscript 或者 Babel 支持 ES6 以上的特性，那就必须要这一步了。</p>
+<p>Javascript 语言本身不需要编译的，构建过程主要是下载依赖。但如果使用 TypeScript 或者 Babel 支持 ES6 以上的特性，那就必须要这一步了。</p>
 <p>一般安装依赖会指定 <code>NODE_ENV=production</code> 或 <code>npm install --production</code> 只安装 dependencies 的依赖。因为 devDependencies 中的模块过大而且在生产环境不会使用，安装后也可能遇到未知问题。</p>
 <p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> baseDir</div><div class="line">$ npm install --production</div><div class="line">$ tar -zcvf ../release.tgz .</div></pre></td></tr></table></figure></p>
 <p>构建完成后打包成 tgz 文件，部署的时候解压启动就可以了。</p>
