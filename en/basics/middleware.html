@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Middleware - Born to build better enterprise frameworks and apps</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="/images/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">Translations</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Middleware</h1>
+    <p>In <a href="../intro/egg-and-koa.html">the previous chapter</a>, we say that Egg is based on Koa 1, so the form of middleware in Egg is the same as in Koa 1, i.e. they are both based on <a href="../intro/egg-and-koa.html#midlleware">the onion model</a> of generator function.</p>
+<h2 id="writing-middleware"><a class="markdown-anchor" href="#writing-middleware">#</a> Writing Middleware</h2>
+<h3 id="how-to-write"><a class="markdown-anchor" href="#how-to-write">#</a> How to write</h3>
+<p>We begin to see how to write a middleware from a simple gzip example.</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> isJSON = <span class="built_in">require</span>(<span class="string">'koa-is-json'</span>);</div><div class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">'zlib'</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">gzip</span>(<span class="params">next</span>) </span>&#123;</div><div class="line">  <span class="keyword">yield</span> next;</div><div class="line"></div><div class="line">  <span class="comment">// convert the response body to gzip after the completion of the execution of subsequent middleware</span></div><div class="line">  <span class="keyword">let</span> body = <span class="keyword">this</span>.body;</div><div class="line">  <span class="keyword">if</span> (!body) <span class="keyword">return</span>;</div><div class="line">  <span class="keyword">if</span> (isJSON(body)) body = <span class="built_in">JSON</span>.stringify(body);</div><div class="line"></div><div class="line">  <span class="comment">// set gzip body, correct the response header</span></div><div class="line">  <span class="keyword">const</span> stream = zlib.createGzip();</div><div class="line">  stream.end(body);</div><div class="line">  <span class="keyword">this</span>.body = stream;</div><div class="line">  <span class="keyword">this</span>.set(<span class="string">'Content-Encoding'</span>, <span class="string">'gzip'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>You might find that the middleware's writing style in the framework is exactly the same as in Koa, so any middleware in Koa can be used directly by the framework.</p>
+<h3 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h3>
+<p>Usually the middleware has its own configuration. In the framework, a complete middleware is including the configuration process. A middleware is a file in <code>app/middleware</code> directory by convention, which needs an exports function that take two parameters:</p>
+<ul>
+<li>options: the configuration field of the middleware, <code>app.config[${middlewareName}]</code> will be passed in by the framework</li>
+<li>app: the Application instance of current application</li>
+</ul>
+<p>We will do a simple optimization to the gzip middleware above, making it do gzip compression only if the body size is greater than a configured threshold. So, we need to create a new file <code>gzip.js</code> in <code>app/middleware</code> directory.</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> isJSON = <span class="built_in">require</span>(<span class="string">'koa-is-json'</span>);</div><div class="line"><span class="keyword">const</span> zlib = <span class="built_in">require</span>(<span class="string">'zlib'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">options</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>* <span class="title">gzip</span>(<span class="params">next</span>) </span>&#123;</div><div class="line">    <span class="keyword">yield</span> next;</div><div class="line"></div><div class="line">    <span class="comment">// convert the response body to gzip after the completion of the execution of subsequent middleware</span></div><div class="line">    <span class="keyword">let</span> body = <span class="keyword">this</span>.body;</div><div class="line">    <span class="keyword">if</span> (!body) <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="comment">// support options.threshold</span></div><div class="line">    <span class="keyword">if</span> (options.threshold &amp;&amp; <span class="keyword">this</span>.length &lt; options.threshold) <span class="keyword">return</span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (isJSON(body)) body = <span class="built_in">JSON</span>.stringify(body);</div><div class="line"></div><div class="line">    <span class="comment">// set gzip body, correct the response header</span></div><div class="line">    <span class="keyword">const</span> stream = zlib.createGzip();</div><div class="line">    stream.end(body);</div><div class="line">    <span class="keyword">this</span>.body = stream;</div><div class="line">    <span class="keyword">this</span>.set(<span class="string">'Content-Encoding'</span>, <span class="string">'gzip'</span>);</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="using-middleware-in-the-application"><a class="markdown-anchor" href="#using-middleware-in-the-application">#</a> Using Middleware in the Application</h2>
+<p>We can load customized middleware completely by configuration in the application, and decide their order.
+If we need to load the gzip middleware in the above,
+we can edit <code>config.default.js</code> like this:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="comment">// configure the middleware you need, which loads in the order of array</span></div><div class="line">  middleware: [ <span class="string">'gzip'</span> ],</div><div class="line"></div><div class="line">  <span class="comment">// configure the gzip middleware</span></div><div class="line">  gzip: &#123;</div><div class="line">    <span class="attr">threshold</span>: <span class="number">1024</span>, <span class="comment">// skip response body which size is less than 1K</span></div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>** About Configuration fields and runtime environment configurations, see <a href="./config.html">Config</a> chapter. **</p>
+<h2 id="default-framework-middleware"><a class="markdown-anchor" href="#default-framework-middleware">#</a> Default Framework Middleware</h2>
+<p>In addition to the application-level middleware is loaded, the framework itself and other plugins will also load many middleware. All the config fields of these built-in middlewares can be modified by modifying the ones with the same name in the config file, for example <a href="https://github.com/eggjs/egg/tree/master/app/middleware" target="_blank" rel="external">Framework Built-in Plugin</a> uses a bodyParser middleware(the framework loader will change the file name separated by delimiters into the camel style), and we can add configs below in <code>config/config.default.js</code> to modify the bodyParser:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">bodyParser</span>: &#123;</div><div class="line">    <span class="attr">jsonLimit</span>: <span class="string">'10m'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>** Note: middleware loaded by the framework and plugins are loaded earlier than those loaded by the application layer, and the application layer cannot overwrite the default framework middleware. If the application layer loads customized middleware that has the same name with default framework middleware, an error will be raised on starting up. **</p>
+<h2 id="middleware-in-router"><a class="markdown-anchor" href="#middleware-in-router">#</a> Middleware in Router</h2>
+<p>Both middleware defined by the application layer and the default framework middleware will be loaded by the loader and are mounted to <code>app.middlewares</code>(Note: it's plural here since <code>app.middleware</code> is used for other purpose in Koa). So middleware defined by the application layer can be loaded by the router other than the config, therefore they only take effect on the corresponding routes.</p>
+<p>Again, let's take the gzip middleware above for an example. In order to use this middleware directly in the router, we can write like this in <code>app/router.js</code>:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> gzip = app.middlewares.gzip(&#123; <span class="attr">threshold</span>: <span class="number">1024</span> &#125;);</div><div class="line">  app.get(<span class="string">'/needgzip'</span>, gzip, app.controller.handler);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="use-koas-middleware"><a class="markdown-anchor" href="#use-koas-middleware">#</a> Use Koa's Middleware</h2>
+<p>The framework is compatible with all kinds of middleware of Koa 1.x and 2.x, including:</p>
+<ul>
+<li>generator function: <code>function* (next) {}</code></li>
+<li>async function: <code>async (ctx, next) =&gt; {}</code></li>
+<li>common function: <code>(ctx, next) =&gt; {}</code></li>
+</ul>
+<p>All middleware used by Koa can be directly used by the framework, too.</p>
+<p>For example, Koa uses <a href="https://github.com/koajs/compress" target="_blank" rel="external">koa-compress</a> in this way:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</div><div class="line"><span class="keyword">const</span> compress = <span class="built_in">require</span>(<span class="string">'koa-compress'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> app = koa();</div><div class="line"></div><div class="line"><span class="keyword">const</span> options = &#123; <span class="attr">threshold</span>: <span class="number">2048</span> &#125;;</div><div class="line">app.use(compress(options));</div></pre></td></tr></table></figure></p>
+<p>We can load the middleware according to the framework specification like this:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/middleware/compress.js</span></div><div class="line"></div><div class="line"><span class="comment">// interfaces(`(options) =&gt; middleware`) exposed by koa-compress match the framework middleware requirements</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="built_in">require</span>(<span class="string">'koa-compress'</span>);</div></pre></td></tr></table></figure></p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line"></div><div class="line">exports.middleware = [ <span class="string">'compress'</span> ];</div><div class="line">exports.compress = &#123;</div><div class="line">  <span class="attr">threshold</span>: <span class="number">2048</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="general-configuration"><a class="markdown-anchor" href="#general-configuration">#</a> General Configuration</h2>
+<p>These general config fields are supported by middleware loaded by the application layer or built in by the framework:</p>
+<ul>
+<li>enable: enable the middleware or not</li>
+<li>match: set some rules with which only the request match can go through middleware</li>
+<li>ignore: set some rules with which the request match can't go through this middleware</li>
+</ul>
+<h3 id="enable"><a class="markdown-anchor" href="#enable">#</a> enable</h3>
+<p>If our application does not need default bodyParser to resolve the request body, we can configure enable to close it.</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">bodyParser</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">false</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h3 id="match-and-ignore"><a class="markdown-anchor" href="#match-and-ignore">#</a> match and ignore</h3>
+<p>match and ignore share the same parameter but do the opposite things. match and ignore cannot be configured in the same time.</p>
+<p>If we want gzip to be used only by url requests starting with <code>/static</code>, the match config field can be set like this:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">gzip</span>: &#123;</div><div class="line">    <span class="attr">match</span>: <span class="string">'/static'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>match and ignore support various types of configuration ways:</p>
+<ol>
+<li>String: when string, it sets the prefix of a url path, and all urls starting with this prefix will match.</li>
+<li>Regular expression: when regular expression, all urls satisfy this regular expression will match.</li>
+<li>Function: when function, the request context will be passed to it and what it returns(true/false) determines whether the request matches or not.</li>
+</ol>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">gzip</span>: &#123;</div><div class="line">    match(ctx) &#123;</div><div class="line">      <span class="comment">// enabled on ios devices</span></div><div class="line">      <span class="keyword">const</span> reg = <span class="regexp">/iphone|ipad|ipod/i</span>;</div><div class="line">      <span class="keyword">return</span> reg.test(ctx.get(<span class="string">'user-agent'</span>));</div><div class="line">    &#125;,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li></ul>
+  </div>
+  <dl><dt>Guide</dt><dd><ul><li><a href="/en/intro/index.html">Egg.js 是什么?</a></li><li><a href="/en/intro/egg-and-koa.html">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html">Quick Start</a></li></ul></dd><dt>Basis Function</dt><dd><ul><li><a href="/en/basics/structure.html">Directory Structure</a></li><li><a href="/en/basics/env.html">Environment</a></li><li><a href="/en/basics/config.html">Configuration</a></li><li><a href="/en/basics/middleware.html">Middleware</a></li><li><a href="/en/basics/router.html">Router</a></li><li><a href="/en/basics/controller.html">Controller</a></li><li><a href="/en/basics/service.html">Service</a></li><li><a href="/en/basics/schedule.html">Schedule</a></li><li><a href="/en/basics/extend.html">Extend</a></li><li><a href="/en/basics/app-start.html">Custom Init</a></li></ul></dd><dt>Core</dt><dd><ul><li><a href="/en/core/development.html">Development</a></li><li><a href="/en/core/unittest.html">Unit Testing</a></li><li><a href="/en/core/deployment.html">应用部署</a></li><li><a href="/en/core/logger.html">Logger</a></li><li><a href="/en/core/httpclient.html">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html">Cluster and IPC</a></li><li><a href="/en/core/view.html">View</a></li><li><a href="/en/core/error-handling.html">Error Handling</a></li><li><a href="/en/core/security.html">Security</a></li><li><a href="/en/core/i18n.html">i18n</a></li></ul></dd><dt>Tutorials</dt><dd><ul><li><a href="/en/tutorials/progressive.html">Progressive</a></li><li><a href="/en/tutorials/mysql.html">MySQL</a></li><li><a href="/en/tutorials/restful.html">RESTful API</a></li><li><a href="/en/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/en/advanced/loader.html">Loader</a></li><li><a href="/en/advanced/plugin.html">Plugin</a></li><li><a href="/en/advanced/framework.html">Framework</a></li><li><a href="/en/advanced/cluster-client.html">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html">View Plugin</a></li></ul></dd><dt>Community</dt><dd><ul><li><a href="/en/contributing.html">Contributing</a></li><li><a href="/en/resource.html">资源</a></li><li><a href="/en/faq.html">FAQ</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+  // debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+</html>
