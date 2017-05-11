@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>MySQL - Born to build better enterprise frameworks and apps</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="/images/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">Translations</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>MySQL</h1>
+    <p>MySQL is one of the most common and best RDBMS in terms of web applications. It is used in many large-scale websites such as Google and Facebook. The document provides a tutorial to access MySQL using Egg framework and plugins.</p>
+<h2 id="egg-mysql"><a class="markdown-anchor" href="#egg-mysql">#</a> egg-mysql</h2>
+<p>egg-mysql is provided to access both the MySQL databases and MySQL-based online database service.</p>
+<h3 id="installation-and-configuration"><a class="markdown-anchor" href="#installation-and-configuration">#</a> Installation and Configuration</h3>
+<p>Install <a href="https://github.com/eggjs/egg-mysql" target="_blank" rel="external">egg-mysql</a></p>
+<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ npm i --save egg-mysql</div></pre></td></tr></table></figure></p>
+<p>Enable Plugin:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line">exports.mysql = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">package</span>: <span class="string">'egg-mysql'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Configure database information in <code>config/config.${env}.js</code></p>
+<h4 id="single-data-source"><a class="markdown-anchor" href="#single-data-source">#</a> Single Data Source</h4>
+<p>Configuration to accesss single MySQL instance as shown below:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/config.$&#123;env&#125;.js</span></div><div class="line">exports.mysql = &#123;</div><div class="line">  <span class="comment">// database configuration </span></div><div class="line">  client: &#123;</div><div class="line">    <span class="attr">host</span>: <span class="string">'mysql.com'</span>,</div><div class="line">    <span class="attr">port</span>: <span class="string">'3306'</span>,</div><div class="line">    <span class="attr">user</span>: <span class="string">'test_user'</span>,</div><div class="line">    <span class="attr">password</span>: <span class="string">'test_password'</span>,</div><div class="line">    <span class="attr">database</span>: <span class="string">'test'</span>,</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">// load into app, default true</span></div><div class="line">  app: <span class="literal">true</span>,</div><div class="line">  <span class="comment">// load into agent, default false</span></div><div class="line">  agent: <span class="literal">false</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Use:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">yield</span> app.mysql.query(sql, values); <span class="comment">// single instance can be accessed through app.mysql</span></div></pre></td></tr></table></figure></p>
+<h4 id="multiple-data-sources"><a class="markdown-anchor" href="#multiple-data-sources">#</a> Multiple Data Sources</h4>
+<p>Configuration to accesss multiple MySQL instances as below:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.mysql = &#123;</div><div class="line">  <span class="attr">clients</span>: &#123;</div><div class="line">    <span class="comment">// clientId, obtain the client instances using the app.mysql.get('clientId')</span></div><div class="line">    db1: &#123;</div><div class="line">      <span class="attr">host</span>: <span class="string">'mysql.com'</span>,</div><div class="line">      <span class="attr">port</span>: <span class="string">'3306'</span>,</div><div class="line">      <span class="attr">user</span>: <span class="string">'test_user'</span>,</div><div class="line">      <span class="attr">password</span>: <span class="string">'test_password'</span>,</div><div class="line">      <span class="attr">database</span>: <span class="string">'test'</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">db2</span>: &#123;</div><div class="line">      <span class="attr">host</span>: <span class="string">'mysql2.com'</span>,</div><div class="line">      <span class="attr">port</span>: <span class="string">'3307'</span>,</div><div class="line">      <span class="attr">user</span>: <span class="string">'test_user'</span>,</div><div class="line">      <span class="attr">password</span>: <span class="string">'test_password'</span>,</div><div class="line">      <span class="attr">database</span>: <span class="string">'test'</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;,</div><div class="line">  <span class="comment">//default configuration of all databases</span></div><div class="line">  <span class="keyword">default</span>: &#123;</div><div class="line"></div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  <span class="comment">// load into app, default true</span></div><div class="line">  app: <span class="literal">true</span>,</div><div class="line">  <span class="comment">// load into agent, default false</span></div><div class="line">  agent: <span class="literal">false</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>Use:</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> client1 = app.mysql.get(<span class="string">'db1'</span>);</div><div class="line"><span class="keyword">yield</span> client1.query(sql, values);</div><div class="line"></div><div class="line"><span class="keyword">const</span> client2 = app.mysql.get(<span class="string">'db2'</span>);</div><div class="line"><span class="keyword">yield</span> client2.query(sql, values);</div></pre></td></tr></table></figure></p>
+<h4 id="dynamic-creation"><a class="markdown-anchor" href="#dynamic-creation">#</a> Dynamic Creation</h4>
+<p>Pre-declaration of configuration might not needed in the configuration file. Obtaining the actual parameters dynamically from the configuration center then initialize an instance instead.</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// &#123;app_root&#125;/app.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">app</span>) </span>&#123;</div><div class="line">  app.beforeStart(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// obtain the MySQL configuration from the configuration center</span></div><div class="line">    <span class="comment">// &#123; host: 'mysql.com', port: '3306', user: 'test_user', password: 'test_password', database: 'test' &#125;</span></div><div class="line">    <span class="keyword">const</span> mysqlConfig = <span class="keyword">yield</span> app.configCenter.fetch(<span class="string">'mysql'</span>);</div><div class="line">    app.database = app.mysql.createInstance(mysqlConfig);</div><div class="line">  &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="service-layer"><a class="markdown-anchor" href="#service-layer">#</a> service layer</h2>
+<p>Connecting to MySQL is a data processing layer in the Web layer. So it is strongly recommended that keeping the code in the service layer.</p>
+<p>An example of connecting to MySQL as follows.</p>
+<p>Details of service layer, refer to <a href="../basics/service.html">service</a></p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/service/user.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Service</span> </span>&#123;</div><div class="line">    * find(uid) &#123;</div><div class="line">      <span class="comment">// assume we have the user id then trying to get the user details from database</span></div><div class="line">      <span class="keyword">const</span> user = <span class="keyword">yield</span> app.mysql.get(<span class="string">'users'</span>, &#123;</div><div class="line">          <span class="attr">id</span>: <span class="number">11</span>,</div><div class="line">      &#125;);</div><div class="line">      <span class="keyword">return</span> &#123;</div><div class="line">        user,</div><div class="line">      &#125;;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>After that, obtaining the data from service layer using the controller</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/controller/user.js</span></div><div class="line">exports.info = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> userId = ctx.params.id;</div><div class="line">  <span class="keyword">const</span> user = <span class="keyword">yield</span> ctx.service.user.find(userId);</div><div class="line">  ctx.body = user;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="writing-crud"><a class="markdown-anchor" href="#writing-crud">#</a> Writing CRUD</h2>
+<p>Following statments default under <code>app/service</code> if not specifed</p>
+<h3 id="create"><a class="markdown-anchor" href="#create">#</a> Create</h3>
+<p>INSERT method to perform the INSERT INTO query</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// INSERT</span></div><div class="line"><span class="keyword">const</span> result = <span class="keyword">yield</span> <span class="keyword">this</span>.app.mysql.insert(<span class="string">'posts'</span>, &#123; <span class="attr">title</span>: <span class="string">'Hello World'</span> &#125;); <span class="comment">//insert a record title 'Hello World' to 'posts' table</span></div><div class="line"></div><div class="line">=&gt; INSERT INTO <span class="string">`posts`</span>(<span class="string">`title`</span>) VALUES(<span class="string">'Hello World'</span>);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(result);</div><div class="line">=&gt;</div><div class="line">&#123;</div><div class="line">  <span class="attr">fieldCount</span>: <span class="number">0</span>,</div><div class="line">  <span class="attr">affectedRows</span>: <span class="number">1</span>,</div><div class="line">  <span class="attr">insertId</span>: <span class="number">3710</span>,</div><div class="line">  <span class="attr">serverStatus</span>: <span class="number">2</span>,</div><div class="line">  <span class="attr">warningCount</span>: <span class="number">2</span>,</div><div class="line">  <span class="attr">message</span>: <span class="string">''</span>,</div><div class="line">  <span class="attr">protocol41</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">changedRows</span>: <span class="number">0</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// check if insertion is success or failure</span></div><div class="line"><span class="keyword">const</span> insertSuccess = result.affectedRows === <span class="number">1</span>;</div></pre></td></tr></table></figure></p>
+<h3 id="read"><a class="markdown-anchor" href="#read">#</a> Read</h3>
+<p>Use <code>get</code> or <code>select</code> to select one or multiple records. <code>select</code> method support query criteria and result customization</p>
+<ul>
+<li>get one record</li>
+</ul>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> post = <span class="keyword">yield</span> <span class="keyword">this</span>.app.mysql.get(<span class="string">'posts'</span>, &#123; <span class="attr">id</span>: <span class="number">12</span> &#125;);</div><div class="line"></div><div class="line">=&gt; SELECT * FROM <span class="string">`posts`</span> WHERE <span class="string">`id`</span> = <span class="number">12</span> LIMIT <span class="number">0</span>, <span class="number">1</span>;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>query all from the table</li>
+</ul>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> results = <span class="keyword">yield</span> <span class="keyword">this</span>.app.mysql.select(<span class="string">'posts'</span>);</div><div class="line"></div><div class="line">=&gt; SELECT * FROM <span class="string">`posts`</span>;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>query criteria and result customization</li>
+</ul>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> results = <span class="keyword">yield</span> <span class="keyword">this</span>.app.mysql.select(<span class="string">'posts'</span>, &#123; <span class="comment">// search posts table</span></div><div class="line">  where: &#123; <span class="attr">status</span>: <span class="string">'draft'</span>, <span class="attr">author</span>: [<span class="string">'author1'</span>, <span class="string">'author2'</span>] &#125;, <span class="comment">// WHERE criteria</span></div><div class="line">  columns: [<span class="string">'author'</span>, <span class="string">'title'</span>], <span class="comment">// get the value of certain columns</span></div><div class="line">  orders: [[<span class="string">'created_at'</span>,<span class="string">'desc'</span>], [<span class="string">'id'</span>,<span class="string">'desc'</span>]], <span class="comment">// sort order</span></div><div class="line">  limit: <span class="number">10</span>, <span class="comment">// limit the return rows</span></div><div class="line">  offset: <span class="number">0</span>, <span class="comment">// data offset</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line">=&gt; SELECT <span class="string">`author`</span>, <span class="string">`title`</span> FROM <span class="string">`posts`</span></div><div class="line">  WHERE <span class="string">`status`</span> = <span class="string">'draft'</span> AND <span class="string">`author`</span> IN(<span class="string">'author1'</span>,<span class="string">'author2'</span>)</div><div class="line">  ORDER BY <span class="string">`created_at`</span> DESC, <span class="string">`id`</span> DESC LIMIT <span class="number">0</span>, <span class="number">10</span>;</div></pre></td></tr></table></figure></p>
+<h3 id="update"><a class="markdown-anchor" href="#update">#</a> Update</h3>
+<p>UPDATE operation to update the records of databases</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// modify data and search by primary key ID, and refresh</span></div><div class="line"><span class="keyword">const</span> row = &#123;</div><div class="line">  <span class="attr">id</span>: <span class="number">123</span>,</div><div class="line">  <span class="attr">name</span>: <span class="string">'fengmk2'</span>,</div><div class="line">  <span class="attr">otherField</span>: <span class="string">'other field value'</span>,    <span class="comment">// any other fields u want to update</span></div><div class="line">  modifiedAt: <span class="keyword">this</span>.app.mysql.literals.now, <span class="comment">// `now()` on db server</span></div><div class="line">&#125;;</div><div class="line"><span class="keyword">const</span> result = <span class="keyword">yield</span> <span class="keyword">this</span>.app.mysql.update(<span class="string">'posts'</span>, row); <span class="comment">// update records in 'posts'</span></div><div class="line"></div><div class="line">=&gt; UPDATE <span class="string">`posts`</span> SET <span class="string">`name`</span> = <span class="string">'fengmk2'</span>, <span class="string">`modifiedAt`</span> = NOW() WHERE id = <span class="number">123</span> ;</div><div class="line"></div><div class="line"><span class="comment">// check if update is success or failure</span></div><div class="line"><span class="keyword">const</span> updateSuccess = result.affectedRows === <span class="number">1</span>;</div></pre></td></tr></table></figure></p>
+<h3 id="delete"><a class="markdown-anchor" href="#delete">#</a> Delete</h3>
+<p>DELETE operation to delete the records of databases</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> result = <span class="keyword">yield</span> <span class="keyword">this</span>.app.mysql.delete(<span class="string">'posts'</span>, &#123;</div><div class="line">  <span class="attr">author</span>: <span class="string">'fengmk2'</span>,</div><div class="line">&#125;);</div><div class="line"></div><div class="line">=&gt; DELETE FROM <span class="string">`posts`</span> WHERE <span class="string">`author`</span> = <span class="string">'fengmk2'</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="implementation-of-sql-statement"><a class="markdown-anchor" href="#implementation-of-sql-statement">#</a> Implementation of SQL statement</h2>
+<p>Plugin supports splicing and execute SQL statment directly. It can use <code>query</code> to execute a valid SQL statement</p>
+<p><strong>Note!! Strongly do not recommend developers splicing SQL statement, it is easier to cause SQL injection!!</strong></p>
+<p>Use the <code>mysql.escape</code> method if you have to splice SQL statement</p>
+<p>Refer to <a href="http://stackoverflow.com/questions/15778572/preventing-sql-injection-in-node-js" target="_blank" rel="external">preventing-sql-injection-in-node-js</a></p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> postId = <span class="number">1</span>;</div><div class="line"><span class="keyword">const</span> results = <span class="keyword">yield</span> <span class="keyword">this</span>.app.mysql.query(<span class="string">'update posts set hits = (hits + ?) where id = ?'</span>, [<span class="number">1</span>, postId]);</div><div class="line"></div><div class="line">=&gt; update posts set hits = (hits + <span class="number">1</span>) where id = <span class="number">1</span>;</div></pre></td></tr></table></figure></p>
+<h2 id="transaction"><a class="markdown-anchor" href="#transaction">#</a> Transaction</h2>
+<p>Transaction is mainly used to deal with large data of high complexity. For example, in a personnel management system, deleting a person which need to delete the basic information of the staff, but also need to delete the related information of staff, such as mailboxes, articles and so on. It is easier to use transaction to run a set of operations.
+A transaction is a set of continuous database operations which performed as a single unit of work. Each individual operation within the group is successful and the transaction succeeds. If one part of the transaction fails, then the entire transaction fails.
+In gerenal, transaction must be atomic, consistent, isolated and durable.</p>
+<ul>
+<li>Atomicity requires that each transaction be &quot;all or nothing&quot;: if one part of the transaction fails, then the entire transaction fails, and the database state is left unchanged.</li>
+<li>The consistency property ensures that any transaction will bring the database from one valid state to another.</li>
+<li>The isolation property ensures that the concurrent execution of transactions results in a system state that would be obtained if transactions were executed sequentially</li>
+<li>The durability property ensures that once a transaction has been committed, it will remain so.</li>
+</ul>
+<p>Therefore, for a transaction, must be accompanied by beginTransaction, commit or rollback, respectively, beginning of the transaction, success and failure to roll back.</p>
+<p>egg-mysql proviodes two types of transactions</p>
+<h3 id="manual-control"><a class="markdown-anchor" href="#manual-control">#</a> Manual Control</h3>
+<ul>
+<li>adventage: <figure class="highlight plain"><figcaption><span>```commit``` or ```rollback``` can be completely under control by developer</span></figcaption><table><tr><td class="code"><pre><div class="line">- disadventage: more handwritten code, Forgot catching error or cleanup will lead to serious bug.</div><div class="line"></div><div class="line">```js</div><div class="line">const conn = yield app.mysql.beginTransaction(); // initialize the transaction</div><div class="line"></div><div class="line">try &#123;</div><div class="line">  yield conn.insert(table, row1);  // first step</div><div class="line">  yield conn.update(table, row2);  // second step</div><div class="line">  yield conn.commit(); // commit the transaction</div><div class="line">&#125; catch (err) &#123;</div><div class="line">  // error, rollback</div><div class="line">  yield conn.rollback(); // rollback after catching the exception!!  </div><div class="line">  throw err;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="automatic-control-transaction-with-scope"><a class="markdown-anchor" href="#automatic-control-transaction-with-scope">#</a> Automatic control: Transaction with scope</h3>
+<ul>
+<li>API：<code>*beginTransactionScope(scope, ctx)</code>
+<ul>
+<li><code>scope</code>: A generatorFunction which will execute all sqls of this transaction.</li>
+<li><code>ctx</code>: The context object of current request, it will ensures that even in the case of a nested transaction, there is only one active transaction in a request at the same time.</li>
+</ul>
+</li>
+<li>adventage: easy to use, as if there is no transaction in your code.</li>
+<li>disadvantage: all transation will be successful or failed, cannot control precisely
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> result = <span class="keyword">yield</span> app.mysql.beginTransactionScope(<span class="function"><span class="keyword">function</span>* (<span class="params">conn</span>) </span>&#123;</div><div class="line">  <span class="comment">// don't commit or rollback by yourself</span></div><div class="line">  <span class="keyword">yield</span> conn.insert(table, row1);</div><div class="line">  <span class="keyword">yield</span> conn.update(table, row2);</div><div class="line">  <span class="keyword">return</span> &#123; <span class="attr">success</span>: <span class="literal">true</span> &#125;;</div><div class="line">&#125;, ctx); <span class="comment">// ctx is the context of current request, accessed by `this.ctx`  within in service file.</span></div><div class="line"><span class="comment">// if error throw on scope, will auto rollback</span></div></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="literal"><a class="markdown-anchor" href="#literal">#</a> Literal</h2>
+<p>Use <code>Literal</code> if need to call literals or functions in MySQL</p>
+<h3 id="inner-literal"><a class="markdown-anchor" href="#inner-literal">#</a> Inner Literal</h3>
+<ul>
+<li><code>NOW()</code>：The database system time, obtained by <code>app.mysql.literals.now</code></li>
+</ul>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">yield</span> <span class="keyword">this</span>.app.mysql.insert(table, &#123;</div><div class="line">  <span class="attr">create_time</span>: <span class="keyword">this</span>.app.mysql.literals.now,</div><div class="line">&#125;);</div><div class="line"></div><div class="line">=&gt; INSERT INTO <span class="string">`$table`</span>(<span class="string">`create_time`</span>) VALUES(NOW())</div></pre></td></tr></table></figure></p>
+<h3 id="custom-literal"><a class="markdown-anchor" href="#custom-literal">#</a> Custom literal</h3>
+<p>The following demo showe how to call <code>CONCAT(s1, ...sn)</code> funtion in mysql to do string splicing.</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> Literal = <span class="keyword">this</span>.app.mysql.literals.Literal;</div><div class="line"><span class="keyword">const</span> first = <span class="string">'James'</span>;</div><div class="line"><span class="keyword">const</span> last = <span class="string">'Bond'</span>;</div><div class="line"><span class="keyword">yield</span> <span class="keyword">this</span>.app.mysql.insert(table, &#123;</div><div class="line">  <span class="attr">id</span>: <span class="number">123</span>,</div><div class="line">  <span class="attr">fullname</span>: <span class="keyword">new</span> Literal(<span class="string">`CONCAT("<span class="subst">$&#123;first&#125;</span>", "<span class="subst">$&#123;last&#125;</span>"`</span>),</div><div class="line">&#125;);</div><div class="line"></div><div class="line">=&gt; INSERT INTO <span class="string">`$table`</span>(<span class="string">`id`</span>, <span class="string">`fullname`</span>) VALUES(<span class="number">123</span>, CONCAT(<span class="string">"James"</span>, <span class="string">"Bond"</span>))</div></pre></td></tr></table></figure></p>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li></ul>
+  </div>
+  <dl><dt>Guide</dt><dd><ul><li><a href="/en/intro/index.html">Egg.js 是什么?</a></li><li><a href="/en/intro/egg-and-koa.html">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html">Quick Start</a></li></ul></dd><dt>Basis Function</dt><dd><ul><li><a href="/en/basics/structure.html">Directory Structure</a></li><li><a href="/en/basics/env.html">Environment</a></li><li><a href="/en/basics/config.html">Configuration</a></li><li><a href="/en/basics/middleware.html">Middleware</a></li><li><a href="/en/basics/router.html">Router</a></li><li><a href="/en/basics/controller.html">Controller</a></li><li><a href="/en/basics/service.html">Service</a></li><li><a href="/en/basics/schedule.html">Schedule</a></li><li><a href="/en/basics/extend.html">Extend</a></li><li><a href="/en/basics/app-start.html">Custom Init</a></li></ul></dd><dt>Core</dt><dd><ul><li><a href="/en/core/development.html">Development</a></li><li><a href="/en/core/unittest.html">Unit Testing</a></li><li><a href="/en/core/deployment.html">应用部署</a></li><li><a href="/en/core/logger.html">Logger</a></li><li><a href="/en/core/httpclient.html">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html">Cluster and IPC</a></li><li><a href="/en/core/view.html">View</a></li><li><a href="/en/core/error-handling.html">Error Handling</a></li><li><a href="/en/core/security.html">Security</a></li><li><a href="/en/core/i18n.html">i18n</a></li></ul></dd><dt>Tutorials</dt><dd><ul><li><a href="/en/tutorials/progressive.html">Progressive</a></li><li><a href="/en/tutorials/mysql.html">MySQL</a></li><li><a href="/en/tutorials/restful.html">RESTful API</a></li><li><a href="/en/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/en/advanced/loader.html">Loader</a></li><li><a href="/en/advanced/plugin.html">Plugin</a></li><li><a href="/en/advanced/framework.html">Framework</a></li><li><a href="/en/advanced/cluster-client.html">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html">View Plugin</a></li></ul></dd><dt>Community</dt><dd><ul><li><a href="/en/contributing.html">Contributing</a></li><li><a href="/en/resource.html">资源</a></li><li><a href="/en/faq.html">FAQ</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+  // debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+</html>
