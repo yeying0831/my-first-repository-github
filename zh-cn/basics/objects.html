@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>框架内置基础对象 - 为企业级框架和应用而生</title>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="icon" href="/images/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">切换语言</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>框架内置基础对象</h1>
+    <p>在往下阅读之前，我们先初步介绍一下框架中内置的一些基础对象，包括从 <a href="http://koajs.com" target="_blank" rel="external">Koa</a> 继承而来的 4 个对象（Application, Context, Request, Response) 以及框架扩展的一些对象（Controller, Service, Helper, Config, Logger），在后续的文档阅读中我们会经常遇到它们。</p>
+<h2 id="application"><a class="markdown-anchor" href="#application">#</a> Application</h2>
+<p>Application 是全局应用对象，在一个应用中，只会实例化一个，它继承自 <a href="http://koajs.com/#application" target="_blank" rel="external">Koa.Application</a>，在它上面我们可以挂载一些全局的方法和对象。我们可以轻松的在插件或者应用中<a href="./extend.html#Application">扩展 Application 对象</a>。</p>
+<h3 id="获取方式"><a class="markdown-anchor" href="#获取方式">#</a> 获取方式</h3>
+<p>Application 对象几乎可以在编写应用时的任何一个地方获取到，下面介绍几个经常用到的获取方式：</p>
+<p>几乎所有被框架 <a href="../advanced/loader.html">Loader</a> 加载的文件（Controller，Service，Schedule 等），都可以 export 一个函数，这个函数会被 Loader 调用，并使用 app 作为参数：</p>
+<ul>
+<li>
+<p><a href="./app-start.html">启动自定义脚本</a></p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  app.cache = <span class="keyword">new</span> Cache();</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+</li>
+<li>
+<p><a href="./controller.html">Controller 文件</a></p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/controller/user.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Controller</span> </span>&#123;</div><div class="line">    *fetch () &#123;</div><div class="line">      <span class="keyword">this</span>.ctx.body = app.cache.get(<span class="keyword">this</span>.query.id);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+</li>
+</ul>
+<p>和 <a href="http://koajs.com" target="_blank" rel="external">Koa</a> 一样，在 Context 对象上，可以通过 <code>ctx.app</code> 访问到 Application 对象。以上面的 Controller 文件举例：</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/controller/user.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Controller</span> </span>&#123;</div><div class="line">    *fetch () &#123;</div><div class="line">      <span class="keyword">this</span>.ctx.body = <span class="keyword">this</span>.ctx.app.cache.get(<span class="keyword">this</span>.query.id);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在继承于 Controller, Service 基类的实例中，可以通过 <code>this.app</code> 访问到 Application 对象。</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/controller/user.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Controller</span> </span>&#123;</div><div class="line">    *fetch () &#123;</div><div class="line">      <span class="keyword">this</span>.ctx.body = <span class="keyword">this</span>.app.cache.get(<span class="keyword">this</span>.query.id);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="context"><a class="markdown-anchor" href="#context">#</a> Context</h2>
+<p>Context 是一个<strong>请求级别的对象</strong>，继承自 <a href="http://koajs.com/#context" target="_blank" rel="external">Koa.Context</a>。在每一次收到用户请求时，框架会实例化一个 Context 对象，这个对象封装了这次用户请求的信息，并提供了许多便捷的方法来获取请求参数或者设置响应信息。框架会将所有的 <a href="./service.html">Service</a> 挂载到 Context 实例上，一些插件也会将一些其他的方法和对象挂载到它上面（<a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="external">egg-sequelize</a> 会将所有的 model 挂载在 Context 上）。</p>
+<h3 id="获取方式-2"><a class="markdown-anchor" href="#获取方式-2">#</a> 获取方式</h3>
+<p>最常见的 Context 实例获取方式是在 <a href="./middleware.html">Middleware</a>, <a href="./controller.html">Controller</a> 以及 <a href="./service.html">Service</a> 中。<a href="./controller.html">Controller</a> 中的获取方式在上面的例子中已经展示过了，在 <a href="./service.html">Service</a> 中获取和 <a href="./controller.html">Controller</a> 中获取的方式一样，在 <a href="./middleware.html">Middleware</a> 中获取 Context 实例则和 <a href="http://koajs.com" target="_blank" rel="external">Koa</a> 框架在中间件中获取 Context 对象的方式一致。</p>
+<p>框架的 <a href="./middleware.html">Middleware</a> 同时支持 Koa v1 和 Koa v2 两种不同的中间件写法，根据不同的写法，获取 Context 实例的方式也稍有不同：</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Koa v1</span></div><div class="line"><span class="function"><span class="keyword">function</span>* <span class="title">middleware</span>(<span class="params">next</span>) </span>&#123;</div><div class="line">  <span class="comment">// this is instance of Context</span></div><div class="line">  <span class="built_in">console</span>.log(<span class="keyword">this</span>.query);</div><div class="line">  <span class="keyword">yield</span> next;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Koa v2</span></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">middleware</span>(<span class="params">ctx, next</span>) </span>&#123;</div><div class="line">  <span class="comment">// ctx is instance of Context</span></div><div class="line">  <span class="built_in">console</span>.log(ctx.query);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>除了在请求时可以获取 Context 实例之外， 在有些非用户请求的场景下我们需要访问 service / model 等 Context 实例上的对象，我们可以通过 <code>Application.createAnonymousContext()</code> 方法创建一个匿名 Context 实例：</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  app.beforeStart(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">const</span> ctx = app.createAnonymousContext();</div><div class="line">    <span class="comment">// preload before app start</span></div><div class="line">    <span class="keyword">yield</span> ctx.service.posts.load();</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在<a href="./schedule.html">定时任务</a>中的每一个 task 都接受一个 Context 实例作为参数，以便我们更方便的执行一些定时的业务逻辑：</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/schedule/refresh.js</span></div><div class="line">exports.task = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</div><div class="line">  <span class="keyword">yield</span> ctx.service.posts.refresh();</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="request-response"><a class="markdown-anchor" href="#request-response">#</a> Request &amp; Response</h2>
+<p>Request 是一个<strong>请求级别的对象</strong>，继承自 <a href="http://koajs.com/#request" target="_blank" rel="external">Koa.Request</a>。封装了 Node.js 原生的 HTTP Request 对象，提供了一系列辅助方法获取 HTTP 请求常用参数。</p>
+<p>Response 是一个<strong>请求级别的对象</strong>，继承自 <a href="http://koajs.com/#response" target="_blank" rel="external">Koa.Response</a>。封装了 Node.js 原生的 HTTP Response 对象，提供了一系列辅助方法设置 HTTP 响应。</p>
+<h3 id="获取方式-3"><a class="markdown-anchor" href="#获取方式-3">#</a> 获取方式</h3>
+<p>可以在 Context 的实例上获取到当前请求的 Request(<code>ctx.request</code>) 和 Response(<code>ctx.response</code>) 实例。</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/controller/user.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Controller</span> </span>&#123;</div><div class="line">    *fetch () &#123;</div><div class="line">      <span class="keyword">const</span> &#123; app, ctx &#125; = <span class="keyword">this</span>;</div><div class="line">      <span class="keyword">const</span> id = ctx.request.query.id;</div><div class="line">      ctx.response.body = app.cache.get(id);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>在上面的例子中，<code>ctx.request.query.id</code> 和 <code>ctx.query.id</code> 是等价的，<code>ctx.response.body=</code> 和 <code>ctx.body=</code> 是等价的，<a href="http://koajs.com" target="_blank" rel="external">Koa</a> 系列的框架会在 Context 上代理一部分 Request 和 Response 上的方法和属性。</p>
+<h2 id="controller"><a class="markdown-anchor" href="#controller">#</a> Controller</h2>
+<p>框架提供了一个 Controller 基类，并推荐所有的 <a href="./controller.html">Controller</a> 都继承于该基类实现。这个 Controller 基类有下列属性：</p>
+<ul>
+<li><code>ctx</code> - 当前请求的 <a href="#context">Context</a> 实例。</li>
+<li><code>app</code> - 应用的 <a href="#application">Application</a> 实例。</li>
+<li><code>config</code> - 应用的<a href="./config.html">配置</a>。</li>
+<li><code>service</code> - 应用所有的 <a href="./service.html">service</a>。</li>
+<li><code>logger</code> - 为当前 controller 封装的 logger 对象。</li>
+</ul>
+<p>在 Controller 文件中，可以通过两种方式来引用 Controller 基类：</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/controller/user.js</span></div><div class="line"></div><div class="line"><span class="comment">// 从 egg 上获取</span></div><div class="line"><span class="keyword">const</span> Controller = <span class="built_in">require</span>(<span class="string">'egg'</span>);</div><div class="line"><span class="built_in">module</span>.exports = UserController extends egg.Controller &#123;</div><div class="line">  <span class="comment">// implement</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 从 app 实例上获取</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> UserController extends app.Controller &#123;</div><div class="line">    <span class="comment">// implement</span></div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="service"><a class="markdown-anchor" href="#service">#</a> Service</h2>
+<p>框架提供了一个 Service 基类，并推荐所有的 <a href="./service.html">Service</a> 都继承于该基类实现。</p>
+<p>Service 基类的属性和 <a href="#controller">Controller</a> 基类属性一致，访问方式也类似：</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/service/user.js</span></div><div class="line"></div><div class="line"><span class="comment">// 从 egg 上获取</span></div><div class="line"><span class="built_in">module</span>.exports = UserService extends <span class="built_in">require</span>(<span class="string">'egg'</span>).Service &#123;</div><div class="line">  <span class="comment">// implement</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 从 app 实例上获取</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> UserService extends app.Service &#123;</div><div class="line">    <span class="comment">// implement</span></div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="helper"><a class="markdown-anchor" href="#helper">#</a> Helper</h2>
+<p>Helper 用来提供一些实用的 utility 函数。它的作用在于我们可以将一些常用的动作抽离在 helper.js 里面成为一个独立的函数，这样可以用 JavaScript 来写复杂的逻辑，避免逻辑分散各处，同时可以更好的编写测试用例。</p>
+<p>Helper 自身是一个类，有和 <a href="#controller">Controller</a> 基类一样的属性，它也会在每次请求时进行实例化，因此 Helper 上的所有函数也能获取到当前请求相关的上下文信息。</p>
+<h3 id="获取方式-4"><a class="markdown-anchor" href="#获取方式-4">#</a> 获取方式</h3>
+<p>可以在 Context 的实例上获取到当前请求的 Helper(<code>ctx.helper</code>) 实例。</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/controller/user.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Controller</span> </span>&#123;</div><div class="line">    *fetch () &#123;</div><div class="line">      <span class="keyword">const</span> &#123; app, ctx &#125; = <span class="keyword">this</span>;</div><div class="line">      <span class="keyword">const</span> id = ctx.request.query.id;</div><div class="line">      <span class="keyword">const</span> user = app.cache.get(id);</div><div class="line">      ctx.body = ctx.helper.formatUser(user);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>除此之外，Helper 的实例还可以在模板中获取到，例如可以在模板中获取到 <a href="../core/security.html">security</a> 插件提供的 <code>shtml</code> 方法。</p>
+<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">// app/view/home.nj</div><div class="line">&#123;&#123; helper.shtml(value) &#125;&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="自定义-helper-方法"><a class="markdown-anchor" href="#自定义-helper-方法">#</a> 自定义 helper 方法</h3>
+<p>应用开发中，我们可能经常要自定义一些 helper 方法，例如上面例子中的 <code>formatUser</code>，我们可以通过<a href="./extend.html#helper">框架扩展</a>的形式来自定义 helper 方法。</p>
+<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/helper.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  formatUser(user) &#123;</div><div class="line">    <span class="keyword">return</span> only(user, [ <span class="string">'name'</span>, <span class="string">'phone'</span> ]);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<h2 id="config"><a class="markdown-anchor" href="#config">#</a> Config</h2>
+<p>我们推荐应用开发遵循配置和代码分离的原则，将一些需要硬编码的业务配置都放到配置文件中，同时配置文件支持各个不同的运行环境使用不同的配置，使用起来也非常方便，所有框架、插件和应用级别的配置都可以通过 Config 对象获取到，关于框架的配置，可以详细阅读 <a href="./config.html">Config 配置</a>章节。</p>
+<h3 id="获取方式-5"><a class="markdown-anchor" href="#获取方式-5">#</a> 获取方式</h3>
+<p>我们可以通过 <code>app.config</code> 从 Application 实例上获取到 config 对象，也可以在 Controller, Service, Helper 的实例上通过 <code>this.config</code> 获取到 config 对象。</p>
+<h2 id="logger"><a class="markdown-anchor" href="#logger">#</a> Logger</h2>
+<p>框架内置了功能强大的<a href="../core/logger.html">日志功能</a>，可以非常方便的打印各种级别的日志到对应的日志文件中，每一个 logger 对象都提供了 5 个级别的方法：</p>
+<ul>
+<li><code>logger.debug()</code></li>
+<li><code>logger.info()</code></li>
+<li><code>logger.warn()</code></li>
+<li><code>logger.error()</code></li>
+</ul>
+<p>在框架中提供了多个 Logger 对象，下面我们简单的介绍一下各个 Logger 对象的获取方式和使用场景。</p>
+<h3 id="app-logger"><a class="markdown-anchor" href="#app-logger">#</a> App Logger</h3>
+<p>我们可以通过 <code>app.logger</code> 来获取到它，如果我们想做一些应用级别的日志记录，如记录启动阶段的一些数据信息，记录一些业务上与请求无关的信息，都可以通过 App Logger 来完成。</p>
+<h3 id="app-corelogger"><a class="markdown-anchor" href="#app-corelogger">#</a> App CoreLogger</h3>
+<p>我们可以通过 <code>app.coreLogger</code> 来获取到它，一般我们在开发应用时都不应该通过 CoreLogger 打印日志，而框架和插件则需要通过它来打印应用级别的日志，这样可以更清晰的区分应用和框架打印的日志，通过 CoreLogger 打印的日志会放到和 Logger 不同的文件中。</p>
+<h3 id="context-logger"><a class="markdown-anchor" href="#context-logger">#</a> Context Logger</h3>
+<p>我们可以通过 <code>ctx.logger</code> 从 Context 实例上获取到它，从访问方式上我们可以看出来，Context Logger 一定是与请求相关的，它打印的日志都会在前面带上一些当前请求相关的信息（如 <code>[$userId/$ip/$traceId/${cost}ms $method $url]</code>），通过这些信息，我们可以从日志快速定位请求，并串联一次请求中的所有的日志。</p>
+<h3 id="context-corelogger"><a class="markdown-anchor" href="#context-corelogger">#</a> Context CoreLogger</h3>
+<p>我们可以通过 <code>ctx.coreLogger</code> 获取到它，和 Context Logger 的区别是一般只有插件和框架会通过它来记录日志。</p>
+<h3 id="controller-logger-service-logger"><a class="markdown-anchor" href="#controller-logger-service-logger">#</a> Controller Logger &amp; Service Logger</h3>
+<p>我们可以在 Controller 和 Service 实例上通过 <code>this.logger</code> 获取到它们，它们本质上就是一个 Context Logger，不过在打印日志的时候还会额外的加上文件路径，方便定位日志的打印位置。</p>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li></ul>
+  </div>
+  <dl><dt>新手指南</dt><dd><ul><li><a href="/zh-cn/intro/index.html">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html">快速入门</a></li></ul></dd><dt>基础功能</dt><dd><ul><li><a href="/zh-cn/basics/structure.html">目录结构</a></li><li><a href="/zh-cn/basics/objects.html">内置对象</a></li><li><a href="/zh-cn/basics/env.html">运行环境</a></li><li><a href="/zh-cn/basics/config.html">配置</a></li><li><a href="/zh-cn/basics/middleware.html">中间件</a></li><li><a href="/zh-cn/basics/router.html">Router</a></li><li><a href="/zh-cn/basics/controller.html">Controller</a></li><li><a href="/zh-cn/basics/service.html">Service</a></li><li><a href="/zh-cn/basics/schedule.html">定时任务</a></li><li><a href="/zh-cn/basics/extend.html">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html">启动自定义</a></li></ul></dd><dt>核心功能</dt><dd><ul><li><a href="/zh-cn/core/development.html">本地开发</a></li><li><a href="/zh-cn/core/unittest.html">单元测试</a></li><li><a href="/zh-cn/core/deployment.html">应用部署</a></li><li><a href="/zh-cn/core/logger.html">日志</a></li><li><a href="/zh-cn/core/httpclient.html">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html">异常处理</a></li><li><a href="/zh-cn/core/security.html">安全</a></li><li><a href="/zh-cn/core/i18n.html">国际化</a></li></ul></dd><dt>教程</dt><dd><ul><li><a href="/zh-cn/tutorials/progressive.html">渐进式开发</a></li><li><a href="/zh-cn/tutorials/mysql.html">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html">RESTful API</a></li><li><a href="/zh-cn/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>进阶</dt><dd><ul><li><a href="/zh-cn/advanced/loader.html">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html">模板插件开发规范</a></li></ul></dd><dt>社区</dt><dd><ul><li><a href="/zh-cn/contributing.html">如何贡献</a></li><li><a href="/zh-cn/resource.html">资源</a></li><li><a href="/zh-cn/faq.html">常见问题</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+  // debug: true // Set debug to true if you want to inspect the dropdown
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+</html>
