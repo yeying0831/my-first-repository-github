@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <title>Extend EGG - Born to build better enterprise frameworks and apps</title>
-<meta charset="utf-8">
-<meta name="description" content="">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="icon" href="/images/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
 <link rel="stylesheet" href="/css/index.css">
+
 </head>
 <body>
   <div class="nav" >
@@ -68,19 +69,19 @@
 </li>
 <li>
 <p>The <code>app</code> object would be injected into the entry function as the first argument in <code>app.js</code>, like this:</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="comment">// here you can use the app object</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="comment">// here you can use the app object</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 </li>
 </ul>
 <h3 id="how-to-extend"><a class="markdown-anchor" href="#how-to-extend">#</a> How to extend</h3>
 <p>Egg will merge the object defined in <code>app/extend/application.js</code> with the prototype of Application object in Koa, then generate object <code>app</code> which is based on the extended prototype when application is boot.</p>
 <h4 id="extend-methods"><a class="markdown-anchor" href="#extend-methods">#</a> Extend Methods</h4>
 <p>If we want to create a method <code>app.foo()</code>, we can do it like this: ：</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/application.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  foo(param) &#123;</div><div class="line">    <span class="comment">// `this` points to the object app, you can access other methods or property of app with this</span></div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/application.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  foo(param) &#123;</div><div class="line">    <span class="comment">// `this` points to the object app, you can access other methods or property of app with this</span></div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h4 id="extend-properties"><a class="markdown-anchor" href="#extend-properties">#</a> Extend Properties</h4>
 <p>Gernerally speaking, the calculation of properties only need to do once, therefore we have to do some cache, otherwise it will degrade performance of the app as too much calculation would be going to do when access those properties several times.</p>
 <p>So, it's recommended to use Symbol + Getter.</p>
 <p>For example, if we would like to add a Getter property <code>app.bar</code>:</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/application.js</span></div><div class="line"><span class="keyword">const</span> BAR = <span class="built_in">Symbol</span>(<span class="string">'Application#bar'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  get bar() &#123;</div><div class="line">    <span class="comment">// `this` points to the app object, you can access other methods or property of app with this</span></div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>[BAR]) &#123;</div><div class="line">      <span class="comment">// It should be more complex in real situation</span></div><div class="line">      <span class="keyword">this</span>[BAR] = <span class="keyword">this</span>.config.xx + <span class="keyword">this</span>.config.yy;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>[BAR];</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/application.js</span></div><div class="line"><span class="keyword">const</span> BAR = <span class="built_in">Symbol</span>(<span class="string">'Application#bar'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  get bar() &#123;</div><div class="line">    <span class="comment">// `this` points to the app object, you can access other methods or property of app with this</span></div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>[BAR]) &#123;</div><div class="line">      <span class="comment">// It should be more complex in real situation</span></div><div class="line">      <span class="keyword">this</span>[BAR] = <span class="keyword">this</span>.config.xx + <span class="keyword">this</span>.config.yy;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>[BAR];</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="context"><a class="markdown-anchor" href="#context">#</a> Context</h2>
 <p>Context means the context in Koa, which is a  <strong>Request Level</strong> object. That is to say, every request from client will gererate an Context instance. We usually write Context as <code>ctx</code> in short. Through all the doc, both Context and <code>ctx</code> means the context object in Koa.</p>
 <h3 id="access-method-2"><a class="markdown-anchor" href="#access-method-2">#</a> Access Method</h3>
@@ -93,32 +94,32 @@
 <p>Egg will merge the object defined in <code>app/extend/context.js</code> with the prototype of Context object in Koa. And it will generate a <code>ctx</code> object which is based on the extended prototype when deal with request.</p>
 <h4 id="extend-methods-2"><a class="markdown-anchor" href="#extend-methods-2">#</a> Extend Methods</h4>
 <p>For instance, we could add a method <code>ctx.foo()</code> in the following way:</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/context.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  foo(param) &#123;</div><div class="line">    <span class="comment">// `this` points to the ctx object, you can access other methods or property of ctx </span></div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/context.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  foo(param) &#123;</div><div class="line">    <span class="comment">// `this` points to the ctx object, you can access other methods or property of ctx </span></div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h4 id="extend-properties-2"><a class="markdown-anchor" href="#extend-properties-2">#</a> Extend Properties</h4>
 <p>Gernerally speaking, the calculation of properties only need to do once, therefore we have to do some cache, otherwise it will degrade performance of the app as too much calculation would be going to do when access those properties several times.</p>
 <p>So, it's recommended to use Symbol + Getter.</p>
 <p>For example, if we would like to add a Getter property <code>ctx.bar</code>:</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/context.js</span></div><div class="line"><span class="keyword">const</span> BAR = <span class="built_in">Symbol</span>(<span class="string">'Context#bar'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  get bar() &#123;</div><div class="line">    <span class="comment">// `this` points to the ctx object, you can access other methods or property of ctx</span></div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>[BAR]) &#123;</div><div class="line">      <span class="comment">// For example, we can get from header, but it should be more complex in real situation.</span></div><div class="line">      <span class="keyword">this</span>[BAR] = <span class="keyword">this</span>.get(<span class="string">'x-bar'</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>[BAR];</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/context.js</span></div><div class="line"><span class="keyword">const</span> BAR = <span class="built_in">Symbol</span>(<span class="string">'Context#bar'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  get bar() &#123;</div><div class="line">    <span class="comment">// `this` points to the ctx object, you can access other methods or property of ctx</span></div><div class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>[BAR]) &#123;</div><div class="line">      <span class="comment">// For example, we can get from header, but it should be more complex in real situation.</span></div><div class="line">      <span class="keyword">this</span>[BAR] = <span class="keyword">this</span>.get(<span class="string">'x-bar'</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>[BAR];</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="request"><a class="markdown-anchor" href="#request">#</a> Request</h2>
 <p>Request object is the same as that in Koa, which is a <strong>Request Level</strong> object. It provides a great number of methods to help to access the properties and methods you need.</p>
 <h3 id="access-method-3"><a class="markdown-anchor" href="#access-method-3">#</a> Access Method</h3>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">ctx.request</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">ctx.request</div></pre></td></tr></table></figure>
 <p>So many properties and methods in <code>ctx</code> can also be accessed in <code>request</code> object. For those properties and methods, it is just the same to access them eigher <code>ctx</code> or <code>request</code>, such as <code>ctx.url === ctx.request.url</code>.</p>
 <p>Here are the properties and methods in <code>ctx</code> which can also be accessed by Request aliases: <a href="http://koajs.com/#request-aliases" target="_blank" rel="external">Koa - Request aliases</a></p>
 <h3 id="how-to-extend-3"><a class="markdown-anchor" href="#how-to-extend-3">#</a> How to extend</h3>
 <p>Egg will merge the object defined in <code>app/extend/request.js</code> and the prototype of <code>request</code> object build in egg. And it will generate a <code>request</code> object which is based on the extended prototype when deal with request.</p>
 <p>For instance, we could add a property <code>request.foo</code> in the following way:</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/request.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  get foo() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'x-request-foo'</span>);</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/request.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  get foo() &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'x-request-foo'</span>);</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="response"><a class="markdown-anchor" href="#response">#</a> Response</h2>
 <p>Response object is the same as that in Koa, which is a <strong>Request Level</strong> object. It provides a great number of methods to help to access the properties and methods you need.</p>
 <h3 id="access-method-4"><a class="markdown-anchor" href="#access-method-4">#</a> Access Method</h3>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">ctx.response</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">ctx.response</div></pre></td></tr></table></figure>
 <p>So many properties and methods in <code>ctx</code> can also be accessed in <code>response</code> object. For those properties and methods, it is just the same to access them eigher <code>ctx</code> or <code>response</code>. For example <code>ctx.status = 404</code> is the same as <code>ctx.response.status = 404</code>.</p>
 <p>Here are the properties and methods in <code>ctx</code> which can also be accessed by Response aliases: <a href="http://koajs.com/#response-aliases" target="_blank" rel="external">Koa Response aliases</a></p>
 <h3 id="how-to-extend-4"><a class="markdown-anchor" href="#how-to-extend-4">#</a> How to extend</h3>
 <p>Egg will merge the object defined in <code>app/extend/response.js</code> and the prototype of <code>response</code> object build in egg. And it will generate a <code>response</code> object which is based on the extended prototype after dealt with request.</p>
 <p>For instance, we could add a setter <code>request.foo</code> in the following way:</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/response.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  set foo(value) &#123;</div><div class="line">    <span class="keyword">this</span>.set(<span class="string">'x-response-foo'</span>, value);</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/response.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  set foo(value) &#123;</div><div class="line">    <span class="keyword">this</span>.set(<span class="string">'x-response-foo'</span>, value);</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>Then we can use the setter like this: <code>this.response.foo = 'bar';</code></p>
 <h2 id="helper"><a class="markdown-anchor" href="#helper">#</a> Helper</h2>
 <p>Function Helper can provides some useful utility functions.</p>
@@ -126,14 +127,14 @@
 <p>Egg has had some build-in Helper functions. We can write our own Helper as well.</p>
 <h3 id="access-method-5"><a class="markdown-anchor" href="#access-method-5">#</a> Access Method</h3>
 <p>Access helper object with <code>ctx.helper</code>, for example:</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Assume that home router has already defined in app/router.js</span></div><div class="line">app.get(<span class="string">'home'</span>, <span class="string">'/'</span>, <span class="string">'home.index'</span>);</div><div class="line"></div><div class="line"><span class="comment">// Use helper to calculate the specific url path</span></div><div class="line">ctx.helper.pathFor(<span class="string">'home'</span>, &#123; <span class="attr">by</span>: <span class="string">'recent'</span>, <span class="attr">limit</span>: <span class="number">20</span> &#125;)</div><div class="line"><span class="comment">// =&gt; /?by=recent&amp;limit=20</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Assume that home router has already defined in app/router.js</span></div><div class="line">app.get(<span class="string">'home'</span>, <span class="string">'/'</span>, <span class="string">'home.index'</span>);</div><div class="line"></div><div class="line"><span class="comment">// Use helper to calculate the specific url path</span></div><div class="line">ctx.helper.pathFor(<span class="string">'home'</span>, &#123; <span class="attr">by</span>: <span class="string">'recent'</span>, <span class="attr">limit</span>: <span class="number">20</span> &#125;)</div><div class="line"><span class="comment">// =&gt; /?by=recent&amp;limit=20</span></div></pre></td></tr></table></figure>
 <h3 id="how-to-extend-5"><a class="markdown-anchor" href="#how-to-extend-5">#</a> How to extend</h3>
 <p>Egg will merge the object defined in <code>app/extend/helper.js</code> and the prototype of <code>helper</code> object build in egg. And it will generate a <code>helper</code> object which is based on the extended prototype after dealt with request.</p>
 <p>For instance, we could add a method <code>helper.foo()</code> in the following way:</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/helper.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  foo(param) &#123;</div><div class="line">    <span class="comment">// // `this` points to the helper object, you can access other methods or property of helper </span></div><div class="line">    <span class="comment">// this.ctx =&gt; context object</span></div><div class="line">    <span class="comment">// this.app =&gt; application object</span></div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/helper.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  foo(param) &#123;</div><div class="line">    <span class="comment">// // `this` points to the helper object, you can access other methods or property of helper </span></div><div class="line">    <span class="comment">// this.ctx =&gt; context object</span></div><div class="line">    <span class="comment">// this.app =&gt; application object</span></div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="extend-according-to-environment"><a class="markdown-anchor" href="#extend-according-to-environment">#</a> Extend according to environment</h2>
 <p>Besides, we can extend the framework in an optional way according to the environment. For example, if you want <code>mockXX()</code> only be able to accessed when doing unittest:</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/application.unittest.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  mockXX(k, v) &#123;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/application.unittest.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  mockXX(k, v) &#123;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>This file will only be required under unittest environment.</p>
 <p>Similarly, we could extend egg in this way for orther object,such as Application, Context, Request, Response and Helper. See more on <a href="./env.html">environment</a></p>
 
@@ -166,10 +167,10 @@ docsearch({
   apiKey: '1561de31a86f79507ea00cdb54ce647c',
   indexName: 'eggjs',
   inputSelector: '#search-query',
-  // debug: true // Set debug to true if you want to inspect the dropdown
 });
 </script>
 <div class="cnzz">
 <script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
 </div>
+
 </html>

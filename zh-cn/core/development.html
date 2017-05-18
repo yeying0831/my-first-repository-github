@@ -2,13 +2,14 @@
 <html lang="zh-cn">
 <head>
   <title>本地开发 - 为企业级框架和应用而生</title>
-<meta charset="utf-8">
-<meta name="description" content="">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="icon" href="/images/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
 <link rel="stylesheet" href="/css/index.css">
+
 </head>
 <body>
   <div class="nav" >
@@ -50,60 +51,60 @@
     <p>为了提升研发体验，我们提供了便捷的方式在本地进行开发、调试、单元测试等。</p>
 <p>在这里我们需要使用到 <a href="https://github.com/eggjs/egg-bin" target="_blank" rel="external">egg-bin</a> 模块（只在本地开发和单元测试使用，如果线上请参考 <a href="./deployment.html">应用部署</a>）。</p>
 <p>首先，我们需要把 <code>egg-bin</code> 模块作为 <code>devDependencies</code> 引入：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ npm i egg-bin --save-dev</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ npm i egg-bin --save-dev</div></pre></td></tr></table></figure>
 <h2 id="启动应用"><a class="markdown-anchor" href="#启动应用">#</a> 启动应用</h2>
 <p>本地启动应用进行开发活动，当我们修改代码并保存后，应用会自动重启实时生效。</p>
 <h3 id="添加命令"><a class="markdown-anchor" href="#添加命令">#</a> 添加命令</h3>
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
-<p><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"dev"</span>: <span class="string">"egg-bin dev"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"dev"</span>: <span class="string">"egg-bin dev"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样我们就可以通过 <code>npm run dev</code> 命令启动应用。</p>
 <h3 id="环境配置"><a class="markdown-anchor" href="#环境配置">#</a> 环境配置</h3>
 <p>本地启动的应用是以 <code>env: local</code> 启动的，读取的配置也是 <code>config.default.js</code> 和 <code>config.local.js</code> 合并的结果。</p>
 <h3 id="指定端口"><a class="markdown-anchor" href="#指定端口">#</a> 指定端口</h3>
 <p>本地启动应用默认监听 7001 端口，可指定其他端口，例如：</p>
-<p><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"dev"</span>: <span class="string">"egg-bin dev --port 7001"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"dev"</span>: <span class="string">"egg-bin dev --port 7001"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h2 id="单元测试"><a class="markdown-anchor" href="#单元测试">#</a> 单元测试</h2>
 <p>这里主要讲解工具部分的使用，更多关于单元测试的内容请参考<a href="./unittest.html">这里</a>。</p>
 <h3 id="添加命令-2"><a class="markdown-anchor" href="#添加命令-2">#</a> 添加命令</h3>
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
-<p><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"test"</span>: <span class="string">"egg-bin test"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"test"</span>: <span class="string">"egg-bin test"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样我们就可以通过 <code>npm test</code> 命令运行单元测试。</p>
 <h3 id="环境配置-2"><a class="markdown-anchor" href="#环境配置-2">#</a> 环境配置</h3>
 <p>测试用例执行时，应用是以 <code>env: unittest</code> 启动的，读取的配置也是 <code>config.default.js</code> 和 <code>config.unittest.js</code> 合并的结果。</p>
 <h3 id="运行特定用例文件"><a class="markdown-anchor" href="#运行特定用例文件">#</a> 运行特定用例文件</h3>
 <p>运行 <code>npm test</code> 时会自动执行 test 目录下的以 <code>.test.js</code> 结尾的文件（默认 <a href="https://www.npmjs.com/package/glob" target="_blank" rel="external">glob</a> 匹配规则 <code>test/**/*.test.js</code> ）。</p>
 <p>我们在编写用例时往往想单独执行正在编写的用例，可以通过以下方式指定特定用例文件：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ TESTS=<span class="built_in">test</span>/x.test.js npm <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ TESTS=<span class="built_in">test</span>/x.test.js npm <span class="built_in">test</span></div></pre></td></tr></table></figure>
 <p>支持 <a href="https://www.npmjs.com/package/glob" target="_blank" rel="external">glob</a> 规则。</p>
 <h3 id="指定-reporter"><a class="markdown-anchor" href="#指定-reporter">#</a> 指定 reporter</h3>
 <p>Mocha 支持多种形式的 reporter，默认使用 <code>spec</code> reporter。</p>
 <p>可以手动设置 <code>TEST_REPORTER</code> 环境变量来指定 reporter，例如使用 <code>dot</code>：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ TEST_REPORTER=dot npm <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ TEST_REPORTER=dot npm <span class="built_in">test</span></div></pre></td></tr></table></figure>
 <p><img src="https://cloud.githubusercontent.com/assets/156269/21849809/a6fe6df8-d842-11e6-8507-20da63bc8b62.png" alt="image"></p>
 <h3 id="指定用例超时时间"><a class="markdown-anchor" href="#指定用例超时时间">#</a> 指定用例超时时间</h3>
 <p>默认执行超时时间为 30 秒。我们也可以手动指定超时时间（单位毫秒），例如设置为 5 秒：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ TEST_TIMEOUT=5000 npm <span class="built_in">test</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ TEST_TIMEOUT=5000 npm <span class="built_in">test</span></div></pre></td></tr></table></figure>
 <h3 id="通过-argv-方式传参"><a class="markdown-anchor" href="#通过-argv-方式传参">#</a> 通过 argv 方式传参</h3>
 <p><code>egg-bin test</code> 除了环境变量方式，也支持直接传参，支持 mocha 的所有参数，参见：<a href="https://mochajs.org/#usage" target="_blank" rel="external">mocha usage</a> 。</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="comment"># npm 传递参数需额外加一个 `--`，参见 https://docs.npmjs.com/cli/run-script</span></div><div class="line">$ npm <span class="built_in">test</span> -- --help</div><div class="line">$</div><div class="line">$ <span class="comment"># 等同于 `TESTS=test/**/test.js npm test`，受限于 bash，最好加上双引号</span></div><div class="line">$ npm <span class="built_in">test</span> <span class="string">"test/**/test.js"</span></div><div class="line">$</div><div class="line">$ <span class="comment"># 等同于 `TEST_REPORTER=dot npm test`</span></div><div class="line">$ npm <span class="built_in">test</span> -- --reporter=dot</div><div class="line">$</div><div class="line">$ <span class="comment"># 支持 mocha 的参数，如 grep / require 等</span></div><div class="line">$ npm <span class="built_in">test</span> -- -t 30000 --grep=<span class="string">"should GET"</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="comment"># npm 传递参数需额外加一个 `--`，参见 https://docs.npmjs.com/cli/run-script</span></div><div class="line">$ npm <span class="built_in">test</span> -- --help</div><div class="line">$</div><div class="line">$ <span class="comment"># 等同于 `TESTS=test/**/test.js npm test`，受限于 bash，最好加上双引号</span></div><div class="line">$ npm <span class="built_in">test</span> <span class="string">"test/**/test.js"</span></div><div class="line">$</div><div class="line">$ <span class="comment"># 等同于 `TEST_REPORTER=dot npm test`</span></div><div class="line">$ npm <span class="built_in">test</span> -- --reporter=dot</div><div class="line">$</div><div class="line">$ <span class="comment"># 支持 mocha 的参数，如 grep / require 等</span></div><div class="line">$ npm <span class="built_in">test</span> -- -t 30000 --grep=<span class="string">"should GET"</span></div></pre></td></tr></table></figure>
 <h2 id="代码覆盖率"><a class="markdown-anchor" href="#代码覆盖率">#</a> 代码覆盖率</h2>
 <p>egg-bin 已经内置了 <a href="https://github.com/gotwarlost/istanbul" target="_blank" rel="external">istanbul</a> 来支持单元测试自动生成代码覆盖率报告。</p>
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
-<p><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"cov"</span>: <span class="string">"egg-bin cov"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"cov"</span>: <span class="string">"egg-bin cov"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样我们就可以通过 <code>npm run cov</code> 命令运行单元测试覆盖率。</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ egg-bin cov</div><div class="line"></div><div class="line">  <span class="built_in">test</span>/controller/home.test.js</div><div class="line">    GET /</div><div class="line">      ✓ should status 200 and get the body</div><div class="line">    POST /post</div><div class="line">      ✓ should status 200 and get the request body</div><div class="line"></div><div class="line">  ...</div><div class="line"></div><div class="line">  16 passing (1s)</div><div class="line"></div><div class="line">=============================== Coverage summary ===============================</div><div class="line">Statements   : 100% ( 41/41 )</div><div class="line">Branches     : 87.5% ( 7/8 )</div><div class="line">Functions    : 100% ( 10/10 )</div><div class="line">Lines        : 100% ( 41/41 )</div><div class="line">================================================================================</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ egg-bin cov</div><div class="line"></div><div class="line">  <span class="built_in">test</span>/controller/home.test.js</div><div class="line">    GET /</div><div class="line">      ✓ should status 200 and get the body</div><div class="line">    POST /post</div><div class="line">      ✓ should status 200 and get the request body</div><div class="line"></div><div class="line">  ...</div><div class="line"></div><div class="line">  16 passing (1s)</div><div class="line"></div><div class="line">=============================== Coverage summary ===============================</div><div class="line">Statements   : 100% ( 41/41 )</div><div class="line">Branches     : 87.5% ( 7/8 )</div><div class="line">Functions    : 100% ( 10/10 )</div><div class="line">Lines        : 100% ( 41/41 )</div><div class="line">================================================================================</div></pre></td></tr></table></figure>
 <p>还可以通过 <code>open coverage/lcov-report/index.html</code> 打开完整的 HTML 覆盖率报告。</p>
 <p><img src="https://cloud.githubusercontent.com/assets/156269/21845201/a9a85ab6-d82c-11e6-8c24-5e85f352be4a.png" alt="image"></p>
 <h3 id="环境配置-3"><a class="markdown-anchor" href="#环境配置-3">#</a> 环境配置</h3>
 <p>和 <code>test</code> 命令一样，<code>cov</code> 命令执行时，应用也是以 <code>env: unittest</code> 启动的，读取的配置也是 <code>config.default.js</code> 和 <code>config.unittest.js</code> 合并的结果。</p>
 <h3 id="忽略指定文件"><a class="markdown-anchor" href="#忽略指定文件">#</a> 忽略指定文件</h3>
 <p>对于某些不需要跑测试覆盖率的文件，可以通过 <code>COV_EXCLUDES</code> 环境变量指定：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ COV_EXCLUDES=app/plugins/c* npm run cov</div><div class="line">$ <span class="comment"># 或者传参方式</span></div><div class="line">$ npm run cov -- --x=app/plugins/c*</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ COV_EXCLUDES=app/plugins/c* npm run cov</div><div class="line">$ <span class="comment"># 或者传参方式</span></div><div class="line">$ npm run cov -- --x=app/plugins/c*</div></pre></td></tr></table></figure>
 <h2 id="调试"><a class="markdown-anchor" href="#调试">#</a> 调试</h2>
 <h3 id="使用-egg-bin-调试"><a class="markdown-anchor" href="#使用-egg-bin-调试">#</a> 使用 egg-bin 调试</h3>
 <h4 id="添加命令-3"><a class="markdown-anchor" href="#添加命令-3">#</a> 添加命令</h4>
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
-<p><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin debug"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin debug"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样我们就可以通过 <code>npm run debug</code> 命令通过 <code>V8 Inspector port</code> 调试应用。</p>
 <h4 id="环境配置-4"><a class="markdown-anchor" href="#环境配置-4">#</a> 环境配置</h4>
 <p>执行 <code>debug</code> 命令时，应用也是以 <code>env: local</code> 启动的，读取的配置是 <code>config.default.js</code> 和 <code>config.local.js</code> 合并的结果。</p>
@@ -112,20 +113,20 @@
 <p><img src="https://cloud.githubusercontent.com/assets/456108/21814737/38ed8f04-d795-11e6-93c4-1de9f1d432c8.png" alt="image"></p>
 <h3 id="使用-logger-模块调试"><a class="markdown-anchor" href="#使用-logger-模块调试">#</a> 使用 logger 模块调试</h3>
 <p>框架内置了<a href="./logger.html">日志</a> 功能，使用 <code>logger.debug()</code> 输出调试信息，<strong>推荐在应用代码中使用它。</strong></p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// controller</span></div><div class="line"><span class="keyword">this</span>.logger.debug(<span class="string">'current user: %j'</span>, <span class="keyword">this</span>.user);</div><div class="line"></div><div class="line"><span class="comment">// service</span></div><div class="line"><span class="keyword">this</span>.ctx.logger.debug(<span class="string">'debug info from service'</span>);</div><div class="line"></div><div class="line"><span class="comment">// app/init.js</span></div><div class="line">app.logger.debug(<span class="string">'app init'</span>);</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// controller</span></div><div class="line"><span class="keyword">this</span>.logger.debug(<span class="string">'current user: %j'</span>, <span class="keyword">this</span>.user);</div><div class="line"></div><div class="line"><span class="comment">// service</span></div><div class="line"><span class="keyword">this</span>.ctx.logger.debug(<span class="string">'debug info from service'</span>);</div><div class="line"></div><div class="line"><span class="comment">// app/init.js</span></div><div class="line">app.logger.debug(<span class="string">'app init'</span>);</div></pre></td></tr></table></figure>
 <p>通过 <code>config.logger.level</code> 来配置打印到文件的日志级别，通过 <code>config.logger.consoleLevel</code> 配置打印到终端的日志级别。</p>
 <h3 id="使用-debug-模块调试"><a class="markdown-anchor" href="#使用-debug-模块调试">#</a> 使用 debug 模块调试</h3>
 <p><a href="https://www.npmjs.com/package/debug" target="_blank" rel="external">debug</a> 模块是 Node.js 社区广泛使用的 debug 工具，很多模块都使用它模块打印调试信息，Egg 社区也广泛采用这一机制打印 debug 信息，<strong>推荐在框架和插件开发中使用它。</strong></p>
 <p>我们可以通过 <code>DEBUG</code> 环境变量选择开启指定的调试代码，方便观测执行过程。</p>
 <p>（调试模块和日志模块不要混淆，而且日志模块也有很多功能，这里所说的日志都是调试信息。）</p>
 <p>开启所有模块的日志：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ DEBUG=* npm run dev</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ DEBUG=* npm run dev</div></pre></td></tr></table></figure>
 <p>开启指定模块的日志：</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ DEBUG=egg* npm run dev</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ DEBUG=egg* npm run dev</div></pre></td></tr></table></figure>
 <p>单元测试也可以用 <code>DEBUG=* npm test</code> 来查看测试用例运行的详细日志。</p>
 <h3 id="使用-webstorm-进行调试"><a class="markdown-anchor" href="#使用-webstorm-进行调试">#</a> 使用 WebStorm 进行调试</h3>
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
-<p><figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin dev $NODE_DEBUG_OPTION"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin dev $NODE_DEBUG_OPTION"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <blockquote>
 <p>目前 WebStorm 还不支持 <code>--inspect</code> 故不能使用 <code>egg-bin debug</code>，暂时使用 <code>egg-bin dev --debug</code> 的方式。</p>
 </blockquote>
@@ -135,11 +136,11 @@
 <p>由于在开发阶段，当我们修改代码并保存后，应用会自动重启 worker。但是每次 worker 的更新都会使得调试端口发生变化，而 <a href="https://code.visualstudio.com" target="_blank" rel="external">VSCode</a> 是需要 attach 到固定的调试端口的。于是我们启用了一个叫 <code>proxyworker</code> 的代理服务，worker 的调试信息会被代理到这个服务上。这样 <a href="https://code.visualstudio.com" target="_blank" rel="external">VSCode</a> 通过固定 attach 到 proxyworker 来调试 worker 了。</p>
 <p>下面是安装使用步骤:</p>
 <h5 id="1-安装-egg-development-proxyworker-插件"><a class="markdown-anchor" href="#1-安装-egg-development-proxyworker-插件">#</a> 1. 安装 <a href="https://github.com/eggjs/egg-development-proxyworker" target="_blank" rel="external">egg-development-proxyworker</a> 插件</h5>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">npm i egg-development-proxyworker --save</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">npm i egg-development-proxyworker --save</div></pre></td></tr></table></figure>
 <h5 id="2-启动插件"><a class="markdown-anchor" href="#2-启动插件">#</a> 2. 启动插件</h5>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line">exports.proxyworker = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">package</span>: <span class="string">'egg-development-proxyworker'</span>,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line"><span class="comment">// 如果10086被占用，你可以通过这个配置指定其他的端口号</span></div><div class="line">exports.proxyworker = &#123;</div><div class="line">  <span class="attr">port</span>: <span class="number">10086</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line">exports.proxyworker = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">package</span>: <span class="string">'egg-development-proxyworker'</span>,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line"><span class="comment">// 如果10086被占用，你可以通过这个配置指定其他的端口号</span></div><div class="line">exports.proxyworker = &#123;</div><div class="line">  <span class="attr">port</span>: <span class="number">10086</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h5 id="3-在-vscodelaunchjson-添加调试配置"><a class="markdown-anchor" href="#3-在-vscodelaunchjson-添加调试配置">#</a> 3. 在 .vscode/launch.json 添加调试配置:</h5>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</div><div class="line">  <span class="string">"configurations"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Launch Egg"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</div><div class="line">      <span class="string">"cwd"</span>: <span class="string">"$&#123;workspaceRoot&#125;"</span>,</div><div class="line">      <span class="string">"runtimeExecutable"</span>: <span class="string">"npm"</span>,</div><div class="line">      <span class="string">"windows"</span>: &#123;</div><div class="line">        <span class="string">"runtimeExecutable"</span>: <span class="string">"npm.cmd"</span></div><div class="line">      &#125;,</div><div class="line">      <span class="string">"runtimeArgs"</span>: [</div><div class="line">        <span class="string">"run"</span>, <span class="string">"dev"</span>, <span class="string">"--"</span>, <span class="string">"--debug"</span></div><div class="line">      ],</div><div class="line">      <span class="string">"port"</span>: <span class="number">5858</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Attach Agent"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"attach"</span>,</div><div class="line">      <span class="string">"port"</span>: <span class="number">5856</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Attach Worker"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"attach"</span>,</div><div class="line">      <span class="string">"restart"</span>: <span class="literal">true</span>,</div><div class="line">      <span class="string">"port"</span>: <span class="number">10086</span></div><div class="line">    &#125;</div><div class="line">  ],</div><div class="line">  <span class="string">"compounds"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Debug Egg"</span>,</div><div class="line">      <span class="string">"configurations"</span>: [<span class="string">"Launch Egg"</span>, <span class="string">"Attach Agent"</span>, <span class="string">"Attach Worker"</span>]</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</div><div class="line">  <span class="string">"configurations"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Launch Egg"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</div><div class="line">      <span class="string">"cwd"</span>: <span class="string">"$&#123;workspaceRoot&#125;"</span>,</div><div class="line">      <span class="string">"runtimeExecutable"</span>: <span class="string">"npm"</span>,</div><div class="line">      <span class="string">"windows"</span>: &#123;</div><div class="line">        <span class="string">"runtimeExecutable"</span>: <span class="string">"npm.cmd"</span></div><div class="line">      &#125;,</div><div class="line">      <span class="string">"runtimeArgs"</span>: [</div><div class="line">        <span class="string">"run"</span>, <span class="string">"dev"</span>, <span class="string">"--"</span>, <span class="string">"--debug"</span></div><div class="line">      ],</div><div class="line">      <span class="string">"port"</span>: <span class="number">5858</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Attach Agent"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"attach"</span>,</div><div class="line">      <span class="string">"port"</span>: <span class="number">5856</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Attach Worker"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"attach"</span>,</div><div class="line">      <span class="string">"restart"</span>: <span class="literal">true</span>,</div><div class="line">      <span class="string">"port"</span>: <span class="number">10086</span></div><div class="line">    &#125;</div><div class="line">  ],</div><div class="line">  <span class="string">"compounds"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Debug Egg"</span>,</div><div class="line">      <span class="string">"configurations"</span>: [<span class="string">"Launch Egg"</span>, <span class="string">"Attach Agent"</span>, <span class="string">"Attach Worker"</span>]</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>由于 V8 Debugger <a href="https://github.com/buggerjs/bugger-v8-client/blob/master/PROTOCOL.md" target="_blank" rel="external">Legacy Protocol</a> 会在 Node.js 8.x 后被移除, 而替换使用的是 <a href="https://chromedevtools.github.io/debugger-protocol-viewer/v8" target="_blank" rel="external">Inspector Protocol</a></p>
 <p>新的协议主要有三大优势:</p>
 <ol>
@@ -188,10 +189,10 @@ docsearch({
   apiKey: '1561de31a86f79507ea00cdb54ce647c',
   indexName: 'eggjs',
   inputSelector: '#search-query',
-  // debug: true // Set debug to true if you want to inspect the dropdown
 });
 </script>
 <div class="cnzz">
 <script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
 </div>
+
 </html>

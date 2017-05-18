@@ -2,13 +2,14 @@
 <html lang="zh-cn">
 <head>
   <title>目录结构 - 为企业级框架和应用而生</title>
-<meta charset="utf-8">
-<meta name="description" content="">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="icon" href="/images/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
 <link rel="stylesheet" href="/css/index.css">
+
 </head>
 <body>
   <div class="nav" >
@@ -48,7 +49,7 @@
   <article class="markdown-body">
     <h1>目录结构</h1>
     <p>在<a href="../intro/quickstart.html">快速入门</a>中，大家对框架应该有了初步的印象，接下来我们简单了解下目录约定规范。</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">egg-project</div><div class="line">├── package.json</div><div class="line">├── app.js (可选)</div><div class="line">├── agent.js (可选)</div><div class="line">├── app</div><div class="line">|   ├── router.js</div><div class="line">│   ├── controller</div><div class="line">│   |   └── home.js</div><div class="line">│   ├── service (可选)</div><div class="line">│   |   └── user.js</div><div class="line">│   ├── middleware (可选)</div><div class="line">│   |   └── response_time.js</div><div class="line">│   ├── schedule (可选)</div><div class="line">│   |   └── my_task.js</div><div class="line">│   ├── public (可选)</div><div class="line">│   |   └── reset.css</div><div class="line">│   ├── view (可选)</div><div class="line">│   |   └── home.tpl</div><div class="line">│   └── extend (可选)</div><div class="line">│       ├── helper.js (可选)</div><div class="line">│       ├── request.js (可选)</div><div class="line">│       ├── response.js (可选)</div><div class="line">│       ├── context.js (可选)</div><div class="line">│       ├── application.js (可选)</div><div class="line">│       └── agent.js (可选)</div><div class="line">├── config</div><div class="line">|   ├── plugin.js</div><div class="line">|   ├── config.default.js</div><div class="line">│   ├── config.prod.js</div><div class="line">|   ├── config.test.js (可选)</div><div class="line">|   ├── config.local.js (可选)</div><div class="line">|   └── config.unittest.js (可选)</div><div class="line">└── <span class="built_in">test</span></div><div class="line">    ├── middleware</div><div class="line">    |   └── response_time.test.js</div><div class="line">    └── controller</div><div class="line">        └── home.test.js</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">egg-project</div><div class="line">├── package.json</div><div class="line">├── app.js (可选)</div><div class="line">├── agent.js (可选)</div><div class="line">├── app</div><div class="line">|   ├── router.js</div><div class="line">│   ├── controller</div><div class="line">│   |   └── home.js</div><div class="line">│   ├── service (可选)</div><div class="line">│   |   └── user.js</div><div class="line">│   ├── middleware (可选)</div><div class="line">│   |   └── response_time.js</div><div class="line">│   ├── schedule (可选)</div><div class="line">│   |   └── my_task.js</div><div class="line">│   ├── public (可选)</div><div class="line">│   |   └── reset.css</div><div class="line">│   ├── view (可选)</div><div class="line">│   |   └── home.tpl</div><div class="line">│   └── extend (可选)</div><div class="line">│       ├── helper.js (可选)</div><div class="line">│       ├── request.js (可选)</div><div class="line">│       ├── response.js (可选)</div><div class="line">│       ├── context.js (可选)</div><div class="line">│       ├── application.js (可选)</div><div class="line">│       └── agent.js (可选)</div><div class="line">├── config</div><div class="line">|   ├── plugin.js</div><div class="line">|   ├── config.default.js</div><div class="line">│   ├── config.prod.js</div><div class="line">|   ├── config.test.js (可选)</div><div class="line">|   ├── config.local.js (可选)</div><div class="line">|   └── config.unittest.js (可选)</div><div class="line">└── <span class="built_in">test</span></div><div class="line">    ├── middleware</div><div class="line">    |   └── response_time.test.js</div><div class="line">    └── controller</div><div class="line">        └── home.test.js</div></pre></td></tr></table></figure>
 <p>如上，由框架约定的目录：</p>
 <ul>
 <li><code>app/router.js</code> 用于配置 URL 路由规则，具体参见 <a href="./router.html">Router</a>。</li>
@@ -102,10 +103,10 @@ docsearch({
   apiKey: '1561de31a86f79507ea00cdb54ce647c',
   indexName: 'eggjs',
   inputSelector: '#search-query',
-  // debug: true // Set debug to true if you want to inspect the dropdown
 });
 </script>
 <div class="cnzz">
 <script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
 </div>
+
 </html>

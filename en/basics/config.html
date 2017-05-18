@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <title>Configuration - Born to build better enterprise frameworks and apps</title>
-<meta charset="utf-8">
-<meta name="description" content="">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="icon" href="/images/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
 <link rel="stylesheet" href="/css/index.css">
+
 </head>
 <body>
   <div class="nav" >
@@ -57,14 +58,14 @@
 <p>we choose the last strategy, namely <strong>configurate with code</strong>, The change of configuration should be also released after review. The application package itself is capable to be deployed in several environments, only by specifing the running environment.</p>
 <h3 id="multiple-environment-configuration"><a class="markdown-anchor" href="#multiple-environment-configuration">#</a> Multiple environment configuration</h3>
 <p>This framework suppports loading configuration according to the environment and defining configuration files of multiple enviroments. For more details, please check <a href="../basics/env.html">env</a>.</p>
-<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">config</div><div class="line">|- config.default.js</div><div class="line">|- config.test.js</div><div class="line">|- config.prod.js</div><div class="line">|- config.unittest.js</div><div class="line">|- config.local.js</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">config</div><div class="line">|- config.default.js</div><div class="line">|- config.test.js</div><div class="line">|- config.prod.js</div><div class="line">|- config.unittest.js</div><div class="line">|- config.local.js</div></pre></td></tr></table></figure>
 <p><code>config.default.js</code> is the default file for configuration, and all environments will load this file. Besides, this is usually used as default configuration file for development environment.</p>
 <p>The corresponding configuration file will be loaded simultaneously when you set up env and the default configuration with the same name will be overwritten. For example, <code>prod</code> environment will load <code>config.prod.js</code> and <code>config.default.js</code>. As a result, <code>config.prod.js</code> will overwrite the configuration with identical name in <code>config.default.js</code>.</p>
 <h3 id="how-to-write-configuration"><a class="markdown-anchor" href="#how-to-write-configuration">#</a> How to write configuration</h3>
 <p>The configuration file returns an object which could overwrite some configurations in the framework. Application can put its own business configuration into it for convenient management.</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// configurate the catalog of logger，the default configuration of logger is provided by framework</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">logger</span>: &#123;</div><div class="line">    <span class="attr">dir</span>: <span class="string">'/home/admin/logs/demoapp'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// configurate the catalog of logger，the default configuration of logger is provided by framework</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">logger</span>: &#123;</div><div class="line">    <span class="attr">dir</span>: <span class="string">'/home/admin/logs/demoapp'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>The configuration file can also return a function which could receive a parameter called <code>appInfo</code></p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// put the catelog of logger to the catalog of codes</span></div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">logger</span>: &#123;</div><div class="line">      <span class="attr">dir</span>: path.join(appInfo.baseDir, <span class="string">'logs'</span>),</div><div class="line">    &#125;,</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// put the catelog of logger to the catalog of codes</span></div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">logger</span>: &#123;</div><div class="line">      <span class="attr">dir</span>: path.join(appInfo.baseDir, <span class="string">'logs'</span>),</div><div class="line">    &#125;,</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>The build-in appInfo contains:</p>
 <table>
 <thead>
@@ -110,24 +111,24 @@
 <p><strong>Note: there will be plugin loading sequence, but the approximate order is similar. For specific logic, please check the <a href="../advanced/loader.html">loader</a> .</strong></p>
 <h3 id="merging-rule"><a class="markdown-anchor" href="#merging-rule">#</a> Merging rule</h3>
 <p>Configs are merged using deep copy from [extend2] module, which is forked from [extend] and process array in a different way.</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> a = &#123;</div><div class="line">  <span class="attr">arr</span>: [ <span class="number">1</span>, <span class="number">2</span> ],</div><div class="line">&#125;;</div><div class="line"><span class="keyword">const</span> b = &#123;</div><div class="line">  <span class="attr">arr</span>: [ <span class="number">3</span> ],</div><div class="line">&#125;;</div><div class="line">extend(<span class="literal">true</span>, a, b);</div><div class="line"><span class="comment">// =&gt; &#123; arr: [ 3 ] &#125;</span></div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> a = &#123;</div><div class="line">  <span class="attr">arr</span>: [ <span class="number">1</span>, <span class="number">2</span> ],</div><div class="line">&#125;;</div><div class="line"><span class="keyword">const</span> b = &#123;</div><div class="line">  <span class="attr">arr</span>: [ <span class="number">3</span> ],</div><div class="line">&#125;;</div><div class="line">extend(<span class="literal">true</span>, a, b);</div><div class="line"><span class="comment">// =&gt; &#123; arr: [ 3 ] &#125;</span></div></pre></td></tr></table></figure>
 <p>As demonstrated above, the framework overwirte arrays instead of merging them.</p>
 <h2 id="plugin-configuration"><a class="markdown-anchor" href="#plugin-configuration">#</a> plugin Configuration</h2>
 <p>In the application, we can control some options of plugins via <code>config/plugin.js</code>.</p>
 <h3 id="enabledisable"><a class="markdown-anchor" href="#enabledisable">#</a> Enable/Disable</h3>
 <p>The framework has some bulid-in plugins which can be enabled or disabed via the configuration. Once the plugin is disabled, all files of this plugin won't be loaderd any more.</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// disable the built-in i18n plugin</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">i18n</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">false</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// disable the built-in i18n plugin</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">i18n</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">false</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>Or we can simply set a boolean value</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">i18n</span>: <span class="literal">false</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">i18n</span>: <span class="literal">false</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h3 id="how-to-load-plugins"><a class="markdown-anchor" href="#how-to-load-plugins">#</a> How to load plugins</h3>
 <p>The framework builds in <a href="https://github.com/eggjs/egg/blob/master/config/plugin.js" target="_blank" rel="external">some plugins</a> that is commonly used for enterprise applications.</p>
 <p>And application developers can load other plugins to Meet business needs just by specifying the <code>package</code> configuration</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// use mysql plugin</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">mysql</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">package</span>: <span class="string">'egg-mysql'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// use mysql plugin</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">mysql</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">package</span>: <span class="string">'egg-mysql'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>As a npm module, <code>package</code> must add dependency to <code>pkg.dependencies</code>. The framework will search this module in node_modules directory and find it as the plugin entry.</p>
-<p><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;dependencies&quot;: &#123;</div><div class="line">    &quot;egg-mysql&quot;: &quot;^1.0.0&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  &quot;dependencies&quot;: &#123;</div><div class="line">    &quot;egg-mysql&quot;: &quot;^1.0.0&quot;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><strong>Note: use dependencies rather than devDependencies to config plugins even used in the development phase in case <code>npm -i --production</code> fails.</strong></p>
 <p>Alternatively, we can use path to replace package.</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">mysql</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">path</span>: path.join(__dirname, <span class="string">'../app/plugin/egg-mysql'</span>),</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">mysql</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">path</span>: path.join(__dirname, <span class="string">'../app/plugin/egg-mysql'</span>),</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>path is an absolute path so that the application can put self developed plugins in the application directory, such as <code>app/plugin</code>.</p>
 <h2 id="configuration-result"><a class="markdown-anchor" href="#configuration-result">#</a> Configuration result</h2>
 <p>The final merged config will be dumped to <code>run/application_config.json</code>(for worker process) and <code>run/agent_config.json</code>(for agent process) when the framework starts, which can help analyzing problems.</p>
@@ -166,10 +167,10 @@ docsearch({
   apiKey: '1561de31a86f79507ea00cdb54ce647c',
   indexName: 'eggjs',
   inputSelector: '#search-query',
-  // debug: true // Set debug to true if you want to inspect the dropdown
 });
 </script>
 <div class="cnzz">
 <script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
 </div>
+
 </html>

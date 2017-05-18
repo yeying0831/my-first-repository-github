@@ -2,13 +2,14 @@
 <html lang="zh-cn">
 <head>
   <title>应用部署 - 为企业级框架和应用而生</title>
-<meta charset="utf-8">
-<meta name="description" content="">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="icon" href="/images/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
 <link rel="stylesheet" href="/css/index.css">
+
 </head>
 <body>
   <div class="nav" >
@@ -52,7 +53,7 @@
 <h2 id="构建"><a class="markdown-anchor" href="#构建">#</a> 构建</h2>
 <p>Javascript 语言本身不需要编译的，构建过程主要是下载依赖。但如果使用 TypeScript 或者 Babel 支持 ES6 以上的特性，那就必须要这一步了。</p>
 <p>一般安装依赖会指定 <code>NODE_ENV=production</code> 或 <code>npm install --production</code> 只安装 dependencies 的依赖。因为 devDependencies 中的模块过大而且在生产环境不会使用，安装后也可能遇到未知问题。</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> baseDir</div><div class="line">$ npm install --production</div><div class="line">$ tar -zcvf ../release.tgz .</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> baseDir</div><div class="line">$ npm install --production</div><div class="line">$ tar -zcvf ../release.tgz .</div></pre></td></tr></table></figure>
 <p>构建完成后打包成 tgz 文件，部署的时候解压启动就可以了。</p>
 <p>增加构建环节才能做到真正的<strong>一次构建多次部署</strong>，理论上代码没有改动的时候是不需要再次构建的，可以用原来的包进行部署，这有着不少好处：</p>
 <ul>
@@ -65,10 +66,10 @@
 <p>更多参数可参考 <a href="https://github.com/eggjs/egg-cluster#options" target="_blank" rel="external">egg-cluster</a></p>
 <h3 id="创建启动文件"><a class="markdown-anchor" href="#创建启动文件">#</a> 创建启动文件</h3>
 <p>在应用根目录创建一个启动文件，比如 <code>dispatch.js</code></p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// dispatch.js</span></div><div class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</div><div class="line"></div><div class="line">egg.startCluster(&#123;</div><div class="line">  <span class="attr">baseDir</span>: __dirname,</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// dispatch.js</span></div><div class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</div><div class="line"></div><div class="line">egg.startCluster(&#123;</div><div class="line">  <span class="attr">baseDir</span>: __dirname,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <h3 id="后台运行"><a class="markdown-anchor" href="#后台运行">#</a> 后台运行</h3>
 <p>然后运行这个文件，将标准输出重定向到 <code>stdout.log</code>，错误输出重定向到 <code>stderr.log</code>，便于排查问题。</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">EGG_SERVER_ENV=prod nohup node dispatch.js &gt; stdout.log 2&gt; stderr.log &amp;</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">EGG_SERVER_ENV=prod nohup node dispatch.js &gt; stdout.log 2&gt; stderr.log &amp;</div></pre></td></tr></table></figure>
 <p>注意：</p>
 <ul>
 <li><strong>生产环境使用的 <code>EGG_SERVER_ENV</code> 必须为 <code>prod</code></strong>，可查看<a href="../basics/env.html">运行环境</a>获取更多内容。</li>
@@ -77,7 +78,7 @@
 </ul>
 <h3 id="自定义框架启动"><a class="markdown-anchor" href="#自定义框架启动">#</a> 自定义框架启动</h3>
 <p>如果应用使用了<a href="../advanced/framework.html">自定义框架</a>，还需要指定额外的参数，比如框架为 <code>yadan</code>。</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// dispatch.js</span></div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</div><div class="line"></div><div class="line">egg.startCluster(&#123;</div><div class="line">  <span class="attr">baseDir</span>: __dirname,</div><div class="line">  <span class="attr">customEgg</span>: path.join(__dirname, <span class="string">'node_modules/yadan'</span>),</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// dispatch.js</span></div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</div><div class="line"></div><div class="line">egg.startCluster(&#123;</div><div class="line">  <span class="attr">baseDir</span>: __dirname,</div><div class="line">  <span class="attr">customEgg</span>: path.join(__dirname, <span class="string">'node_modules/yadan'</span>),</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 
   </article>
   <aside id="mobileAside" class="toc">
@@ -108,10 +109,10 @@ docsearch({
   apiKey: '1561de31a86f79507ea00cdb54ce647c',
   indexName: 'eggjs',
   inputSelector: '#search-query',
-  // debug: true // Set debug to true if you want to inspect the dropdown
 });
 </script>
 <div class="cnzz">
 <script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
 </div>
+
 </html>

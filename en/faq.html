@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
   <title>FAQ - Born to build better enterprise frameworks and apps</title>
-<meta charset="utf-8">
-<meta name="description" content="">
-<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="icon" href="/images/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
 <link rel="stylesheet" href="/css/index.css">
+
 </head>
 <body>
   <div class="nav" >
@@ -63,9 +64,9 @@
 <p><strong>How to start application with PM2?</strong></p>
 <p>Although PM2 is not recommanded, you can use it anyway.</p>
 <p>Firstly, put a start file in the root directory of your project:</p>
-<p><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// server.js</span></div><div class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> workers = <span class="built_in">Number</span>(process.argv[<span class="number">2</span>] || <span class="built_in">require</span>(<span class="string">'os'</span>).cpus().length);</div><div class="line">egg.startCluster(&#123;</div><div class="line">  workers,</div><div class="line">  <span class="attr">baseDir</span>: __dirname,</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// server.js</span></div><div class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> workers = <span class="built_in">Number</span>(process.argv[<span class="number">2</span>] || <span class="built_in">require</span>(<span class="string">'os'</span>).cpus().length);</div><div class="line">egg.startCluster(&#123;</div><div class="line">  workers,</div><div class="line">  <span class="attr">baseDir</span>: __dirname,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>We can start application with PM2 like this:</p>
-<p><figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">pm2 start server.js</div></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">pm2 start server.js</div></pre></td></tr></table></figure>
 <h2 id="how-to-resolve-csrf-error"><a class="markdown-anchor" href="#how-to-resolve-csrf-error">#</a> How to resolve csrf error?</h2>
 <p>There are two kinds of common csrf errors:</p>
 <ul>
@@ -111,10 +112,10 @@ docsearch({
   apiKey: '1561de31a86f79507ea00cdb54ce647c',
   indexName: 'eggjs',
   inputSelector: '#search-query',
-  // debug: true // Set debug to true if you want to inspect the dropdown
 });
 </script>
 <div class="cnzz">
 <script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
 </div>
+
 </html>
