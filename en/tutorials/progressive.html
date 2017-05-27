@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Progressive Development - Born to build better enterprise frameworks and apps</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">Translations</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Progressive Development</h1>
+    <p>Egg provides both <a href="../advanced/plugin.html">Plugin</a> and <a href="../advanced/framework.html">Framework</a>, and the former has two loading modes includes <code>path</code> and <code>package</code>. Then how should we choose?</p>
+<p>Step-by-step example will be provided to demonstrate how to start coding development progressively.</p>
+<p>Find detail codes on <a href="https://github.com/eggjs/examples/tree/master/progressive" target="_blank" rel="external">eggjs/examples/progressive</a>.</p>
+<h2 id="getting-started"><a class="markdown-anchor" href="#getting-started">#</a> Getting Started</h2>
+<p>Assume we are writing a code to analyze UA to implement the function below:</p>
+<ul>
+<li><code>ctx.isAndroid</code></li>
+<li><code>ctx.isIOS</code></li>
+</ul>
+<p>You can easily write it down after previous tutorials, let's have a quick review:</p>
+<p>Codes refer to <a href="https://github.com/eggjs/examples/tree/master/progressive/step1" target="_blank" rel="external">step1</a>.</p>
+<p>Directory structure:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">example-app</div><div class="line">├── app</div><div class="line">│   ├── extend</div><div class="line">│   │   └── context.js</div><div class="line">│   └── router.js</div><div class="line">├── <span class="built_in">test</span></div><div class="line">│   └── index.test.js</div><div class="line">└── package.json</div></pre></td></tr></table></figure>
+<p>Core code:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/extend/context.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  get isIOS() &#123;</div><div class="line">    <span class="keyword">const</span> iosReg = <span class="regexp">/iphone|ipad|ipod/i</span>;</div><div class="line">    <span class="keyword">return</span> iosReg.test(<span class="keyword">this</span>.get(<span class="string">'user-agent'</span>));</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="prototype-of-plugin"><a class="markdown-anchor" href="#prototype-of-plugin">#</a> Prototype of Plugin</h2>
+<p>Obviously, the logic is universal that can be written as a plugin.</p>
+<p>But since function might not perfect at the beginning, it might difficult to maintain if encapsulate into a plugin directly.</p>
+<p>We can put the code as the format of plugin, but not separate out.</p>
+<p>Codes refer to <a href="https://github.com/eggjs/examples/tree/master/progressive/step2" target="_blank" rel="external">step2</a>.</p>
+<p>New directory structure:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">example-app</div><div class="line">├── app</div><div class="line">│   └── router.js</div><div class="line">├── config</div><div class="line">│   └── plugin.js</div><div class="line">├── lib</div><div class="line">│   └── plugin</div><div class="line">│       └── egg-ua</div><div class="line">│           ├── app</div><div class="line">│           │   └── extend</div><div class="line">│           │       └── context.js</div><div class="line">│           └── package.json</div><div class="line">├── <span class="built_in">test</span></div><div class="line">│   └── index.test.js</div><div class="line">└── package.json</div></pre></td></tr></table></figure>
+<p>Core code:</p>
+<ul>
+<li>
+<p><code>app/extend/context.js</code> move to <code>lib/plugin/egg-ua/app/extend/context.js</code>.</p>
+</li>
+<li>
+<p><code>lib/plugin/egg-ua/package.json</code> to declare plugin.</p>
+</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"eggPlugin"</span>: &#123;</div><div class="line">    <span class="attr">"name"</span>: <span class="string">"ua"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>config/plugin.js</code> use <code>path</code> to mount the plugin.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line">exports.ua = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">path</span>: path.join(__dirname, <span class="string">'../lib/plugin/egg-ua'</span>),</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="extraction-to-independent-plugin"><a class="markdown-anchor" href="#extraction-to-independent-plugin">#</a> Extraction to Independent Plugin</h2>
+<p>The module's functions become more better after a period of developing so we could extract it out as an independent plugin.</p>
+<p>We extract an egg-ua plugin and have a quick review as below. Details refer to <a href="../advanced/plugin.html">Plugin</a>.</p>
+<p>Directory structure:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">egg-ua</div><div class="line">├── app</div><div class="line">│   └── extend</div><div class="line">│       └── context.js</div><div class="line">├── <span class="built_in">test</span></div><div class="line">│   ├── fixtures</div><div class="line">│   │   └── <span class="built_in">test</span>-app</div><div class="line">│   │       ├── app</div><div class="line">│   │       │   └── router.js</div><div class="line">│   │       └── package.json</div><div class="line">│   └── ua.test.js</div><div class="line">└── package.json</div></pre></td></tr></table></figure>
+<p>Codes refer to  <a href="https://github.com/eggjs/examples/tree/master/progressive/step3/egg-ua" target="_blank" rel="external">step3/egg-ua</a>.</p>
+<p>Then modify the application, details refer to <a href="https://github.com/eggjs/examples/tree/master/progressive/step3/example-app" target="_blank" rel="external">step3/example-app</a>.</p>
+<ul>
+<li>Remove directory <code>lib/plugin/egg-ua</code>.</li>
+<li>declare dependencies <code>egg-ua</code>  in <code>package.json</code>.</li>
+<li>change type to <code>package</code> in <code>config/plugin.js</code>.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line">exports.ua = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">package</span>: <span class="string">'egg-ua'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><strong>Note：We can use <code>npm link</code> for local test before releasing the plugin. Details refer to  <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="external">npm-link</a>.</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> example-app</div><div class="line">$ npm link ../egg-ua</div><div class="line">$ npm i</div><div class="line">$ npm <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<h2 id="finally-a-framework"><a class="markdown-anchor" href="#finally-a-framework">#</a> Finally: A Framework</h2>
+<p>After repeating the process above, we accumulate a few plugins and configurations, and might found that most of our team projects are using them.</p>
+<p>At that time, you can consider to abstract them as a framework which suitable for business scenarios.</p>
+<p>Firstly, abstract the example-framework as below. Let's have a quick review, details refer to <a href="../advanced/framework.html">Framework</a>.</p>
+<p>Directory structure:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">example-framework</div><div class="line">├── config</div><div class="line">│   ├── config.default.js</div><div class="line">│   └── plugin.js</div><div class="line">├── lib</div><div class="line">│   ├── agent.js</div><div class="line">│   └── application.js</div><div class="line">├── <span class="built_in">test</span></div><div class="line">│   ├── fixtures</div><div class="line">│   │   └── <span class="built_in">test</span>-app</div><div class="line">│   └── framework.test.j.</div><div class="line">├── README.md</div><div class="line">├── index.js</div><div class="line">└── package.json</div></pre></td></tr></table></figure>
+<ul>
+<li>Codes refer to <a href="https://github.com/eggjs/examples/tree/master/progressive/step4/example-framework" target="_blank" rel="external">example-framework</a>.</li>
+<li>Remove the dependencies of plugins such as <code>egg-ua</code> and remove it from example-app, then configure them into the <code>package.json</code> and <code>config/plugin.js</code> of the framework.</li>
+</ul>
+<p>Then modify the application, details refer to <a href="https://github.com/eggjs/examples/tree/master/progressive/step4/example-app" target="_blank" rel="external">step4/example-app</a>.</p>
+<ul>
+<li>Remove declaring dependencies <code>egg-ua</code> in <code>config/plugin.js</code>.</li>
+<li>Remove dependencies <code>egg-ua</code> in <code>package.json</code>.</li>
+<li>declare dependencies <code>example-framework</code>  in <code>package.json</code> and configure the <code>egg.framework</code>.</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"name"</span>: <span class="string">"progressive"</span>,</div><div class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</div><div class="line">  <span class="attr">"private"</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">"egg"</span>: &#123;</div><div class="line">    <span class="attr">"framework"</span>: <span class="string">"example-framework"</span></div><div class="line">  &#125;,</div><div class="line">  <span class="attr">"dependencies"</span>: &#123;</div><div class="line">    <span class="attr">"example-framework"</span>: <span class="string">"*"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>Note：We can use <code>npm link</code> for local test before releasing the framework <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="external">npm-link</a>.</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> example-app</div><div class="line">$ npm link ../egg-framework</div><div class="line">$ npm i</div><div class="line">$ npm <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<h2 id="last"><a class="markdown-anchor" href="#last">#</a> Last</h2>
+<p>In conclusion, we can see how to make the framework evolution step by step which benefits from Egg provides the powerful plugin mechanism, code co-build, reusability and modularity.</p>
+<ul>
+<li>
+<p>in general, put codes into <code>lib/plugin</code> if it can be reused in the application.</p>
+</li>
+<li>
+<p>separate it into a <code>node module</code> when plugin becomes stable.</p>
+</li>
+<li>
+<p>application with relatively reusable codes will work as a separate plugin.</p>
+</li>
+<li>
+<p>abstract as framework to release after application become certain solutions of specified business scenario.</p>
+</li>
+<li>
+<p>it would be a great improvement of teamwork after plugins extract, modularize and finally as a framework, beacuase other projects could reuse codes by just <code>npm install</code>.</p>
+</li>
+<li>
+<p><strong>Note：Whether application/plugin/framework, unittest is a must and try to reach 100% coverage</strong></p>
+</li>
+</ul>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li></ul>
+  </div>
+  <dl><dt>Guide</dt><dd><ul><li><a href="/en/intro/index.html">What is Egg?</a></li><li><a href="/en/intro/egg-and-koa.html">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html">Quick Start</a></li></ul></dd><dt>Basis Function</dt><dd><ul><li><a href="/en/basics/structure.html">Directory Structure</a></li><li><a href="/en/basics/objects.html">Built-in Objects</a></li><li><a href="/en/basics/env.html">Environment</a></li><li><a href="/en/basics/config.html">Configuration</a></li><li><a href="/en/basics/middleware.html">Middleware</a></li><li><a href="/en/basics/router.html">Router</a></li><li><a href="/en/basics/controller.html">Controller</a></li><li><a href="/en/basics/service.html">Service</a></li><li><a href="/en/basics/schedule.html">Schedule</a></li><li><a href="/en/basics/extend.html">Extend</a></li><li><a href="/en/basics/app-start.html">Custom Init</a></li></ul></dd><dt>Core</dt><dd><ul><li><a href="/en/core/development.html">Development</a></li><li><a href="/en/core/unittest.html">Unit Testing</a></li><li><a href="/en/core/deployment.html">应用部署</a></li><li><a href="/en/core/logger.html">Logger</a></li><li><a href="/en/core/httpclient.html">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html">Cluster and IPC</a></li><li><a href="/en/core/view.html">View</a></li><li><a href="/en/core/error-handling.html">Error Handling</a></li><li><a href="/en/core/security.html">Security</a></li><li><a href="/en/core/i18n.html">i18n</a></li></ul></dd><dt>Tutorials</dt><dd><ul><li><a href="/en/tutorials/progressive.html">Progressive</a></li><li><a href="/en/tutorials/mysql.html">MySQL</a></li><li><a href="/en/tutorials/restful.html">RESTful API</a></li><li><a href="/en/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/en/advanced/loader.html">Loader</a></li><li><a href="/en/advanced/plugin.html">Plugin</a></li><li><a href="/en/advanced/framework.html">Framework</a></li><li><a href="/en/advanced/cluster-client.html">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html">View Plugin</a></li></ul></dd><dt>Community</dt><dd><ul><li><a href="/en/contributing.html">Contributing</a></li><li><a href="/en/resource.html">资源</a></li><li><a href="/en/faq.html">FAQ</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
