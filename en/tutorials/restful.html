@@ -88,7 +88,7 @@ A example of <code>topics</code> is shown below:</p>
 <p>After interface convention, we begin to create a RESTful API.</p>
 <h3 id="application-initialization"><a class="markdown-anchor" href="#application-initialization">#</a> Application initialization</h3>
 <p>Initializes the application using <a href="https://github.com/eggjs/egg-init" target="_blank" rel="external">egg-init</a> in the <a href="../intro/quickstart.html">quickstart</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ egg-init cnode-api --type=empty</div><div class="line">$ <span class="built_in">cd</span> cnode-api</div><div class="line">$ npm i</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ egg-init cnode-api --<span class="built_in">type</span>=empty</div><div class="line">$ <span class="built_in">cd</span> cnode-api</div><div class="line">$ npm i</div></pre></td></tr></table></figure>
 <h3 id="enable-validate-plugin"><a class="markdown-anchor" href="#enable-validate-plugin">#</a> Enable validate plugin</h3>
 <p><a href="https://github.com/eggjs/egg-validate" target="_blank" rel="external">egg-validate</a> is used to present the validate plugin.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line">exports.validate = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">package</span>: <span class="string">'egg-validate'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>

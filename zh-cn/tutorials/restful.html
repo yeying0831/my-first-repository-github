@@ -87,7 +87,7 @@
 <p>在约定好接口之后，我们可以开始动手实现了。</p>
 <h3 id="初始化项目"><a class="markdown-anchor" href="#初始化项目">#</a> 初始化项目</h3>
 <p>还是通过<a href="../intro/quickstart.html">快速入门</a>章节介绍的 <a href="https://github.com/eggjs/egg-init" target="_blank" rel="external">egg-init</a> 工具来初始化我们的应用</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ egg-init cnode-api --type=empty</div><div class="line">$ <span class="built_in">cd</span> cnode-api</div><div class="line">$ npm i</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ egg-init cnode-api --<span class="built_in">type</span>=empty</div><div class="line">$ <span class="built_in">cd</span> cnode-api</div><div class="line">$ npm i</div></pre></td></tr></table></figure>
 <h3 id="开启-validate-插件"><a class="markdown-anchor" href="#开启-validate-插件">#</a> 开启 validate 插件</h3>
 <p>我们选择 <a href="https://github.com/eggjs/egg-validate" target="_blank" rel="external">egg-validate</a> 作为 validate 插件的示例。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line">exports.validate = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">package</span>: <span class="string">'egg-validate'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
