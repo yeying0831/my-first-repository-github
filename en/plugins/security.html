@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>egg - Born to build better enterprise frameworks and apps</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">Translations</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1></h1>
+    <h1 id="egg-security"><a class="markdown-anchor" href="#egg-security">#</a> egg-security</h1>
+<p>Security plugin in egg</p>
+<p><a href="https://npmjs.org/package/egg-security" target="_blank" rel="external"><img src="https://img.shields.io/npm/v/egg-security.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-security" target="_blank" rel="external"><img src="https://img.shields.io/travis/eggjs/egg-security.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/gh/eggjs/egg-security" target="_blank" rel="external"><img src="https://codecov.io/gh/eggjs/egg-security/branch/master/graph/badge.svg" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-security" target="_blank" rel="external"><img src="https://img.shields.io/david/eggjs/egg-security.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-security" target="_blank" rel="external"><img src="https://snyk.io/test/npm/egg-security/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-security" target="_blank" rel="external"><img src="https://img.shields.io/npm/dm/egg-security.svg?style=flat-square" alt="npm download"></a></p>
+<p>Egg's default security plugin, generally no need to configure.</p>
+<h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ npm i egg-security</div></pre></td></tr></table></figure>
+<h2 id="usage-configuration"><a class="markdown-anchor" href="#usage-configuration">#</a> Usage &amp; configuration</h2>
+<ul>
+<li><code>config.default.js</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">xframe</span>: &#123;</div><div class="line">    <span class="attr">value</span>: <span class="string">'SAMEORIGIN'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="disable-security-precautions"><a class="markdown-anchor" href="#disable-security-precautions">#</a> Disable security precautions</h3>
+<p>If you want to disable some security precautions, set <code>enable</code> porperty to 'false' directly.</p>
+<p>For example, disable xframe defense:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">xframe</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">false</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="match-ignore"><a class="markdown-anchor" href="#match-ignore">#</a> match &amp; ignore</h3>
+<p>If you want to set security config open for a certain path, you can configure <code>match</code> option.</p>
+<p>For example, just open csp when path contains <code>/example</code>, you can configure with the following configuration:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">csp</span>: &#123;</div><div class="line">    <span class="attr">match</span>: <span class="string">'/example'</span>,</div><div class="line">    <span class="attr">policy</span>: &#123;</div><div class="line">      <span class="comment">//...</span></div><div class="line">    &#125;,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>If you want to set security config disable for a certain path, you can configure <code>match</code> option.</p>
+<p>For example, just disable xframe when path contains <code>/example</code> while our pages can be embedded in cooperative businesses , you can configure with the following configuration:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">csp</span>: &#123;</div><div class="line">    <span class="attr">ignore</span>: <span class="string">'/example'</span>,</div><div class="line">    <span class="attr">xframe</span>: &#123;</div><div class="line">      <span class="comment">//...</span></div><div class="line">    &#125;,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><strong>mention：<code>match</code> has higher priority than <code>ignore</code></strong></p>
+<h3 id="dynamic-configuration-for-security-plugins-depend-on-context"><a class="markdown-anchor" href="#dynamic-configuration-for-security-plugins-depend-on-context">#</a> Dynamic configuration for security plugins depend on context</h3>
+<p>There are times when we want to be more flexible to configure security plugins.For example:</p>
+<ol>
+<li>To decide whether to enable or disable the xframe security header from the context of the request.</li>
+<li>To decide csp policies from different request urls.</li>
+</ol>
+<p>Then we can configure <code>this.securityOptions[name] opts</code> in the custom middleware or controller,then the current request configuration will overrides the default configuration (new configuration will be merged and override the default project configuration, but only take effect in the current request)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="comment">// if satisfied some condition</span></div><div class="line">  <span class="comment">// change configuration</span></div><div class="line">  <span class="keyword">this</span>.securityOptions.xframe = &#123;</div><div class="line">    <span class="attr">value</span>: <span class="string">'ALLOW-FROM: https://domain.com'</span>,</div><div class="line">  &#125;;</div><div class="line">  <span class="comment">// disable configuration</span></div><div class="line">  <span class="keyword">this</span>.securityOptions.xssProtection = &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">false</span>,</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Not all security plugins support dynamic configuration, only following plugins list support</p>
+<ul>
+<li>csp</li>
+<li>hsts</li>
+<li>noopen</li>
+<li>nosniff</li>
+<li>xframe</li>
+<li>xssProtection</li>
+</ul>
+<p>And in <code>helper</code>：</p>
+<ul>
+<li>shtml</li>
+</ul>
+<p>helper is the same way to configure.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">this</span>.securityOptions.shtml = &#123;</div><div class="line">  <span class="attr">whiteList</span>: &#123;</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="mention"><a class="markdown-anchor" href="#mention">#</a> Mention</h4>
+<ul>
+<li>Security is a big thing, please pay attention to the risk of changes in the security configuration (especially dynamic changes)</li>
+<li><code>this.securityOptions</code> the current request configuration will overrides the default configuration, but it does not make a deep copy，so pay attention to configure <code>csp.policy</code>, it will not be merged.</li>
+<li>If you configure <code>this.securityOptions</code>，please write unit tests to ensure the code is correct.</li>
+</ul>
+<h2 id="api"><a class="markdown-anchor" href="#api">#</a> API</h2>
+<h3 id="ctxissafedomaindomain"><a class="markdown-anchor" href="#ctxissafedomaindomain">#</a> ctx.isSafeDomain(domain)</h3>
+<p>Whether or not the domain is in the whitelist of the configuration. See <code>ctx.redirect</code>.</p>
+<p>Note: <a href="https://github.com/eggjs/egg-cors" target="_blank" rel="external">egg-cors</a> module uses this function internally to determine whether or not send back an <code>Access-Control-Allow-Origin</code> response header with the value of safe domain. Otherwise, ignore the request with an error, <code>No 'Access-Control-Allow-Origin' header is present on the requested resource.</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">domainWhiteList</span>: [<span class="string">'http://localhost:4200'</span>]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="interface-restriction"><a class="markdown-anchor" href="#interface-restriction">#</a> Interface restriction</h2>
+<h3 id="csrf"><a class="markdown-anchor" href="#csrf">#</a> CSRF</h3>
+<p><strong>usage</strong></p>
+<ul>
+<li><code>ctx.csrf</code> getter for CSRF token</li>
+</ul>
+<p>Generally used when send POST form request. When page rendering, put <code>ctx.csrf</code> into form hidden field or query string.(<code>_csrf</code> is the key).
+When submitting the form, please submit with the <code>_csrf</code> token parameter.</p>
+<h4 id="using-csrf-when-upload-by-formdata"><a class="markdown-anchor" href="#using-csrf-when-upload-by-formdata">#</a> Using CSRF when upload by formData</h4>
+<p>browser:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">action</span>=<span class="string">"/upload?_csrf=&#123;&#123; ctx.csrf | safe &#125;&#125;"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></div><div class="line">  title: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"title"</span> /&gt;</span></div><div class="line">  file: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"file"</span> <span class="attr">type</span>=<span class="string">"file"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>上传<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="using-csrf-when-request-by-ajax"><a class="markdown-anchor" href="#using-csrf-when-request-by-ajax">#</a> Using CSRF when request by AJAX</h4>
+<p>CSRF token will also set to cookie by default, and you can send token through header:</p>
+<p>In jQuery:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> csrftoken = Cookies.get(<span class="string">'csrftoken'</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">csrfSafeMethod</span>(<span class="params">method</span>) </span>&#123;</div><div class="line">  <span class="comment">// these HTTP methods do not require CSRF protection</span></div><div class="line">  <span class="keyword">return</span> (<span class="regexp">/^(GET|HEAD|OPTIONS|TRACE)$/</span>.test(method));</div><div class="line">&#125;</div><div class="line">$.ajaxSetup(&#123;</div><div class="line">  <span class="attr">beforeSend</span>: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, settings</span>) </span>&#123;</div><div class="line">    <span class="keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="keyword">this</span>.crossDomain) &#123;</div><div class="line">      xhr.setRequestHeader(<span class="string">'x-csrf-token'</span>, csrftoken);</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="options"><a class="markdown-anchor" href="#options">#</a> Options</h4>
+<p>there are some options that you can customize:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">csrf</span>: &#123;</div><div class="line">    <span class="attr">useSession</span>: <span class="literal">false</span>,          <span class="comment">// if useSession set to true, the secret will keep in session instead of cookie</span></div><div class="line">    ignoreJSON: <span class="literal">false</span>,          <span class="comment">// skip check JSON requests if ignoreJSON set to true</span></div><div class="line">    cookieName: <span class="string">'csrfToken'</span>,    <span class="comment">// csrf token's cookie name</span></div><div class="line">    sessionName: <span class="string">'csrfToken'</span>,   <span class="comment">// csrf token's session name</span></div><div class="line">    headerName: <span class="string">'x-csrf-token'</span>, <span class="comment">// request csrf token's name in header</span></div><div class="line">    bodyName: <span class="string">'_csrf'</span>,          <span class="comment">// request csrf token's name in body</span></div><div class="line">    queryName: <span class="string">'_csrf'</span>,         <span class="comment">// request csrf token's name in query</span></div><div class="line">  &#125;,</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="rotate-csrf-secret"><a class="markdown-anchor" href="#rotate-csrf-secret">#</a> Rotate CSRF secret</h4>
+<p>Must call <code>ctx.rotateCsrfSecret()</code> when user login to ensure each user has independent secret.</p>
+<h3 id="safe-redirect"><a class="markdown-anchor" href="#safe-redirect">#</a> safe redirect</h3>
+<ul>
+<li>
+<p><code>ctx.redirect(url)</code> If url is not in the configuration of the white list, the redirect will be prohibited</p>
+</li>
+<li>
+<p><code>ctx.unsafeRedirect(url)</code> Not Recommended;</p>
+</li>
+</ul>
+<p>Security plugin override <code>ctx.redirect</code> method，all redirects will be judged by the domain name.</p>
+<p>If you need to use <code>ctx.redirect</code>, you need to do the following configuration in the application configuration file：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">domainWhiteList</span>:[<span class="string">'.domain.com'</span>],  <span class="comment">// security whitelist, starts with '.'</span></div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>If user do not configure <code>domainWhiteList</code> or <code>domainWhiteList</code> is empty, it will pass all redirects, equal to <code>ctx.unsafeRedirect(url)</code></p>
+<h3 id="jsonp"><a class="markdown-anchor" href="#jsonp">#</a> jsonp</h3>
+<p>Based on <a href="https://github.com/node-modules/jsonp-body" target="_blank" rel="external">jsonp-body</a>.</p>
+<p>Defense:</p>
+<ul>
+<li>The longest callback function name limit of 50 characters.</li>
+<li>Callback function only allows &quot;[&quot;,&quot;]&quot;,&quot;a-zA-Z0123456789_&quot;, &quot;$&quot; &quot;.&quot; to prevent <code>xss</code> or <code>utf-7</code> attack.</li>
+</ul>
+<p>Config：</p>
+<ul>
+<li>callback function default name <code>_callback</code>.</li>
+<li>limit - function name limit, default by 50.</li>
+</ul>
+<h2 id="helper"><a class="markdown-anchor" href="#helper">#</a> helper</h2>
+<h3 id="escape"><a class="markdown-anchor" href="#escape">#</a> .escape()</h3>
+<p>String xss filter, the most secure filtering mechanism.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> str = <span class="string">'&gt;&lt;script&gt;alert("abc") &lt;/script&gt;&lt;'</span>;</div><div class="line"><span class="built_in">console</span>.log(ctx.helper.escape(str));</div><div class="line"><span class="comment">// =&gt; &amp;gt;&amp;lt;script&amp;gt;alert(&amp;quot;abc&amp;quot;) &amp;lt;/script&amp;gt;&amp;lt;</span></div></pre></td></tr></table></figure>
+<p>In nunjucks template, escape by default.</p>
+<h3 id="surl"><a class="markdown-anchor" href="#surl">#</a> .surl()</h3>
+<p>url filter.</p>
+<p>Used for url in html tags (like <code>&lt;a href=&quot;&quot;/&gt;&lt;img src=&quot;&quot;/&gt;</code>),please do not call under other places.</p>
+<p><code>helper.surl($value)</code>。</p>
+<p>** Mention: Particular attention, if you need to resolve URL use <code>surl</code>，<code>surl</code> need warpped in quotes, Otherwise will lead to XSS vulnerability.**</p>
+<p>Example: do not use surl</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"$value"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>output:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://ww.domain.com&lt;script&gt;"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>Use surl</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"helper.surl($value)"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<p>output:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://ww.domain.com&amp;lt;script&amp;gt;"</span> /&gt;</span></div></pre></td></tr></table></figure>
+<h4 id="protocolwhitelist"><a class="markdown-anchor" href="#protocolwhitelist">#</a> protocolWhitelist</h4>
+<p>If url's protocol is not in the protocol whitelist, it will return empty string.</p>
+<p>Protocol whitelist is <code>http</code>, <code>https</code>, <code>file</code>, <code>data</code>.</p>
+<p>So if you want <code>surl</code> support custom protocol, please extend the security <code>protocolWhitelist</code> config :</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.security = &#123;</div><div class="line">  <span class="attr">protocolWhitelist</span>: [<span class="string">'test'</span>]</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="sjs"><a class="markdown-anchor" href="#sjs">#</a> .sjs()</h3>
+<p>Used to output variables in javascript(include onload/event),it will do <code>JAVASCRIPT ENCODE</code> for the variable string.It will escape all characters to <code>\x</code> which are not in the whitelist to avoid XSS attack.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> foo = <span class="string">'"hello"'</span>;</div><div class="line"></div><div class="line"><span class="comment">// not use sjs</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">`var foo = "<span class="subst">$&#123;foo&#125;</span>";`</span>);</div><div class="line"><span class="comment">// =&gt; var foo = ""hello"";</span></div><div class="line"></div><div class="line"><span class="comment">// use sjs</span></div><div class="line"><span class="built_in">console</span>.log(<span class="string">`var foo = "<span class="subst">$&#123;<span class="keyword">this</span>.helper.sjs(foo)&#125;</span>";`</span>);</div><div class="line"><span class="comment">// =&gt; var foo = "\\x22hello\\x22";</span></div></pre></td></tr></table></figure>
+<h3 id="shtml"><a class="markdown-anchor" href="#shtml">#</a> .shtml()</h3>
+<p>If you want to output richtexts in views, you need to use <code>shtml</code> helper.
+It will do XSS filter, then output html tags to avoid illegal scripts.</p>
+<p>** shtml is a very complex process, it will effect server performance, so if you do not need to output HTML, please do not use shtml.**</p>
+<p>Examples:</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">// js</div><div class="line">const value = `&lt;a href="http://www.domain.com"&gt;google&lt;/a&gt;&lt;script&gt;evilcode…&lt;/script&gt;`;</div><div class="line"></div><div class="line">// in your view</div><div class="line">&lt;html&gt;</div><div class="line">&lt;body&gt;</div><div class="line">  $&#123;helper.shtml($value)&#125;</div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div><div class="line">// =&gt; &lt;a href="http://www.domain.com"&gt;google&lt;/a&gt;&amp;lt;script&amp;gt;evilcode…&amp;lt;/script&amp;gt;</div></pre></td></tr></table></figure>
+<p>shtml based on <a href="https://github.com/leizongmin/js-xss/" target="_blank" rel="external">xss</a>, and add filter by domain feature.</p>
+<ul>
+<li><a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="external">default rule</a></li>
+<li>custom rule http://jsxss.com/zh/options.html</li>
+</ul>
+<p>For example, only support <code>a</code> tag, and filter all attributes except for <code>title</code>:</p>
+<p><code>whiteList: {a: ['title']}</code></p>
+<p>options:</p>
+<blockquote>
+<p><code>config.helper.shtml.domainWhiteList: []</code> has been deprecated, please use config.security.domainWhiteList</p>
+</blockquote>
+<p>Mention that <code>shtml</code> uses a strict white list mechanism, in addition to filtering out the XSS risk of the string,<code>tags</code> and <code>attrs</code> which are not in the <a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="external">default rule</a> will be filtered.</p>
+<p>For example <code>html</code> tag is not in the whitelist.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> html = <span class="string">'&lt;html&gt;&lt;/html&gt;'</span>;</div><div class="line"></div><div class="line"><span class="comment">// html</span></div><div class="line">$&#123;helper.shtml($html)&#125;</div><div class="line"></div><div class="line"><span class="comment">// output none</span></div></pre></td></tr></table></figure>
+<p>Commonly used <code>data-xx</code> property is not in the whitelist, so it will be filtered.
+So please check the applicable scenarios for <code>shtml</code>, it usually used for richtext submmited by user.</p>
+<p>A usage error will limit functions, also affect the performance of the server.
+Such scenes are generally forums, comments, etc.</p>
+<p>Even if the forum does not support the HTML content input, do not use this helper, you can directly use <code>escape</code> instead.</p>
+<h3 id="spath"><a class="markdown-anchor" href="#spath">#</a> .spath()</h3>
+<p>If you want to use users input for a file path, please use spath for security check. If path is illegal, it will return null.</p>
+<p>Illegal path:</p>
+<ul>
+<li>relative path starts with <code>..</code></li>
+<li>absolute path starts with <code>/</code></li>
+<li>above path try to use <code>url encode</code> to bypass the check</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> foo = <span class="string">'/usr/local/bin'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.helper.spath(foo2));</div><div class="line"><span class="comment">// =&gt; null</span></div></pre></td></tr></table></figure>
+<h3 id="sjson"><a class="markdown-anchor" href="#sjson">#</a> .sjson()</h3>
+<p>json encode.</p>
+<p>If you want to output json in javascript without encoding, it will be a risk for XSS.
+sjson supports json encode，it will iterate all keys in json, then escape all characters in the value to <code>\x</code> to avoid XSS attack, and keep the json structure unchanged.
+If you want to output json string in your views, please use <code>${this.helper.sjson(变量名)}</code>to escape.</p>
+<p><strong>it has a very complex process and will lost performance, so avoid the use as far as possible</strong></p>
+<p>example:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&lt;script&gt;</div><div class="line">  <span class="built_in">window</span>.locals = $&#123;<span class="keyword">this</span>.helper.sjson(locals)&#125;;</div><div class="line"><span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></div></pre></td></tr></table></figure>
+<h3 id="clifilter"><a class="markdown-anchor" href="#clifilter">#</a> .cliFilter()</h3>
+<p>It will cause remote command execution vulnerability, when user submit the implementation of the command by browser.because the server does not filter for the implementation of the function, resulting in the execution of the command can usually lead to the invasion of the server.</p>
+<p>If you want to get user submit for command's parameter, please use <code>cliFilter</code>。</p>
+<p>before fix:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"></div><div class="line">cp.exec(<span class="string">"bash /home/admin/ali-knowledge-graph-backend/initrun.sh "</span> + port);</div></pre></td></tr></table></figure>
+<p>after fix:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"></div><div class="line">cp.exec(<span class="string">"bash /home/admin/ali-knowledge-graph-backend/initrun.sh "</span> + <span class="keyword">this</span>.helper.cliFilter(port));</div></pre></td></tr></table></figure>
+<h2 id="security-headers"><a class="markdown-anchor" href="#security-headers">#</a> Security Headers</h2>
+<p>Refer to <a href="https://github.com/krakenjs/lusca" target="_blank" rel="external">lusca</a>, appriciate for their works.</p>
+<h3 id="hsts-strict-transport-security"><a class="markdown-anchor" href="#hsts-strict-transport-security">#</a> hsts Strict-Transport-Security</h3>
+<p>Disabled by default. If your website based on https, we recommend you should enable it.</p>
+<ul>
+<li>maxAge one year by default <code>365 * 24 * 3600</code></li>
+<li>includeSubdomains false by default</li>
+</ul>
+<h3 id="csp"><a class="markdown-anchor" href="#csp">#</a> csp</h3>
+<p>Default disabled. If you need to enable, please contact your security engineers and determine the opening strategy</p>
+<ul>
+<li>policy policies used by csp</li>
+</ul>
+<h3 id="x-download-optionsnoopen"><a class="markdown-anchor" href="#x-download-optionsnoopen">#</a> X-Download-Options:noopen</h3>
+<p>Default enabled, disable IE download dialog automatically open download file and will cause XSS</p>
+<h3 id="x-content-type-optionsnosniff"><a class="markdown-anchor" href="#x-content-type-optionsnosniff">#</a> X-Content-Type-Options:nosniff</h3>
+<p>禁用IE8自动嗅探mime功能例如 text/plain 却当成 text/html 渲染，特别当本站点 serve 的内容未必可信的时候。</p>
+<h3 id="x-frame-options"><a class="markdown-anchor" href="#x-frame-options">#</a> X-Frame-Options</h3>
+<p>Defaulting to &quot;SAMEORIGIN&quot;, only allow iframe embed by same origin.</p>
+<ul>
+<li>value Defaulting to <code>SAMEORIGIN</code></li>
+</ul>
+<h3 id="x-xss-protection"><a class="markdown-anchor" href="#x-xss-protection">#</a> X-XSS-Protection</h3>
+<ul>
+<li>disable Defaulting to <code>false</code>，same as <code>1; mode=block</code>.</li>
+</ul>
+<h2 id="other"><a class="markdown-anchor" href="#other">#</a> Other</h2>
+<ul>
+<li>Forbidden <code>trace</code> <code>track</code> <code>options</code> http method.</li>
+</ul>
+<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
+<p><a href="LICENSE">MIT</a></p>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li></ul>
+  </div>
+  <dl><dt>Guide</dt><dd><ul><li><a href="/en/intro/index.html">What is Egg?</a></li><li><a href="/en/intro/egg-and-koa.html">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html">Quick Start</a></li></ul></dd><dt>Basis Function</dt><dd><ul><li><a href="/en/basics/structure.html">Directory Structure</a></li><li><a href="/en/basics/objects.html">Built-in Objects</a></li><li><a href="/en/basics/env.html">Environment</a></li><li><a href="/en/basics/config.html">Configuration</a></li><li><a href="/en/basics/middleware.html">Middleware</a></li><li><a href="/en/basics/router.html">Router</a></li><li><a href="/en/basics/controller.html">Controller</a></li><li><a href="/en/basics/service.html">Service</a></li><li><a href="/en/basics/schedule.html">Schedule</a></li><li><a href="/en/basics/extend.html">Extend</a></li><li><a href="/en/basics/app-start.html">Custom Init</a></li></ul></dd><dt>Core</dt><dd><ul><li><a href="/en/core/development.html">Development</a></li><li><a href="/en/core/unittest.html">Unit Testing</a></li><li><a href="/en/core/deployment.html">应用部署</a></li><li><a href="/en/core/logger.html">Logger</a></li><li><a href="/en/core/httpclient.html">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html">Cluster and IPC</a></li><li><a href="/en/core/view.html">View</a></li><li><a href="/en/core/error-handling.html">Error Handling</a></li><li><a href="/en/core/security.html">Security</a></li><li><a href="/en/core/i18n.html">i18n</a></li></ul></dd><dt>Tutorials</dt><dd><ul><li><a href="/en/tutorials/progressive.html">Progressive</a></li><li><a href="/en/tutorials/mysql.html">MySQL</a></li><li><a href="/en/tutorials/restful.html">RESTful API</a></li><li><a href="/en/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/en/advanced/loader.html">Loader</a></li><li><a href="/en/advanced/plugin.html">Plugin</a></li><li><a href="/en/advanced/framework.html">Framework</a></li><li><a href="/en/advanced/cluster-client.html">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html">View Plugin</a></li></ul></dd><dt>Community</dt><dd><ul><li><a href="/en/contributing.html">Contributing</a></li><li><a href="/en/resource.html">资源</a></li><li><a href="/en/faq.html">FAQ</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>

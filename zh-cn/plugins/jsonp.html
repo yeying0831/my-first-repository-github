@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>egg - 为企业级框架和应用而生</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">切换语言</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1></h1>
+    <h1 id="egg-jsonp"><a class="markdown-anchor" href="#egg-jsonp">#</a> egg-jsonp</h1>
+<p><a href="https://npmjs.org/package/egg-jsonp" target="_blank" rel="external"><img src="https://img.shields.io/npm/v/egg-jsonp.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-jsonp" target="_blank" rel="external"><img src="https://img.shields.io/travis/eggjs/egg-jsonp.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-jsonp?branch=master" target="_blank" rel="external"><img src="https://img.shields.io/codecov/c/github/eggjs/egg-jsonp.svg?style=flat-square" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-jsonp" target="_blank" rel="external"><img src="https://img.shields.io/david/eggjs/egg-jsonp.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-jsonp" target="_blank" rel="external"><img src="https://snyk.io/test/npm/egg-jsonp/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-jsonp" target="_blank" rel="external"><img src="https://img.shields.io/npm/dm/egg-jsonp.svg?style=flat-square" alt="npm download"></a></p>
+<p>An egg plugin for jsonp support.</p>
+<h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ npm i egg-jsonp --save</div></pre></td></tr></table></figure>
+<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// &#123;app_root&#125;/config/plugin.js</span></div><div class="line">exports.jsonp = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">package</span>: <span class="string">'egg-jsonp'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h2>
+<ul>
+<li>{String|Array} callback - jsonp callback method key, default to <code>[ '_callback', 'callback' ]</code></li>
+<li>{Number} limit - callback method name's max length, default to <code>50</code></li>
+<li>{Boolean} csrf - enable csrf check or not. default to false</li>
+<li>{String|RegExp|Array} whiteList - referrer white list</li>
+</ul>
+<p>if whiteList's type is <code>RegExp</code>, referrer must match <code>whiteList</code>, pay attention to the first <code>^</code> and last <code>/</code>.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.jsonp = &#123;</div><div class="line">  <span class="attr">whiteList</span>: <span class="regexp">/^https?:\/\/test.com\//</span>,</div><div class="line">&#125;</div><div class="line"><span class="comment">// matchs referrer:</span></div><div class="line"><span class="comment">// https://test.com/hello</span></div><div class="line"><span class="comment">// http://test.com/</span></div></pre></td></tr></table></figure>
+<p>if whiteList's type is <code>String</code> and starts with <code>.</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.jsonp = &#123;</div><div class="line">  <span class="attr">whiteList</span>: <span class="string">'.test.com'</span>,</div><div class="line">&#125;;</div><div class="line"><span class="comment">// matchs domain test.com:</span></div><div class="line"><span class="comment">// https://test.com/hello</span></div><div class="line"><span class="comment">// http://test.com/</span></div><div class="line"></div><div class="line"><span class="comment">// matchs subdomain</span></div><div class="line"><span class="comment">// https://sub.test.com/hello</span></div><div class="line"><span class="comment">// http://sub.sub.test.com/</span></div></pre></td></tr></table></figure>
+<p>if whiteList's type is <code>String</code> and not starts with <code>.</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.jsonp = &#123;</div><div class="line">  <span class="attr">whiteList</span>: <span class="string">'sub.test.com'</span>,</div><div class="line">&#125;;</div><div class="line"><span class="comment">// only matchs domain sub.test.com:</span></div><div class="line"><span class="comment">// https://sub.test.com/hello</span></div><div class="line"><span class="comment">// http://sub.test.com/</span></div></pre></td></tr></table></figure>
+<p>whiteList also can be an array:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.jsonp = &#123;</div><div class="line">  <span class="attr">whiteList</span>: [ <span class="string">'.foo.com'</span>, <span class="string">'.bar.com'</span> ],</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>see <a href="config/config.default.js">config/config.default.js</a> for more detail.</p>
+<h2 id="example"><a class="markdown-anchor" href="#example">#</a> Example</h2>
+<p>In <code>app/router.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Create once and use in any router you want to support jsonp.</span></div><div class="line"><span class="keyword">const</span> jsonp = app.jsonp();</div><div class="line">app.get(<span class="string">'/default'</span>, jsonp, <span class="string">'jsonp.index'</span>);</div><div class="line">app.get(<span class="string">'/another'</span>, jsonp, <span class="string">'jsonp.another'</span>);</div><div class="line"></div><div class="line"><span class="comment">// Customize by create another jsonp middleware with specific sonfigurations.</span></div><div class="line">app.get(<span class="string">'/customize'</span>, app.jsonp(&#123; <span class="attr">callback</span>: <span class="string">'fn'</span> &#125;), <span class="string">'jsonp.customize'</span>);</div></pre></td></tr></table></figure>
+<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
+<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="external">here</a>.</p>
+<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
+<p><a href="LICENSE">MIT</a></p>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li></ul>
+  </div>
+  <dl><dt>新手指南</dt><dd><ul><li><a href="/zh-cn/intro/index.html">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html">快速入门</a></li></ul></dd><dt>基础功能</dt><dd><ul><li><a href="/zh-cn/basics/structure.html">目录结构</a></li><li><a href="/zh-cn/basics/objects.html">内置对象</a></li><li><a href="/zh-cn/basics/env.html">运行环境</a></li><li><a href="/zh-cn/basics/config.html">配置</a></li><li><a href="/zh-cn/basics/middleware.html">中间件</a></li><li><a href="/zh-cn/basics/router.html">Router</a></li><li><a href="/zh-cn/basics/controller.html">Controller</a></li><li><a href="/zh-cn/basics/service.html">Service</a></li><li><a href="/zh-cn/basics/schedule.html">定时任务</a></li><li><a href="/zh-cn/basics/extend.html">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html">启动自定义</a></li></ul></dd><dt>核心功能</dt><dd><ul><li><a href="/zh-cn/core/development.html">本地开发</a></li><li><a href="/zh-cn/core/unittest.html">单元测试</a></li><li><a href="/zh-cn/core/deployment.html">应用部署</a></li><li><a href="/zh-cn/core/logger.html">日志</a></li><li><a href="/zh-cn/core/httpclient.html">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html">异常处理</a></li><li><a href="/zh-cn/core/security.html">安全</a></li><li><a href="/zh-cn/core/i18n.html">国际化</a></li></ul></dd><dt>教程</dt><dd><ul><li><a href="/zh-cn/tutorials/progressive.html">渐进式开发</a></li><li><a href="/zh-cn/tutorials/mysql.html">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html">RESTful API</a></li><li><a href="/zh-cn/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>进阶</dt><dd><ul><li><a href="/zh-cn/advanced/loader.html">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html">模板插件开发规范</a></li></ul></dd><dt>社区</dt><dd><ul><li><a href="/zh-cn/contributing.html">如何贡献</a></li><li><a href="/zh-cn/resource.html">资源</a></li><li><a href="/zh-cn/faq.html">常见问题</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>

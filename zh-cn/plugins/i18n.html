@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>egg - 为企业级框架和应用而生</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">切换语言</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1></h1>
+    <h1 id="egg-i18n"><a class="markdown-anchor" href="#egg-i18n">#</a> egg-i18n</h1>
+<p><a href="https://npmjs.org/package/egg-i18n" target="_blank" rel="external"><img src="https://img.shields.io/npm/v/egg-i18n.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-i18n" target="_blank" rel="external"><img src="https://img.shields.io/travis/eggjs/egg-i18n.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-i18n?branch=master" target="_blank" rel="external"><img src="https://codecov.io/github/eggjs/egg-i18n/coverage.svg?branch=master" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-i18n" target="_blank" rel="external"><img src="https://img.shields.io/david/eggjs/egg-i18n.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-i18n" target="_blank" rel="external"><img src="https://snyk.io/test/npm/egg-i18n/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-i18n" target="_blank" rel="external"><img src="https://img.shields.io/npm/dm/egg-i18n.svg?style=flat-square" alt="npm download"></a></p>
+<p>可以为你的应用提供多语言的特性</p>
+<h2 id="功能"><a class="markdown-anchor" href="#功能">#</a> 功能</h2>
+<ul>
+<li>支持多种语言独立配置，统一存放在 config/locales/*.js 下；</li>
+<li>提供 Middleware 为 View 提供 <code>__</code>, <code>gettext</code> 函数获取多语言文案；</li>
+<li>基于 URL 参数 <code>locale</code> 修改语言显示，同时会记录到 Cookie，下次请求会用 Cookie 里面的语言方案。</li>
+</ul>
+<h2 id="配置"><a class="markdown-anchor" href="#配置">#</a> 配置</h2>
+<p>默认处于关闭状态，你需要在 <code>config/plugin.js</code> 开启它：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line">exports.i18n = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">package</span>: <span class="string">'egg-i18n'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>你可以修改 <code>config/config.default.js</code> 来设定 i18n 的配置项：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line">exports.i18n = &#123;</div><div class="line">  <span class="comment">// 默认语言，默认 "en_US"</span></div><div class="line">  defaultLocale: <span class="string">'zh-CN'</span>,</div><div class="line">  <span class="comment">// URL 参数，默认 "locale"</span></div><div class="line">  queryField: <span class="string">'locale'</span>,</div><div class="line">  <span class="comment">// Cookie 记录的 key, 默认："locale"</span></div><div class="line">  cookieField: <span class="string">'locale'</span>,</div><div class="line">  <span class="comment">// Cookie 默认 `1y` 一年后过期， 如果设置为 Number，则单位为 ms</span></div><div class="line">  cookieMaxAge: <span class="string">'1y'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>其实大部分时候，你只需要修改一下 <code>defaultLocale</code> 设定默认的语言。</p>
+<h2 id="编写你的-i18n-多语言文件"><a class="markdown-anchor" href="#编写你的-i18n-多语言文件">#</a> 编写你的 I18n 多语言文件</h2>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/locales/zh-CN.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="string">"Email"</span>: <span class="string">"邮箱"</span>,</div><div class="line">  <span class="string">"Welcome back, %s!"</span>: <span class="string">"欢迎回来，%s!"</span>,</div><div class="line">  <span class="string">"Hello %s, how are you today?"</span>: <span class="string">"你好 %s, 今天过得咋样？"</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/locales/en-US.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="string">"Email"</span>: <span class="string">"Email"</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>或者也可以用 JSON 格式的文件：</p>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">// config/locales/zh-CN.json</div><div class="line">&#123;</div><div class="line">  "email": "邮箱",</div><div class="line">  "login": "帐号",</div><div class="line">  "createdAt": "注册时间"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="使用-i18n-函数获取语言文本"><a class="markdown-anchor" href="#使用-i18n-函数获取语言文本">#</a> 使用 I18n 函数获取语言文本</h2>
+<p>I18n 为你提供 <code>__</code> (Alias: <code>gettext</code>) 函数，让你可以轻松获得 locales 文件夹下面的多语言文本。</p>
+<blockquote>
+<p>NOTE: __ 是两个下划线哦！</p>
+</blockquote>
+<ul>
+<li>ctx.__ = function (key, value[, value2, ...]): 类似 util.format 接口</li>
+<li>ctx.__ = function (key, values): 支持数组下标占位符方式，如</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">ctx.__(<span class="string">'&#123;0&#125; &#123;0&#125; &#123;1&#125; &#123;1&#125;'</span>), [<span class="string">'foo'</span>, <span class="string">'bar'</span>])</div><div class="line">ctx.gettext(<span class="string">'&#123;0&#125; &#123;0&#125; &#123;1&#125; &#123;1&#125;'</span>), [<span class="string">'foo'</span>, <span class="string">'bar'</span>])</div><div class="line">=&gt;</div><div class="line">foo foo bar bar</div></pre></td></tr></table></figure>
+<h3 id="controllers-下的使用示例"><a class="markdown-anchor" href="#controllers-下的使用示例">#</a> Controllers 下的使用示例</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.body = &#123;</div><div class="line">    <span class="attr">message</span>: <span class="keyword">this</span>.__(<span class="string">'Welcome back, %s!'</span>, <span class="keyword">this</span>.user.name)</div><div class="line">    <span class="comment">// 或者使用 gettext，如果觉得 __ 不好看的话</span></div><div class="line">    <span class="comment">// message: this.gettext('Welcome back, %s!', this.user.name)</span></div><div class="line">    user: <span class="keyword">this</span>.user,</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="view-文件下的使用示例"><a class="markdown-anchor" href="#view-文件下的使用示例">#</a> View 文件下的使用示例</h3>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; __('Email') &#125;&#125;: &#123;&#123; user.email &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></div><div class="line">  &#123;&#123; __('Hello %s, how are you today?', user.name) &#125;&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></div><div class="line">  &#123;&#123; __('&#123;0&#125; &#123;0&#125; &#123;1&#125; &#123;1&#125;'), ['foo', 'bar']) &#125;&#125;</div><div class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="修改应用的默认语言"><a class="markdown-anchor" href="#修改应用的默认语言">#</a> 修改应用的默认语言</h3>
+<p>你可以用下面几种方式修改应用的当前语言（修改或会记录到 Cookie)，下次请求直接用设定好的语言。</p>
+<p>优先级从上到下：</p>
+<ul>
+<li>query: /?locale=en-US</li>
+<li>cookie: locale=zh-TW</li>
+<li>header: Accept-Language: zh-CN,zh;q=0.5</li>
+</ul>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li></ul>
+  </div>
+  <dl><dt>新手指南</dt><dd><ul><li><a href="/zh-cn/intro/index.html">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html">快速入门</a></li></ul></dd><dt>基础功能</dt><dd><ul><li><a href="/zh-cn/basics/structure.html">目录结构</a></li><li><a href="/zh-cn/basics/objects.html">内置对象</a></li><li><a href="/zh-cn/basics/env.html">运行环境</a></li><li><a href="/zh-cn/basics/config.html">配置</a></li><li><a href="/zh-cn/basics/middleware.html">中间件</a></li><li><a href="/zh-cn/basics/router.html">Router</a></li><li><a href="/zh-cn/basics/controller.html">Controller</a></li><li><a href="/zh-cn/basics/service.html">Service</a></li><li><a href="/zh-cn/basics/schedule.html">定时任务</a></li><li><a href="/zh-cn/basics/extend.html">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html">启动自定义</a></li></ul></dd><dt>核心功能</dt><dd><ul><li><a href="/zh-cn/core/development.html">本地开发</a></li><li><a href="/zh-cn/core/unittest.html">单元测试</a></li><li><a href="/zh-cn/core/deployment.html">应用部署</a></li><li><a href="/zh-cn/core/logger.html">日志</a></li><li><a href="/zh-cn/core/httpclient.html">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html">异常处理</a></li><li><a href="/zh-cn/core/security.html">安全</a></li><li><a href="/zh-cn/core/i18n.html">国际化</a></li></ul></dd><dt>教程</dt><dd><ul><li><a href="/zh-cn/tutorials/progressive.html">渐进式开发</a></li><li><a href="/zh-cn/tutorials/mysql.html">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html">RESTful API</a></li><li><a href="/zh-cn/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>进阶</dt><dd><ul><li><a href="/zh-cn/advanced/loader.html">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html">模板插件开发规范</a></li></ul></dd><dt>社区</dt><dd><ul><li><a href="/zh-cn/contributing.html">如何贡献</a></li><li><a href="/zh-cn/resource.html">资源</a></li><li><a href="/zh-cn/faq.html">常见问题</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>

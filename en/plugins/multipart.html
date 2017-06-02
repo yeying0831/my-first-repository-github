@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>egg - Born to build better enterprise frameworks and apps</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">Translations</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1></h1>
+    <h1 id="egg-multipart"><a class="markdown-anchor" href="#egg-multipart">#</a> egg-multipart</h1>
+<p><a href="https://npmjs.org/package/egg-multipart" target="_blank" rel="external"><img src="https://img.shields.io/npm/v/egg-multipart.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-multipart" target="_blank" rel="external"><img src="https://img.shields.io/travis/eggjs/egg-multipart.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-multipart?branch=master" target="_blank" rel="external"><img src="https://codecov.io/github/eggjs/egg-multipart/coverage.svg?branch=master" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-multipart" target="_blank" rel="external"><img src="https://img.shields.io/david/eggjs/egg-multipart.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-multipart" target="_blank" rel="external"><img src="https://snyk.io/test/npm/egg-multipart/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-multipart" target="_blank" rel="external"><img src="https://img.shields.io/npm/dm/egg-multipart.svg?style=flat-square" alt="npm download"></a></p>
+<p>Use <a href="https://github.com/cojs/busboy" target="_blank" rel="external">co-busboy</a> to upload file by streaming and process it without save to disk.</p>
+<p>Just use <code>ctx.multipart()</code> to got file stream, then pass to image processing liberary such as <code>gm</code> or upload to cloud storage such as <code>oss</code>.</p>
+<h2 id="whitelist-of-file-extendtions"><a class="markdown-anchor" href="#whitelist-of-file-extendtions">#</a> Whitelist of file extendtions</h2>
+<p>For security, if uploading file extendtion is not in white list, will response as <code>400 Bad request</code>.</p>
+<p>Default Whitelist:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> whitelist = [</div><div class="line">  <span class="comment">// images</span></div><div class="line">  <span class="string">'.jpg'</span>, <span class="string">'.jpeg'</span>, <span class="comment">// image/jpeg</span></div><div class="line">  <span class="string">'.png'</span>, <span class="comment">// image/png, image/x-png</span></div><div class="line">  <span class="string">'.gif'</span>, <span class="comment">// image/gif</span></div><div class="line">  <span class="string">'.bmp'</span>, <span class="comment">// image/bmp</span></div><div class="line">  <span class="string">'.wbmp'</span>, <span class="comment">// image/vnd.wap.wbmp</span></div><div class="line">  <span class="string">'.webp'</span>,</div><div class="line">  <span class="string">'.tif'</span>,</div><div class="line">  <span class="string">'.psd'</span>,</div><div class="line">  <span class="comment">// text</span></div><div class="line">  <span class="string">'.svg'</span>,</div><div class="line">  <span class="string">'.js'</span>, <span class="string">'.jsx'</span>,</div><div class="line">  <span class="string">'.json'</span>,</div><div class="line">  <span class="string">'.css'</span>, <span class="string">'.less'</span>,</div><div class="line">  <span class="string">'.html'</span>, <span class="string">'.htm'</span>,</div><div class="line">  <span class="string">'.xml'</span>,</div><div class="line">  <span class="comment">// tar</span></div><div class="line">  <span class="string">'.zip'</span>,</div><div class="line">  <span class="string">'.gz'</span>, <span class="string">'.tgz'</span>, <span class="string">'.gzip'</span>,</div><div class="line">  <span class="comment">// video</span></div><div class="line">  <span class="string">'.mp3'</span>,</div><div class="line">  <span class="string">'.mp4'</span>,</div><div class="line">  <span class="string">'.avi'</span>,</div><div class="line">];</div></pre></td></tr></table></figure>
+<h3 id="custom-config"><a class="markdown-anchor" href="#custom-config">#</a> Custom Config</h3>
+<p>Developer can custom additional file extentions:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line">exports.multipart = &#123;</div><div class="line">  <span class="comment">// will append to whilelist</span></div><div class="line">  fileExtensions: [</div><div class="line">    <span class="string">'.foo'</span>,</div><div class="line">    <span class="string">'.apk'</span>,</div><div class="line">  ],</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Can also <strong>override</strong> built-in whitelist, such as only allow png:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line">exports.multipart = &#123;</div><div class="line">  <span class="attr">whitelist</span>: [</div><div class="line">    <span class="string">'.png'</span>,</div><div class="line">  ],</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Or by function：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.multipart = &#123;</div><div class="line">  <span class="attr">whitelist</span>: <span class="function">(<span class="params">filename</span>) =&gt;</span> [ <span class="string">'.png'</span> ].includes(path.extname(filename) || <span class="string">''</span>)</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><strong>Note: if define <code>whitelist</code>, then <code>fileExtensions</code> will be ignored.</strong></p>
+<h2 id="examples"><a class="markdown-anchor" href="#examples">#</a> Examples</h2>
+<h3 id="upload-file"><a class="markdown-anchor" href="#upload-file">#</a> Upload File</h3>
+<p>You can got upload stream by <code>ctx.getFileStream*()</code>.</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">action</span>=<span class="string">"/upload?_csrf=&#123;&#123; ctx.csrf | safe &#125;&#125;"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></div><div class="line">  title: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"title"</span> /&gt;</span></div><div class="line">  file: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"file"</span> <span class="attr">type</span>=<span class="string">"file"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>Upload<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Controller which hanlder <code>POST /upload</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/controller/upload.js</span></div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="keyword">const</span> sendToWormhole = <span class="built_in">require</span>(<span class="string">'stream-wormhole'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> stream = <span class="keyword">yield</span> ctx.getFileStream();</div><div class="line">  <span class="keyword">const</span> name = <span class="string">'egg-multipart-test/'</span> + path.basename(stream.filename);</div><div class="line">  <span class="keyword">let</span> result;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="comment">// process file or upload to cloud storage</span></div><div class="line">    result = <span class="keyword">yield</span> ctx.oss.put(name, stream);</div><div class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">    <span class="comment">// must consume the stream, otherwise browser will be stuck.</span></div><div class="line">    <span class="keyword">yield</span> sendToWormhole(stream);</div><div class="line">    <span class="keyword">throw</span> err;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  ctx.body = &#123;</div><div class="line">    <span class="attr">url</span>: result.url,</div><div class="line">    <span class="comment">// process form fields by `stream.fields`</span></div><div class="line">    fields: stream.fields,</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="upload-multiple-files"><a class="markdown-anchor" href="#upload-multiple-files">#</a> Upload Multiple Files</h3>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">action</span>=<span class="string">"/upload?_csrf=&#123;&#123; ctx.csrf | safe &#125;&#125;"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></div><div class="line">  title: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"title"</span> /&gt;</span></div><div class="line">  file: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"file"</span> <span class="attr">type</span>=<span class="string">"file"</span> /&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>Upload<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Controller which hanlder <code>POST /upload</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/controller/upload.js</span></div><div class="line"><span class="keyword">const</span> sendToWormhole = <span class="built_in">require</span>(<span class="string">'stream-wormhole'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> parts = ctx.multipart();</div><div class="line">  <span class="keyword">let</span> part;</div><div class="line">  <span class="keyword">while</span> ((part = <span class="keyword">yield</span> parts) != <span class="literal">null</span>) &#123;</div><div class="line">    <span class="keyword">if</span> (part.length) &#123;</div><div class="line">      <span class="comment">// arrays are busboy fields</span></div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'field: '</span> + part[<span class="number">0</span>]);</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'value: '</span> + part[<span class="number">1</span>]);</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'valueTruncated: '</span> + part[<span class="number">2</span>]);</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'fieldnameTruncated: '</span> + part[<span class="number">3</span>]);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">if</span> (!part.filename) &#123;</div><div class="line">        <span class="comment">// user click `upload` before choose a file,</span></div><div class="line">        <span class="comment">// `part` will be file stream, but `part.filename` is empty</span></div><div class="line">        <span class="comment">// must handler this, such as log error.</span></div><div class="line">        <span class="keyword">return</span>;</div><div class="line">      &#125;</div><div class="line">      <span class="comment">// otherwise, it's a stream</span></div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'field: '</span> + part.fieldname);</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'filename: '</span> + part.filename);</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'encoding: '</span> + part.encoding);</div><div class="line">      <span class="built_in">console</span>.log(<span class="string">'mime: '</span> + part.mime);</div><div class="line">      <span class="keyword">let</span> result;</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">        result = <span class="keyword">yield</span> ctx.oss.put(<span class="string">'egg-multipart-test/'</span> + part.filename, part);</div><div class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">        <span class="keyword">yield</span> sendToWormhole(stream);</div><div class="line">        <span class="keyword">throw</span> err;</div><div class="line">      &#125;</div><div class="line">      <span class="built_in">console</span>.log(result);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'and we are done parsing the form!'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li></ul>
+  </div>
+  <dl><dt>Guide</dt><dd><ul><li><a href="/en/intro/index.html">What is Egg?</a></li><li><a href="/en/intro/egg-and-koa.html">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html">Quick Start</a></li></ul></dd><dt>Basis Function</dt><dd><ul><li><a href="/en/basics/structure.html">Directory Structure</a></li><li><a href="/en/basics/objects.html">Built-in Objects</a></li><li><a href="/en/basics/env.html">Environment</a></li><li><a href="/en/basics/config.html">Configuration</a></li><li><a href="/en/basics/middleware.html">Middleware</a></li><li><a href="/en/basics/router.html">Router</a></li><li><a href="/en/basics/controller.html">Controller</a></li><li><a href="/en/basics/service.html">Service</a></li><li><a href="/en/basics/schedule.html">Schedule</a></li><li><a href="/en/basics/extend.html">Extend</a></li><li><a href="/en/basics/app-start.html">Custom Init</a></li></ul></dd><dt>Core</dt><dd><ul><li><a href="/en/core/development.html">Development</a></li><li><a href="/en/core/unittest.html">Unit Testing</a></li><li><a href="/en/core/deployment.html">应用部署</a></li><li><a href="/en/core/logger.html">Logger</a></li><li><a href="/en/core/httpclient.html">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html">Cluster and IPC</a></li><li><a href="/en/core/view.html">View</a></li><li><a href="/en/core/error-handling.html">Error Handling</a></li><li><a href="/en/core/security.html">Security</a></li><li><a href="/en/core/i18n.html">i18n</a></li></ul></dd><dt>Tutorials</dt><dd><ul><li><a href="/en/tutorials/progressive.html">Progressive</a></li><li><a href="/en/tutorials/mysql.html">MySQL</a></li><li><a href="/en/tutorials/restful.html">RESTful API</a></li><li><a href="/en/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/en/advanced/loader.html">Loader</a></li><li><a href="/en/advanced/plugin.html">Plugin</a></li><li><a href="/en/advanced/framework.html">Framework</a></li><li><a href="/en/advanced/cluster-client.html">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html">View Plugin</a></li></ul></dd><dt>Community</dt><dd><ul><li><a href="/en/contributing.html">Contributing</a></li><li><a href="/en/resource.html">资源</a></li><li><a href="/en/faq.html">FAQ</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
