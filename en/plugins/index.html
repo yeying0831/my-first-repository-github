@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>egg - Born to build better enterprise frameworks and apps</title>
+  <title>Plugin List - Born to build better enterprise frameworks and apps</title>
   <meta charset="utf-8">
   <meta name="description" content="index.description">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -47,29 +47,58 @@
   <div id="container">
     <div class="page-main">
   <article class="markdown-body">
-    <h1></h1>
-    <h1 id="egg-onerror"><a class="markdown-anchor" href="#egg-onerror">#</a> egg-onerror</h1>
-<p><a href="https://npmjs.org/package/egg-onerror" target="_blank" rel="external"><img src="https://img.shields.io/npm/v/egg-onerror.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-onerror" target="_blank" rel="external"><img src="https://img.shields.io/travis/eggjs/egg-onerror.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-onerror?branch=master" target="_blank" rel="external"><img src="https://codecov.io/github/eggjs/egg-onerror/coverage.svg?branch=master" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-onerror" target="_blank" rel="external"><img src="https://img.shields.io/david/eggjs/egg-onerror.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-onerror" target="_blank" rel="external"><img src="https://snyk.io/test/npm/egg-onerror/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-onerror" target="_blank" rel="external"><img src="https://img.shields.io/npm/dm/egg-onerror.svg?style=flat-square" alt="npm download"></a></p>
-<p>Default error handling plugin for egg.</p>
-<h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ npm i egg-onerror</div></pre></td></tr></table></figure>
-<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
-<p><code>egg-onerror</code> is on by default in egg. But you still can configure its properties to fits your scenarios.</p>
-<ul>
-<li><code>errorPageUrl: String</code> - If user request html pages in production environment and unexpected error happened, it will redirect user to <code>errorPageUrl</code>.</li>
-<li><code>accepts: Function</code> - detect user's request accpet <code>json</code> or <code>html</code>.</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// an accept detect function that mark all request with `x-request-with=XMLHttpRequest` header accepts json.</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">accpets</span>(<span class="params">ctx</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (ctx.get(<span class="string">'x-request-with'</span>) === <span class="string">'XMLHttpRequest'</span>) <span class="keyword">return</span> <span class="string">'json'</span>;</div><div class="line">  <span class="keyword">return</span> <span class="string">'html'</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
-<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="external">here</a>.</p>
-<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="LICENSE">MIT</a></p>
-
+    <h1>Plugin List</h1>
+    <ul>
+    
+      <li>
+        <a href="./onerror.html">onerror</a>
+      </li>
+    
+      <li>
+        <a href="./session.html">session</a>
+      </li>
+    
+      <li>
+        <a href="./i18n.html">i18n</a>
+      </li>
+    
+      <li>
+        <a href="./watcher.html">watcher</a>
+      </li>
+    
+      <li>
+        <a href="./multipart.html">multipart</a>
+      </li>
+    
+      <li>
+        <a href="./security.html">security</a>
+      </li>
+    
+      <li>
+        <a href="./development.html">development</a>
+      </li>
+    
+      <li>
+        <a href="./logrotator.html">logrotator</a>
+      </li>
+    
+      <li>
+        <a href="./schedule.html">schedule</a>
+      </li>
+    
+      <li>
+        <a href="./static.html">static</a>
+      </li>
+    
+      <li>
+        <a href="./jsonp.html">jsonp</a>
+      </li>
+    
+      <li>
+        <a href="./view.html">view</a>
+      </li>
+    
+    </ul>
   </article>
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
