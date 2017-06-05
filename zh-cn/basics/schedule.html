@@ -74,7 +74,6 @@
 <p><strong>注意：cron-parser 支持可选的秒（linux crontab 不支持）。</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">*    *    *    *    *    *</div><div class="line">┬    ┬    ┬    ┬    ┬    ┬</div><div class="line">│    │    │    │    │    |</div><div class="line">│    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)</div><div class="line">│    │    │    │    └───── month (1 - 12)</div><div class="line">│    │    │    └────────── day of month (1 - 31)</div><div class="line">│    │    └─────────────── hour (0 - 23)</div><div class="line">│    └──────────────────── minute (0 - 59)</div><div class="line">└───────────────────────── second (0 - 59, optional)</div></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.schedule = &#123;</div><div class="line">  <span class="comment">// 每三小时准点执行一次</span></div><div class="line">  cron: <span class="string">'0 0 */3 * * *'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p><strong>注意：由于 setTimeout 的时间有最大限制(2147483647，换算成天数是 24 天多)，所以定时任务的间隔不能设置大于该数值，包括 interval 以及 cron 方式。</strong></p>
 <h3 id="类型"><a class="markdown-anchor" href="#类型">#</a> 类型</h3>
 <p>框架提供的定时任务默认支持两种类型，worker 和 all。worker 和 all 都支持上面的两种定时方式，但是当到执行时机时，会执行定时任务的 worker 不同</p>
 <ul>

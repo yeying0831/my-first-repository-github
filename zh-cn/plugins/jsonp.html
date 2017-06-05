@@ -75,14 +75,14 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.jsonp = &#123;</div><div class="line">  <span class="attr">whiteList</span>: <span class="string">'sub.test.com'</span>,</div><div class="line">&#125;;</div><div class="line"><span class="comment">// only matchs domain sub.test.com:</span></div><div class="line"><span class="comment">// https://sub.test.com/hello</span></div><div class="line"><span class="comment">// http://sub.test.com/</span></div></pre></td></tr></table></figure>
 <p>whiteList also can be an array:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.jsonp = &#123;</div><div class="line">  <span class="attr">whiteList</span>: [ <span class="string">'.foo.com'</span>, <span class="string">'.bar.com'</span> ],</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>see <a href="config/config.default.js">config/config.default.js</a> for more detail.</p>
+<p>see <a href="https://github.com/eggjs/egg-jsonp/blob/master/config/config.default.js" target="_blank" rel="external">config/config.default.js</a> for more detail.</p>
 <h2 id="example"><a class="markdown-anchor" href="#example">#</a> Example</h2>
 <p>In <code>app/router.js</code></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// Create once and use in any router you want to support jsonp.</span></div><div class="line"><span class="keyword">const</span> jsonp = app.jsonp();</div><div class="line">app.get(<span class="string">'/default'</span>, jsonp, <span class="string">'jsonp.index'</span>);</div><div class="line">app.get(<span class="string">'/another'</span>, jsonp, <span class="string">'jsonp.another'</span>);</div><div class="line"></div><div class="line"><span class="comment">// Customize by create another jsonp middleware with specific sonfigurations.</span></div><div class="line">app.get(<span class="string">'/customize'</span>, app.jsonp(&#123; <span class="attr">callback</span>: <span class="string">'fn'</span> &#125;), <span class="string">'jsonp.customize'</span>);</div></pre></td></tr></table></figure>
 <h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
 <p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="external">here</a>.</p>
 <h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="LICENSE">MIT</a></p>
+<p><a href="https://github.com/eggjs/egg-jsonp/blob/master/LICENSE" target="_blank" rel="external">MIT</a></p>
 
   </article>
   <aside id="mobileAside" class="toc">
