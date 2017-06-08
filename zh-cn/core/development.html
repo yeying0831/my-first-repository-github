@@ -111,6 +111,17 @@
 <h4 id="开始调试"><a class="markdown-anchor" href="#开始调试">#</a> 开始调试</h4>
 <p>找到你需要设置断点的文件，设置一个断点，访问一下，就进入断点调试了。</p>
 <p><img src="https://cloud.githubusercontent.com/assets/456108/21814737/38ed8f04-d795-11e6-93c4-1de9f1d432c8.png" alt="image"></p>
+<h4 id="nodejs-8x"><a class="markdown-anchor" href="#nodejs-8x">#</a> Node.js 8.x</h4>
+<p>在 Node.js 8.x 后，不再输出完整的调试地址，仅输出如下的日志：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">&gt; egg-bin dev <span class="string">"--inspect"</span></div><div class="line"></div><div class="line">Debugger listening on ws://127.0.0.1:9229/fd7c6a26-5aa6-4c76-9310-045368fdaabc</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">2017-06-08 09:28:31,035 INFO 28121 [master] agent_worker<span class="comment">#1:28131 start with clusterPort:54285</span></div><div class="line">Debugger listening on ws://127.0.0.1:5856/7aa12781-6452-4160-829e-2ef037d39658</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">2017-06-08 09:28:31,366 INFO 28121 [master] app_worker<span class="comment">#1:28132 start, state: none, current workers: ["1"]</span></div><div class="line">Debugger listening on ws://127.0.0.1:9230/d1ad683d-a261-4f78-b9a2-77e8117a0aa0</div></pre></td></tr></table></figure>
+<p>分别对应于 master / agent / worker 的调试端口，我们一般关注最后一个即可，如上即 <code>9230</code>。</p>
+<ul>
+<li>访问 <a href="chrome://inspect" target="_blank" rel="external">chrome://inspect</a> 页面。</li>
+<li>点击 <code>Configure...</code>。</li>
+<li>增加 <code>localhost:9230</code>。</li>
+<li>在 <code>Remote Target</code> 里面访问对应的链接即可（包含 <code>app_worker</code> 的那个）。</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/227713/26908722-0a9861b0-4c2f-11e7-834e-f26c3724f185.png" alt="image"></p>
 <h3 id="使用-logger-模块调试"><a class="markdown-anchor" href="#使用-logger-模块调试">#</a> 使用 logger 模块调试</h3>
 <p>框架内置了<a href="./logger.html">日志</a> 功能，使用 <code>logger.debug()</code> 输出调试信息，<strong>推荐在应用代码中使用它。</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// controller</span></div><div class="line"><span class="keyword">this</span>.logger.debug(<span class="string">'current user: %j'</span>, <span class="keyword">this</span>.user);</div><div class="line"></div><div class="line"><span class="comment">// service</span></div><div class="line"><span class="keyword">this</span>.ctx.logger.debug(<span class="string">'debug info from service'</span>);</div><div class="line"></div><div class="line"><span class="comment">// app/init.js</span></div><div class="line">app.logger.debug(<span class="string">'app init'</span>);</div></pre></td></tr></table></figure>
