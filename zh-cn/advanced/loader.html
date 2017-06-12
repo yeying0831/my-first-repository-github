@@ -174,7 +174,7 @@
 <li><code>app/service/user-info.js</code> =&gt; <code>app.service.userInfo</code></li>
 <li><code>app/service/userInfo.js</code> =&gt; <code>app.service.userInfo</code></li>
 </ul>
-<p>Loader 还提供了 <a href="#caseStyle-boolean">caseStyle</a> 强制指定首字母大小写，比如加载 model 时 API 首字母大写，<code>app/model/user.js</code> =&gt; <code>app.model.User</code>，就可以指定 <code>caseStyle: 'upper'</code>。</p>
+<p>Loader 还提供了 <a href="#caseStyle-string">caseStyle</a> 强制指定首字母大小写，比如加载 model 时 API 首字母大写，<code>app/model/user.js</code> =&gt; <code>app.model.User</code>，就可以指定 <code>caseStyle: 'upper'</code>。</p>
 <h2 id="扩展-loader"><a class="markdown-anchor" href="#扩展-loader">#</a> 扩展 Loader</h2>
 <p><a href="https://github.com/eggjs/egg-core/blob/master/lib/loader/egg_loader.js" target="_blank" rel="external">Loader</a> 是一个基类，并根据文件加载的规则提供了一些内置的方法，但基本本身并不会去调用，而是由继承类调用。</p>
 <ul>
