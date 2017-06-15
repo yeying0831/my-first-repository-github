@@ -184,20 +184,20 @@
 <li><code>app.messenger.broadcast(action, data)</code>：发送给所有的 agent / app 进程（包括自己）</li>
 <li><code>app.messenger.sendToApp(action, data)</code>: 发送给所有的 app 进程
 <ul>
-<li>在 app 调用该方法上会发送给自己和其他的 app 进程</li>
+<li>在 app 上调用该方法会发送给自己和其他的 app 进程</li>
 <li>在 agent 上调用该方法会发送给所有的 app 进程</li>
 </ul>
 </li>
 <li><code>app.messenger.sendToAgent(action, data)</code>: 发送给 agent 进程
 <ul>
-<li>在 app 调用该方法上会发送 agent 进程</li>
+<li>在 app 上调用该方法会发送给 agent 进程</li>
 <li>在 agent 上调用该方法会发送给 agent 自己</li>
 </ul>
 </li>
 <li><code>agent.messenger.sendRandom(action, data)</code>:
 <ul>
 <li>app 上没有该方法（现在 Egg 的实现是等同于 sentToAgent）</li>
-<li>agent 上回随机发送消息给一个 app 进程（由 master 来控制发送给谁）</li>
+<li>agent 会随机发送消息给一个 app 进程（由 master 来控制发送给谁）</li>
 </ul>
 </li>
 <li><code>app.messenger.sendTo(pid, action, data)</code>: 发送给指定进程</li>
