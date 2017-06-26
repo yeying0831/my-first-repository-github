@@ -1069,6 +1069,9 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .highlight .strong {
   font-weight: bold;
 }
+html {
+  background: #F9F9F9;
+}
 body {
   min-width: 320px;
   background: #FFFFFF;
@@ -1109,6 +1112,9 @@ p {
 }
 .leftpadding {
   padding-left: 20px;
+}
+.container {
+  padding-top: 56px;
 }
 .nav {
   background: #f9f9f9;
@@ -1364,7 +1370,7 @@ aside li {
 }
 .banner {
   max-width: 1136px;
-  margin: 100px auto;
+  margin: 44px auto 100px;
 }
 .banner h1 {
   font-size: 46px;
