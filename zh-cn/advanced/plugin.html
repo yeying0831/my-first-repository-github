@@ -184,7 +184,6 @@
 <h3 id="安装"><a class="markdown-anchor" href="#安装">#</a> 安装</h3>
 <p>和安装普通 <code>npm</code> 包一样</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ npm i egg-onerror --save</div></pre></td></tr></table></figure>
-<p><strong>注意：插件即使是只在 local 运行的，也需要配置为 dependencies 而不是 devDependencies，否则线上 <code>npm i --production</code> 时将无法找到插件。</strong></p>
 <h3 id="开启和关闭"><a class="markdown-anchor" href="#开启和关闭">#</a> 开启和关闭</h3>
 <p>在应用的 <code>${app_root}/config/plugin.js</code> 文件里配置</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">onerror</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">package</span>: <span class="string">'egg-onerror'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
