@@ -133,6 +133,8 @@
 <li>如密码、密钥等安全字段，这里可以通过 <code>config.dump.ignore</code> 配置，必须是 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set" target="_blank" rel="external">Set</a> 类型，查看<a href="https://github.com/eggjs/egg/blob/master/config/config.default.js" target="_blank" rel="external">默认配置</a>。</li>
 <li>如函数、Buffer 等类型，<code>JSON.stringify</code> 后的内容特别大</li>
 </ul>
+<p>还会生成 <code>run/application_config_meta.json</code>（worker 进程）和 <code>run/agent_config_meta.json</code>（agent 进程）文件，用来排查属性的来源，如</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"logger"</span>: &#123;</div><div class="line">    <span class="attr">"dir"</span>: <span class="string">"/path/to/config/config.default.js"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
   </article>
   <aside id="mobileAside" class="toc">

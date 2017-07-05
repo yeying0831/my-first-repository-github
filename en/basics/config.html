@@ -133,12 +133,14 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">mysql</span>: &#123;</div><div class="line">    <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">    <span class="attr">path</span>: path.join(__dirname, <span class="string">'../app/plugin/egg-mysql'</span>),</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>path is an absolute path so that the application can put self developed plugins in the application directory, such as <code>app/plugin</code>.</p>
 <h2 id="configuration-result"><a class="markdown-anchor" href="#configuration-result">#</a> Configuration result</h2>
-<p>The final merged config will be dumped to <code>run/application_config.json</code>(for worker process) and <code>run/agent_config.json</code>(for agent process) when the framework starts, which can help analyzing problems.</p>
+<p>The final merged config will be dumped to <code>run/application_config.json</code>(for worker process) and <code>run/agent_config.json</code>(for agent process) when the framework started, which can help analyzing problems.</p>
 <p>Some fields are hidden in the config file, mainly including 2 types:</p>
 <ul>
 <li>like passwords, secret keys and other security related fields which can be configured in <code>config.dump.ignore</code> and only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set" target="_blank" rel="external">Set</a> type is accepted. See <a href="https://github.com/eggjs/egg/blob/master/config/config.default.js" target="_blank" rel="external">Default Configs</a></li>
 <li>like Function, Buffer, etc. whose content converted by <code>JSON.stringify</code> will be specially large.</li>
 </ul>
+<p><code>run/application_config_meta.json</code> (for worker process）and <code>run/agent_config_meta.json</code> (for agent process) will also be dumped that show which file defines the property, see below</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"logger"</span>: &#123;</div><div class="line">    <span class="attr">"dir"</span>: <span class="string">"/path/to/config/config.default.js"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
   </article>
   <aside id="mobileAside" class="toc">
