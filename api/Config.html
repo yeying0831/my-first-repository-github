@@ -203,7 +203,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config_config.default.js.html">config/config.default.js</a>, <a href="config_config.default.js.html#line264">line 264</a>
+        <a href="config_config.default.js.html">config/config.default.js</a>, <a href="config_config.default.js.html#line282">line 282</a>
     </li></ul></dd>
     
 
@@ -1230,121 +1230,6 @@ Only worked when config.proxy set to true.</p>
 
         <tr>
             
-                <td class="name"><code>keepAlive</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Boolean</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>Enable http keepalive or not, default is true</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>freeSocketKeepAliveTimeout</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>socket keepalive max free time, default is 4000 ms.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>timeout</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>socket max unative time, default is 30000 ms.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>maxSockets</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>max socket number of one host, default is <code>Number.MAX_SAFE_INTEGER</code> @ses https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>maxFreeSockets</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>max free socket number of one host, default is 256.</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>enableDNSCache</code></td>
             
 
@@ -1362,6 +1247,213 @@ Only worked when config.proxy set to true.</p>
             
 
             <td class="description last"><p>Enable DNS lookup from local cache or not, default is false.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>request.timeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>httpclient request default timeout, default is 5000 ms.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>httpAgent.keepAlive</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Enable http agent keepalive or not, default is true</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>httpAgent.freeSocketKeepAliveTimeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>http agent socket keepalive max free time, default is 4000 ms.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>httpAgent.maxSockets</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>http agent max socket number of one host, default is <code>Number.MAX_SAFE_INTEGER</code> @ses https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>httpAgent.maxFreeSockets</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>http agent max free socket number of one host, default is 256.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>httpsAgent.keepAlive</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>Enable https agent keepalive or not, default is true</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>httpsAgent.freeSocketKeepAliveTimeout</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>httpss agent socket keepalive max free time, default is 4000 ms.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>httpsAgent.maxSockets</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>https agent max socket number of one host, default is <code>Number.MAX_SAFE_INTEGER</code> @ses https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>httpsAgent.maxFreeSockets</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>https agent max free socket number of one host, default is 256.</p></td>
         </tr>
 
     
@@ -2583,7 +2675,7 @@ Only worked when config.proxy set to true.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="config_config.default.js.html">config/config.default.js</a>, <a href="config_config.default.js.html#line252">line 252</a>
+        <a href="config_config.default.js.html">config/config.default.js</a>, <a href="config_config.default.js.html#line270">line 270</a>
     </li></ul></dd>
     
 
@@ -4328,7 +4420,7 @@ config.siteFile = {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Tue Jul 18 2017 07:55:24 GMT+0000 (UTC) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Jul 19 2017 02:12:30 GMT+0000 (UTC) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
