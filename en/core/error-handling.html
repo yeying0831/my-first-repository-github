@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Exception Handling - Born to build better enterprise frameworks and apps</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">Translations</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container" class="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Exception Handling</h1>
+    <h2 id="exception-capture"><a class="markdown-anchor" href="#exception-capture">#</a> Exception Capture</h2>
+<p>Taking benefits from <a href="https://github.com/tj/co" target="_blank" rel="external">co</a> library, Egg easily transforms asynchronous to synchronous. In the meantime, all exceptions can be caught by <code>try catch</code>.</p>
+<p>With those features, you can take following implementation as reference:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/service/test.js</span></div><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">  <span class="keyword">const</span> res = <span class="keyword">yield</span> <span class="keyword">this</span>.ctx.curl(<span class="string">'http://eggjs.com/api/echo'</span>, &#123; <span class="attr">dataType</span>: <span class="string">'json'</span> &#125;);</div><div class="line">  <span class="keyword">if</span> (res.status !== <span class="number">200</span>) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'response status is not 200'</span>);</div><div class="line">  <span class="keyword">return</span> res.data;</div><div class="line">&#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">  <span class="keyword">this</span>.logger.error(err);</div><div class="line">  <span class="keyword">return</span> &#123;&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Generally, you can use <code>try catch</code> to catch exceptions. However, some implementations may break this mechanism down. Imaging that <code>yield</code> makes generators run in order just like a chain. What will happen if one of them jumpoff the chain? The following code can help you realize the imagination:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/controller/jump.js</span></div><div class="line">exports.buy = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> request = &#123;&#125;;</div><div class="line">  <span class="keyword">const</span> config = <span class="keyword">yield</span> ctx.service.trade.buy(request);</div><div class="line">  <span class="comment">// checking the deal and don't block current request</span></div><div class="line">  setImmediate(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    ctx.service.trade.check(request).catch(<span class="function"><span class="params">err</span> =&gt;</span> ctx.logger.error(err));</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>In this case, you may find that the exceptions in <code>setImmediate</code> will be swallowed because the scope breaks the chain, although egg already handled exceptions externally.</p>
+<p>Above scene is also considered. To catch the exception inside the scope, You can invoke helper method <code>ctx.runInBackground(scope)</code> to wrap the chain back. Now, the exceptions will be detected and caught.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">exports.buy = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> request = &#123;&#125;;</div><div class="line">  <span class="keyword">const</span> config = <span class="keyword">yield</span> ctx.service.trade.buy(request);</div><div class="line">  ctx.runInBackground(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// Exceptions thrown here will be caught in background and printed into log.</span></div><div class="line">    <span class="keyword">yield</span> ctx.service.trade.check(request);</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>For convenience of locating problems, exceptions must be guaranteed to be Error object or object based on Error object, which offers a trace of which functions were called.</p>
+<h2 id="egg-takes-charge-of-exceptions"><a class="markdown-anchor" href="#egg-takes-charge-of-exceptions">#</a> Egg takes charge of exceptions</h2>
+<p><a href="https://github.com/eggjs/egg-onerror" target="_blank" rel="external">egg-onerror</a>, one of Egg's plugin, handles all exceptions thrown in Middleware, Controller and Service, and returns the error as response based on &quot;Accept&quot; in request header field.</p>
+<table>
+<thead>
+<tr>
+<th>Accept</th>
+<th>ENV</th>
+<th>errorPageUrl</th>
+<th>response</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HTML &amp; TEXT</td>
+<td>local &amp; unittest</td>
+<td>-</td>
+<td>onerror built-in error page</td>
+</tr>
+<tr>
+<td>HTML &amp; TEXT</td>
+<td>others</td>
+<td>YES</td>
+<td>redirect to errorPageUrl</td>
+</tr>
+<tr>
+<td>HTML &amp; TEXT</td>
+<td>others</td>
+<td>NO</td>
+<td>onerror built-in error page(simple, not recommended)</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td>local &amp; unittest</td>
+<td>-</td>
+<td>JSON Object with details</td>
+</tr>
+<tr>
+<td>JSON</td>
+<td>others</td>
+<td>-</td>
+<td>JSON object without details</td>
+</tr>
+</tbody>
+</table>
+<h3 id="errorpageurl"><a class="markdown-anchor" href="#errorpageurl">#</a> errorPageUrl</h3>
+<p>Redirecting to your customized error page by setting <code>errorPageUrl</code> in <code>onerror</code> plugin.</p>
+<p><code>onerror</code> config in <code>config/config.default.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">onerror</span>: &#123;</div><div class="line">    <span class="attr">errorPageUrl</span>: <span class="string">'/50x.html'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="create-your-universal-exception-handler"><a class="markdown-anchor" href="#create-your-universal-exception-handler">#</a> Create your universal exception handler</h2>
+<p>Once the default handler no longer meet your needs, you still can leverage Middleware to create a new handler.</p>
+<p>As following implementation, you can create a new file in <code>app/middleware</code>, for example <code>error_handler.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/middleware/error_handler.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>* <span class="title">errorHandler</span>(<span class="params">next</span>) </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">      <span class="keyword">yield</span> next;</div><div class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">      <span class="comment">// `app.emit('error', err, this)` should be invoked after exceptions are caught</span></div><div class="line">      <span class="comment">// Exceptions will be caught and printed out.</span></div><div class="line">      <span class="keyword">this</span>.app.emit(<span class="string">'error'</span>, err, <span class="keyword">this</span>);</div><div class="line">      <span class="comment">// Composing the object in handler when exceptions are thrown</span></div><div class="line">      <span class="keyword">this</span>.body = &#123;</div><div class="line">        <span class="attr">success</span>: <span class="literal">false</span>,</div><div class="line">        <span class="attr">message</span>: <span class="keyword">this</span>.app.config.env === <span class="string">'prod'</span> ? <span class="string">'Internal Server Error'</span> : err.message,</div><div class="line">      &#125;;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Adding your customized <code>error_handler</code> in <code>config/config.default.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">middleware</span>: [ <span class="string">'errorHandler'</span> ],</div><div class="line">  <span class="attr">errorHandler</span>: &#123;</div><div class="line">    <span class="comment">// errorHandler only handle exceptions from requests under /api/, and onerror will do the same things for the rest.</span></div><div class="line">    match: <span class="string">'/api'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h2 id="404"><a class="markdown-anchor" href="#404">#</a> 404</h2>
+<p>Egg won't take <code>NOT FOUND</code> from back-end as exception. Instead, if <code>NOT FOUND</code> is emitted without a body, it will return the following JSON object as default response.</p>
+<p>identified as JSON:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"message"</span>: <span class="string">"Not Found"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>identified as HTML:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>404 Not Found<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>Overriding default 404 page to the one you want:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">notfound</span>: &#123;</div><div class="line">    <span class="attr">pageUrl</span>: <span class="string">'/404.html'</span>,</div><div class="line">  &#125;,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h3 id="customize-404-response"><a class="markdown-anchor" href="#customize-404-response">#</a> Customize 404 Response</h3>
+<p>If you want a customized 404 response, you only need to create a middleware to handle it once, just like handling exceptions above.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/middleware/notfound_handler.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>* (<span class="params">next</span>) </span>&#123;</div><div class="line">    <span class="keyword">yield</span> next;</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.status === <span class="number">404</span> &amp;&amp; !<span class="keyword">this</span>.body) &#123;</div><div class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.acceptJSON) <span class="keyword">this</span>.body = &#123; <span class="attr">error</span>: <span class="string">'Not Found'</span> &#125;;</div><div class="line">      <span class="keyword">else</span> <span class="keyword">this</span>.body = <span class="string">'&lt;h1&gt;Page Not Found&lt;/h1&gt;'</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Adding yours to <code>middleware</code> in config:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="attr">middleware</span>: [ <span class="string">'notfoundHander'</span> ],</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li></ul>
+  </div>
+  <dl><dt>Guide</dt><dd><ul><li><a href="/en/intro/index.html">What is Egg?</a></li><li><a href="/en/intro/egg-and-koa.html">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html">Quick Start</a></li></ul></dd><dt>Basis Function</dt><dd><ul><li><a href="/en/basics/structure.html">Directory Structure</a></li><li><a href="/en/basics/objects.html">Built-in Objects</a></li><li><a href="/en/basics/env.html">Environment</a></li><li><a href="/en/basics/config.html">Configuration</a></li><li><a href="/en/basics/middleware.html">Middleware</a></li><li><a href="/en/basics/router.html">Router</a></li><li><a href="/en/basics/controller.html">Controller</a></li><li><a href="/en/basics/service.html">Service</a></li><li><a href="/en/basics/schedule.html">Schedule</a></li><li><a href="/en/basics/extend.html">Extend</a></li><li><a href="/en/basics/app-start.html">Custom Init</a></li></ul></dd><dt>Core</dt><dd><ul><li><a href="/en/core/development.html">Development</a></li><li><a href="/en/core/unittest.html">Unit Testing</a></li><li><a href="/en/core/deployment.html">应用部署</a></li><li><a href="/en/core/logger.html">Logger</a></li><li><a href="/en/core/httpclient.html">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html">Cluster and IPC</a></li><li><a href="/en/core/view.html">View</a></li><li><a href="/en/core/error-handling.html">Error Handling</a></li><li><a href="/en/core/security.html">Security</a></li><li><a href="/en/core/i18n.html">i18n</a></li></ul></dd><dt>Tutorials</dt><dd><ul><li><a href="/en/tutorials/progressive.html">Progressive</a></li><li><a href="/en/tutorials/mysql.html">MySQL</a></li><li><a href="/en/tutorials/restful.html">RESTful API</a></li><li><a href="/en/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/en/advanced/loader.html">Loader</a></li><li><a href="/en/advanced/plugin.html">Plugin</a></li><li><a href="/en/advanced/framework.html">Framework</a></li><li><a href="/en/advanced/cluster-client.html">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html">View Plugin</a></li></ul></dd><dt>Community</dt><dd><ul><li><a href="/en/plugins/">内置插件列表</a></li><li><a href="/en/contributing.html">Contributing</a></li><li><a href="/en/resource.html">资源</a></li><li><a href="/en/faq.html">FAQ</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
