@@ -83,7 +83,7 @@
 <ul>
 <li><code>config/plugin.js</code> 中通过 <code>path</code> 来挂载插件。</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line">exports.ua = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">path</span>: path.join(__dirname, <span class="string">'../lib/plugin/egg-ua'</span>),</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line">exports.ua = &#123;</div><div class="line">  enable: <span class="literal">true</span>,</div><div class="line">  path: path.join(__dirname, <span class="string">'../lib/plugin/egg-ua'</span>),</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <h2 id="抽成独立插件"><a class="markdown-anchor" href="#抽成独立插件">#</a> 抽成独立插件</h2>
 <p>经过一段时间开发后，该模块的功能成熟，此时可以考虑抽出来成为独立的插件。</p>
 <p>首先，我们抽出一个 egg-ua 插件，看过<a href="../advanced/plugin.html">插件文档</a>的同学应该都比较熟悉，我们这里只简单过一下：</p>
@@ -96,7 +96,7 @@
 <li><code>package.json</code> 中声明对 <code>egg-ua</code> 的依赖。</li>
 <li><code>config/plugin.js</code> 中修改依赖声明为 <code>package</code> 方式。</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line">exports.ua = &#123;</div><div class="line">  <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">  <span class="attr">package</span>: <span class="string">'egg-ua'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line">exports.ua = &#123;</div><div class="line">  enable: <span class="literal">true</span>,</div><div class="line">  package: <span class="string">'egg-ua'</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p><strong>注意：在插件还没发布前，可以通过 <code>npm link</code> 的方式进行本地测试，具体参见 <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="external">npm-link</a>。</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> example-app</div><div class="line">$ npm link ../egg-ua</div><div class="line">$ npm i</div><div class="line">$ npm <span class="built_in">test</span></div></pre></td></tr></table></figure>
 <h2 id="沉淀到框架"><a class="markdown-anchor" href="#沉淀到框架">#</a> 沉淀到框架</h2>
