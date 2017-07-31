@@ -90,7 +90,7 @@
 </ul>
 <h2 id="提交代码"><a class="markdown-anchor" href="#提交代码">#</a> 提交代码</h2>
 <h3 id="提交-pull-request"><a class="markdown-anchor" href="#提交-pull-request">#</a> 提交 Pull Request</h3>
-<p>如果你有仓库的开发者权限，而且希望贡献代码，那么你可以创建分支修改代码提交 MR，egg 开发团队会 review 代码合并到主干。</p>
+<p>如果你有仓库的开发者权限，而且希望贡献代码，那么你可以创建分支修改代码提交 PR，egg 开发团队会 review 代码合并到主干。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 先创建开发分支开发，分支名应该有含义，避免使用 update、tmp 之类的</span></div><div class="line">$ git checkout -b branch-name</div><div class="line"></div><div class="line"><span class="comment"># 开发完成后跑下测试是否通过，必要时需要新增或修改测试用例</span></div><div class="line">$ npm <span class="built_in">test</span></div><div class="line"></div><div class="line"><span class="comment"># 测试通过后，提交代码，message 见下面的规范</span></div><div class="line"></div><div class="line">$ git add . <span class="comment"># git add -u 删除文件</span></div><div class="line">$ git commit -m <span class="string">"fix(role): role.use must xxx"</span></div><div class="line">$ git push origin branch-name</div></pre></td></tr></table></figure>
 <p>提交后就可以在 <a href="https://github.com/eggjs/egg/pulls" target="_blank" rel="external">egg</a> 创建 Pull Request 了。</p>
 <p>由于谁也无法保证过了多久之后还记得多少，为了后期回溯历史的方便，请在提交 MR 时确保提供了以下信息。</p>
