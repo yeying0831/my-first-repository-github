@@ -137,10 +137,8 @@
 <p>单元测试也可以用 <code>DEBUG=* npm test</code> 来查看测试用例运行的详细日志。</p>
 <h3 id="使用-webstorm-进行调试"><a class="markdown-anchor" href="#使用-webstorm-进行调试">#</a> 使用 WebStorm 进行调试</h3>
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin dev $NODE_DEBUG_OPTION"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>目前 WebStorm 还不支持 <code>--inspect</code> 故不能使用 <code>egg-bin debug</code>，暂时使用 <code>egg-bin dev --debug</code> 的方式。</p>
-</blockquote>
+<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin debug"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>egg-bin</code> 会自动读取 WebStorm 调试模式下设置的环境变量 <code>$NODE_DEBUG_OPTION</code>。</p>
 <p>使用 WebStorm 的 npm 调试启动即可：</p>
 <p><img src="https://cloud.githubusercontent.com/assets/227713/24495078/9bf8aaa2-1566-11e7-8dbd-2def56f904d3.png" alt=""></p>
 <h3 id="使用-vscode-进行调试"><a class="markdown-anchor" href="#使用-vscode-进行调试">#</a> 使用 <a href="https://code.visualstudio.com" target="_blank" rel="external">VSCode</a> 进行调试</h3>
