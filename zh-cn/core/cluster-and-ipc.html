@@ -89,7 +89,7 @@
 <ol>
 <li>关闭异常 Worker 进程所有的 TCP Server（将已有的连接快速断开，且不再接收新的连接），断开和 Master 的 IPC 通道，不再接受新的用户请求。</li>
 <li>Master 立刻 fork 一个新的 Worker 进程，保证在线的『工人』总数不变。</li>
-<li>异常 Worker 等待一端时间，处理完已经接受的请求后退出。</li>
+<li>异常 Worker 等待一段时间，处理完已经接受的请求后退出。</li>
 </ol>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">+---------+                 +---------+</div><div class="line">|  Worker |                 |  Master |</div><div class="line">+---------+                 +----+----+</div><div class="line">     | uncaughtException         |</div><div class="line">     +------------+              |</div><div class="line">     |            |              |                   +---------+</div><div class="line">     | &lt;----------+              |                   |  Worker |</div><div class="line">     |                           |                   +----+----+</div><div class="line">     |        disconnect         |   fork a new worker    |</div><div class="line">     +-------------------------&gt; + ---------------------&gt; |</div><div class="line">     |         <span class="built_in">wait</span>...           |                        |</div><div class="line">     |          <span class="built_in">exit</span>             |                        |</div><div class="line">     +-------------------------&gt; |                        |</div><div class="line">     |                           |                        |</div><div class="line">    die                          |                        |</div><div class="line">                                 |                        |</div><div class="line">                                 |                        |</div></pre></td></tr></table></figure>
 <h4 id="oom-系统异常"><a class="markdown-anchor" href="#oom-系统异常">#</a> OOM、系统异常</h4>
@@ -233,7 +233,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// agent.js</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> Subscriber = <span class="built_in">require</span>(<span class="string">'./lib/subscriber'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">agent</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> subscriber = <span class="keyword">new</span> Subscriber();</div><div class="line">  <span class="comment">// listen changed event, broadcast to all workers</span></div><div class="line">  subscriber.on(<span class="string">'changed'</span>, () =&gt; agent.messenger.sendToApp(<span class="string">'refresh'</span>, <span class="string">'push'</span>));</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
 <p>通过合理使用 Agent 进程、定时任务和 IPC，我们可以轻松搞定类似的需求并降低对数据源的压力。具体的示例代码可以查看 <a href="https://github.com/eggjs/examples/tree/master/ipc" target="_blank" rel="external">examples/ipc</a>。</p>
 <h2 id="更复杂的场景"><a class="markdown-anchor" href="#更复杂的场景">#</a> 更复杂的场景</h2>
-<p>上面的例子中，我们在 Agent 进程上运行了一个 subscriber，来接收和消息中间件的消息，如果 Worker 进程也需要监听一些消息怎么办？如何通过 Agent 进程建立连接再转发给 Worker 进程呢？这些问题可以在<a href="../advanced/cluster-client.html">多进程研发模式增强</a>中找到答案。</p>
+<p>上面的例子中，我们在 Agent 进程上运行了一个 subscriber，来监听消息中间件的消息，如果 Worker 进程也需要监听一些消息怎么办？如何通过 Agent 进程建立连接再转发给 Worker 进程呢？这些问题可以在<a href="../advanced/cluster-client.html">多进程研发模式增强</a>中找到答案。</p>
 
   </article>
   <aside id="mobileAside" class="toc">
