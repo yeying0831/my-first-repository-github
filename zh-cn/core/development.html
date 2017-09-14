@@ -101,32 +101,12 @@
 <p>对于某些不需要跑测试覆盖率的文件，可以通过 <code>COV_EXCLUDES</code> 环境变量指定：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ COV_EXCLUDES=app/plugins/c* npm run cov</div><div class="line">$ <span class="comment"># 或者传参方式</span></div><div class="line">$ npm run cov -- --x=app/plugins/c*</div></pre></td></tr></table></figure>
 <h2 id="调试"><a class="markdown-anchor" href="#调试">#</a> 调试</h2>
-<h3 id="使用-egg-bin-调试"><a class="markdown-anchor" href="#使用-egg-bin-调试">#</a> 使用 egg-bin 调试</h3>
-<h4 id="添加命令-3"><a class="markdown-anchor" href="#添加命令-3">#</a> 添加命令</h4>
-<p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin debug"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>这样我们就可以通过 <code>npm run debug</code> 命令通过 <code>V8 Inspector port</code> 调试应用。</p>
-<h4 id="环境配置-4"><a class="markdown-anchor" href="#环境配置-4">#</a> 环境配置</h4>
-<p>执行 <code>debug</code> 命令时，应用也是以 <code>env: local</code> 启动的，读取的配置是 <code>config.default.js</code> 和 <code>config.local.js</code> 合并的结果。</p>
-<h4 id="开始调试"><a class="markdown-anchor" href="#开始调试">#</a> 开始调试</h4>
-<p>找到你需要设置断点的文件，设置一个断点，访问一下，就进入断点调试了。</p>
-<p><img src="https://cloud.githubusercontent.com/assets/456108/21814737/38ed8f04-d795-11e6-93c4-1de9f1d432c8.png" alt="image"></p>
-<h4 id="nodejs-8x"><a class="markdown-anchor" href="#nodejs-8x">#</a> Node.js 8.x</h4>
-<p>在 Node.js 8.x 后，不再输出完整的调试地址，仅输出如下的日志：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">&gt; egg-bin dev <span class="string">"--inspect"</span></div><div class="line"></div><div class="line">Debugger listening on ws://127.0.0.1:9229/fd7c6a26-5aa6-4c76-9310-045368fdaabc</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">2017-06-08 09:28:31,035 INFO 28121 [master] agent_worker<span class="comment">#1:28131 start with clusterPort:54285</span></div><div class="line">Debugger listening on ws://127.0.0.1:5856/7aa12781-6452-4160-829e-2ef037d39658</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line">2017-06-08 09:28:31,366 INFO 28121 [master] app_worker<span class="comment">#1:28132 start, state: none, current workers: ["1"]</span></div><div class="line">Debugger listening on ws://127.0.0.1:9230/d1ad683d-a261-4f78-b9a2-77e8117a0aa0</div></pre></td></tr></table></figure>
-<p>分别对应于 master / agent / worker 的调试端口，我们一般关注最后一个即可，如上即 <code>9230</code>。</p>
-<ul>
-<li>访问 <a href="chrome://inspect" target="_blank" rel="external">chrome://inspect</a> 页面。</li>
-<li>点击 <code>Configure...</code>。</li>
-<li>增加 <code>localhost:9230</code>。</li>
-<li>在 <code>Remote Target</code> 里面访问对应的链接即可（包含 <code>app_worker</code> 的那个）。</li>
-</ul>
-<p><img src="https://user-images.githubusercontent.com/227713/26908722-0a9861b0-4c2f-11e7-834e-f26c3724f185.png" alt="image"></p>
-<h3 id="使用-logger-模块调试"><a class="markdown-anchor" href="#使用-logger-模块调试">#</a> 使用 logger 模块调试</h3>
+<h3 id="日志输出"><a class="markdown-anchor" href="#日志输出">#</a> 日志输出</h3>
+<h3 id="使用-logger-模块"><a class="markdown-anchor" href="#使用-logger-模块">#</a> 使用 logger 模块</h3>
 <p>框架内置了<a href="./logger.html">日志</a> 功能，使用 <code>logger.debug()</code> 输出调试信息，<strong>推荐在应用代码中使用它。</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// controller</span></div><div class="line"><span class="keyword">this</span>.logger.debug(<span class="string">'current user: %j'</span>, <span class="keyword">this</span>.user);</div><div class="line"></div><div class="line"><span class="comment">// service</span></div><div class="line"><span class="keyword">this</span>.ctx.logger.debug(<span class="string">'debug info from service'</span>);</div><div class="line"></div><div class="line"><span class="comment">// app/init.js</span></div><div class="line">app.logger.debug(<span class="string">'app init'</span>);</div></pre></td></tr></table></figure>
 <p>通过 <code>config.logger.level</code> 来配置打印到文件的日志级别，通过 <code>config.logger.consoleLevel</code> 配置打印到终端的日志级别。</p>
-<h3 id="使用-debug-模块调试"><a class="markdown-anchor" href="#使用-debug-模块调试">#</a> 使用 debug 模块调试</h3>
+<h3 id="使用-debug-模块"><a class="markdown-anchor" href="#使用-debug-模块">#</a> 使用 debug 模块</h3>
 <p><a href="https://www.npmjs.com/package/debug" target="_blank" rel="external">debug</a> 模块是 Node.js 社区广泛使用的 debug 工具，很多模块都使用它模块打印调试信息，Egg 社区也广泛采用这一机制打印 debug 信息，<strong>推荐在框架和插件开发中使用它。</strong></p>
 <p>我们可以通过 <code>DEBUG</code> 环境变量选择开启指定的调试代码，方便观测执行过程。</p>
 <p>（调试模块和日志模块不要混淆，而且日志模块也有很多功能，这里所说的日志都是调试信息。）</p>
@@ -135,39 +115,47 @@
 <p>开启指定模块的日志：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ DEBUG=egg* npm run dev</div></pre></td></tr></table></figure>
 <p>单元测试也可以用 <code>DEBUG=* npm test</code> 来查看测试用例运行的详细日志。</p>
-<h3 id="使用-webstorm-进行调试"><a class="markdown-anchor" href="#使用-webstorm-进行调试">#</a> 使用 WebStorm 进行调试</h3>
+<h3 id="使用-egg-bin-调试"><a class="markdown-anchor" href="#使用-egg-bin-调试">#</a> 使用 egg-bin 调试</h3>
+<h4 id="添加命令-3"><a class="markdown-anchor" href="#添加命令-3">#</a> 添加命令</h4>
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin debug"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样我们就可以通过 <code>npm run debug</code> 命令来断点调试应用。</p>
+<p><code>egg-bin</code> 会智能选择调试协议，在 7.x 之后版本使用 <a href="https://chromedevtools.github.io/debugger-protocol-viewer/v8" target="_blank" rel="external">Inspector Protocol</a> 协议，低版本使用 <a href="https://github.com/buggerjs/bugger-v8-client/blob/master/PROTOCOL.md" target="_blank" rel="external">Legacy Protocol</a>。</p>
+<p>同时也支持自定义调试参数：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ egg-bin debug --proxy=9999 --inpsect=9229 --inspect-brk</div></pre></td></tr></table></figure>
+<ul>
+<li><code>master</code> 调试端口为 9229 或 5858（旧协议）</li>
+<li><code>agent</code> 调试端口固定为 5800</li>
+<li><code>worker</code> 调试端口为 <code>master</code> 调试端口递增。</li>
+<li>开发阶段 worker 在代码修改后会热重启，导致调试端口会自增，故 <code>egg-bin</code> 启动了代理服务，用户可以直接 attach 9999 端口即可，无需担心重启问题。</li>
+</ul>
+<h4 id="环境配置-4"><a class="markdown-anchor" href="#环境配置-4">#</a> 环境配置</h4>
+<p>执行 <code>debug</code> 命令时，应用也是以 <code>env: local</code> 启动的，读取的配置是 <code>config.default.js</code> 和 <code>config.local.js</code> 合并的结果。</p>
+<h4 id="开始调试"><a class="markdown-anchor" href="#开始调试">#</a> 开始调试</h4>
+<p>执行 <code>npm run debug</code> 启动：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">➜  showcase git:(master) ✗ npm run debug</div><div class="line"></div><div class="line">&gt; showcase@1.0.0 debug /Users/tz/Workspaces/eggjs/<span class="built_in">test</span>/showcase</div><div class="line">&gt; egg-bin debug</div><div class="line"></div><div class="line">Debugger listening on ws://127.0.0.1:9229/f8258ca6-d5ac-467d-bbb1-03f59bcce85b</div><div class="line">For <span class="built_in">help</span> see https://nodejs.org/en/docs/inspector</div><div class="line">2017-09-14 16:01:35,990 INFO 39940 [master] egg version 1.8.0</div><div class="line">Debugger listening on ws://127.0.0.1:5800/bfe1bf6a-2be5-4568-ac7d-69935e0867fa</div><div class="line">For <span class="built_in">help</span> see https://nodejs.org/en/docs/inspector</div><div class="line">2017-09-14 16:01:36,432 INFO 39940 [master] agent_worker<span class="comment">#1:39941 started (434ms)</span></div><div class="line">Debugger listening on ws://127.0.0.1:9230/2fcf4208-4571-4968-9da0-0863ab9f98ae</div><div class="line">For <span class="built_in">help</span> see https://nodejs.org/en/docs/inspector</div><div class="line">9230 opened</div><div class="line">Debug Proxy online, now you could attach to 9999 without worry about reload.</div><div class="line">DevTools → chrome-devtools://devtools/bundled/inspector.html?experiments=<span class="literal">true</span>&amp;v8only=<span class="literal">true</span>&amp;ws=127.0.0.1:9999/__ws_proxy__</div></pre></td></tr></table></figure>
+<p>接下来你可以使用 <a href="https://developer.chrome.com/devtools" target="_blank" rel="external">DevTools</a> / <a href="https://www.jetbrains.com/webstorm/" target="_blank" rel="external">WebStorm</a> / <a href="https://code.visualstudio.com" target="_blank" rel="external">VSCode</a> 尽情断点调试。</p>
+<h4 id="使用-devtools-进行调试"><a class="markdown-anchor" href="#使用-devtools-进行调试">#</a> 使用 <a href="https://developer.chrome.com/devtools" target="_blank" rel="external">DevTools</a> 进行调试</h4>
+<p>最新的 DevTools 只支持 <a href="https://chromedevtools.github.io/debugger-protocol-viewer/v8" target="_blank" rel="external">Inspector Protocol</a> 协议，故你需要使用 Node.js 7.x+ 的版本方能使用。</p>
+<p>选择以下一种方式即可：</p>
+<ul>
+<li>直接访问控制台最后输出的 <code>DevTools</code> 地址，该地址是代理后的 worker，无需担心重启问题。</li>
+<li>访问 <code>chrome://inspect</code>，配置对应的端口，然后点击 <code>Open dedicated DevTools for Node</code> 即可打开调试控制台。</li>
+</ul>
+<p><img src="https://user-images.githubusercontent.com/227713/30419047-a54ac592-9967-11e7-8a05-5dbb82088487.png" alt="DevTools"></p>
+<h4 id="使用-webstorm-进行调试"><a class="markdown-anchor" href="#使用-webstorm-进行调试">#</a> 使用 WebStorm 进行调试</h4>
 <p><code>egg-bin</code> 会自动读取 WebStorm 调试模式下设置的环境变量 <code>$NODE_DEBUG_OPTION</code>。</p>
 <p>使用 WebStorm 的 npm 调试启动即可：</p>
-<p><img src="https://cloud.githubusercontent.com/assets/227713/24495078/9bf8aaa2-1566-11e7-8dbd-2def56f904d3.png" alt=""></p>
-<h3 id="使用-vscode-进行调试"><a class="markdown-anchor" href="#使用-vscode-进行调试">#</a> 使用 <a href="https://code.visualstudio.com" target="_blank" rel="external">VSCode</a> 进行调试</h3>
-<p>由于在开发阶段，当我们修改代码并保存后，应用会自动重启 worker。但是每次 worker 的更新都会使得调试端口发生变化，而 <a href="https://code.visualstudio.com" target="_blank" rel="external">VSCode</a> 是需要 attach 到固定的调试端口的。于是我们启用了一个叫 <code>proxyworker</code> 的代理服务，worker 的调试信息会被代理到这个服务上。这样 <a href="https://code.visualstudio.com" target="_blank" rel="external">VSCode</a> 通过固定 attach 到 proxyworker 来调试 worker 了。</p>
-<p>下面是安装使用步骤:</p>
-<h5 id="1-安装-egg-development-proxyworker-插件"><a class="markdown-anchor" href="#1-安装-egg-development-proxyworker-插件">#</a> 1. 安装 <a href="https://github.com/eggjs/egg-development-proxyworker" target="_blank" rel="external">egg-development-proxyworker</a> 插件</h5>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">npm i egg-development-proxyworker --save</div></pre></td></tr></table></figure>
-<h5 id="2-启动插件"><a class="markdown-anchor" href="#2-启动插件">#</a> 2. 启动插件</h5>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// config/plugin.js</span></div><div class="line">exports.proxyworker = &#123;</div><div class="line">  enable: <span class="literal">true</span>,</div><div class="line">  package: <span class="string">'egg-development-proxyworker'</span>,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// config/config.default.js</span></div><div class="line"><span class="comment">// 如果10086被占用，你可以通过这个配置指定其他的端口号</span></div><div class="line">exports.proxyworker = &#123;</div><div class="line">  port: <span class="number">10086</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<h5 id="3-在-vscodelaunchjson-添加调试配置"><a class="markdown-anchor" href="#3-在-vscodelaunchjson-添加调试配置">#</a> 3. 在 .vscode/launch.json 添加调试配置:</h5>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</div><div class="line">  <span class="string">"configurations"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Launch Egg"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</div><div class="line">      <span class="string">"cwd"</span>: <span class="string">"$&#123;workspaceRoot&#125;"</span>,</div><div class="line">      <span class="string">"runtimeExecutable"</span>: <span class="string">"npm"</span>,</div><div class="line">      <span class="string">"windows"</span>: &#123;</div><div class="line">        <span class="string">"runtimeExecutable"</span>: <span class="string">"npm.cmd"</span></div><div class="line">      &#125;,</div><div class="line">      <span class="string">"runtimeArgs"</span>: [</div><div class="line">        <span class="string">"run"</span>, <span class="string">"dev"</span>, <span class="string">"--"</span>, <span class="string">"--debug"</span></div><div class="line">      ],</div><div class="line">      <span class="string">"protocol"</span>: <span class="string">"legacy"</span>,</div><div class="line">      <span class="string">"port"</span>: <span class="number">5858</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Attach Agent"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"attach"</span>,</div><div class="line">      <span class="string">"port"</span>: <span class="number">5856</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Attach Worker"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"attach"</span>,</div><div class="line">      <span class="string">"restart"</span>: <span class="literal">true</span>,</div><div class="line">      <span class="string">"port"</span>: <span class="number">10086</span></div><div class="line">    &#125;</div><div class="line">  ],</div><div class="line">  <span class="string">"compounds"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Debug Egg"</span>,</div><div class="line">      <span class="string">"configurations"</span>: [<span class="string">"Launch Egg"</span>, <span class="string">"Attach Agent"</span>, <span class="string">"Attach Worker"</span>]</div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>由于 V8 Debugger <a href="https://github.com/buggerjs/bugger-v8-client/blob/master/PROTOCOL.md" target="_blank" rel="external">Legacy Protocol</a> 会在 Node.js 8.x 后被移除, 而替换使用的是 <a href="https://chromedevtools.github.io/debugger-protocol-viewer/v8" target="_blank" rel="external">Inspector Protocol</a></p>
-<p>新的协议主要有三大优势:</p>
-<ol>
-<li>支持非常大的 JavaScript 对象</li>
-<li>支持 ES6 Proxy</li>
-<li>支持 Source Map 更好</li>
-</ol>
-<p>当且仅当你的 Node.js 版本大于 7.x 时，可以使用 <a href="https://chromedevtools.github.io/debugger-protocol-viewer/v8" target="_blank" rel="external">Inspector Protocol</a> 进行调试。</p>
-<p>VScode 升级 1.14 后，默认 protocol 由 [Legacy] 变为了 [Inspector]。如果仍需使用 [Legacy], 需手动指定。详情参考 https://github.com/Microsoft/vscode/issues/30629#issuecomment-315196813</p>
-<p>在上面的调试配置中需要修改一些参数来开启新协议:</p>
-<ul>
-<li><code>Launch Egg</code> 调整参数 <code>&quot;runtimeArgs&quot;: [&quot;run&quot;, &quot;debug&quot;]</code>、<code>&quot;protocol&quot;: &quot;inspector&quot;</code></li>
-<li><code>Attach Worker</code> 添加参数 <code>&quot;protocol&quot;: &quot;inspector&quot;</code></li>
-</ul>
-<p>此外，如果使用新协议还可以通过 chrome devtools 进行调试, 调试地址：</p>
-<p><a href="chrome-devtools://devtools/bundled/inspector.html?experiments=true&amp;v8only=true&amp;ws=127.0.0.1:10087" target="_blank" rel="external">chrome-devtools://devtools/bundled/inspector.html?experiments=true&amp;v8only=true&amp;ws=127.0.0.1:10087</a></p>
-<h5 id="4-开始调试"><a class="markdown-anchor" href="#4-开始调试">#</a> 4. 开始调试</h5>
-<p>在 <a href="https://code.visualstudio.com" target="_blank" rel="external">VSCode</a> 中，切换到调试页面。选择 Debug Egg 配置进行启动。</p>
+<p><img src="https://user-images.githubusercontent.com/227713/30423086-5dd32ac6-9974-11e7-840f-904e49a97694.png" alt="WebStorm"></p>
+<h4 id="使用-vscode-进行调试"><a class="markdown-anchor" href="#使用-vscode-进行调试">#</a> 使用 <a href="https://code.visualstudio.com" target="_blank" rel="external">VSCode</a> 进行调试</h4>
+<p><img src="https://user-images.githubusercontent.com/227713/30421285-dad801e6-996e-11e7-85b6-817165ab5783.png" alt="VSCode"></p>
+<p>在 Node.js 7.x 及之后的版本，配置 <code>.vscode/launch.json</code> 如下，然后 F5 一键启动即可。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// .vscode/launch.json</span></div><div class="line">&#123;</div><div class="line">  <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</div><div class="line">  <span class="string">"configurations"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Launch Egg"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"launch"</span>,</div><div class="line">      <span class="string">"cwd"</span>: <span class="string">"$&#123;workspaceRoot&#125;"</span>,</div><div class="line">      <span class="string">"runtimeExecutable"</span>: <span class="string">"npm"</span>,</div><div class="line">      <span class="string">"windows"</span>: &#123; <span class="string">"runtimeExecutable"</span>: <span class="string">"npm.cmd"</span> &#125;,</div><div class="line">      <span class="string">"runtimeArgs"</span>: [ <span class="string">"run"</span>, <span class="string">"debug"</span> ],</div><div class="line">      <span class="string">"console"</span>: <span class="string">"integratedTerminal"</span>,</div><div class="line">      <span class="string">"protocol"</span>: <span class="string">"auto"</span>,</div><div class="line">      <span class="string">"restart"</span>: <span class="literal">true</span>,</div><div class="line">      <span class="string">"port"</span>: <span class="number">9999</span></div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在低于 Node.js 7.x 版本中，<strong>只能在 Terminal 手动执行 <code>npm run debug</code></strong>， 然后通过以下配置进行 attach :</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// .vscode/launch.json</span></div><div class="line">&#123;</div><div class="line">  <span class="string">"version"</span>: <span class="string">"0.2.0"</span>,</div><div class="line">  <span class="string">"configurations"</span>: [</div><div class="line">    &#123;</div><div class="line">      <span class="string">"name"</span>: <span class="string">"Attach Egg Worker"</span>,</div><div class="line">      <span class="string">"type"</span>: <span class="string">"node"</span>,</div><div class="line">      <span class="string">"request"</span>: <span class="string">"attach"</span>,</div><div class="line">      <span class="string">"restart"</span>: <span class="literal">true</span>,</div><div class="line">      <span class="string">"port"</span>: <span class="number">9999</span></div><div class="line">    &#125;</div><div class="line">  ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>后续我们会提供一个 <a href="https://github.com/eggjs/vscode-eggjs" target="_blank" rel="external">vscode-eggjs</a> 来简化配置。</p>
+</blockquote>
 <p>更多 VSCode Debug 用法可以参见文档: <a href="https://code.visualstudio.com/docs/nodejs/nodejs-debugging" target="_blank" rel="external">Node.js Debugging in VS Code</a></p>
 <h2 id="更多"><a class="markdown-anchor" href="#更多">#</a> 更多</h2>
 <p>如果想了解更多本地开发相关的内容，例如为你的团队定制一个本地开发工具，请参考 <a href="https://github.com/eggjs/egg-bin" target="_blank" rel="external">egg-bin</a>。</p>
