@@ -138,7 +138,9 @@
 <p>最终模块向外暴露的是这个 APIClient：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// index.js</span></div><div class="line"><span class="built_in">module</span>.exports = APIClient;</div></pre></td></tr></table></figure>
 <p>那么在插件中我们就可以这么使用：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app.js || agent.js</span></div><div class="line"><span class="keyword">const</span> APIClient = <span class="built_in">require</span>(<span class="string">'some-client'</span>); <span class="comment">// 上面那个模块</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> config = app.config.apiClient;</div><div class="line">  app.apiClient = <span class="keyword">new</span> APIClient(<span class="built_in">Object</span>.assign(&#123;&#125;, config, &#123; <span class="attr">cluster</span>: app.cluster.bind(app) &#125;);</div><div class="line">  app.beforeStart(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">yield</span> app.apiClient.ready();</div><div class="line">  &#125;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// config.$&#123;env&#125;.js</span></div><div class="line">exports.apiClient = &#123;</div><div class="line">  subMap: &#123;</div><div class="line">    foo: &#123;</div><div class="line">      id: <span class="string">''</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="comment">// bar...</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app.js || agent.js</span></div><div class="line"><span class="keyword">const</span> APIClient = <span class="built_in">require</span>(<span class="string">'some-client'</span>); <span class="comment">// 上面那个模块</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> config = app.config.apiClient;</div><div class="line">  app.apiClient = <span class="keyword">new</span> APIClient(<span class="built_in">Object</span>.assign(&#123;&#125;, config, &#123; <span class="attr">cluster</span>: app.cluster &#125;);</div><div class="line">  app.beforeStart(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="keyword">yield</span> app.apiClient.ready();</div><div class="line">  &#125;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// config.$&#123;env&#125;.js</span></div><div class="line">exports.apiClient = &#123;</div><div class="line">  subMap: &#123;</div><div class="line">    foo: &#123;</div><div class="line">      id: <span class="string">''</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="comment">// bar...</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>为了方便你封装 <code>APIClient</code>，在 <a href="https://www.npmjs.com/package/cluster-client" target="_blank" rel="external">cluster-client</a> 模块中提供了一个 <code>APIClientBase</code> 基类，那么上面的 <code>APIClient</code> 可以改写为：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> APIClientBase = <span class="built_in">require</span>(<span class="string">'cluster-client'</span>).APIClientBase;</div><div class="line"><span class="keyword">const</span> RegistryClient = <span class="built_in">require</span>(<span class="string">'./registry_client'</span>);</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">APIClient</span> <span class="keyword">extends</span> <span class="title">APIClientBase</span> </span>&#123;</div><div class="line">  <span class="comment">// 返回原始的客户端类</span></div><div class="line">  get DataClient() &#123;</div><div class="line">    <span class="keyword">return</span> RegistryClient;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// 用于设置 cluster-client 相关参数，等同于 cluster 方法的第二个参数</span></div><div class="line">  get clusterOptions() &#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      responseTimeout: <span class="number">120</span> * <span class="number">1000</span>,</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  subscribe(reg, listener) &#123;</div><div class="line">    <span class="keyword">this</span>._client.subscribe(reg, listener);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  publish(reg) &#123;</div><div class="line">    <span class="keyword">this</span>._client.publish(reg);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  get(key) &#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>._cache[key];</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>总结一下：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">+------------------------------------------------+</div><div class="line">| APIClient                                      |</div><div class="line">|       +----------------------------------------|</div><div class="line">|       | ClusterClient                          |</div><div class="line">|       |      +---------------------------------|</div><div class="line">|       |      | RegistryClient                  |</div><div class="line">+------------------------------------------------+</div></pre></td></tr></table></figure>
 <ul>
@@ -147,6 +149,41 @@
 <li>APIClient - 内部调用 ClusterClient 做数据同步，无需关心多进程模型，用户最终使用的模块。API 都通过此处暴露，支持同步和异步。</li>
 </ul>
 <p>有兴趣的同学可以看一下<a href="https://github.com/eggjs/egg/issues/322" target="_blank" rel="external">增强多进程研发模式</a> 讨论过程。</p>
+<h2 id="在-egg-里面-cluster-client-相关的配置项"><a class="markdown-anchor" href="#在-egg-里面-cluster-client-相关的配置项">#</a> 在 Egg 里面 cluster-client 相关的配置项</h2>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"><span class="comment"> * @property &#123;Number&#125; responseTimeout - response timeout, default is 60000</span></div><div class="line"><span class="comment"> * @property &#123;Transcode&#125; [transcode]</span></div><div class="line"><span class="comment"> *   - &#123;Function&#125; encode - custom serialize method</span></div><div class="line"><span class="comment"> *   - &#123;Function&#125; decode - custom deserialize method</span></div><div class="line"><span class="comment"> */</span></div><div class="line">config.clusterClient = &#123;</div><div class="line">  responseTimeout: <span class="number">60000</span>,</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>类型</th>
+<th>默认值</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>responseTimeout</td>
+<td>number</td>
+<td>60000 （一分钟）</td>
+<td>全局的进程间通讯的超时时长，不能设置的太短，因为代理的接口本身也有超时设置</td>
+</tr>
+<tr>
+<td>transcode</td>
+<td>function</td>
+<td>N/A</td>
+<td>进程间通讯的序列化方式，默认采用 <a href="https://www.npmjs.com/package/serialize-json" target="_blank" rel="external">serialize-json</a>（建议不要自行设置）</td>
+</tr>
+</tbody>
+</table>
+<p>上面是全局的配置方式。如果，你想对一个客户端单独做设置</p>
+<ul>
+<li>可以通过 <code>app/agent.cluster(ClientClass, options)</code> 的第二个参数 <code>options</code> 进行覆盖</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">app.registryClient = app.cluster(RegistryClient, &#123;</div><div class="line">  responseTimeout: <span class="number">120</span> * <span class="number">1000</span>, <span class="comment">// 这里传入的是和 cluster-client 相关的参数</span></div><div class="line">&#125;).create(&#123;</div><div class="line">  <span class="comment">// 这里传入的是 RegistryClient 需要的参数</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<ul>
+<li>也可以通过覆盖 <code>APIClientBase</code> 的 <code>clusterOptions</code> 这个 <code>getter</code> 属性</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> APIClientBase = <span class="built_in">require</span>(<span class="string">'cluster-client'</span>).APIClientBase;</div><div class="line"><span class="keyword">const</span> RegistryClient = <span class="built_in">require</span>(<span class="string">'./registry_client'</span>);</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">APIClient</span> <span class="keyword">extends</span> <span class="title">APIClientBase</span> </span>&#123;</div><div class="line">  get DataClient() &#123;</div><div class="line">    <span class="keyword">return</span> RegistryClient;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  get clusterOptions() &#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      responseTimeout: <span class="number">120</span> * <span class="number">1000</span>,</div><div class="line">    &#125;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = APIClient;</div></pre></td></tr></table></figure>
 
   </article>
   <aside id="mobileAside" class="toc">
