@@ -138,6 +138,11 @@
 <p>我们可以通过 <code>ctx.coreLogger</code> 获取到它，和 Context Logger 的区别是一般只有插件和框架会通过它来记录日志。</p>
 <h3 id="controller-logger-service-logger"><a class="markdown-anchor" href="#controller-logger-service-logger">#</a> Controller Logger &amp; Service Logger</h3>
 <p>我们可以在 Controller 和 Service 实例上通过 <code>this.logger</code> 获取到它们，它们本质上就是一个 Context Logger，不过在打印日志的时候还会额外的加上文件路径，方便定位日志的打印位置。</p>
+<h2 id="subscription"><a class="markdown-anchor" href="#subscription">#</a> Subscription</h2>
+<p>订阅模型是一种比较常见的开发模式，譬如消息中间件的消费者或调度任务。因此我们提供了 Subscription 基类来规范化这个模式。</p>
+<p>可以通过以下方式来引用 Subscription 基类：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Schedule</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</div><div class="line">  <span class="comment">// 需要实现此方法</span></div><div class="line">  <span class="comment">// subscribe 可以为 generator function 或 async function</span></div><div class="line">  * subscribe() &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>插件开发者可以根据自己的需求基于它定制订阅规范，如<a href="./schedule.html">定时任务</a>就是使用这种规范实现的。</p>
 
   </article>
   <aside id="mobileAside" class="toc">

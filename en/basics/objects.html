@@ -138,6 +138,11 @@
 <p>We can get it via <code>ctx.coreLogger</code>, the difference between the Context Logger is that only plugins and framework will log via it.</p>
 <h3 id="controller-logger-service-logger"><a class="markdown-anchor" href="#controller-logger-service-logger">#</a> Controller Logger &amp; Service Logger</h3>
 <p>We can get them via <code>this.logger</code> in Controller and Service instance, they are essentially a Context Logger, but additional file path will be added to logs, easy to locate the log print location.</p>
+<h2 id="subscription"><a class="markdown-anchor" href="#subscription">#</a> Subscription</h2>
+<p>Subscription is the model for subscribing, including consumer in message broker or schedule.</p>
+<p>The base class of Subscription is exported by egg.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Schedule</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</div><div class="line">  <span class="comment">// This method should be implemented</span></div><div class="line">  <span class="comment">// subscribe can be generator function or async function</span></div><div class="line">  * subscribe() &#123;&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>We recommend plugin developers to implement based on this model, For example, <a href="./schedule.html">Schedule</a>.</p>
 
   </article>
   <aside id="mobileAside" class="toc">
