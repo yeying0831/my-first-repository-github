@@ -69,6 +69,9 @@
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">"scripts"</span>: &#123;</div><div class="line">    <span class="attr">"start"</span>: <span class="string">"egg-scripts start --daemon"</span>,</div><div class="line">    <span class="attr">"stop"</span>: <span class="string">"egg-scripts stop"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这样我们就可以通过 <code>npm start</code> 和 <code>npm stop</code> 命令启动或停止应用。</p>
+<blockquote>
+<p>注意：<code>egg-scripts</code> 不支持 Windows 系统。</p>
+</blockquote>
 <h3 id="启动命令"><a class="markdown-anchor" href="#启动命令">#</a> 启动命令</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ egg-scripts start --port=7001 --daemon --title=egg-server-showcase</div></pre></td></tr></table></figure>
 <p>如上示例，支持以下参数：</p>
