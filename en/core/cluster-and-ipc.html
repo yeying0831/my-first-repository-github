@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Multi-Process Model and Inter-Process Communication - Born to build better enterprise frameworks and apps</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">Translations</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container" class="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Multi-Process Model and Inter-Process Communication</h1>
+    <p>We know that JavaScript codes are run on single thread, in other words, one Node.js process only runs on one CPU. So if we use Node.js as a Web Server, we cannot benefit from multi-core any more. As an enterprise-level solution, one problem that must be solved is:</p>
+<blockquote>
+<p>how to squeeze all server resources, taking advantages of multi-cores?</p>
+</blockquote>
+<p>And the official solution provided by Node.js is <a href="https://nodejs.org/api/cluster.html" target="_blank" rel="external">Cluster module</a></p>
+<blockquote>
+<p>A single instance of Node.js runs in a single thread. To take advantage of multi-core systems the user will sometimes want to launch a cluster of Node.js processes to handle the load.</p>
+</blockquote>
+<blockquote>
+<p>The cluster module allows you to easily create child processes that all share server ports.</p>
+</blockquote>
+<h1 id="what-is-cluster"><a class="markdown-anchor" href="#what-is-cluster">#</a> What is Cluster?</h1>
+<p>In short,</p>
+<ul>
+<li>fork multiple processes on the server concurrently.</li>
+<li>every single process runs the same source code(just like assigning work done by one process to multiple processes).</li>
+<li>what is more, all these processes can listen on the same one port(for detailed mechanism referring to @DavidCai1993 <a href="https://cnodejs.org/topic/56e84480833b7c8a0492e20c" target="_blank" rel="external">Cluster Implementation Mechanism</a>)</li>
+</ul>
+<p>of which:</p>
+<ul>
+<li>the process that forks other processes is called Master process, it seems like a contractor that does nothing except forking other processes.</li>
+<li>other forked processes are called Worker processes, as the name suggests, they are workers that work actually. They accept requests and provide services.</li>
+<li>usually the number of Worker processes depends on the CPU core number, only in this way can we take full advantage of multi-core resources.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> cluster = <span class="built_in">require</span>(<span class="string">'cluster'</span>);</div><div class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</div><div class="line"><span class="keyword">const</span> numCPUs = <span class="built_in">require</span>(<span class="string">'os'</span>).cpus().length;</div><div class="line"></div><div class="line"><span class="keyword">if</span> (cluster.isMaster) &#123;</div><div class="line">  <span class="comment">// Fork workers.</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; numCPUs; i++) &#123;</div><div class="line">    cluster.fork();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  cluster.on(<span class="string">'exit'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">worker, code, signal</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'worker '</span> + worker.process.pid + <span class="string">' died'</span>);</div><div class="line">  &#125;);</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">  <span class="comment">// Workers can share any TCP connection</span></div><div class="line">  <span class="comment">// In this case it is an HTTP server</span></div><div class="line">  http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">    res.writeHead(<span class="number">200</span>);</div><div class="line">    res.end(<span class="string">"hello world\n"</span>);</div><div class="line">  &#125;).listen(<span class="number">8000</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="multi-process-model-of-the-framework"><a class="markdown-anchor" href="#multi-process-model-of-the-framework">#</a> Multi-Process Model of the Framework</h2>
+<p>Simple like the example above, but as an enterprise-level solution, much more remains to be considered.</p>
+<ul>
+<li>How to handle the exception that Worker processes exit unexpected?</li>
+<li>How to share resources among multiple Worker processes?</li>
+<li>How to schedule multiple Worker processes?</li>
+<li>...</li>
+</ul>
+<h3 id="daemon-process"><a class="markdown-anchor" href="#daemon-process">#</a> Daemon Process</h3>
+<p>Haleness(aka Robustness) of an enterprise-level application must be considered, apart from the guarantee of high quality codes of program itself, the framework level should provide the cache-all mechanism to ensure the availability under extreme circumstance.</p>
+<p>Generally, Node.js processes exist for two reasons:</p>
+<h4 id="uncaught-exception"><a class="markdown-anchor" href="#uncaught-exception">#</a> Uncaught Exception</h4>
+<p>The process will exit when codes throw an exception but fail to catch it, at this time, Node.js provides <code>process.on('uncaughtException', handler)</code> interface to catch it, But if a Worker process encounters an uncaught exception, it enters an uncertain state and what we should do is to make it exit elegantly:</p>
+<ol>
+<li>close all TCP Servers started by the corrupted Worker process(close all connections and stop accepting new requests), close the IPC channel between Master and do not accept user requests any more.</li>
+<li>a new Worker process should be forked by the Master immediately to ensure the total number of workers unchanged.</li>
+<li>the corrupted Worker process waits for a while before exit in order to get through accepted requests.</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">+---------+                 +---------+</div><div class="line">|  Worker |                 |  Master |</div><div class="line">+---------+                 +----+----+</div><div class="line">     | uncaughtException         |</div><div class="line">     +------------+              |</div><div class="line">     |            |              |                   +---------+</div><div class="line">     | &lt;----------+              |                   |  Worker |</div><div class="line">     |                           |                   +----+----+</div><div class="line">     |        disconnect         |   fork a new worker    |</div><div class="line">     +-------------------------&gt; + ---------------------&gt; |</div><div class="line">     |         <span class="built_in">wait</span>...           |                        |</div><div class="line">     |          <span class="built_in">exit</span>             |                        |</div><div class="line">     +-------------------------&gt; |                        |</div><div class="line">     |                           |                        |</div><div class="line">    die                          |                        |</div><div class="line">                                 |                        |</div><div class="line">                                 |                        |</div></pre></td></tr></table></figure>
+<h4 id="oom-system-exception"><a class="markdown-anchor" href="#oom-system-exception">#</a> OOM, System Exception</h4>
+<p>When a process crashes due to exceptions or is killed due to OOM by the OS, we have no chance to resume the process like uncaught exceptions occurring, the only choice is to exit current process direcly then Master fork a new Worker immediately.</p>
+<p>In the framework, we use <a href="https://github.com/node-modules/graceful" target="_blank" rel="external">graceful</a> and <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="external">egg-cluster</a> 2 modules correspondingly to implement above logics. This solution has been widely deployed in production environment in Alibaba Cor. and Ant Financial Cor. and is long-tested by 'Double 11' big promotion, solid and reliable.</p>
+<h3 id="agent-mechanism"><a class="markdown-anchor" href="#agent-mechanism">#</a> Agent Mechanism</h3>
+<p>Up to now, Node.js multi-process solution seems good enough and it's also the solution that we used in production environment previously. But before long, we find that there is some work that should not be done by every Worker in fact, if not, it leads to wasting of resources and, even worse, it may result in conflicts on resource access among processes. For example: we usually archive log file by date in production environment and it is easy to do in single process model:</p>
+<blockquote>
+<ol>
+<li>at 0 o'clock in the morning, rename current log file by date</li>
+<li>destroy previous file handle, create new log file and continue writing</li>
+</ol>
+</blockquote>
+<p>Now imagine there are 4 processes doing the same work, and they may get into a mess. So for this kind of background logics, we'd like to run it on a single process which is called Agent Worker, or Agent for short. Agent is something like a 'secretary' for other Worker which is introduced by Master, it does not serve outside but only App Workers, especially processes common affairs. Now our multi-process model becomes something like below:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">                +--------+          +-------+</div><div class="line">                | Master |&lt;--------&gt;| Agent |</div><div class="line">                +--------+          +-------+</div><div class="line">                ^   ^    ^</div><div class="line">               /    |     \</div><div class="line">             /      |       \</div><div class="line">           /        |         \</div><div class="line">         v          v          v</div><div class="line">+----------+   +----------+   +----------+</div><div class="line">| Worker 1 |   | Worker 2 |   | Worker 3 |</div><div class="line">+----------+   +----------+   +----------+</div></pre></td></tr></table></figure>
+<p>And our framework startup sequence looks like:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">+---------+           +---------+          +---------+</div><div class="line">|  Master |           |  Agent  |          |  Worker |</div><div class="line">+---------+           +----+----+          +----+----+</div><div class="line">     |      fork agent     |                    |</div><div class="line">     +--------------------&gt;|                    |</div><div class="line">     |      agent ready    |                    |</div><div class="line">     |&lt;--------------------+                    |</div><div class="line">     |                     |     fork worker    |</div><div class="line">     +-----------------------------------------&gt;|</div><div class="line">     |     worker ready    |                    |</div><div class="line">     |&lt;-----------------------------------------+</div><div class="line">     |      Egg ready      |                    |</div><div class="line">     +--------------------&gt;|                    |</div><div class="line">     |      Egg ready      |                    |</div><div class="line">     +-----------------------------------------&gt;|</div></pre></td></tr></table></figure>
+<ol>
+<li>Agent process is forked after Mater starts up</li>
+<li>when Agent initialized successfully, Master is notified via IPC channel</li>
+<li>Master forks many App Workers</li>
+<li>when App Worker initialized successfully, Master is notified</li>
+<li>when all process initialized successfully, Master notifies Agent and Worker that the application starts up successfully</li>
+</ol>
+<p>Besides, there still is something about Agent Worker needing to be notices:</p>
+<ol>
+<li>since App Worker depends on Agent, App Worker can be forked only after Agent being initialized</li>
+<li>although Agent is the secretary of App Worker, business related work should not be assigned to Agent, or it may be broken down</li>
+<li>considering the special orientation of Agent, <strong>we must ensure it's relatively stable</strong>. When it throws an uncaught exception, framework does not shut it down then restart it like App Worker, instead, it logs the exception, gives an alarm and waits for manual handling</li>
+<li>mounting API of Agent differs from that of App Worker, and differences are listed in <a href="../advanced/framework.html">Framework docs</a></li>
+</ol>
+<h3 id="agent-usage"><a class="markdown-anchor" href="#agent-usage">#</a> Agent Usage</h3>
+<p>You can implement your own logics in <code>agent.js</code> which is under the directory of the application or the plugin(like the usage of <a href="../basics/app-start.html">Customized Startup</a>, and the only difference is using agent object as the entrance parameter)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// agent.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">agent</span> =&gt;</span> &#123;</div><div class="line">  <span class="comment">// put your initialization logics here</span></div><div class="line"></div><div class="line">  <span class="comment">// messages can also be sent by the messenger object to App Worker</span></div><div class="line">  <span class="comment">// but you should wait until App Worker starts up successfully, or the message may be log</span></div><div class="line">  agent.messenger.on(<span class="string">'egg-ready'</span>, () =&gt; &#123;</div><div class="line">    <span class="keyword">const</span> data = &#123; ... &#125;;</div><div class="line">    agent.messenger.sendToApp(<span class="string">'xxx_action'</span>, data);</div><div class="line">  &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  app.messenger.on(<span class="string">'xxx_action'</span>, data =&gt; &#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">  &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>In this example, codes of <code>agent.js</code> are run in Agent process, codes of <code>app.js</code> are run in the Worker process, and they do the Inter-Process Communication(IPC) through the <code>messenger</code> object encapsulated by framework. Details about the IPC are explained in later sections.</p>
+<h3 id="master-vs-agent-vs-worker"><a class="markdown-anchor" href="#master-vs-agent-vs-worker">#</a> Master VS Agent VS Worker</h3>
+<p>When an application starts up, 3 kinds of processes will be forked.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Number of Processes</th>
+<th>Purpose</th>
+<th>Stability</th>
+<th>Run Business Codes or Not</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Master</td>
+<td>1</td>
+<td>Managing processes and transmitting messages among processes</td>
+<td>Very High</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Agent</td>
+<td>1</td>
+<td>Running background jobs(persistent connection client)</td>
+<td>High</td>
+<td>Little</td>
+</tr>
+<tr>
+<td>Worker</td>
+<td>usually the number of CPU cores</td>
+<td>Running Business codes</td>
+<td>Normal</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<h4 id="master"><a class="markdown-anchor" href="#master">#</a> Master</h4>
+<p>With this model, Master process undertakes the process management workers(like <a href="https://github.com/Unitech/pm2" target="_blank" rel="external">pm2</a>) but runs no business codes. We simply start up a Master process and it will handle all initialization and restarting issues of Worker and Agent processes.</p>
+<p>Master process is extremely stable. We simply use <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="external">egg-scripts</a> for online and <code>egg.startCluster</code> for background to start Master process and <a href="https://github.com/Unitech/pm2" target="_blank" rel="external">pm2</a> or other daemon module is no long necessary.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ egg-scripts start --daemon</div></pre></td></tr></table></figure>
+<h4 id="agent"><a class="markdown-anchor" href="#agent">#</a> Agent</h4>
+<p>In most cases, we needn't care about Agent process when writing business codes, but in several cases, where we propose to run the codes in a single process and that is the time we use Agent process.</p>
+<p>Since there's only one Agent that is in charge of tough and tedious work like keeping connections, it cannot be hang or restarted rashly. Agent process won't exit when encounters uncaught exceptions, but output an error log instead, <strong>so we should always keep out eyes on the uncaught exceptions in logs</strong>.</p>
+<h4 id="worker"><a class="markdown-anchor" href="#worker">#</a> Worker</h4>
+<p>Worker process undertakes user requests and <a href="../basics/schedule.html">scheduled tasks</a> actually. Egg provides scheduled tasks with the ability to be run only in one Worker process, <strong>so never solve problems by Agent as long as they can be solved by scheduled tasks</strong>.</p>
+<p>Worker runs business codes, which are more complicated than those of Agent and Master but the stability may be lower, <strong>a Worker process will be restarted by Master when a Worker process exits unexpectedly</strong>.</p>
+<h2 id="inter-process-communicationipc"><a class="markdown-anchor" href="#inter-process-communicationipc">#</a> Inter-Process Communication(IPC)</h2>
+<p>Although every Worker process runs individually, it's necessary for them to communicate with each other which is called inter-process communication(IPC). Below is an example code provided by Node.js officially.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"><span class="keyword">const</span> cluster = <span class="built_in">require</span>(<span class="string">'cluster'</span>);</div><div class="line"></div><div class="line"><span class="keyword">if</span> (cluster.isMaster) &#123;</div><div class="line">  <span class="keyword">const</span> worker = cluster.fork();</div><div class="line">  worker.send(<span class="string">'hi there'</span>);</div><div class="line">  worker.on(<span class="string">'message'</span>, msg =&gt; &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">`msg: <span class="subst">$&#123;msg&#125;</span> from worker#<span class="subst">$&#123;worker.id&#125;</span>`</span>);</div><div class="line">  &#125;);</div><div class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (cluster.isWorker) &#123;</div><div class="line">  process.on(<span class="string">'message'</span>, (msg) =&gt; &#123;</div><div class="line">    process.send(msg);</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Carefully you can see that the IPC channel of clusters exists only between Master and Worker/Agent, not between Worker and Agent. So how to communicate among Workers? Yes, Master helps transmit.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">Broadcast messages: agent =&gt; all workers</div><div class="line">                  +--------+          +-------+</div><div class="line">                  | Master |&lt;---------| Agent |</div><div class="line">                  +--------+          +-------+</div><div class="line">                 /    |     \</div><div class="line">                /     |      \</div><div class="line">               /      |       \</div><div class="line">              /       |        \</div><div class="line">             v        v         v</div><div class="line">  +----------+   +----------+   +----------+</div><div class="line">  | Worker 1 |   | Worker 2 |   | Worker 3 |</div><div class="line">  +----------+   +----------+   +----------+</div><div class="line"></div><div class="line">Specify receivers: one worker =&gt; another worker</div><div class="line">                  +--------+          +-------+</div><div class="line">                  | Master |----------| Agent |</div><div class="line">                  +--------+          +-------+</div><div class="line">                 ^    |</div><div class="line">     send to    /     |</div><div class="line">    worker 2   /      |</div><div class="line">              /       |</div><div class="line">             /        v</div><div class="line">  +----------+   +----------+   +----------+</div><div class="line">  | Worker 1 |   | Worker 2 |   | Worker 3 |</div><div class="line">  +----------+   +----------+   +----------+</div></pre></td></tr></table></figure>
+<p>To simplify the invocation, we have encapsulated a messenger object and attached it to the app/agent instance, a set of friendly APIs is provided too.</p>
+<h3 id="send"><a class="markdown-anchor" href="#send">#</a> Send</h3>
+<ul>
+<li><code>app.messenger.broadcast(action, data)</code>: sends messages to all agent/app processes(including itself)</li>
+<li><code>app.messenger.sendToApp(action, data)</code>: sends messages to all app processes
+<ul>
+<li>when called on app, it sends messages to itself and other app processes</li>
+<li>when called on agent, it sends messages to all app processes</li>
+</ul>
+</li>
+<li><code>app.messenger.sendToAgent(action, data)</code>: sends messages to the agent process
+<ul>
+<li>when called on app, it sends messages to the agent process</li>
+<li>when called on agent, it sends messages to the agent itself</li>
+</ul>
+</li>
+<li><code>agent.messenger.sendRandom(action, data)</code>:
+<ul>
+<li>app dose not have this method(now Egg implements it as sendToAgent)</li>
+<li>agent sends a random message to one app process(master determines whom to send to)</li>
+</ul>
+</li>
+<li><code>app.messenger.sendTo(pid, action, data)</code>: send messages to specified process</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="comment">// Note, only after egg-ready event occurs can the message be sent</span></div><div class="line">  app.messenger.once(<span class="string">'egg-ready'</span>, () =&gt; &#123;</div><div class="line">    app.messenger.sendToAgent(<span class="string">'agent-event'</span>, &#123; <span class="attr">foo</span>: <span class="string">'bar'</span> &#125;);</div><div class="line">    app.messenger.sendToApp(<span class="string">'app-egent'</span>, &#123; <span class="attr">foo</span>: <span class="string">'bar'</span> &#125;);</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>All methods called on <code>app.messenger</code> above can be called on <code>agent.messenger</code> too. *</li>
+</ul>
+<h4 id="egg-ready"><a class="markdown-anchor" href="#egg-ready">#</a> egg-ready</h4>
+<p>We mentioned in the example above that, only after egg-ready event occurs can the message be sent. Only after Master makes sure that all Agent process and Worker processes have been started successfully(and ready), can the <code>egg-ready</code> message be sent to all Agent and Worker through messenger, notifying that everything is ready and the IPC channel can be used.</p>
+<h3 id="receive"><a class="markdown-anchor" href="#receive">#</a> Receive</h3>
+<p>Listen the action event on messenger therefore messages sent by other processes can be received.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">app.messenger.on(action, data =&gt; &#123;</div><div class="line">  <span class="comment">// process data</span></div><div class="line">&#125;);</div><div class="line">app.messenger.once(action, data =&gt; &#123;</div><div class="line">  <span class="comment">// process data</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><em>The way to receive messages using messenger in agent is the same with that of app.</em></p>
+<h2 id="ipc-in-practice"><a class="markdown-anchor" href="#ipc-in-practice">#</a> IPC in Practice</h2>
+<p>Now we will show you how IPC solves real problems with the multi-process model of framework by a simple example.</p>
+<h3 id="requisition"><a class="markdown-anchor" href="#requisition">#</a> Requisition</h3>
+<p>We have a API that gets data from the remote data source and provides services outside. Since data of the data source change little and we prefer to cache it in the memory to accelerate the response of services and reduce the RT. Now a mechanism to update the memory cache is needed.</p>
+<ol>
+<li>Get data from the remote data source periodically and update the memory cache. To reduce pressure on the data source, the period for updating may be set relatively long.</li>
+<li>The remote data source provides an API to check whether its data has been updated. Our service calls that API more frequently and only when data is updated can it pull the data.</li>
+<li>The remote data source pushes data changes through a message-oriented middleware on which our service listens to update the data.</li>
+</ol>
+<p>In real projects, we use solution one to catch all, and, in combination with solution tow or three, the instantaneity of data updating can be sped up. In the example, we use IPC + <a href="../basics/schedule.html">scheduled tasks</a> to implement these three cache updating solutions in the same time.</p>
+<h3 id="implementation"><a class="markdown-anchor" href="#implementation">#</a> Implementation</h3>
+<p>We put all logics that is used to interact with the remote data source into a Service, where a <code>get</code> method is exposed to Controller to invoke.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/service/source.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">let</span> memoryCache = &#123;&#125;;</div><div class="line"></div><div class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="title">Source</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Service</span> </span>&#123;</div><div class="line">    get(key) &#123;</div><div class="line">      <span class="keyword">return</span> memoryCache[key];</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    * checkUpdate() &#123;</div><div class="line">      <span class="comment">// check if remote data source has changed</span></div><div class="line">      <span class="keyword">const</span> updated = <span class="keyword">yield</span> mockCheck();</div><div class="line">      <span class="keyword">this</span>.ctx.logger.info(<span class="string">'check update response %s'</span>, updated);</div><div class="line">      <span class="keyword">return</span> updated;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    * update() &#123;</div><div class="line">      <span class="comment">// update memory cache from remote</span></div><div class="line">      memoryCache = <span class="keyword">yield</span> mockFetch();</div><div class="line">      <span class="keyword">this</span>.ctx.logger.info(<span class="string">'update memory cache from remote: %j'</span>, memoryCache);</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Write the scheduled task to implement solution one: gets data changes from the remote data source every 10 minutes to update cache as a cache-all.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/schedule/force_refresh.js</span></div><div class="line">exports.schedule = &#123;</div><div class="line">  interval: <span class="string">'10m'</span>,</div><div class="line">  type: <span class="string">'all'</span>, <span class="comment">// run in all workers</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">exports.task = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</div><div class="line">  <span class="keyword">yield</span> ctx.service.source.update();</div><div class="line">  ctx.app.lastUpdateBy = <span class="string">'force'</span>;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Write a scheduled task again to implement check logics of solution two: make a worker call the check API every 10 seconds and notify all Workers using methods provided by messenger when data changes are found.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app/schedule/pull_refresh.js</span></div><div class="line">exports.schedule = &#123;</div><div class="line">  interval: <span class="string">'10s'</span>,</div><div class="line">  type: <span class="string">'worker'</span>, <span class="comment">// only run in one worker</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line">exports.task = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> needRefresh = <span class="keyword">yield</span> ctx.service.source.checkUpdate();</div><div class="line">  <span class="keyword">if</span> (!needRefresh) <span class="keyword">return</span>;</div><div class="line"></div><div class="line">  <span class="comment">// notify all workers to update memory cache from `file`</span></div><div class="line">  ctx.app.messenger.sendToApp(<span class="string">'refresh'</span>, <span class="string">'pull'</span>);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Listen on the <code>pullRefresh</code> event in the customized start-up file and update data. All Worker processes will receive this message, trigger updates and our solution two succeeds at last.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// app.js</span></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</div><div class="line">  app.messenger.on(<span class="string">'refresh'</span>, by =&gt; &#123;</div><div class="line">    app.logger.info(<span class="string">'start update by %s'</span>, by);</div><div class="line">    <span class="comment">// create an anonymous context to access service</span></div><div class="line">    <span class="keyword">const</span> ctx = app.createAnonymousContext();</div><div class="line">    <span class="comment">// a convenient way to execute with generator function</span></div><div class="line">    <span class="comment">// can replaced by `co`</span></div><div class="line">    ctx.runInBackground(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</div><div class="line">      <span class="keyword">yield</span> ctx.service.source.update();</div><div class="line">      app.lastUpdateBy = by;</div><div class="line">    &#125;);</div><div class="line">  &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Now let's consider how to implement solution three. We need a message-oriented middleware that keeps persistent connections with the server side. This kind of persistent connections is proper for Agent process to keep which can effectively reduce connection numbers and reduce costs both ends. So we start message listening on Agent process.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="comment">// agent.js</span></div><div class="line"></div><div class="line"><span class="keyword">const</span> Subscriber = <span class="built_in">require</span>(<span class="string">'./lib/subscriber'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">agent</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> subscriber = <span class="keyword">new</span> Subscriber();</div><div class="line">  <span class="comment">// listen changed event, broadcast to all workers</span></div><div class="line">  subscriber.on(<span class="string">'changed'</span>, () =&gt; agent.messenger.sendToApp(<span class="string">'refresh'</span>, <span class="string">'push'</span>));</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>With an intelligent use of Agent process, scheduled tasks and IPC, we can easily implement this kind of requisition and reduce pressure on the data source. Detailed example codes refer to<a href="https://github.com/eggjs/examples/tree/master/ipc" target="_blank" rel="external">examples/ipc</a>.</p>
+<h2 id="more-complexed-scenario"><a class="markdown-anchor" href="#more-complexed-scenario">#</a> More Complexed Scenario</h2>
+<p>In the above example, we runs a subscriber on Agent process to listen messages sent by the message-oriented middleware. What if Worker processes need to listen messages? How to create connections by Agent process and transmit messages to Worker processes? Answers to these questions can be found in <a href="../advanced/cluster-client.html">Advanced Multi-Process Developing Pattern</a>.</p>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li></ul>
+  </div>
+  <dl><dt>Guide</dt><dd><ul><li><a href="/en/intro/index.html">What is Egg?</a></li><li><a href="/en/intro/egg-and-koa.html">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html">Quick Start</a></li></ul></dd><dt>Basis Function</dt><dd><ul><li><a href="/en/basics/structure.html">Directory Structure</a></li><li><a href="/en/basics/objects.html">Built-in Objects</a></li><li><a href="/en/basics/env.html">Environment</a></li><li><a href="/en/basics/config.html">Configuration</a></li><li><a href="/en/basics/middleware.html">Middleware</a></li><li><a href="/en/basics/router.html">Router</a></li><li><a href="/en/basics/controller.html">Controller</a></li><li><a href="/en/basics/service.html">Service</a></li><li><a href="/en/basics/schedule.html">Schedule</a></li><li><a href="/en/basics/extend.html">Extend</a></li><li><a href="/en/basics/app-start.html">Custom Init</a></li></ul></dd><dt>Core</dt><dd><ul><li><a href="/en/core/development.html">Development</a></li><li><a href="/en/core/unittest.html">Unit Testing</a></li><li><a href="/en/core/deployment.html">应用部署</a></li><li><a href="/en/core/logger.html">Logger</a></li><li><a href="/en/core/httpclient.html">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html">Cluster and IPC</a></li><li><a href="/en/core/view.html">View</a></li><li><a href="/en/core/error-handling.html">Error Handling</a></li><li><a href="/en/core/security.html">Security</a></li><li><a href="/en/core/i18n.html">i18n</a></li></ul></dd><dt>Tutorials</dt><dd><ul><li><a href="/en/tutorials/progressive.html">Progressive</a></li><li><a href="/en/tutorials/mysql.html">MySQL</a></li><li><a href="/en/tutorials/restful.html">RESTful API</a></li><li><a href="/en/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/en/advanced/loader.html">Loader</a></li><li><a href="/en/advanced/plugin.html">Plugin</a></li><li><a href="/en/advanced/framework.html">Framework</a></li><li><a href="/en/advanced/cluster-client.html">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html">View Plugin</a></li></ul></dd><dt>Community</dt><dd><ul><li><a href="/en/plugins/">内置插件列表</a></li><li><a href="/en/contributing.html">Contributing</a></li><li><a href="/en/resource.html">资源</a></li><li><a href="/en/faq.html">FAQ</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
