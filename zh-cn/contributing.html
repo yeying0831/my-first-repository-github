@@ -91,7 +91,7 @@
 <h2 id="提交代码"><a class="markdown-anchor" href="#提交代码">#</a> 提交代码</h2>
 <h3 id="提交-pull-request"><a class="markdown-anchor" href="#提交-pull-request">#</a> 提交 Pull Request</h3>
 <p>如果你有仓库的开发者权限，而且希望贡献代码，那么你可以创建分支修改代码提交 PR，egg 开发团队会 review 代码合并到主干。</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 先创建开发分支开发，分支名应该有含义，避免使用 update、tmp 之类的</span></div><div class="line">$ git checkout -b branch-name</div><div class="line"></div><div class="line"><span class="comment"># 开发完成后跑下测试是否通过，必要时需要新增或修改测试用例</span></div><div class="line">$ npm <span class="built_in">test</span></div><div class="line"></div><div class="line"><span class="comment"># 测试通过后，提交代码，message 见下面的规范</span></div><div class="line"></div><div class="line">$ git add . <span class="comment"># git add -u 删除文件</span></div><div class="line">$ git commit -m <span class="string">"fix(role): role.use must xxx"</span></div><div class="line">$ git push origin branch-name</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 先创建开发分支开发，分支名应该有含义，避免使用 update、tmp 之类的</span></span><br><span class="line">$ git checkout -b branch-name</span><br><span class="line"></span><br><span class="line"><span class="comment"># 开发完成后跑下测试是否通过，必要时需要新增或修改测试用例</span></span><br><span class="line">$ npm <span class="built_in">test</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试通过后，提交代码，message 见下面的规范</span></span><br><span class="line"></span><br><span class="line">$ git add . <span class="comment"># git add -u 删除文件</span></span><br><span class="line">$ git commit -m <span class="string">"fix(role): role.use must xxx"</span></span><br><span class="line">$ git push origin branch-name</span><br></pre></td></tr></table></figure>
 <p>提交后就可以在 <a href="https://github.com/eggjs/egg/pulls" target="_blank" rel="external">egg</a> 创建 Pull Request 了。</p>
 <p>由于谁也无法保证过了多久之后还记得多少，为了后期回溯历史的方便，请在提交 MR 时确保提供了以下信息。</p>
 <ol>
@@ -105,7 +105,7 @@
 <h3 id="commit-提交规范"><a class="markdown-anchor" href="#commit-提交规范">#</a> Commit 提交规范</h3>
 <p>根据 <a href="https://github.com/angular/angular.js/blob/master/CONTRIBUTING.md#commit-message-format" target="_blank" rel="external">angular 规范</a>提交 commit，
 这样 history 看起来更加清晰，还可以自动生成 changelog。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">type</span>&gt;</span>(<span class="tag">&lt;<span class="name">scope</span>&gt;</span>): <span class="tag">&lt;<span class="name">subject</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">BLANK</span> <span class="attr">LINE</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">BLANK</span> <span class="attr">LINE</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">footer</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">type</span>&gt;</span>(<span class="tag">&lt;<span class="name">scope</span>&gt;</span>): <span class="tag">&lt;<span class="name">subject</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">BLANK</span> <span class="attr">LINE</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">BLANK</span> <span class="attr">LINE</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">footer</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>（1）type</p>
 <p>提交 commit 的类型，包括以下几种</p>
 <ul>
@@ -132,7 +132,7 @@
 <li>如果功能点有新增或修改的，还需要关联文档 <code>doc</code> 和 <code>egg-init</code> 的 PR，如 <code>eggjs/egg-bin#123</code></li>
 </ul>
 <p>示例</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">fix($compile): [BREAKING_CHANGE] couple of unit tests for IE9</div><div class="line"></div><div class="line">Older IEs serialize html uppercased, but IE9 does not...</div><div class="line">Would be better to expect case insensitive, unfortunately jasmine does</div><div class="line">not allow to user regexps for throw expectations.</div><div class="line"></div><div class="line">Document change on eggjs/egg#123</div><div class="line"></div><div class="line">Closes #392</div><div class="line"></div><div class="line">BREAKING CHANGE:</div><div class="line"></div><div class="line">  Breaks foo.bar api, foo.baz should be used instead</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fix($compile): [BREAKING_CHANGE] couple of unit tests for IE9</span><br><span class="line"></span><br><span class="line">Older IEs serialize html uppercased, but IE9 does not...</span><br><span class="line">Would be better to expect case insensitive, unfortunately jasmine does</span><br><span class="line">not allow to user regexps for throw expectations.</span><br><span class="line"></span><br><span class="line">Document change on eggjs/egg#123</span><br><span class="line"></span><br><span class="line">Closes #392</span><br><span class="line"></span><br><span class="line">BREAKING CHANGE:</span><br><span class="line"></span><br><span class="line">  Breaks foo.bar api, foo.baz should be used instead</span><br></pre></td></tr></table></figure>
 <p>查看具体<a href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit" target="_blank" rel="external">文档</a></p>
 <h2 id="发布管理"><a class="markdown-anchor" href="#发布管理">#</a> 发布管理</h2>
 <p>egg 基于 <a href="http://semver.org/lang/zh-CN/" target="_blank" rel="external">semver</a> 语义化版本号进行发布。</p>
@@ -159,7 +159,7 @@
 </li>
 <li>
 <p>发起一个新的 <a href="https://github.com/nodejs/node/pull/4181" target="_blank" rel="external">Release Proposal MR</a>，按照 <a href="https://github.com/nodejs/node/blob/master/CHANGELOG.md" target="_blank" rel="external">node CHANGELOG</a> 进行 <code>History</code> 的编写，修正文档中与版本相关的内容，commits 可以自动生成。</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">$ npm run commits</div></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm run commits</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>指定下一个大版本的 PM。</p>
@@ -173,7 +173,7 @@
 <li><code>npm publish</code> 之前，请先阅读<a href="https://fengmk2.com/blog/2016/how-i-publish-a-npm-package" target="_blank" rel="external">『我是如何发布一个 npm 包的』</a>。</li>
 </ul>
 <p>上述描述中所有的设置 tag 都是指在 <code>package.json</code> 中设置 npm 的 tag。</p>
-<figure class="highlight"><table><tr><td class="code"><pre><div class="line">"publishConfig": &#123;</div><div class="line">  "tag": "next"</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">"publishConfig": &#123;</span><br><span class="line">  "tag": "next"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
   </article>
   <aside id="mobileAside" class="toc">
