@@ -81,8 +81,8 @@
 <li>To decide whether to enable or disable the xframe security header from the context of the request.</li>
 <li>To decide csp policies from different request urls.</li>
 </ol>
-<p>Then we can configure <code>this.securityOptions[name] opts</code> in the custom middleware or controller,then the current request configuration will overrides the default configuration (new configuration will be merged and override the default project configuration, but only take effect in the current request)</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>*(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// if satisfied some condition</span></span><br><span class="line">  <span class="comment">// change configuration</span></span><br><span class="line">  <span class="keyword">this</span>.securityOptions.xframe = &#123;</span><br><span class="line">    value: <span class="string">'ALLOW-FROM: https://domain.com'</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// disable configuration</span></span><br><span class="line">  <span class="keyword">this</span>.securityOptions.xssProtection = &#123;</span><br><span class="line">    enable: <span class="literal">false</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Then we can configure <code>ctx.securityOptions[name] opts</code> in the custom middleware or controller,then the current request configuration will overrides the default configuration (new configuration will be merged and override the default project configuration, but only take effect in the current request)</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> ctx =&gt; &#123;</span><br><span class="line">  <span class="comment">// if satisfied some condition</span></span><br><span class="line">  <span class="comment">// change configuration</span></span><br><span class="line">  ctx.securityOptions.xframe = &#123;</span><br><span class="line">    value: <span class="string">'ALLOW-FROM: https://domain.com'</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="comment">// disable configuration</span></span><br><span class="line">  ctx.securityOptions.xssProtection = &#123;</span><br><span class="line">    enable: <span class="literal">false</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Not all security plugins support dynamic configuration, only following plugins list support</p>
 <ul>
 <li>csp</li>
@@ -97,12 +97,12 @@
 <li>shtml</li>
 </ul>
 <p>helper is the same way to configure.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">this</span>.securityOptions.shtml = &#123;</span><br><span class="line">  whiteList: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ctx.securityOptions.shtml = &#123;</span><br><span class="line">  whiteList: &#123;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h4 id="mention"><a class="markdown-anchor" href="#mention">#</a> Mention</h4>
 <ul>
 <li>Security is a big thing, please pay attention to the risk of changes in the security configuration (especially dynamic changes)</li>
-<li><code>this.securityOptions</code> the current request configuration will overrides the default configuration, but it does not make a deep copy，so pay attention to configure <code>csp.policy</code>, it will not be merged.</li>
-<li>If you configure <code>this.securityOptions</code>，please write unit tests to ensure the code is correct.</li>
+<li><code>ctx.securityOptions</code> the current request configuration will overrides the default configuration, but it does not make a deep copy，so pay attention to configure <code>csp.policy</code>, it will not be merged.</li>
+<li>If you configure <code>ctx.securityOptions</code>，please write unit tests to ensure the code is correct.</li>
 </ul>
 <h2 id="api"><a class="markdown-anchor" href="#api">#</a> API</h2>
 <h3 id="ctxissafedomaindomain"><a class="markdown-anchor" href="#ctxissafedomaindomain">#</a> ctx.isSafeDomain(domain)</h3>
@@ -179,7 +179,7 @@ When submitting the form, please submit with the <code>_csrf</code> token parame
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.security = &#123;</span><br><span class="line">  protocolWhitelist: [<span class="string">'test'</span>]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="sjs"><a class="markdown-anchor" href="#sjs">#</a> .sjs()</h3>
 <p>Used to output variables in javascript(include onload/event),it will do <code>JAVASCRIPT ENCODE</code> for the variable string.It will escape all characters to <code>\x</code> which are not in the whitelist to avoid XSS attack.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = <span class="string">'"hello"'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// not use sjs</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`var foo = "<span class="subst">$&#123;foo&#125;</span>";`</span>);</span><br><span class="line"><span class="comment">// =&gt; var foo = ""hello"";</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// use sjs</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`var foo = "<span class="subst">$&#123;<span class="keyword">this</span>.helper.sjs(foo)&#125;</span>";`</span>);</span><br><span class="line"><span class="comment">// =&gt; var foo = "\\x22hello\\x22";</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = <span class="string">'"hello"'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// not use sjs</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`var foo = "<span class="subst">$&#123;foo&#125;</span>";`</span>);</span><br><span class="line"><span class="comment">// =&gt; var foo = ""hello"";</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// use sjs</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`var foo = "<span class="subst">$&#123;ctx.helper.sjs(foo)&#125;</span>";`</span>);</span><br><span class="line"><span class="comment">// =&gt; var foo = "\\x22hello\\x22";</span></span><br></pre></td></tr></table></figure>
 <h3 id="shtml"><a class="markdown-anchor" href="#shtml">#</a> .shtml()</h3>
 <p>If you want to output richtexts in views, you need to use <code>shtml</code> helper.
 It will do XSS filter, then output html tags to avoid illegal scripts.</p>
@@ -213,22 +213,22 @@ Such scenes are generally forums, comments, etc.</p>
 <li>absolute path starts with <code>/</code></li>
 <li>above path try to use <code>url encode</code> to bypass the check</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = <span class="string">'/usr/local/bin'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">this</span>.helper.spath(foo2));</span><br><span class="line"><span class="comment">// =&gt; null</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = <span class="string">'/usr/local/bin'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(ctx.helper.spath(foo2));</span><br><span class="line"><span class="comment">// =&gt; null</span></span><br></pre></td></tr></table></figure>
 <h3 id="sjson"><a class="markdown-anchor" href="#sjson">#</a> .sjson()</h3>
 <p>json encode.</p>
 <p>If you want to output json in javascript without encoding, it will be a risk for XSS.
 sjson supports json encode，it will iterate all keys in json, then escape all characters in the value to <code>\x</code> to avoid XSS attack, and keep the json structure unchanged.
-If you want to output json string in your views, please use <code>${this.helper.sjson(变量名)}</code>to escape.</p>
+If you want to output json string in your views, please use <code>${ctx.helper.sjson(var)}</code>to escape.</p>
 <p><strong>it has a very complex process and will lost performance, so avoid the use as far as possible</strong></p>
 <p>example:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="built_in">window</span>.locals = $&#123;<span class="keyword">this</span>.helper.sjson(locals)&#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">  <span class="built_in">window</span>.locals = $&#123;ctx.helper.sjson(locals)&#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="clifilter"><a class="markdown-anchor" href="#clifilter">#</a> .cliFilter()</h3>
 <p>It will cause remote command execution vulnerability, when user submit the implementation of the command by browser.because the server does not filter for the implementation of the function, resulting in the execution of the command can usually lead to the invasion of the server.</p>
 <p>If you want to get user submit for command's parameter, please use <code>cliFilter</code>。</p>
 <p>before fix:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">cp.exec(<span class="string">"bash /home/admin/ali-knowledge-graph-backend/initrun.sh "</span> + port);</span><br></pre></td></tr></table></figure>
 <p>after fix:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">cp.exec(<span class="string">"bash /home/admin/ali-knowledge-graph-backend/initrun.sh "</span> + <span class="keyword">this</span>.helper.cliFilter(port));</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">cp.exec(<span class="string">"bash /home/admin/ali-knowledge-graph-backend/initrun.sh "</span> + ctx.helper.cliFilter(port));</span><br></pre></td></tr></table></figure>
 <h2 id="security-headers"><a class="markdown-anchor" href="#security-headers">#</a> Security Headers</h2>
 <p>Refer to <a href="https://github.com/krakenjs/lusca" target="_blank" rel="external">lusca</a>, appriciate for their works.</p>
 <h3 id="hsts-strict-transport-security"><a class="markdown-anchor" href="#hsts-strict-transport-security">#</a> hsts Strict-Transport-Security</h3>
