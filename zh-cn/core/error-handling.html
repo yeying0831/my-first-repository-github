@@ -88,16 +88,16 @@
 <td>onerror 自带的没有错误信息的简单错误页（不推荐）</td>
 </tr>
 <tr>
-<td>JSON</td>
+<td>JSON &amp; JSONP</td>
 <td>local &amp; unittest</td>
 <td>-</td>
-<td>JSON 对象，带详细的错误信息</td>
+<td>JSON 对象或对应的 JSONP 格式响应，带详细的错误信息</td>
 </tr>
 <tr>
-<td>JSON</td>
+<td>JSON &amp; JSONP</td>
 <td>其他</td>
 <td>-</td>
-<td>json 对象，不带详细的错误信息</td>
+<td>JSON 对象或对应的 JSONP 格式响应，不带详细的错误信息</td>
 </tr>
 </tbody>
 </table>
@@ -106,11 +106,8 @@
 <p>在 <code>config/config.default.js</code> 中</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  onerror: &#123;</span><br><span class="line">    <span class="comment">// 线上页面发生异常时，重定向到这个页面上</span></span><br><span class="line">    errorPageUrl: <span class="string">'/50x.html'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="自定义统一异常处理"><a class="markdown-anchor" href="#自定义统一异常处理">#</a> 自定义统一异常处理</h2>
-<p>尽管框架提供了默认的统一异常处理机制，但是应用开发中经常需要对异常时的响应做自定义，特别是在做一些接口开发的时候。这时我们可以通过自定义<a href="../basics/middleware.html">中间件</a>的方式来自行定义统一的异常处理函数。</p>
-<p>例如我们可以在 <code>app/middleware</code> 中新增一个 <code>error_handler.js</code> 的文件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/middleware/error_handler.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>* <span class="title">errorHandler</span>(<span class="params">next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">yield</span> next;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="comment">// 注意：自定义的错误统一处理函数捕捉到错误后也要 `app.emit('error', err, this)`</span></span><br><span class="line">      <span class="comment">// 框架会统一监听，并打印对应的错误日志</span></span><br><span class="line">      <span class="keyword">this</span>.app.emit(<span class="string">'error'</span>, err, <span class="keyword">this</span>);</span><br><span class="line">      <span class="comment">// 自定义错误时异常返回的格式</span></span><br><span class="line">      <span class="keyword">this</span>.body = &#123;</span><br><span class="line">        success: <span class="literal">false</span>,</span><br><span class="line">        message: <span class="keyword">this</span>.app.config.env === <span class="string">'prod'</span> ? <span class="string">'Internal Server Error'</span> : err.message,</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>然后在 <code>config/config.default.js</code> 中引入这个中间件</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  middleware: [ <span class="string">'errorHandler'</span> ],</span><br><span class="line">  errorHandler: &#123;</span><br><span class="line">    <span class="comment">// 非 `/api/` 路径不在这里做错误处理，留给默认的 onerror 插件统一处理</span></span><br><span class="line">    match: <span class="string">'/api'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>尽管框架提供了默认的统一异常处理机制，但是应用开发中经常需要对异常时的响应做自定义，特别是在做一些接口开发的时候。框架自带的 onerror 插件支持自定义配置错误处理方法，可以覆盖默认的错误处理方法。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  onerror: &#123;</span><br><span class="line">    all(err, ctx) &#123;</span><br><span class="line">      <span class="comment">// 在此处定义针对所有响应类型的错误处理方法</span></span><br><span class="line">      <span class="comment">// 注意，定义了 config.all 之后，其他错误处理方法不会再生效</span></span><br><span class="line">      <span class="keyword">this</span>.body = <span class="string">'error'</span>;</span><br><span class="line">      <span class="keyword">this</span>.status = <span class="number">500</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    html(err, ctx) &#123;</span><br><span class="line">      <span class="comment">// html hander</span></span><br><span class="line">      <span class="keyword">this</span>.body = <span class="string">'&lt;h3&gt;error&lt;/h3&gt;'</span>;</span><br><span class="line">      <span class="keyword">this</span>.status = <span class="number">500</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    json(err, ctx) &#123;</span><br><span class="line">      <span class="comment">// json hander</span></span><br><span class="line">      <span class="keyword">this</span>.body = &#123; <span class="attr">message</span>: <span class="string">'error'</span> &#125;;</span><br><span class="line">      <span class="keyword">this</span>.status = <span class="number">500</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    jsonp(err, ctx) &#123;</span><br><span class="line">      <span class="comment">// 一般来说，不需要特殊针对 jsonp 进行错误定义，jsonp 的错误处理会自动调用 json 错误处理，并包装成 jsonp 的响应格式</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="404"><a class="markdown-anchor" href="#404">#</a> 404</h2>
 <p>框架并不会将服务端返回的 404 状态当做异常来处理，但是框架提供了当响应为 404 且没有返回 body 时的默认响应。</p>
 <ul>

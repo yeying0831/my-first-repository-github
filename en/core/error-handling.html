@@ -89,16 +89,16 @@
 <td>onerror built-in error page(simple, not recommended)</td>
 </tr>
 <tr>
-<td>JSON</td>
+<td>JSON &amp; JSONP</td>
 <td>local &amp; unittest</td>
 <td>-</td>
-<td>JSON Object with details</td>
+<td>JSON Object or JSONP response body with details</td>
 </tr>
 <tr>
-<td>JSON</td>
+<td>JSON &amp; JSONP</td>
 <td>others</td>
 <td>-</td>
-<td>JSON object without details</td>
+<td>JSON object  or JSONP response body without details</td>
 </tr>
 </tbody>
 </table>
@@ -107,11 +107,8 @@
 <p><code>onerror</code> config in <code>config/config.default.js</code>:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  onerror: &#123;</span><br><span class="line">    errorPageUrl: <span class="string">'/50x.html'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="create-your-universal-exception-handler"><a class="markdown-anchor" href="#create-your-universal-exception-handler">#</a> Create your universal exception handler</h2>
-<p>Once the default handler no longer meet your needs, you still can leverage Middleware to create a new handler.</p>
-<p>As following implementation, you can create a new file in <code>app/middleware</code>, for example <code>error_handler.js</code>:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/middleware/error_handler.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>* <span class="title">errorHandler</span>(<span class="params">next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">yield</span> next;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="comment">// `app.emit('error', err, this)` should be invoked after exceptions are caught</span></span><br><span class="line">      <span class="comment">// Exceptions will be caught and printed out.</span></span><br><span class="line">      <span class="keyword">this</span>.app.emit(<span class="string">'error'</span>, err, <span class="keyword">this</span>);</span><br><span class="line">      <span class="comment">// Composing the object in handler when exceptions are thrown</span></span><br><span class="line">      <span class="keyword">this</span>.body = &#123;</span><br><span class="line">        success: <span class="literal">false</span>,</span><br><span class="line">        message: <span class="keyword">this</span>.app.config.env === <span class="string">'prod'</span> ? <span class="string">'Internal Server Error'</span> : err.message,</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>Adding your customized <code>error_handler</code> in <code>config/config.default.js</code>:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  middleware: [ <span class="string">'errorHandler'</span> ],</span><br><span class="line">  errorHandler: &#123;</span><br><span class="line">    <span class="comment">// errorHandler only handle exceptions from requests under /api/, and onerror will do the same things for the rest.</span></span><br><span class="line">    match: <span class="string">'/api'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Once the default handler no longer meet your needs, you still can customize your owner error handler by onerror's configurations.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  onerror: &#123;</span><br><span class="line">    all(err, ctx) &#123;</span><br><span class="line">      <span class="comment">// Define an error handler for all type of Response.</span></span><br><span class="line">      <span class="comment">// Once config.all present, other type of error handers will be ignored.</span></span><br><span class="line">      <span class="keyword">this</span>.body = <span class="string">'error'</span>;</span><br><span class="line">      <span class="keyword">this</span>.status = <span class="number">500</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    html(err, ctx) &#123;</span><br><span class="line">      <span class="comment">// html hander</span></span><br><span class="line">      <span class="keyword">this</span>.body = <span class="string">'&lt;h3&gt;error&lt;/h3&gt;'</span>;</span><br><span class="line">      <span class="keyword">this</span>.status = <span class="number">500</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    json(err, ctx) &#123;</span><br><span class="line">      <span class="comment">// json hander</span></span><br><span class="line">      <span class="keyword">this</span>.body = &#123; <span class="attr">message</span>: <span class="string">'error'</span> &#125;;</span><br><span class="line">      <span class="keyword">this</span>.status = <span class="number">500</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    jsonp(err, ctx) &#123;</span><br><span class="line">      <span class="comment">// Generally, we don't need to customize jsonp error handler.</span></span><br><span class="line">      <span class="comment">// It will call json error handler and wrap to jsonp type response.</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="404"><a class="markdown-anchor" href="#404">#</a> 404</h2>
 <p>Egg won't take <code>NOT FOUND</code> from back-end as exception. Instead, if <code>NOT FOUND</code> is emitted without a body, it will return the following JSON object as default response.</p>
 <p>identified as JSON:</p>
@@ -125,6 +122,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/middleware/notfound_handler.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>* (<span class="params">next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">yield</span> next;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.status === <span class="number">404</span> &amp;&amp; !<span class="keyword">this</span>.body) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.acceptJSON) <span class="keyword">this</span>.body = &#123; <span class="attr">error</span>: <span class="string">'Not Found'</span> &#125;;</span><br><span class="line">      <span class="keyword">else</span> <span class="keyword">this</span>.body = <span class="string">'&lt;h1&gt;Page Not Found&lt;/h1&gt;'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>Adding yours to <code>middleware</code> in config:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  middleware: [ <span class="string">'notfoundHander'</span> ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
   </article>
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
