@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>插件 - 为企业级框架和应用而生</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">切换语言</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container" class="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>插件</h1>
+    <p>插件机制是我们框架的一大特色。它不但可以保证框架核心的足够精简、稳定、高效，还可以促进业务逻辑的复用，生态圈的形成。有人可能会问了</p>
+<ul>
+<li>Koa 已经有了中间件的机制，为啥还要插件呢？</li>
+<li>中间件、插件、应用它们之间是什么关系，有什么区别？</li>
+<li>我该怎么使用一个插件？</li>
+<li>如何编写一个插件？</li>
+<li>...</li>
+</ul>
+<p>接下来我们就来逐一讨论</p>
+<h2 id="为什么要插件"><a class="markdown-anchor" href="#为什么要插件">#</a> 为什么要插件</h2>
+<p>我们在使用 Koa 中间件过程中发现了下面一些问题：</p>
+<ol>
+<li>中间件加载其实是有先后顺序的，但是中间件自身却无法管理这种顺序，只能交给使用者。这样其实非常不友好，一旦顺序不对，结果可能有天壤之别。</li>
+<li>中间件的定位是拦截用户请求，并在它前后做一些事情，例如：鉴权、安全检查、访问日志等等。但实际情况是，有些功能是和请求无关的，例如：定时任务、消息订阅、后台逻辑等等。</li>
+<li>有些功能包含非常复杂的初始化逻辑，需要在应用启动的时候完成。这显然也不适合放到中间件中去实现。</li>
+</ol>
+<p>综上所述，我们需要一套更加强大的机制，来管理、编排那些相对独立的业务逻辑。</p>
+<h3 id="中间件-插件-应用的关系"><a class="markdown-anchor" href="#中间件-插件-应用的关系">#</a> 中间件、插件、应用的关系</h3>
+<p>一个插件其实就是一个『迷你的应用』，和应用（app）几乎一样：</p>
+<ul>
+<li>它包含了 <a href="./service.html">Service</a>、<a href="./middleware.html">中间件</a>、<a href="./config.html">配置</a>、<a href="./extend.html">框架扩展</a>等等。</li>
+<li>它没有独立的 <a href="./router.html">Router</a> 和 <a href="./controller.html">Controller</a>。</li>
+</ul>
+<p>他们的关系是：</p>
+<ul>
+<li>应用可以直接引入 Koa 的中间件。</li>
+<li>当遇到上一节提到的场景时，则应用需引入插件。</li>
+<li>插件本身可以包含中间件。</li>
+<li>多个插件可以包装为一个<a href="../advanced/framework.html">上层框架</a>。</li>
+</ul>
+<h2 id="使用插件"><a class="markdown-anchor" href="#使用插件">#</a> 使用插件</h2>
+<p>插件一般通过 npm 模块的方式进行复用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-mysql --save</span><br></pre></td></tr></table></figure>
+<p><strong>注意：我们建议通过 <code>^</code> 的方式引入依赖，并且强烈不建议锁定版本。</strong></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"egg-mysql"</span>: <span class="string">"^3.0.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后需要在应用或框架的 <code>config/plugin.js</code> 中声明：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line"><span class="comment">// 使用 mysql 插件</span></span><br><span class="line">exports.mysql = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-mysql'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>就可以直接使用插件提供的功能：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.mysql.query(sql, values);</span><br></pre></td></tr></table></figure>
+<h3 id="参数介绍"><a class="markdown-anchor" href="#参数介绍">#</a> 参数介绍</h3>
+<p><code>plugin.js</code> 中的每个配置项支持：</p>
+<ul>
+<li><code>{Boolean} enable</code> - 是否开启此插件，默认为 true</li>
+<li><code>{String} package</code> - <code>npm</code> 模块名称，通过 <code>npm</code> 模块形式引入插件</li>
+<li><code>{String} path</code> - 插件绝对路径，跟 package 配置互斥</li>
+<li><code>{Array} env</code> - 只有在指定运行环境才能开启，会覆盖插件自身 <code>package.json</code> 中的配置</li>
+</ul>
+<h3 id="开启和关闭"><a class="markdown-anchor" href="#开启和关闭">#</a> 开启和关闭</h3>
+<p>在上层框架内部内置的插件，应用在使用时就不用配置 package 或者 path，只需要指定 enable 与否：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 对于内置插件，可以用下面的简洁方式开启或关闭</span></span><br><span class="line">exports.onerror = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="根据环境配置"><a class="markdown-anchor" href="#根据环境配置">#</a> 根据环境配置</h3>
+<p>虽然上述有 <code>env</code> 字段可以配置，但我们更推荐 <code>plugin.{env}.js</code> 这种模式，会根据<a href="../basics/env.html">运行环境</a>加载插件配置。</p>
+<p>比如定义了一个开发环境使用的插件 <code>egg-dev</code>，只希望在本地环境加载，可以安装到 <code>devDependencies</code>。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// npm i egg-dev --save-dev</span></span><br><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"egg-dev"</span>: <span class="string">"*"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在 <code>plugin.local.js</code> 中声明：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.local.js</span></span><br><span class="line">exports.dev = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-dev'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这样在生产环境可以 <code>npm i --production</code> 不需要下载 <code>egg-dev</code> 的包了。</p>
+<p><strong>注意: 不存在 <code>plugin.default.js</code>。</strong></p>
+<h3 id="package-和-path"><a class="markdown-anchor" href="#package-和-path">#</a> package 和 path</h3>
+<ul>
+<li><code>package</code> 是 <code>npm</code> 方式引入，也是最常见的引入方式</li>
+<li><code>path</code> 是绝对路径引入，如应用内部抽了一个插件，但还没达到开源发布独立 <code>npm</code> 的阶段，或者是应用自己覆盖了框架的一些插件</li>
+<li>关于这两种方式的使用场景，可以参见<a href="../tutorials/progressive.html">渐进式开发</a>。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line">exports.mysql = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: path.join(__dirname, <span class="string">'../lib/plugin/egg-mysql'</span>),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="插件配置"><a class="markdown-anchor" href="#插件配置">#</a> 插件配置</h2>
+<p>插件一般会包含自己的默认配置，应用开发者可以在 <code>config.default.js</code> 覆盖对应的配置：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.mysql = &#123;</span><br><span class="line">  client: &#123;</span><br><span class="line">    host: <span class="string">'mysql.com'</span>,</span><br><span class="line">    port: <span class="string">'3306'</span>,</span><br><span class="line">    user: <span class="string">'test_user'</span>,</span><br><span class="line">    password: <span class="string">'test_password'</span>,</span><br><span class="line">    database: <span class="string">'test'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>具体合并规则可以参见<a href="./config.html">配置</a>。</p>
+<h2 id="插件列表"><a class="markdown-anchor" href="#插件列表">#</a> 插件列表</h2>
+<ul>
+<li>框架默认内置了企业级应用<a href="https://eggjs.org/zh-cn/plugins/">常用的插件</a>：
+<ul>
+<li><a href="https://github.com/eggjs/egg-onerror" target="_blank" rel="external">onerror</a> 统一异常处理</li>
+<li><a href="https://github.com/eggjs/egg-session" target="_blank" rel="external">Session</a> Session 实现</li>
+<li><a href="https://github.com/eggjs/egg-i18n" target="_blank" rel="external">i18n</a> 多语言</li>
+<li><a href="https://github.com/eggjs/egg-watcher" target="_blank" rel="external">watcher</a> 文件和文件夹监控</li>
+<li><a href="https://github.com/eggjs/egg-multipart" target="_blank" rel="external">multipart</a> 文件流式上传</li>
+<li><a href="https://github.com/eggjs/egg-security" target="_blank" rel="external">security</a> 安全</li>
+<li><a href="https://github.com/eggjs/egg-development" target="_blank" rel="external">development</a> 开发环境配置</li>
+<li><a href="https://github.com/eggjs/egg-logrotator" target="_blank" rel="external">logrotator</a> 日志切分</li>
+<li><a href="https://github.com/eggjs/egg-schedule" target="_blank" rel="external">schedule</a> 定时任务</li>
+<li><a href="https://github.com/eggjs/egg-static" target="_blank" rel="external">static</a> 静态服务器</li>
+<li><a href="https://github.com/eggjs/egg-jsonp" target="_blank" rel="external">jsonp</a> jsonp 支持</li>
+<li><a href="https://github.com/eggjs/egg-view" target="_blank" rel="external">view</a> 模板引擎</li>
+</ul>
+</li>
+<li>更多社区的插件可以 GitHub 搜索 <a href="https://github.com/topics/egg-plugin" target="_blank" rel="external">egg-plugin</a>。</li>
+</ul>
+<h2 id="如何开发一个插件"><a class="markdown-anchor" href="#如何开发一个插件">#</a> 如何开发一个插件</h2>
+<p>参见文档：<a href="../advanced/plugin.html">插件开发</a>。</p>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li></ul>
+  </div>
+  <dl><dt>新手指南</dt><dd><ul><li><a href="/zh-cn/intro/index.html">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html">快速入门</a></li></ul></dd><dt>基础功能</dt><dd><ul><li><a href="/zh-cn/basics/structure.html">目录结构</a></li><li><a href="/zh-cn/basics/objects.html">内置对象</a></li><li><a href="/zh-cn/basics/env.html">运行环境</a></li><li><a href="/zh-cn/basics/config.html">配置</a></li><li><a href="/zh-cn/basics/middleware.html">中间件</a></li><li><a href="/zh-cn/basics/router.html">Router</a></li><li><a href="/zh-cn/basics/controller.html">Controller</a></li><li><a href="/zh-cn/basics/service.html">Service</a></li><li><a href="/zh-cn/basics/plugin.html">插件</a></li><li><a href="/zh-cn/basics/schedule.html">定时任务</a></li><li><a href="/zh-cn/basics/extend.html">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html">启动自定义</a></li></ul></dd><dt>核心功能</dt><dd><ul><li><a href="/zh-cn/core/development.html">本地开发</a></li><li><a href="/zh-cn/core/unittest.html">单元测试</a></li><li><a href="/zh-cn/core/deployment.html">应用部署</a></li><li><a href="/zh-cn/core/logger.html">日志</a></li><li><a href="/zh-cn/core/httpclient.html">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html">异常处理</a></li><li><a href="/zh-cn/core/security.html">安全</a></li><li><a href="/zh-cn/core/i18n.html">国际化</a></li></ul></dd><dt>教程</dt><dd><ul><li><a href="/zh-cn/tutorials/progressive.html">渐进式开发</a></li><li><a href="/zh-cn/tutorials/mysql.html">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html">RESTful API</a></li><li><a href="/zh-cn/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>进阶</dt><dd><ul><li><a href="/zh-cn/advanced/loader.html">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html">模板插件开发规范</a></li></ul></dd><dt>社区</dt><dd><ul><li><a href="/zh-cn/plugins/">内置插件列表</a></li><li><a href="/zh-cn/contributing.html">如何贡献</a></li><li><a href="/zh-cn/resource.html">资源</a></li><li><a href="/zh-cn/faq.html">常见问题</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
