@@ -49,14 +49,14 @@
   <article class="markdown-body">
     <h1>View 模板渲染</h1>
     <p>绝大多数情况，我们都需要读取数据后渲染模板，然后呈现给用户。故我们需要引入对应的模板引擎。</p>
-<p>框架内置 <a href="https://github.com/eggjs/egg-view" target="_blank" rel="external">egg-view</a> 作为模板解决方案，并支持多模板渲染，每个模板引擎都以插件的方式引入，但保持渲染的 API 一致。如果想更深入的了解，可以查看<a href="../advanced/view-plugin.html">模板插件开发</a>。</p>
-<p>以下以官方支持的 View 插件 <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="external">egg-view-nunjucks</a> 为例</p>
+<p>框架内置 <a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> 作为模板解决方案，并支持多模板渲染，每个模板引擎都以插件的方式引入，但保持渲染的 API 一致。如果想更深入的了解，可以查看<a href="../advanced/view-plugin.html">模板插件开发</a>。</p>
+<p>以下以官方支持的 View 插件 <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a> 为例</p>
 <h2 id="引入-view-插件"><a class="markdown-anchor" href="#引入-view-插件">#</a> 引入 view 插件</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-view-nunjucks --save</span><br></pre></td></tr></table></figure>
 <h3 id="启用插件"><a class="markdown-anchor" href="#启用插件">#</a> 启用插件</h3>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.nunjucks = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-view-nunjucks'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="配置插件"><a class="markdown-anchor" href="#配置插件">#</a> 配置插件</h2>
-<p><a href="https://github.com/eggjs/egg-view" target="_blank" rel="external">egg-view</a> 提供了 <code>config.view</code> 通用配置</p>
+<p><a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> 提供了 <code>config.view</code> 通用配置</p>
 <h3 id="root-string"><a class="markdown-anchor" href="#root-string">#</a> root {String}</h3>
 <p>模板文件的根目录，为绝对路径，默认为 <code>${baseDir}/app/view</code>。支持配置多个目录，以 <code>,</code> 分割，会从多个目录查找文件。</p>
 <p>如下示例演示了如何配置多个 <code>view</code> 目录：</p>
@@ -106,7 +106,7 @@
 <p>在模板中可以直接使用 <code>helper</code> 上注册的方法，具体可以参见<a href="../basics/extend.html">扩展</a>。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/extend/helper.js</span></span><br><span class="line">exports.lowercaseFirst = <span class="function"><span class="params">str</span> =&gt;</span> str[<span class="number">0</span>].toLowerCase() + str.substring(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="keyword">yield</span> <span class="keyword">this</span>.renderString(<span class="string">'&#123;&#123; helper.lowercaseFirst(name) &#125;&#125;'</span>, data);</span><br></pre></td></tr></table></figure>
 <h2 id="security"><a class="markdown-anchor" href="#security">#</a> Security</h2>
-<p>框架内置的 <a href="https://github.com/eggjs/egg-security" target="_blank" rel="external">egg-security</a> 插件，为我们提供了常见的安全辅助函数，包括 <code>helper.shtml / surl / sjs</code> 等等等，强烈建议阅读下<a href="./security.html">安全</a>。</p>
+<p>框架内置的 <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a> 插件，为我们提供了常见的安全辅助函数，包括 <code>helper.shtml / surl / sjs</code> 等等等，强烈建议阅读下<a href="./security.html">安全</a>。</p>
 
   </article>
   <aside id="mobileAside" class="toc">

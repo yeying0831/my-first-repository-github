@@ -52,7 +52,7 @@
 <blockquote>
 <p>如何榨干服务器资源，利用上多核 CPU 的并发优势？</p>
 </blockquote>
-<p>而 Node.js 官方提供的解决方案是 <a href="https://nodejs.org/api/cluster.html" target="_blank" rel="external">Cluster 模块</a></p>
+<p>而 Node.js 官方提供的解决方案是 <a href="https://nodejs.org/api/cluster.html" target="_blank" rel="noopener">Cluster 模块</a></p>
 <blockquote>
 <p>A single instance of Node.js runs in a single thread. To take advantage of multi-core systems the user will sometimes want to launch a cluster of Node.js processes to handle the load.</p>
 </blockquote>
@@ -64,7 +64,7 @@
 <ul>
 <li>在服务器上同时启动多个进程。</li>
 <li>每个进程里都跑的是同一份源代码（好比把以前一个进程的工作分给多个进程去做）。</li>
-<li>更神奇的是，这些进程可以同时监听一个端口（具体原理推荐阅读 @DavidCai1993 这篇 <a href="https://cnodejs.org/topic/56e84480833b7c8a0492e20c" target="_blank" rel="external">Cluster 实现原理</a>）。</li>
+<li>更神奇的是，这些进程可以同时监听一个端口（具体原理推荐阅读 @DavidCai1993 这篇 <a href="https://cnodejs.org/topic/56e84480833b7c8a0492e20c" target="_blank" rel="noopener">Cluster 实现原理</a>）。</li>
 </ul>
 <p>其中：</p>
 <ul>
@@ -85,7 +85,7 @@
 <p>健壮性（又叫鲁棒性）是企业级应用必须考虑的问题，除了程序本身代码质量要保证，框架层面也需要提供相应的『兜底』机制保证极端情况下应用的可用性。</p>
 <p>一般来说，Node.js 进程退出可以分为两类：</p>
 <h4 id="未捕获异常"><a class="markdown-anchor" href="#未捕获异常">#</a> 未捕获异常</h4>
-<p>当代码抛出了异常没有被捕获到时，进程将会退出，此时 Node.js 提供了 <code>process.on('uncaughtException', handler)</code> 接口来捕获它，但是当一个 Worker 进程遇到 <a href="https://nodejs.org/dist/latest-v6.x/docs/api/process.html#process_event_uncaughtexception" target="_blank" rel="external">未捕获的异常</a> 时，它已经处于一个不确定状态，此时我们应该让这个进程优雅退出：</p>
+<p>当代码抛出了异常没有被捕获到时，进程将会退出，此时 Node.js 提供了 <code>process.on('uncaughtException', handler)</code> 接口来捕获它，但是当一个 Worker 进程遇到 <a href="https://nodejs.org/dist/latest-v6.x/docs/api/process.html#process_event_uncaughtexception" target="_blank" rel="noopener">未捕获的异常</a> 时，它已经处于一个不确定状态，此时我们应该让这个进程优雅退出：</p>
 <ol>
 <li>关闭异常 Worker 进程所有的 TCP Server（将已有的连接快速断开，且不再接收新的连接），断开和 Master 的 IPC 通道，不再接受新的用户请求。</li>
 <li>Master 立刻 fork 一个新的 Worker 进程，保证在线的『工人』总数不变。</li>
@@ -94,7 +94,7 @@
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+---------+                 +---------+</span><br><span class="line">|  Worker |                 |  Master |</span><br><span class="line">+---------+                 +----+----+</span><br><span class="line">     | uncaughtException         |</span><br><span class="line">     +------------+              |</span><br><span class="line">     |            |              |                   +---------+</span><br><span class="line">     | &lt;----------+              |                   |  Worker |</span><br><span class="line">     |                           |                   +----+----+</span><br><span class="line">     |        disconnect         |   fork a new worker    |</span><br><span class="line">     +-------------------------&gt; + ---------------------&gt; |</span><br><span class="line">     |         <span class="built_in">wait</span>...           |                        |</span><br><span class="line">     |          <span class="built_in">exit</span>             |                        |</span><br><span class="line">     +-------------------------&gt; |                        |</span><br><span class="line">     |                           |                        |</span><br><span class="line">    die                          |                        |</span><br><span class="line">                                 |                        |</span><br><span class="line">                                 |                        |</span><br></pre></td></tr></table></figure>
 <h4 id="oom-系统异常"><a class="markdown-anchor" href="#oom-系统异常">#</a> OOM、系统异常</h4>
 <p>而当一个进程出现异常导致 crash 或者 OOM 被系统杀死时，不像未捕获异常发生时我们还有机会让进程继续执行，只能够让当前进程直接退出，Master 立刻 fork 一个新的 Worker。</p>
-<p>在框架里，我们采用 <a href="https://github.com/node-modules/graceful" target="_blank" rel="external">graceful</a> 和 <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="external">egg-cluster</a> 两个模块配合实现上面的逻辑。这套方案已在阿里巴巴和蚂蚁金服的生产环境广泛部署，且经受过『双11』大促的考验，所以是相对稳定和靠谱的。</p>
+<p>在框架里，我们采用 <a href="https://github.com/node-modules/graceful" target="_blank" rel="noopener">graceful</a> 和 <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="noopener">egg-cluster</a> 两个模块配合实现上面的逻辑。这套方案已在阿里巴巴和蚂蚁金服的生产环境广泛部署，且经受过『双11』大促的考验，所以是相对稳定和靠谱的。</p>
 <h3 id="agent-机制"><a class="markdown-anchor" href="#agent-机制">#</a> Agent 机制</h3>
 <p>说到这里，Node.js 多进程方案貌似已经成型，这也是我们早期线上使用的方案。但后来我们发现有些工作其实不需要每个 Worker 都去做，如果都做，一来是浪费资源，更重要的是可能会导致多进程间资源访问冲突。举个例子：生产环境的日志文件我们一般会按照日期进行归档，在单进程模型下这再简单不过了：</p>
 <blockquote>
@@ -163,8 +163,8 @@
 </tbody>
 </table>
 <h4 id="master"><a class="markdown-anchor" href="#master">#</a> Master</h4>
-<p>在这个模型下，Master 进程承担了进程管理的工作（类似 <a href="https://github.com/Unitech/pm2" target="_blank" rel="external">pm2</a>），不运行任何业务代码，我们只需要运行起一个 Master 进程它就会帮我们搞定所有的 Worker、Agent 进程的初始化以及重启等工作了。</p>
-<p>Master 进程的稳定性是极高的，线上运行时我们只需要通过 <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="external">egg-scripts</a> 后台运行通过 <code>egg.startCluster</code> 启动的 Master 进程就可以了，不再需要使用 <a href="https://github.com/Unitech/pm2" target="_blank" rel="external">pm2</a> 等进程守护模块。</p>
+<p>在这个模型下，Master 进程承担了进程管理的工作（类似 <a href="https://github.com/Unitech/pm2" target="_blank" rel="noopener">pm2</a>），不运行任何业务代码，我们只需要运行起一个 Master 进程它就会帮我们搞定所有的 Worker、Agent 进程的初始化以及重启等工作了。</p>
+<p>Master 进程的稳定性是极高的，线上运行时我们只需要通过 <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="noopener">egg-scripts</a> 后台运行通过 <code>egg.startCluster</code> 启动的 Master 进程就可以了，不再需要使用 <a href="https://github.com/Unitech/pm2" target="_blank" rel="noopener">pm2</a> 等进程守护模块。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-scripts start --daemon</span><br></pre></td></tr></table></figure>
 <h4 id="agent"><a class="markdown-anchor" href="#agent">#</a> Agent</h4>
 <p>在大部分情况下，我们在写业务代码的时候完全不用考虑 Agent 进程的存在，但是当我们遇到一些场景，只想让代码运行在一个进程上的时候，Agent 进程就到了发挥作用的时候了。</p>
@@ -230,7 +230,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.messenger.on(<span class="string">'refresh'</span>, by =&gt; &#123;</span><br><span class="line">    app.logger.info(<span class="string">'start update by %s'</span>, by);</span><br><span class="line">    <span class="comment">// create an anonymous context to access service</span></span><br><span class="line">    <span class="keyword">const</span> ctx = app.createAnonymousContext();</span><br><span class="line">    <span class="comment">// a convenient way to execute with generator function</span></span><br><span class="line">    <span class="comment">// can be replaced by `co`</span></span><br><span class="line">    ctx.runInBackground(<span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">yield</span> ctx.service.source.update();</span><br><span class="line">      app.lastUpdateBy = by;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>现在我们来看看如何实现第三个方案。我们需要有一个消息中间件的客户端，它会和服务端保持长连接，这一类的长连接维持比较适合在 Agent 进程上做，可以有效降低连接数，减少两端的消耗。所以我们在 Agent 进程上来开启消息监听。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// agent.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Subscriber = <span class="built_in">require</span>(<span class="string">'./lib/subscriber'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">agent</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> subscriber = <span class="keyword">new</span> Subscriber();</span><br><span class="line">  <span class="comment">// listen changed event, broadcast to all workers</span></span><br><span class="line">  subscriber.on(<span class="string">'changed'</span>, () =&gt; agent.messenger.sendToApp(<span class="string">'refresh'</span>, <span class="string">'push'</span>));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>通过合理使用 Agent 进程、定时任务和 IPC，我们可以轻松搞定类似的需求并降低对数据源的压力。具体的示例代码可以查看 <a href="https://github.com/eggjs/examples/tree/master/ipc" target="_blank" rel="external">examples/ipc</a>。</p>
+<p>通过合理使用 Agent 进程、定时任务和 IPC，我们可以轻松搞定类似的需求并降低对数据源的压力。具体的示例代码可以查看 <a href="https://github.com/eggjs/examples/tree/master/ipc" target="_blank" rel="noopener">examples/ipc</a>。</p>
 <h2 id="更复杂的场景"><a class="markdown-anchor" href="#更复杂的场景">#</a> 更复杂的场景</h2>
 <p>上面的例子中，我们在 Agent 进程上运行了一个 subscriber，来监听消息中间件的消息，如果 Worker 进程也需要监听一些消息怎么办？如何通过 Agent 进程建立连接再转发给 Worker 进程呢？这些问题可以在<a href="../advanced/cluster-client.html">多进程研发模式增强</a>中找到答案。</p>
 

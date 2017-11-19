@@ -73,11 +73,11 @@
 <p>通过 <code>schedule.interval</code> 参数来配置定时任务的执行时机，定时任务将会每间隔指定的时间执行一次。interval 可以配置成</p>
 <ul>
 <li>数字类型，单位为毫秒数，例如 <code>5000</code>。</li>
-<li>字符类型，会通过 <a href="https://github.com/zeit/ms" target="_blank" rel="external">ms</a> 转换成毫秒数，例如 <code>5s</code>。</li>
+<li>字符类型，会通过 <a href="https://github.com/zeit/ms" target="_blank" rel="noopener">ms</a> 转换成毫秒数，例如 <code>5s</code>。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  schedule: &#123;</span><br><span class="line">    <span class="comment">// 每 10 秒执行一次</span></span><br><span class="line">    interval: <span class="string">'10s'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h4 id="cron"><a class="markdown-anchor" href="#cron">#</a> cron</h4>
-<p>通过 <code>schedule.cron</code> 参数来配置定时任务的执行时机，定时任务将会按照 cron 表达式在特定的时间点执行。cron 表达式通过 <a href="https://github.com/harrisiirak/cron-parser" target="_blank" rel="external">cron-parser</a> 进行解析。</p>
+<p>通过 <code>schedule.cron</code> 参数来配置定时任务的执行时机，定时任务将会按照 cron 表达式在特定的时间点执行。cron 表达式通过 <a href="https://github.com/harrisiirak/cron-parser" target="_blank" rel="noopener">cron-parser</a> 进行解析。</p>
 <p><strong>注意：cron-parser 支持可选的秒（linux crontab 不支持）。</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">*    *    *    *    *    *</span><br><span class="line">┬    ┬    ┬    ┬    ┬    ┬</span><br><span class="line">│    │    │    │    │    |</span><br><span class="line">│    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)</span><br><span class="line">│    │    │    │    └───── month (1 - 12)</span><br><span class="line">│    │    │    └────────── day of month (1 - 31)</span><br><span class="line">│    │    └─────────────── hour (0 - 23)</span><br><span class="line">│    └──────────────────── minute (0 - 59)</span><br><span class="line">└───────────────────────── second (0 - 59, optional)</span><br></pre></td></tr></table></figure>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  schedule: &#123;</span><br><span class="line">    <span class="comment">// 每三小时准点执行一次</span></span><br><span class="line">    cron: <span class="string">'0 0 */3 * * *'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -90,7 +90,7 @@
 <h3 id="其他参数"><a class="markdown-anchor" href="#其他参数">#</a> 其他参数</h3>
 <p>除了刚才介绍到的几个参数之外，定时任务还支持这些参数：</p>
 <ul>
-<li><code>cronOptions</code>: 配置 cron 的时区等，参见 <a href="https://github.com/harrisiirak/cron-parser#options" target="_blank" rel="external">cron-parser</a> 文档</li>
+<li><code>cronOptions</code>: 配置 cron 的时区等，参见 <a href="https://github.com/harrisiirak/cron-parser#options" target="_blank" rel="noopener">cron-parser</a> 文档</li>
 <li><code>immediate</code>：配置了该参数为 true 时，这个定时任务会在应用启动并 ready 后立刻执行一次这个定时任务。</li>
 <li><code>disable</code>：配置改参数为 true 时，这个定时任务不会被启动。</li>
 </ul>

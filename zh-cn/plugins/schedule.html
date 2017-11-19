@@ -48,12 +48,12 @@
     <div class="page-main">
   <article class="markdown-body">
     <h1>egg-schedule</h1>
-    <p><a href="https://npmjs.org/package/egg-schedule" target="_blank" rel="external"><img src="https://img.shields.io/npm/v/egg-schedule.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-schedule" target="_blank" rel="external"><img src="https://img.shields.io/travis/eggjs/egg-schedule.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-schedule?branch=master" target="_blank" rel="external"><img src="https://codecov.io/github/eggjs/egg-schedule/coverage.svg?branch=master" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-schedule" target="_blank" rel="external"><img src="https://img.shields.io/david/eggjs/egg-schedule.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-schedule" target="_blank" rel="external"><img src="https://snyk.io/test/npm/egg-schedule/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-schedule" target="_blank" rel="external"><img src="https://img.shields.io/npm/dm/egg-schedule.svg?style=flat-square" alt="npm download"></a></p>
+    <p><a href="https://npmjs.org/package/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-schedule.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-schedule.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-schedule?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-schedule/coverage.svg?branch=master" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-schedule.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-schedule" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-schedule/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-schedule.svg?style=flat-square" alt="npm download"></a></p>
 <p>A schedule plugin for egg. It supports two scheduler types, <code>worker</code> and <code>all</code>, and can be extended by other plugins.</p>
 <p><code>egg-schedule</code> has been built-in for egg. It is enabled by default.</p>
 <h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
@@ -79,7 +79,7 @@
 <h2 id="scheduling"><a class="markdown-anchor" href="#scheduling">#</a> Scheduling</h2>
 <p><code>schedule</code> is an object that contains one required property, <code>type</code>, and optional properties, <code>{ cron, cronOptions, interval, immediate, disable }</code>.</p>
 <h3 id="cron-style-scheduling"><a class="markdown-anchor" href="#cron-style-scheduling">#</a> Cron-style Scheduling</h3>
-<p>Use <a href="https://github.com/harrisiirak/cron-parser" target="_blank" rel="external">cron-parser</a>.</p>
+<p>Use <a href="https://github.com/harrisiirak/cron-parser" target="_blank" rel="noopener">cron-parser</a>.</p>
 <blockquote>
 <p>Note: <code>cron-parser</code> support <code>second</code> as optional that is not supported by linux crontab.</p>
 <p><code>@hourly / @daily / @weekly / @monthly / @yearly</code> is also supported.</p>
@@ -88,7 +88,7 @@
 <p>Example:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// To execute task every 3 hours</span></span><br><span class="line">exports.schedule = &#123;</span><br><span class="line">  type: <span class="string">'worker'</span>,</span><br><span class="line">  cron: <span class="string">'0 0 */3 * * *'</span>,</span><br><span class="line">  cronOptions: &#123;</span><br><span class="line">    <span class="comment">// tz: 'Europe/Athens',</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="interval-style-scheduling"><a class="markdown-anchor" href="#interval-style-scheduling">#</a> Interval-style Scheduling</h3>
-<p>To use <code>setInterval</code>, and support <a href="https://www.npmjs.com/package/ms" target="_blank" rel="external">ms</a> conversion style</p>
+<p>To use <code>setInterval</code>, and support <a href="https://www.npmjs.com/package/ms" target="_blank" rel="noopener">ms</a> conversion style</p>
 <p>Example:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// To execute task every 3 hours</span></span><br><span class="line">exports.schedule = &#123;</span><br><span class="line">  type: <span class="string">'worker'</span>,</span><br><span class="line">  interval: <span class="string">'3h'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="schedule-type"><a class="markdown-anchor" href="#schedule-type">#</a> Schedule Type</h3>
@@ -110,9 +110,9 @@ You can schedule the task to be executed by one random worker or all workers wit
 <p>Example:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">it(<span class="string">'test a schedule task'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// get app instance</span></span><br><span class="line">  <span class="keyword">await</span> app.runSchedule(<span class="string">'clean_cache'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
-<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="external">here</a>.</p>
+<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
 <h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="https://github.com/eggjs/egg-schedule/blob/master/LICENSE" target="_blank" rel="external">MIT</a></p>
+<p><a href="https://github.com/eggjs/egg-schedule/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
 
   </article>
   <aside id="mobileAside" class="toc">

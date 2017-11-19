@@ -59,14 +59,14 @@
 </ul>
 <p>而框架本身针对 Web 端常见的安全风险内置了丰富的解决方案：</p>
 <ul>
-<li>利用 <a href="https://github.com/eggjs/egg/blob/master/docs/source/zh-cn/basics/extend.md" target="_blank" rel="external">extend</a> 机制扩展了 Helper API, 提供了各种模板过滤函数，防止钓鱼或 XSS 攻击。</li>
+<li>利用 <a href="https://github.com/eggjs/egg/blob/master/docs/source/zh-cn/basics/extend.md" target="_blank" rel="noopener">extend</a> 机制扩展了 Helper API, 提供了各种模板过滤函数，防止钓鱼或 XSS 攻击。</li>
 <li>常见 Web 安全头的支持。</li>
 <li>CSRF 的防御方案。</li>
 <li>灵活的安全配置，可以匹配不同的请求 url 。</li>
 <li>可定制的白名单，用于安全跳转和 url 过滤。</li>
 <li>各种模板相关的工具函数做预处理。</li>
 </ul>
-<p>在框架中内置了安全插件 <a href="https://github.com/eggjs/egg-security" target="_blank" rel="external">egg-security</a>， 提供了默认的安全实践。</p>
+<p>在框架中内置了安全插件 <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a>， 提供了默认的安全实践。</p>
 <h3 id="开启与关闭配置"><a class="markdown-anchor" href="#开启与关闭配置">#</a> 开启与关闭配置</h3>
 <p>注意：除非清楚的确认后果，否则不建议擅自关闭安全插件提供的功能。</p>
 <p>框架的安全插件是默认开启的，如果我们想关闭其中一些安全防范，直接设置该项的 <code>enable</code> 属性为 false 即可。例如关闭 xframe 防范：</p>
@@ -81,7 +81,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.security = &#123;</span><br><span class="line">  csrf: &#123;</span><br><span class="line">    <span class="comment">// 判断是否需要 ignore 的方法，请求上下文 context 作为第一个参数</span></span><br><span class="line">    ignore: <span class="function"><span class="params">ctx</span> =&gt;</span> isInnerIp(ctx.ip),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>下面我们会针对具体的场景，来讲解如何使用框架提供的安全方案进行 Web 安全防范。</p>
 <h2 id="安全威胁xss的防范"><a class="markdown-anchor" href="#安全威胁xss的防范">#</a> 安全威胁<code>XSS</code>的防范</h2>
-<p><a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)" target="_blank" rel="external">XSS</a>（cross-site scripting跨域脚本攻击）攻击是最常见的 Web 攻击，其重点是『跨域』和『客户端执行』。</p>
+<p><a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)" target="_blank" rel="noopener">XSS</a>（cross-site scripting跨域脚本攻击）攻击是最常见的 Web 攻击，其重点是『跨域』和『客户端执行』。</p>
 <p>XSS 攻击一般分为两类：</p>
 <ul>
 <li>Reflected XSS（反射型的 XSS 攻击）</li>
@@ -93,7 +93,7 @@
 <h4 id="防范方式"><a class="markdown-anchor" href="#防范方式">#</a> 防范方式</h4>
 <p>框架提供了 <code>helper.escape()</code> 方法对字符串进行 XSS 过滤。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">'&gt;&lt;script&gt;alert("abc") &lt;/script&gt;&lt;'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(ctx.helper.escape(str));</span><br><span class="line"><span class="comment">// =&gt; &amp;gt;&amp;lt;script&amp;gt;alert(&amp;quot;abc&amp;quot;) &amp;lt;/script&amp;gt;&amp;lt;</span></span><br></pre></td></tr></table></figure>
-<p>当网站需要直接输出用户输入的结果时，请务必使用 <code>helper.escape()</code> 包裹起来，如在 <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="external">egg-view-nunjucks</a> 里面就覆盖掉了内置的 <code>escape</code>。</p>
+<p>当网站需要直接输出用户输入的结果时，请务必使用 <code>helper.escape()</code> 包裹起来，如在 <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a> 里面就覆盖掉了内置的 <code>escape</code>。</p>
 <p>另外一种情况，网站输出的内容会提供给 JavaScript 来使用。这个时候需要使用 <code>helper.sjs()</code> 来进行过滤。</p>
 <p><code>helper.sjs()</code> 用于在 JavaScript（包括 onload 等 event）中输出变量，会对变量中字符进行 JavaScript ENCODE，
 将所有非白名单字符转义为 <code>\x</code> 形式，防止 XSS 攻击，也确保在 js 中输出的正确性。使用实例：</p>
@@ -113,9 +113,9 @@
 <p>简单示例：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// js</span></span><br><span class="line"><span class="keyword">const</span> value = <span class="string">`&lt;a href="http://www.domain.com"&gt;google&lt;/a&gt;&lt;script&gt;evilcode…&lt;/script&gt;`</span>;</span><br></pre></td></tr></table></figure>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">// 模板</span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  &#123;&#123; helper.shtml(value) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">// =&gt; <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.domain.com"</span>&gt;</span>google<span class="tag">&lt;/<span class="name">a</span>&gt;</span>&amp;lt;script&amp;gt;evilcode…&amp;lt;/script&amp;gt;</span><br></pre></td></tr></table></figure>
-<p>shtml 在 <a href="https://github.com/leizongmin/js-xss/" target="_blank" rel="external">xss</a> 模块基础上增加了针对域名的过滤。</p>
+<p>shtml 在 <a href="https://github.com/leizongmin/js-xss/" target="_blank" rel="noopener">xss</a> 模块基础上增加了针对域名的过滤。</p>
 <ul>
-<li><a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="external">默认规则</a></li>
+<li><a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="noopener">默认规则</a></li>
 <li>自定义过滤项： http://jsxss.com/zh/options.html</li>
 </ul>
 <p>例如只支持 a 标签，且除了 title 其他属性都过滤掉： <code>whiteList: {a: ['title']}</code></p>
@@ -124,7 +124,7 @@
 <li><code>config.helper.shtml.domainWhiteList: []</code> 可拓展 href 和 src 中允许的域名白名单。</li>
 </ul>
 <p>注意，shtml 使用了严格的白名单机制，除了过滤掉 XSS 风险的字符串外，
-在<a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="external">默认规则</a>外的 tag 和 attr 都会被过滤掉。</p>
+在<a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="noopener">默认规则</a>外的 tag 和 attr 都会被过滤掉。</p>
 <p>例如 HTML 标签就不在白名单中，</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> html = <span class="string">'&lt;html&gt;&lt;/html&gt;'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// html</span></span><br><span class="line">&#123;&#123; helper.shtml(html) &#125;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 输出空</span></span><br></pre></td></tr></table></figure>
 <p>常见的 <code>data-xx</code> 属性由于不在白名单中，所以都会被过滤。</p>
@@ -134,8 +134,8 @@
 <p>JSONP 的 callback 参数非常危险，他有两种风险可能导致 XSS</p>
 <p>1、callback 参数意外截断js代码，特殊字符单引号双引号，换行符均存在风险。</p>
 <p>2、callback 参数恶意添加标签（如 <code>&lt;script&gt;</code> ），造成 XSS 漏洞。</p>
-<p>参考 <a href="http://blog.knownsec.com/2015/03/jsonp_security_technic/" target="_blank" rel="external">JSONP 安全攻防</a></p>
-<p>框架内部使用 <a href="https://github.com/node-modules/jsonp-body" target="_blank" rel="external">jsonp-body</a> 来对 JSONP 请求进行安全防范。</p>
+<p>参考 <a href="http://blog.knownsec.com/2015/03/jsonp_security_technic/" target="_blank" rel="noopener">JSONP 安全攻防</a></p>
+<p>框架内部使用 <a href="https://github.com/node-modules/jsonp-body" target="_blank" rel="noopener">jsonp-body</a> 来对 JSONP 请求进行安全防范。</p>
 <p>防御内容：</p>
 <ul>
 <li>callback 函数名词最长 50 个字符限制</li>
@@ -150,7 +150,7 @@
 <p>浏览器自身具有一定针对各种攻击的防范能力，他们一般是通过开启 Web 安全头生效的。框架内置了一些常见的 Web 安全头的支持。</p>
 <h4 id="csp"><a class="markdown-anchor" href="#csp">#</a> CSP</h4>
 <p>W3C 的 Content Security Policy，简称 CSP，主要是用来定义页面可以加载哪些资源，减少 XSS 的发生。</p>
-<p>框架内支持 CSP 的配置，不过是默认关闭的，开启后可以有效的防止 XSS 攻击的发生。要配置 CSP , 需要对 CSP 的 policy 策略有了解，具体细节可以参考 <a href="https://www.zhihu.com/question/21979782" target="_blank" rel="external">CSP 是什么</a>。</p>
+<p>框架内支持 CSP 的配置，不过是默认关闭的，开启后可以有效的防止 XSS 攻击的发生。要配置 CSP , 需要对 CSP 的 policy 策略有了解，具体细节可以参考 <a href="https://www.zhihu.com/question/21979782" target="_blank" rel="noopener">CSP 是什么</a>。</p>
 <h4 id="x-download-optionsnoopen"><a class="markdown-anchor" href="#x-download-optionsnoopen">#</a> X-Download-Options:noopen</h4>
 <p>默认开启，禁用 IE 下下载框Open按钮，防止 IE 下下载文件默认被打开 XSS。</p>
 <h4 id="x-content-type-optionsnosniff"><a class="markdown-anchor" href="#x-content-type-optionsnosniff">#</a> X-Content-Type-Options:nosniff</h4>
@@ -161,14 +161,14 @@
 <li>close 默认值false，即设置为 <code>1; mode=block</code></li>
 </ul>
 <h2 id="安全威胁-csrf-的防范"><a class="markdown-anchor" href="#安全威胁-csrf-的防范">#</a> 安全威胁 CSRF  的防范</h2>
-<p><a href="https://www.owasp.org/index.php/CSRF" target="_blank" rel="external">CSRF</a>（Cross-site request forgery跨站请求伪造，也被称为 <code>One Click Attack</code> 或者 <code>Session Riding</code>，通常缩写为 CSRF 或者 XSRF，是一种对网站的恶意利用。
+<p><a href="https://www.owasp.org/index.php/CSRF" target="_blank" rel="noopener">CSRF</a>（Cross-site request forgery跨站请求伪造，也被称为 <code>One Click Attack</code> 或者 <code>Session Riding</code>，通常缩写为 CSRF 或者 XSRF，是一种对网站的恶意利用。
 CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全。因此框架内置了 CSRF 防范方案。</p>
 <h3 id="防范方式-3"><a class="markdown-anchor" href="#防范方式-3">#</a> 防范方式</h3>
-<p>通常来说，对于 CSRF 攻击有一些通用的<a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet#CSRF_Specific_Defense" target="_blank" rel="external">防范方案</a>，简单的介绍几种常用的防范方案：</p>
+<p>通常来说，对于 CSRF 攻击有一些通用的<a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet#CSRF_Specific_Defense" target="_blank" rel="noopener">防范方案</a>，简单的介绍几种常用的防范方案：</p>
 <ul>
 <li>Synchronizer Tokens：通过响应页面时将 token 渲染到页面上，在 form 表单提交的时候通过隐藏域提交上来。</li>
 <li>Double Cookie Defense：将 token 设置在 Cookie 中，在提交 post 请求的时候提交 Cookie，并通过 header 或者 body 带上 Cookie 中的 token，服务端进行对比校验。</li>
-<li>Custom Header：信任带有特定的 header（例如 <code>X-Requested-With: XMLHttpRequest</code>）的请求。这个方案可以被绕过，所以 rails 和 django 等框架都<a href="https://www.djangoproject.com/weblog/2011/feb/08/security/" target="_blank" rel="external">放弃了该防范方式</a>。</li>
+<li>Custom Header：信任带有特定的 header（例如 <code>X-Requested-With: XMLHttpRequest</code>）的请求。这个方案可以被绕过，所以 rails 和 django 等框架都<a href="https://www.djangoproject.com/weblog/2011/feb/08/security/" target="_blank" rel="noopener">放弃了该防范方式</a>。</li>
 </ul>
 <p>框架结合了上述几种防范方式，提供了一个可配置的 CSRF 防范策略。</p>
 <h4 id="使用方式"><a class="markdown-anchor" href="#使用方式">#</a> 使用方式</h4>
@@ -177,7 +177,7 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">action</span>=<span class="string">"/upload?_csrf=&#123;&#123; ctx.csrf | safe &#125;&#125;"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">  title: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"title"</span> /&gt;</span></span><br><span class="line">  file: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"file"</span> <span class="attr">type</span>=<span class="string">"file"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>upload<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>传递 CSRF token 的字段可以在配置中改变：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  security: &#123;</span><br><span class="line">    csrf: &#123;</span><br><span class="line">      queryName: <span class="string">'_csrf'</span>, <span class="comment">// 通过 query 传递 CSRF token 的默认字段为 _csrf</span></span><br><span class="line">      bodyName: <span class="string">'_csrf'</span>, <span class="comment">// 通过 body 传递 CSRF token 的默认字段为 _csrf</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>为了防范 <a href="http://breachattack.com/" target="_blank" rel="external">BREACH 攻击</a>，通过同步方式渲染到页面上的 CSRF token 在每次请求时都会变化，<a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="external">egg-view-nunjucks</a> 等 View 插件会自动对 Form 进行注入，对应用开发者无感知。</p>
+<p>为了防范 <a href="http://breachattack.com/" target="_blank" rel="noopener">BREACH 攻击</a>，通过同步方式渲染到页面上的 CSRF token 在每次请求时都会变化，<a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a> 等 View 插件会自动对 Form 进行注入，对应用开发者无感知。</p>
 <h5 id="ajax-请求"><a class="markdown-anchor" href="#ajax-请求">#</a> AJAX 请求</h5>
 <p>在 CSRF 默认配置下，token 会被设置在 Cookie 中，在 AJAX 请求的时候，可以从 Cookie 中取到 token，放置到 query、body 或者 header 中发送给服务端。</p>
 <p>In jQuery:</p>
@@ -188,13 +188,13 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 <p>默认配置下，框架会将 CSRF token 存在 Cookie 中，以方便 AJAX 请求获取到。但是所有的子域名都可以设置 Cookie，因此当我们的应用处于无法保证所有的子域名都受控的情况下，存放在 Cookie 中可能有被 CSRF 攻击的风险。框架提供了一个配置项，可以将 token 存放到 Session 中。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  security: &#123;</span><br><span class="line">    csrf: &#123;</span><br><span class="line">      useSession: <span class="literal">true</span>, <span class="comment">// 默认为 false，当设置为 true 时，将会把 csrf token 保存到 Session 中</span></span><br><span class="line">      cookieName: <span class="string">'csrfToken'</span>, <span class="comment">// Cookie 中的字段名，默认为 csrfToken</span></span><br><span class="line">      sessionName: <span class="string">'csrfToken'</span>, <span class="comment">// Session 中的字段名，默认为 csrfToken</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h4 id="忽略-json-请求"><a class="markdown-anchor" href="#忽略-json-请求">#</a> 忽略 JSON 请求</h4>
-<p>在 <a href="https://en.wikipedia.org/wiki/Same-origin_policy" target="_blank" rel="external">SOP</a> 的安全策略保护下，基本上所有的现代浏览器都不允许跨域发起 content-type 为 JSON 的请求，因此我们可以直接放过类型的 JSON 格式的请求。</p>
+<p>在 <a href="https://en.wikipedia.org/wiki/Same-origin_policy" target="_blank" rel="noopener">SOP</a> 的安全策略保护下，基本上所有的现代浏览器都不允许跨域发起 content-type 为 JSON 的请求，因此我们可以直接放过类型的 JSON 格式的请求。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  security: &#123;</span><br><span class="line">    csrf: &#123;</span><br><span class="line">      ignoreJSON: <span class="literal">true</span>, <span class="comment">// 默认为 false，当设置为 true 时，将会放过所有 content-type 为 `application/json` 的请求</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h4 id="刷新-csrf-token"><a class="markdown-anchor" href="#刷新-csrf-token">#</a> 刷新 CSRF token</h4>
 <p>当 CSRF token 存储在 Cookie 中时，一旦在同一个浏览器上发生用户切换，新登陆的用户将会依旧使用旧的 token（之前用户使用的），这会带来一定的安全风险，因此在每次用户登陆的时候都<strong>必须刷新 CSRF token</strong>。</p>
  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// login controller</span></span><br><span class="line">exports.login = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username, password &#125; = ctx.request.body;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">yield</span> ctx.service.user.find(&#123; username, password &#125;);</span><br><span class="line">  <span class="keyword">if</span> (!user) ctx.throw(<span class="number">403</span>);</span><br><span class="line">  ctx.session = &#123; user &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 调用 rotateCsrfSecret 刷新用户的 CSRF token</span></span><br><span class="line">  ctx.rotateCsrfSecret();</span><br><span class="line"></span><br><span class="line">  ctx.body = &#123; <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="安全威胁-xst-的防范"><a class="markdown-anchor" href="#安全威胁-xst-的防范">#</a> 安全威胁 XST 的防范</h2>
-<p><a href="https://www.owasp.org/index.php/XST" target="_blank" rel="external">XST</a> 的全称是 <code>Cross-Site Tracing</code>，客户端发 TRACE 请求至服务器，如果服务器按照标准实现了 TRACE 响应，则在 response body 里会返回此次请求的完整头信息。通过这种方式，客户端可以获取某些敏感的头字段，例如 httpOnly 的 Cookie。</p>
+<p><a href="https://www.owasp.org/index.php/XST" target="_blank" rel="noopener">XST</a> 的全称是 <code>Cross-Site Tracing</code>，客户端发 TRACE 请求至服务器，如果服务器按照标准实现了 TRACE 响应，则在 response body 里会返回此次请求的完整头信息。通过这种方式，客户端可以获取某些敏感的头字段，例如 httpOnly 的 Cookie。</p>
 <p>下面我们基于 Koa 来实现一个简单的支持 TRACE 方法的服务器：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">var</span> app = koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="function"><span class="keyword">function</span>* (<span class="params">next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.cookies.set(<span class="string">'a'</span>, <span class="number">1</span>, &#123; <span class="attr">httpOnly</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.method === <span class="string">'TRACE'</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> body = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> (header <span class="keyword">in</span> <span class="keyword">this</span>.headers) &#123;</span><br><span class="line">      body += header + <span class="string">': '</span> + <span class="keyword">this</span>.headers[header] + <span class="string">'\r\n'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">this</span>.body = body;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">yield</span>* next;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">7001</span>);</span><br></pre></td></tr></table></figure>
 <p>启动服务后，先发个 GET 请求 <code>curl -i http://127.0.0.1:7001</code>，得到如下响应：</p>
@@ -252,7 +252,7 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 <p>output:</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://ww.safe.com&amp;lt;script&amp;gt;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="iframe-钓鱼"><a class="markdown-anchor" href="#iframe-钓鱼">#</a> iframe 钓鱼</h3>
-<p><a href="https://www.owasp.org/index.php/Cross_Frame_Scripting" target="_blank" rel="external">iframe 钓鱼</a>，通过内嵌 iframe 到被攻击的网页中，攻击者可以引导用户去点击 iframe 指向的危险网站，甚至遮盖，影响网站的正常功能，劫持用户的点击操作。</p>
+<p><a href="https://www.owasp.org/index.php/Cross_Frame_Scripting" target="_blank" rel="noopener">iframe 钓鱼</a>，通过内嵌 iframe 到被攻击的网页中，攻击者可以引导用户去点击 iframe 指向的危险网站，甚至遮盖，影响网站的正常功能，劫持用户的点击操作。</p>
 <p>框架提供了 <code>X-Frame-Options</code> 这个安全头来防止 iframe 钓鱼。默认值为 SAMEORIGIN，只允许同域把本页面当作 iframe 嵌入。</p>
 <p>当需要嵌入一些可信的第三方网页时，可以关闭这个配置。</p>
 <h2 id="安全威胁-hpp-的防范"><a class="markdown-anchor" href="#安全威胁-hpp-的防范">#</a> 安全威胁 HPP 的防范</h2>
@@ -271,7 +271,7 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 </ul>
 <h3 id="如何防范"><a class="markdown-anchor" href="#如何防范">#</a> 如何防范</h3>
 <p>框架本身会在客户端传输 key 相同而 value 不同的参数时，强制使用第一个参数，因此不会导致 hpp 攻击。</p>
-<h2 id="中间人攻击"><a class="markdown-anchor" href="#中间人攻击">#</a> <a href="https://www.owasp.org/index.php/Man-in-the-middle_attack" target="_blank" rel="external">中间人攻击</a>与 HTTP / HTTPS</h2>
+<h2 id="中间人攻击"><a class="markdown-anchor" href="#中间人攻击">#</a> <a href="https://www.owasp.org/index.php/Man-in-the-middle_attack" target="_blank" rel="noopener">中间人攻击</a>与 HTTP / HTTPS</h2>
 <p>HTTP 是网络应用广泛使用的协议，负责 Web 内容的请求和获取。然而，内容请求和获取时会经过许多中间人，主要是网络环节，充当内容入口的浏览器、路由器厂商、WIFI提供商、通信运营商，如果使用了代理、翻墙软件则会引入更多中间人。由于 HTTP 请求的路径、参数默认情况下均是明文的，因此这些中间人可以对 HTTP 请求进行监控、劫持、阻挡。</p>
 <p>在没有 HTTPS 时，运营商可在用户发起请求时直接跳转到某个广告，或者直接改变搜索结果插入自家的广告。如果劫持代码出现了 BUG ，则直接让用户无法使用，出现白屏。</p>
 <p>数据泄露、请求劫持、内容篡改等等问题，核心原因就在于 HTTP 是全裸式的明文请求，域名、路径和参数都被中间人们看得一清二楚。HTTPS 做的就是给请求加密，让其对用户更加安全。对于自身而言除了保障用户利益外，还可避免本属于自己的流量被挟持，以保护自身利益。</p>
@@ -290,7 +290,7 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 <h3 id="appinjectcsrfstr"><a class="markdown-anchor" href="#appinjectcsrfstr">#</a> app.injectCsrf(str)</h3>
 <p>这个函数提供了模板预处理－自动插入 CSRF key 的能力，可以自动在所有的 form 标签中插入 CSRF 隐藏域，用户就不需要手动写了。</p>
 <h3 id="appinjectnoncestr"><a class="markdown-anchor" href="#appinjectnoncestr">#</a> app.injectNonce(str)</h3>
-<p>这个函数提供了模板预处理－自动插入 nonce 的能力，如果网站开启了 CSP 安全头，并且想使用 <code>CSP 2.0 nonce</code> 特性，可以使用这个函数。参考 <a href="https://www.zhihu.com/question/21979782" target="_blank" rel="external">CSP 是什么</a>。</p>
+<p>这个函数提供了模板预处理－自动插入 nonce 的能力，如果网站开启了 CSP 安全头，并且想使用 <code>CSP 2.0 nonce</code> 特性，可以使用这个函数。参考 <a href="https://www.zhihu.com/question/21979782" target="_blank" rel="noopener">CSP 是什么</a>。</p>
 <p>这个函数会扫描模板中的 script 标签，并自动加上 nonce 头。</p>
 <h3 id="appinjecthijackingdefensestr"><a class="markdown-anchor" href="#appinjecthijackingdefensestr">#</a> app.injectHijackingDefense(str)</h3>
 <p>对于没有开启 HTTPS 的网站，这个函数可以有限的防止运营商劫持。</p>

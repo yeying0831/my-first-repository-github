@@ -48,13 +48,13 @@
     <div class="page-main">
   <article class="markdown-body">
     <h1>egg-multipart</h1>
-    <p><a href="https://npmjs.org/package/egg-multipart" target="_blank" rel="external"><img src="https://img.shields.io/npm/v/egg-multipart.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-multipart" target="_blank" rel="external"><img src="https://img.shields.io/travis/eggjs/egg-multipart.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-multipart?branch=master" target="_blank" rel="external"><img src="https://codecov.io/github/eggjs/egg-multipart/coverage.svg?branch=master" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-multipart" target="_blank" rel="external"><img src="https://img.shields.io/david/eggjs/egg-multipart.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-multipart" target="_blank" rel="external"><img src="https://snyk.io/test/npm/egg-multipart/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-multipart" target="_blank" rel="external"><img src="https://img.shields.io/npm/dm/egg-multipart.svg?style=flat-square" alt="npm download"></a></p>
-<p>Use <a href="https://github.com/cojs/busboy" target="_blank" rel="external">co-busboy</a> to upload file by streaming and process it without save to disk.</p>
+    <p><a href="https://npmjs.org/package/egg-multipart" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-multipart.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-multipart" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-multipart.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-multipart?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-multipart/coverage.svg?branch=master" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-multipart" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-multipart.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-multipart" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-multipart/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-multipart" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-multipart.svg?style=flat-square" alt="npm download"></a></p>
+<p>Use <a href="https://github.com/cojs/busboy" target="_blank" rel="noopener">co-busboy</a> to upload file by streaming and process it without save to disk.</p>
 <p>Just use <code>ctx.multipart()</code> to got file stream, then pass to image processing liberary such as <code>gm</code> or upload to cloud storage such as <code>oss</code>.</p>
 <h2 id="whitelist-of-file-extensions"><a class="markdown-anchor" href="#whitelist-of-file-extensions">#</a> Whitelist of file extensions</h2>
 <p>For security, if uploading file extension is not in white list, will response as <code>400 Bad request</code>.</p>
@@ -72,7 +72,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.multipart = &#123;</span><br><span class="line">  whitelist: <span class="function">(<span class="params">filename</span>) =&gt;</span> [ <span class="string">'.png'</span> ].includes(path.extname(filename) || <span class="string">''</span>)</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><strong>Note: if define <code>whitelist</code>, then <code>fileExtensions</code> will be ignored.</strong></p>
 <h2 id="examples"><a class="markdown-anchor" href="#examples">#</a> Examples</h2>
-<p><a href="https://github.com/eggjs/examples/tree/master/multipart" target="_blank" rel="external">More Examples</a></p>
+<p><a href="https://github.com/eggjs/examples/tree/master/multipart" target="_blank" rel="noopener">More Examples</a></p>
 <h3 id="upload-file"><a class="markdown-anchor" href="#upload-file">#</a> Upload File</h3>
 <p>You can got upload stream by <code>ctx.getFileStream*()</code>.</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">action</span>=<span class="string">"/upload?_csrf=&#123;&#123; ctx.csrf | safe &#125;&#125;"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">  title: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"title"</span> /&gt;</span></span><br><span class="line">  file: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"file"</span> <span class="attr">type</span>=<span class="string">"file"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>Upload<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>

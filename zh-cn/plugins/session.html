@@ -48,13 +48,13 @@
     <div class="page-main">
   <article class="markdown-body">
     <h1>egg-session</h1>
-    <p><a href="https://npmjs.org/package/egg-session" target="_blank" rel="external"><img src="https://img.shields.io/npm/v/egg-session.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-session" target="_blank" rel="external"><img src="https://img.shields.io/travis/eggjs/egg-session.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-session?branch=master" target="_blank" rel="external"><img src="https://codecov.io/github/eggjs/egg-session/coverage.svg?branch=master" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-session" target="_blank" rel="external"><img src="https://img.shields.io/david/eggjs/egg-session.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-session" target="_blank" rel="external"><img src="https://snyk.io/test/npm/egg-session/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-session" target="_blank" rel="external"><img src="https://img.shields.io/npm/dm/egg-session.svg?style=flat-square" alt="npm download"></a></p>
-<p>Session plugin for egg, based on <a href="https://github.com/koajs/session" target="_blank" rel="external">koa-session</a>.</p>
+    <p><a href="https://npmjs.org/package/egg-session" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-session.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-session" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-session.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-session?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-session/coverage.svg?branch=master" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-session" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-session.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-session" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-session/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-session" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-session.svg?style=flat-square" alt="npm download"></a></p>
+<p>Session plugin for egg, based on <a href="https://github.com/koajs/session" target="_blank" rel="noopener">koa-session</a>.</p>
 <h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-session --save</span><br></pre></td></tr></table></figure>
 <h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
@@ -64,7 +64,7 @@
 <p>egg-session support external store, you can store your sessions in redis, memcached or other databases.</p>
 <p>For example, if you want to store session in redis, you must:</p>
 <ol>
-<li>Dependent <a href="https://github.com/eggjs/egg-redis" target="_blank" rel="external">egg-redis</a></li>
+<li>Dependent <a href="https://github.com/eggjs/egg-redis" target="_blank" rel="noopener">egg-redis</a></li>
 </ol>
   <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm i --save egg-redis</span><br></pre></td></tr></table></figure>
 <ol start="2">
@@ -78,12 +78,12 @@
   <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// set redis session store</span></span><br><span class="line">  <span class="comment">// session store must have 3 methods</span></span><br><span class="line">  <span class="comment">// define sessionStore in `app.js` so you can access `app.redis`</span></span><br><span class="line">  app.sessionStore = &#123;</span><br><span class="line">    * get(key) &#123;</span><br><span class="line">      <span class="keyword">const</span> res = <span class="keyword">yield</span> app.redis.get(key);</span><br><span class="line">      <span class="keyword">if</span> (!res) <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">JSON</span>.parse(res);</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    * set(key, value, maxAge) &#123;</span><br><span class="line">      <span class="comment">// maxAge not present means session cookies</span></span><br><span class="line">      <span class="comment">// we can't exactly know the maxAge and just set an appropriate value like one day</span></span><br><span class="line">      <span class="keyword">if</span> (!maxAge) maxAge = <span class="number">24</span> * <span class="number">60</span> * <span class="number">60</span> * <span class="number">1000</span>;</span><br><span class="line">      value = <span class="built_in">JSON</span>.stringify(value);</span><br><span class="line">      <span class="keyword">yield</span> app.redis.set(key, value, <span class="string">'PX'</span>, maxAge);</span><br><span class="line">    &#125;,</span><br><span class="line"></span><br><span class="line">    * destroy(key) &#123;</span><br><span class="line">      <span class="keyword">yield</span> app.redis.del(key);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// session store can be a session store class</span></span><br><span class="line">  <span class="comment">// app.sessionStore = class Store &#123;</span></span><br><span class="line">  <span class="comment">//   constructor(app) &#123;</span></span><br><span class="line">  <span class="comment">//     this.app = app;</span></span><br><span class="line">  <span class="comment">//   &#125;</span></span><br><span class="line">  <span class="comment">//   * get() &#123;&#125;</span></span><br><span class="line">  <span class="comment">//   * set() &#123;&#125;</span></span><br><span class="line">  <span class="comment">//   * destroy() &#123;&#125;</span></span><br><span class="line">  <span class="comment">// &#125;;</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>Once you use external session store, session is strong dependent on your external store, you can't access session if your external store is down. <strong>Use external session stores only if necessary, avoid use session as a cache, keep session lean and stored by cookie!</strong></p>
 <h2 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h2>
-<p>Support all configurations in <a href="https://github.com/koajs/session" target="_blank" rel="external">koa-session</a>.</p>
-<p><a href="https://github.com/eggjs/egg-session/blob/master/config/config.default.js" target="_blank" rel="external">View the default configurations</a></p>
+<p>Support all configurations in <a href="https://github.com/koajs/session" target="_blank" rel="noopener">koa-session</a>.</p>
+<p><a href="https://github.com/eggjs/egg-session/blob/master/config/config.default.js" target="_blank" rel="noopener">View the default configurations</a></p>
 <h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
-<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="external">here</a>.</p>
+<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
 <h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="https://github.com/eggjs/egg-session/blob/master/LICENSE" target="_blank" rel="external">MIT</a></p>
+<p><a href="https://github.com/eggjs/egg-session/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
 
   </article>
   <aside id="mobileAside" class="toc">

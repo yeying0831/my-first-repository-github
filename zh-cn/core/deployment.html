@@ -62,8 +62,8 @@
 </ul>
 <h2 id="部署"><a class="markdown-anchor" href="#部署">#</a> 部署</h2>
 <p>服务器需要预装 Node.js，框架支持的 Node 版本为 <code>&gt;= 6.0.0</code>。</p>
-<p>框架内置了 <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="external">egg-cluster</a> 来启动 <a href="./cluster-and-ipc.html#master">Master 进程</a>，Master 有足够的稳定性，不再需要使用 <a href="https://github.com/Unitech/pm2" target="_blank" rel="external">pm2</a> 等进程守护模块。</p>
-<p>同时，框架也提供了 <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="external">egg-scripts</a> 来支持线上环境的运行和停止。</p>
+<p>框架内置了 <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="noopener">egg-cluster</a> 来启动 <a href="./cluster-and-ipc.html#master">Master 进程</a>，Master 有足够的稳定性，不再需要使用 <a href="https://github.com/Unitech/pm2" target="_blank" rel="noopener">pm2</a> 等进程守护模块。</p>
+<p>同时，框架也提供了 <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="noopener">egg-scripts</a> 来支持线上环境的运行和停止。</p>
 <p>首先，我们需要把 <code>egg-scripts</code> 模块作为 <code>dependencies</code> 引入：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-scripts --save</span><br></pre></td></tr></table></figure>
 <p>添加 <code>npm scripts</code> 到 <code>package.json</code>：</p>
@@ -83,11 +83,11 @@
 <li><code>--title=egg-server-showcase</code> 用于方便 ps 进程时 grep 用，默认为 <code>egg-server-${appname}</code>。</li>
 <li><code>--framework=yadan</code> 如果应用使用了<a href="../advanced/framework.html">自定义框架</a>，可以配置 <code>package.json</code> 的 <code>egg.framework</code> 或指定该参数。</li>
 </ul>
-<p>更多参数可查看 <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="external">egg-scripts</a> 和 <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="external">egg-cluster</a> 文档。</p>
+<p>更多参数可查看 <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="noopener">egg-scripts</a> 和 <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="noopener">egg-cluster</a> 文档。</p>
 <h4 id="启动配置项"><a class="markdown-anchor" href="#启动配置项">#</a> 启动配置项</h4>
 <p>你也可以在 <code>config.{env}.js</code> 中配置指定启动配置。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.cluster = &#123;</span><br><span class="line">  listen: &#123;</span><br><span class="line">    port: <span class="number">7001</span>,</span><br><span class="line">    hostname: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">    <span class="comment">// path: '/var/run/egg.sock',</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>path</code>，<code>port</code>，<code>hostname</code> 均为 <a href="https://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback" target="_blank" rel="external">server.listen</a> 的参数，<code>egg-scripts</code> 和 <code>egg.startCluster</code> 方法传入的 port 优先级高于此配置。</p>
+<p><code>path</code>，<code>port</code>，<code>hostname</code> 均为 <a href="https://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback" target="_blank" rel="noopener">server.listen</a> 的参数，<code>egg-scripts</code> 和 <code>egg.startCluster</code> 方法传入的 port 优先级高于此配置。</p>
 <h3 id="停止命令"><a class="markdown-anchor" href="#停止命令">#</a> 停止命令</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-scripts stop</span><br></pre></td></tr></table></figure>
 <p>该命令将杀死 master 进程，并通知 worker 和 agent 优雅退出。</p>

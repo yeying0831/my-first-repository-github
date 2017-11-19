@@ -50,7 +50,7 @@
     <h1>渐进式开发</h1>
     <p>在 Egg 里面，有<a href="../basics/plugin.html">插件</a>，也有<a href="../advanced/framework.html">框架</a>，前者还包括了 <code>path</code> 和 <code>package</code> 两种加载模式，那我们应该如何选择呢？</p>
 <p>本文将以实例的方式，一步步给大家演示下，如何渐进式地进行代码演进。</p>
-<p>全部的示例代码可以参见 <a href="https://github.com/eggjs/examples/tree/master/progressive" target="_blank" rel="external">eggjs/examples/progressive</a>。</p>
+<p>全部的示例代码可以参见 <a href="https://github.com/eggjs/examples/tree/master/progressive" target="_blank" rel="noopener">eggjs/examples/progressive</a>。</p>
 <h2 id="最初始的状态"><a class="markdown-anchor" href="#最初始的状态">#</a> 最初始的状态</h2>
 <p>假设我们有一段分析 UA 的代码，实现以下功能：</p>
 <ul>
@@ -58,7 +58,7 @@
 <li><code>ctx.isIOS</code></li>
 </ul>
 <p>通过之前的教程，大家一定可以很快的写出来，我们快速回顾下：</p>
-<p>对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step1" target="_blank" rel="external">step1</a>。</p>
+<p>对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step1" target="_blank" rel="noopener">step1</a>。</p>
 <p>目录结构：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">example-app</span><br><span class="line">├── app</span><br><span class="line">│   ├── extend</span><br><span class="line">│   │   └── context.js</span><br><span class="line">│   └── router.js</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   └── index.test.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
 <p>核心代码：</p>
@@ -67,7 +67,7 @@
 <p>我们很明显能感知到，这段逻辑是具备通用性的，可以写成插件。</p>
 <p>但一开始的时候，功能还没完善，直接独立插件，维护起来比较麻烦。</p>
 <p>此时，我们可以把代码写成插件的形式，但并不独立出去。</p>
-<p>对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step2" target="_blank" rel="external">step2</a>。</p>
+<p>对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step2" target="_blank" rel="noopener">step2</a>。</p>
 <p>新的目录结构：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">example-app</span><br><span class="line">├── app</span><br><span class="line">│   └── router.js</span><br><span class="line">├── config</span><br><span class="line">│   └── plugin.js</span><br><span class="line">├── lib</span><br><span class="line">│   └── plugin</span><br><span class="line">│       └── egg-ua</span><br><span class="line">│           ├── app</span><br><span class="line">│           │   └── extend</span><br><span class="line">│           │       └── context.js</span><br><span class="line">│           └── package.json</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   └── index.test.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
 <p>核心代码：</p>
@@ -89,15 +89,15 @@
 <p>首先，我们抽出一个 egg-ua 插件，看过<a href="../advanced/plugin.html">插件文档</a>的同学应该都比较熟悉，我们这里只简单过一下：</p>
 <p>目录结构：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">egg-ua</span><br><span class="line">├── app</span><br><span class="line">│   └── extend</span><br><span class="line">│       └── context.js</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   ├── fixtures</span><br><span class="line">│   │   └── <span class="built_in">test</span>-app</span><br><span class="line">│   │       ├── app</span><br><span class="line">│   │       │   └── router.js</span><br><span class="line">│   │       └── package.json</span><br><span class="line">│   └── ua.test.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
-<p>对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step3/egg-ua" target="_blank" rel="external">step3/egg-ua</a>。</p>
-<p>然后改造原有的应用，对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step3/example-app" target="_blank" rel="external">step3/example-app</a>。</p>
+<p>对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step3/egg-ua" target="_blank" rel="noopener">step3/egg-ua</a>。</p>
+<p>然后改造原有的应用，对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step3/example-app" target="_blank" rel="noopener">step3/example-app</a>。</p>
 <ul>
 <li>移除 <code>lib/plugin/egg-ua</code> 目录。</li>
 <li><code>package.json</code> 中声明对 <code>egg-ua</code> 的依赖。</li>
 <li><code>config/plugin.js</code> 中修改依赖声明为 <code>package</code> 方式。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.ua = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-ua'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><strong>注意：在插件还没发布前，可以通过 <code>npm link</code> 的方式进行本地测试，具体参见 <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="external">npm-link</a>。</strong></p>
+<p><strong>注意：在插件还没发布前，可以通过 <code>npm link</code> 的方式进行本地测试，具体参见 <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="noopener">npm-link</a>。</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> example-app</span><br><span class="line">$ npm link ../egg-ua</span><br><span class="line">$ npm i</span><br><span class="line">$ npm <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 <h2 id="沉淀到框架"><a class="markdown-anchor" href="#沉淀到框架">#</a> 沉淀到框架</h2>
 <p>重复上述的过程，很快我们会积累了好几个插件和配置，并且我们会发现，在团队的大部分项目中，都会用到这些插件。</p>
@@ -106,17 +106,17 @@
 <p>目录结构：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">example-framework</span><br><span class="line">├── config</span><br><span class="line">│   ├── config.default.js</span><br><span class="line">│   └── plugin.js</span><br><span class="line">├── lib</span><br><span class="line">│   ├── agent.js</span><br><span class="line">│   └── application.js</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   ├── fixtures</span><br><span class="line">│   │   └── <span class="built_in">test</span>-app</span><br><span class="line">│   └── framework.test.js</span><br><span class="line">├── README.md</span><br><span class="line">├── index.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
 <ul>
-<li>对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step4/example-framework" target="_blank" rel="external">example-framework</a>。</li>
+<li>对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step4/example-framework" target="_blank" rel="noopener">example-framework</a>。</li>
 <li>把原来的 <code>egg-ua</code> 等插件的依赖，从 example-app 中移除，配置到该框架的 <code>package.json</code> 和 <code>config/plugin.js</code> 中。</li>
 </ul>
-<p>然后改造原有的应用，对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step4/example-app" target="_blank" rel="external">step4/example-app</a>。</p>
+<p>然后改造原有的应用，对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step4/example-app" target="_blank" rel="noopener">step4/example-app</a>。</p>
 <ul>
 <li>移除 <code>config/plugin.js</code> 中对 <code>egg-ua</code> 的依赖。</li>
 <li><code>package.json</code> 中移除对 <code>egg-ua</code> 的依赖。</li>
 <li><code>package.json</code> 中声明对 <code>example-framework</code> 的依赖，并配置 <code>egg.framework</code>。</li>
 </ul>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"progressive"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"private"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"egg"</span>: &#123;</span><br><span class="line">    <span class="attr">"framework"</span>: <span class="string">"example-framework"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"example-framework"</span>: <span class="string">"*"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>注意：在框架还没发布前，可以通过 <code>npm link</code> 的方式进行本地测试，具体参见 <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="external">npm-link</a>。</strong></p>
+<p><strong>注意：在框架还没发布前，可以通过 <code>npm link</code> 的方式进行本地测试，具体参见 <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="noopener">npm-link</a>。</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> example-app</span><br><span class="line">$ npm link ../egg-framework</span><br><span class="line">$ npm i</span><br><span class="line">$ npm <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 <h2 id="写在最后"><a class="markdown-anchor" href="#写在最后">#</a> 写在最后</h2>
 <p>综上所述，大家可以看到，我们是如何一步步渐进的去进行框架演进，得益于 Egg 强大的插件机制，代码的共建，复用和下沉，竟然可以这么的无痛。</p>

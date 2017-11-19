@@ -49,12 +49,12 @@
   <article class="markdown-body">
     <h1>egg-security</h1>
     <p>Security plugin in egg</p>
-<p><a href="https://npmjs.org/package/egg-security" target="_blank" rel="external"><img src="https://img.shields.io/npm/v/egg-security.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-security" target="_blank" rel="external"><img src="https://img.shields.io/travis/eggjs/egg-security.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/gh/eggjs/egg-security" target="_blank" rel="external"><img src="https://codecov.io/gh/eggjs/egg-security/branch/master/graph/badge.svg" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-security" target="_blank" rel="external"><img src="https://img.shields.io/david/eggjs/egg-security.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-security" target="_blank" rel="external"><img src="https://snyk.io/test/npm/egg-security/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-security" target="_blank" rel="external"><img src="https://img.shields.io/npm/dm/egg-security.svg?style=flat-square" alt="npm download"></a></p>
+<p><a href="https://npmjs.org/package/egg-security" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-security.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-security" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-security.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/gh/eggjs/egg-security" target="_blank" rel="noopener"><img src="https://codecov.io/gh/eggjs/egg-security/branch/master/graph/badge.svg" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-security" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-security.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-security" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-security/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-security" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-security.svg?style=flat-square" alt="npm download"></a></p>
 <p>Egg's default security plugin, generally no need to configure.</p>
 <h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-security</span><br></pre></td></tr></table></figure>
@@ -107,7 +107,7 @@
 <h2 id="api"><a class="markdown-anchor" href="#api">#</a> API</h2>
 <h3 id="ctxissafedomaindomain"><a class="markdown-anchor" href="#ctxissafedomaindomain">#</a> ctx.isSafeDomain(domain)</h3>
 <p>Whether or not the domain is in the whitelist of the configuration. See <code>ctx.redirect</code>.</p>
-<p>Note: <a href="https://github.com/eggjs/egg-cors" target="_blank" rel="external">egg-cors</a> module uses this function internally to determine whether or not send back an <code>Access-Control-Allow-Origin</code> response header with the value of safe domain. Otherwise, ignore the request with an error, <code>No 'Access-Control-Allow-Origin' header is present on the requested resource.</code></p>
+<p>Note: <a href="https://github.com/eggjs/egg-cors" target="_blank" rel="noopener">egg-cors</a> module uses this function internally to determine whether or not send back an <code>Access-Control-Allow-Origin</code> response header with the value of safe domain. Otherwise, ignore the request with an error, <code>No 'Access-Control-Allow-Origin' header is present on the requested resource.</code></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.security = &#123;</span><br><span class="line">  domainWhiteList: [<span class="string">'http://localhost:4200'</span>]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="interface-restriction"><a class="markdown-anchor" href="#interface-restriction">#</a> Interface restriction</h2>
 <h3 id="csrf"><a class="markdown-anchor" href="#csrf">#</a> CSRF</h3>
@@ -143,7 +143,7 @@ When submitting the form, please submit with the <code>_csrf</code> token parame
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.security = &#123;</span><br><span class="line">  domainWhiteList:[<span class="string">'.domain.com'</span>],  <span class="comment">// security whitelist, starts with '.'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>If user do not configure <code>domainWhiteList</code> or <code>domainWhiteList</code> is empty, it will pass all redirects, equal to <code>ctx.unsafeRedirect(url)</code></p>
 <h3 id="jsonp"><a class="markdown-anchor" href="#jsonp">#</a> jsonp</h3>
-<p>Based on <a href="https://github.com/node-modules/jsonp-body" target="_blank" rel="external">jsonp-body</a>.</p>
+<p>Based on <a href="https://github.com/node-modules/jsonp-body" target="_blank" rel="noopener">jsonp-body</a>.</p>
 <p>Defense:</p>
 <ul>
 <li>The longest callback function name limit of 50 characters.</li>
@@ -186,9 +186,9 @@ It will do XSS filter, then output html tags to avoid illegal scripts.</p>
 <p>** shtml is a very complex process, it will effect server performance, so if you do not need to output HTML, please do not use shtml.**</p>
 <p>Examples:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// js</span></span><br><span class="line"><span class="keyword">const</span> value = <span class="string">`&lt;a href="http://www.domain.com"&gt;google&lt;/a&gt;&lt;script&gt;evilcode…&lt;/script&gt;`</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// in your view</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  $&#123;helper.shtml($value)&#125;</span><br><span class="line">&lt;<span class="regexp">/body&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>html&gt;</span><br><span class="line"><span class="comment">// =&gt; &lt;a href="http://www.domain.com"&gt;google&lt;/a&gt;&amp;lt;script&amp;gt;evilcode…&amp;lt;/script&amp;gt;</span></span><br></pre></td></tr></table></figure>
-<p>shtml based on <a href="https://github.com/leizongmin/js-xss/" target="_blank" rel="external">xss</a>, and add filter by domain feature.</p>
+<p>shtml based on <a href="https://github.com/leizongmin/js-xss/" target="_blank" rel="noopener">xss</a>, and add filter by domain feature.</p>
 <ul>
-<li><a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="external">default rule</a></li>
+<li><a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="noopener">default rule</a></li>
 <li>custom rule http://jsxss.com/zh/options.html</li>
 </ul>
 <p>For example, only support <code>a</code> tag, and filter all attributes except for <code>title</code>:</p>
@@ -197,7 +197,7 @@ It will do XSS filter, then output html tags to avoid illegal scripts.</p>
 <blockquote>
 <p><code>config.helper.shtml.domainWhiteList: []</code> has been deprecated, please use config.security.domainWhiteList</p>
 </blockquote>
-<p>Mention that <code>shtml</code> uses a strict white list mechanism, in addition to filtering out the XSS risk of the string,<code>tags</code> and <code>attrs</code> which are not in the <a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="external">default rule</a> will be filtered.</p>
+<p>Mention that <code>shtml</code> uses a strict white list mechanism, in addition to filtering out the XSS risk of the string,<code>tags</code> and <code>attrs</code> which are not in the <a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="noopener">default rule</a> will be filtered.</p>
 <p>For example <code>html</code> tag is not in the whitelist.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> html = <span class="string">'&lt;html&gt;&lt;/html&gt;'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// html</span></span><br><span class="line">$&#123;helper.shtml($html)&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// output none</span></span><br></pre></td></tr></table></figure>
 <p>Commonly used <code>data-xx</code> property is not in the whitelist, so it will be filtered.
@@ -230,7 +230,7 @@ If you want to output json string in your views, please use <code>${ctx.helper.s
 <p>after fix:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">cp.exec(<span class="string">"bash /home/admin/ali-knowledge-graph-backend/initrun.sh "</span> + ctx.helper.cliFilter(port));</span><br></pre></td></tr></table></figure>
 <h2 id="security-headers"><a class="markdown-anchor" href="#security-headers">#</a> Security Headers</h2>
-<p>Refer to <a href="https://github.com/krakenjs/lusca" target="_blank" rel="external">lusca</a>, appriciate for their works.</p>
+<p>Refer to <a href="https://github.com/krakenjs/lusca" target="_blank" rel="noopener">lusca</a>, appriciate for their works.</p>
 <h3 id="hsts-strict-transport-security"><a class="markdown-anchor" href="#hsts-strict-transport-security">#</a> hsts Strict-Transport-Security</h3>
 <p>Disabled by default. If your website based on https, we recommend you should enable it.</p>
 <ul>
@@ -260,7 +260,7 @@ If you want to output json string in your views, please use <code>${ctx.helper.s
 <li>Forbidden <code>trace</code> <code>track</code> <code>options</code> http method.</li>
 </ul>
 <h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="https://github.com/eggjs/egg-security/blob/master/LICENSE" target="_blank" rel="external">MIT</a></p>
+<p><a href="https://github.com/eggjs/egg-security/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
 
   </article>
   <aside id="mobileAside" class="toc">
