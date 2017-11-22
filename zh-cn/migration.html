@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>Egg@2 升级指南 - 为企业级框架和应用而生</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">切换语言</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container" class="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Egg@2 升级指南</h1>
+    <h2 id="背景"><a class="markdown-anchor" href="#背景">#</a> 背景</h2>
+<p>随着 Node.js 8 LTS 的发布， 内建了对 ES2017 Async Function 的支持。</p>
+<p>在这之前，TJ 的 <a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a> 使我们可以提前享受到 <code>async/await</code> 的编程体验，但同时它不可避免的也带来一些问题：</p>
+<ul>
+<li>性能损失</li>
+<li><a href="https://github.com/eggjs/egg/wiki/co-vs-async" target="_blank" rel="noopener">错误堆栈不友好</a></li>
+</ul>
+<p>现在 Egg 正式发布了 2.x 版本：</p>
+<ul>
+<li>保持了对 Egg 1.x 以及 <code>generator function</code> 的<strong>完全兼容</strong>。</li>
+<li>基于 Koa 2.x，异步解决方案基于 <code>async function</code>。</li>
+<li>只支持 Node.js 8 及以上版本。</li>
+<li>去除 <a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a> 后堆栈信息更清晰，带来 30% 左右的性能提升（不含 Node 带来的性能提升），详细参见：<a href="https://eggjs.github.io/benchmark/plot/" target="_blank" rel="noopener">benchmark</a>。</li>
+</ul>
+<p>Egg 的理念之一是<code>渐进式增强</code>，故我们为开发者提供<code>渐进升级</code>的体验。</p>
+<ul>
+<li><a href="#%E5%BF%AB%E9%80%9F%E5%8D%87%E7%BA%A7">快速升级</a></li>
+<li><a href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%8D%87%E7%BA%A7">进一步升级</a></li>
+<li><a href="#%E6%8F%92%E4%BB%B6%E5%8D%87%E7%BA%A7">针对<code>插件开发者</code>的升级指南</a></li>
+</ul>
+<h2 id="快速升级"><a class="markdown-anchor" href="#快速升级">#</a> 快速升级</h2>
+<ul>
+<li>Node.js 使用最新的 LTS 版本（<code>&gt;=8.9.0</code>）。</li>
+<li>执行 <code>egg-bin autod</code>，会自动升级 <code>egg</code> 的依赖为 <code>^2.0.0</code>，以及其他插件版本。</li>
+<li>重新安装依赖，跑单元测试。</li>
+</ul>
+<p><strong>搞定！不需要修改任何一行代码，就已经完成了升级。</strong></p>
+<h2 id="进一步升级"><a class="markdown-anchor" href="#进一步升级">#</a> 进一步升级</h2>
+<p>得益于 Egg 对 1.x 的<strong>完全兼容</strong>，我们可以如何非常快速的完成升级。</p>
+<p>不过，为了更好的统一代码风格，以及更佳的性能和错误堆栈，我们建议开发者进一步升级：</p>
+<ul>
+<li>修改为推荐的代码风格，传送门：<a href="./style-guide.html">代码风格指南</a></li>
+<li><a href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E4%BD%BF%E7%94%A8-Koa2-%E9%A3%8E%E6%A0%BC">中间件使用 Koa2 风格</a></li>
+<li><a href="#yieldable-To-awaitable">函数调用的 <code>yieldable</code> 转为 <code>awaitable</code></a></li>
+</ul>
+<h3 id="中间件使用-koa2-风格"><a class="markdown-anchor" href="#中间件使用-koa2-风格">#</a> 中间件使用 Koa2 风格</h3>
+<blockquote>
+<p>2.x 仍然保持对 1.x 风格的中间件的兼容，故不修改也能继续使用。</p>
+</blockquote>
+<ul>
+<li>返回的函数入参改为 <code>(ctx, next)</code> 的形式。</li>
+<li>不建议使用 <code>async (ctx, next) =&gt; {}</code> 格式，避免错误堆栈丢失函数名。</li>
+<li><code>yield next</code> 改为函数调用 <code>await next()</code> 的方式。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1.x</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>* <span class="title">responseTime</span>(<span class="params">next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line">    <span class="keyword">yield</span> next;</span><br><span class="line">    <span class="keyword">const</span> delta = <span class="built_in">Math</span>.ceil(<span class="built_in">Date</span>.now() - start);</span><br><span class="line">    <span class="keyword">this</span>.set(<span class="string">'X-Response-Time'</span>, delta + <span class="string">'ms'</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.x</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">responseTime</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line">    <span class="comment">// 注意：函数调用</span></span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">    <span class="keyword">const</span> delta = <span class="built_in">Math</span>.ceil(<span class="built_in">Date</span>.now() - start);</span><br><span class="line">    ctx.set(<span class="string">'X-Response-Time'</span>, delta + <span class="string">'ms'</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="yieldable-to-awaitable"><a class="markdown-anchor" href="#yieldable-to-awaitable">#</a> yieldable to awaitable</h3>
+<blockquote>
+<p>我们早在 Egg 1.x 时就已经支持 async，故若应用层已经是 async-base 的，就可以跳过本小节内容了。</p>
+</blockquote>
+<p><a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a> 支持了 <code>yieldable</code> 兼容类型：</p>
+<ul>
+<li>promises</li>
+<li>array (parallel execution)</li>
+<li>objects (parallel execution)</li>
+<li>thunks (functions)</li>
+<li>generators (delegation)</li>
+<li>generator functions (delegation)</li>
+</ul>
+<p>而原生的 <code>yield</code> 和 <code>await</code> 只支持其中的一部分，故在移除 <code>co</code> 后，我们需要根据不同场景自行处理：</p>
+<h4 id="promise"><a class="markdown-anchor" href="#promise">#</a> promise</h4>
+<p>直接替换即可：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">echo</span>(<span class="params">msg</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(msg);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">yield</span> echo(<span class="string">'hi egg'</span>);</span><br><span class="line"><span class="comment">// change to</span></span><br><span class="line"><span class="keyword">await</span> echo(<span class="string">'hi egg'</span>);</span><br></pre></td></tr></table></figure>
+<h4 id="array-yield"><a class="markdown-anchor" href="#array-yield">#</a> array - yield []</h4>
+<p><code>yield []</code> 常用于并发请求，如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> [ news, user ] = <span class="keyword">yield</span> [</span><br><span class="line">  ctx.service.news.list(topic),</span><br><span class="line">  ctx.service.user.get(uid),</span><br><span class="line">];</span><br></pre></td></tr></table></figure>
+<p>这种修改起来比较简单，用 <code>Promise.all()</code> 包装下即可：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> [ news, user ] = <span class="keyword">await</span> <span class="built_in">Promise</span>.all([</span><br><span class="line">  ctx.service.news.list(topic),</span><br><span class="line">  ctx.service.user.get(uid),</span><br><span class="line">]);</span><br></pre></td></tr></table></figure>
+<h4 id="object-yield"><a class="markdown-anchor" href="#object-yield">#</a> object - yield {}</h4>
+<p><code>yield {}</code> 和 <code>yield map</code> 的方式也常用于并发请求，但由于 <code>Promise.all</code> 不支持 Object，会稍微有点复杂。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/biz.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BizService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  * list(topic, uid) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      news: ctx.service.news.list(topic),</span><br><span class="line">      user: ctx.service.user.get(uid),</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; news, user &#125; = <span class="keyword">yield</span> ctx.service.biz.list(topic, uid);</span><br></pre></td></tr></table></figure>
+<p>建议修改为 <code>await Promise.all([])</code> 的方式：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/biz.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BizService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  * list(topic, uid) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.all([</span><br><span class="line">      ctx.service.news.list(topic),</span><br><span class="line">      ctx.service.user.get(uid),</span><br><span class="line">    ]);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="keyword">const</span> [ news, user ] = <span class="keyword">await</span> ctx.service.biz.list(topic, uid);</span><br></pre></td></tr></table></figure>
+<p>如果无法修改对应的接口，以下几种方式可以临时兼容下：</p>
+<p><code>Promise.props</code>:</p>
+<ul>
+<li><a href="http://bluebirdjs.com/docs/api/promise.props.html" target="_blank" rel="noopener">Bluebird</a> 等库提供的 Utils 方法。</li>
+<li>只支持 Promise，只支持一层 Object。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/biz.js</span></span><br><span class="line"><span class="keyword">const</span> <span class="built_in">Promise</span> = <span class="built_in">require</span>(<span class="string">"bluebird"</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BizService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  * list(topic, uid) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">Promise</span>.props(&#123;</span><br><span class="line">      news: ctx.service.news.list(topic),</span><br><span class="line">      user: ctx.service.user.get(uid),</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; news, user &#125; = <span class="keyword">await</span> ctx.service.biz.list(topic, uid);</span><br></pre></td></tr></table></figure>
+<p><code>app.toPromise</code>:</p>
+<ul>
+<li>我们提供的 Utils 方法 <a href="https://github.com/eggjs/egg-core/blob/da4ba1784175c43217125f3d5cd7f0be3d5396bf/lib/egg.js#L353" target="_blank" rel="noopener">app.toPromise</a>。</li>
+<li>支持所有的 <code>yieldable</code>。</li>
+<li><strong>建议尽量改掉，因为实际上就是丢给 co，会带回对应的性能损失和堆栈问题。</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; news, user &#125; = <span class="keyword">await</span> app.toPromise(ctx.service.biz.list(topic, uid));</span><br></pre></td></tr></table></figure>
+<h4 id="其他"><a class="markdown-anchor" href="#其他">#</a> 其他</h4>
+<ul>
+<li>thunks (functions)</li>
+<li>generators (delegation)</li>
+<li>generator functions (delegation)</li>
+</ul>
+<p>修改为对应的 async function 即可，如果不能修改，则可以用 <a href="https://github.com/eggjs/egg-core/blob/da4ba1784175c43217125f3d5cd7f0be3d5396bf/lib/egg.js#L344" target="_blank" rel="noopener">app.toAsyncFunction</a> 简单包装下。</p>
+<p><strong>注意</strong></p>
+<ul>
+<li><a href="https://github.com/eggjs/egg-core/blob/da4ba1784175c43217125f3d5cd7f0be3d5396bf/lib/egg.js#L344" target="_blank" rel="noopener">toAsyncFunction</a> 和 <a href="https://github.com/eggjs/egg-core/blob/da4ba1784175c43217125f3d5cd7f0be3d5396bf/lib/egg.js#L353" target="_blank" rel="noopener">toPromise</a> 实际使用的是 <a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a> 包装，因此会带回对应的性能损失和堆栈问题，建议开发者还是尽量全链路升级。</li>
+<li><a href="https://github.com/eggjs/egg-core/blob/da4ba1784175c43217125f3d5cd7f0be3d5396bf/lib/egg.js#L344" target="_blank" rel="noopener">toAsyncFunction</a> 在调用 async function 时不会有损失。</li>
+</ul>
+<h2 id="插件升级"><a class="markdown-anchor" href="#插件升级">#</a> 插件升级</h2>
+<p><code>应用开发者</code>只需升级<code>插件开发者</code>修改后的依赖版本即可，可以用我们提供的命令 <code>egg-bin autod</code> 快速更新。</p>
+<p>以下内容针对<code>插件开发者</code>，指导如何升级插件：</p>
+<h3 id="升级事项"><a class="markdown-anchor" href="#升级事项">#</a> 升级事项</h3>
+<ul>
+<li>完成上面章节提到的升级项。
+<ul>
+<li>所有的 <code>generator function</code> 改为 <code>async function</code> 格式。</li>
+<li>升级中间件风格。</li>
+</ul>
+</li>
+<li>接口兼容（可选），如下。</li>
+<li>发布大版本。</li>
+</ul>
+<h3 id="接口兼容"><a class="markdown-anchor" href="#接口兼容">#</a> 接口兼容</h3>
+<p>某些场景下，<code>插件开发者</code>提供给<code>应用开发者</code>的接口是同时支持 generator 和 async 的，一般是会用 co 包装一层。</p>
+<ul>
+<li>在 2.x 里为了更好的性能和错误堆栈，我们建议修改为 <code>async-first</code>。</li>
+<li>如有需要，使用 <a href="https://github.com/eggjs/egg-core/blob/da4ba1784175c43217125f3d5cd7f0be3d5396bf/lib/egg.js#L344" target="_blank" rel="noopener">toAsyncFunction</a> 和 <a href="https://github.com/eggjs/egg-core/blob/da4ba1784175c43217125f3d5cd7f0be3d5396bf/lib/egg.js#L353" target="_blank" rel="noopener">toPromise</a> 来兼容。</li>
+</ul>
+<p>譬如 <a href="https://github.com/eggjs/egg-schedule" target="_blank" rel="noopener">egg-schedule</a> 插件，支持应用层使用 generator 或 async 定义 task。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/schedule/cleandb.js</span></span><br><span class="line">exports.task = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">yield</span> ctx.service.db.clean();</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123;app_root&#125;/app/schedule/log.js</span></span><br><span class="line">exports.task = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">splitLog</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">await</span> ctx.service.log.split();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>插件开发者</code>可以简单包装下原始函数：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// https://github.com/eggjs/egg-schedule/blob/80252ef/lib/load_schedule.js#L38</span></span><br><span class="line">task = app.toAsyncFunction(schedule.task);</span><br></pre></td></tr></table></figure>
+<h3 id="插件发布规则"><a class="markdown-anchor" href="#插件发布规则">#</a> 插件发布规则</h3>
+<ul>
+<li><strong>需要发布大版本</strong>
+<ul>
+<li>除非插件提供的接口都是 promise 的，且代码里面不存在 <code>async</code>，如 <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a>。</li>
+</ul>
+</li>
+<li>修改 <code>package.json</code>
+<ul>
+<li>修改 <code>devDependencies</code> 依赖的 <code>egg</code> 为 <code>^2.0.0</code>。</li>
+<li>修改 <code>engines.node</code> 为 <code>&gt;=8.0.0</code>。</li>
+<li>修改 <code>ci.version</code> 为 <code>8, 9</code>， 并重新安装依赖以便生成新的 travis 配置文件。</li>
+</ul>
+</li>
+<li>修改 <code>README.md</code> 的示例为 async function。</li>
+<li>修改 <code>test/fixtures</code> 为 async function，可选，建议分开另一个 PR 方便 Review。</li>
+</ul>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li></ul>
+  </div>
+  <dl><dt>新手指南</dt><dd><ul><li><a href="/zh-cn/intro/index.html">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html">快速入门</a></li><li><a href="/zh-cn/tutorials/progressive.html">渐进式开发</a></li><li><a href="/zh-cn/migration.html">2.x 升级指南</a></li></ul></dd><dt>基础功能</dt><dd><ul><li><a href="/zh-cn/basics/structure.html">目录结构</a></li><li><a href="/zh-cn/basics/objects.html">内置对象</a></li><li><a href="/zh-cn/basics/env.html">运行环境</a></li><li><a href="/zh-cn/basics/config.html">配置</a></li><li><a href="/zh-cn/basics/middleware.html">中间件</a></li><li><a href="/zh-cn/basics/router.html">Router</a></li><li><a href="/zh-cn/basics/controller.html">Controller</a></li><li><a href="/zh-cn/basics/service.html">Service</a></li><li><a href="/zh-cn/basics/plugin.html">插件</a></li><li><a href="/zh-cn/basics/schedule.html">定时任务</a></li><li><a href="/zh-cn/basics/extend.html">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html">启动自定义</a></li></ul></dd><dt>核心功能</dt><dd><ul><li><a href="/zh-cn/core/development.html">本地开发</a></li><li><a href="/zh-cn/core/unittest.html">单元测试</a></li><li><a href="/zh-cn/core/deployment.html">应用部署</a></li><li><a href="/zh-cn/core/logger.html">日志</a></li><li><a href="/zh-cn/core/httpclient.html">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html">异常处理</a></li><li><a href="/zh-cn/core/security.html">安全</a></li><li><a href="/zh-cn/core/i18n.html">国际化</a></li></ul></dd><dt>教程</dt><dd><ul><li><a href="/zh-cn/tutorials/mysql.html">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html">RESTful API</a></li><li><a href="/zh-cn/tutorials/async-function.html">Async Function</a></li></ul></dd><dt>进阶</dt><dd><ul><li><a href="/zh-cn/advanced/loader.html">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html">模板插件开发规范</a></li><li><a href="/zh-cn/style-guide.html">代码风格指南</a></li></ul></dd><dt>社区</dt><dd><ul><li><a href="/zh-cn/plugins/">内置插件列表</a></li><li><a href="/zh-cn/contributing.html">如何贡献</a></li><li><a href="/zh-cn/resource.html">资源</a></li><li><a href="/zh-cn/faq.html">常见问题</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
