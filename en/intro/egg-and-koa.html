@@ -54,15 +54,15 @@
 <li><a href="http://callbackhell.com/" target="_blank" rel="noopener">callback hell</a>: Notorious &quot;callback hell&quot;。</li>
 <li><a href="https://oren.github.io/blog/zalgo.html" target="_blank" rel="noopener">release zalgo</a>: Asynchronous functions may call callback function response data synchronously which would bring inconsistency.</li>
 </ul>
-<p>The community has provided many solutions for the problems, the winner is Promise, it is built into ECMAScript 2015. On the basis of Promise, and Generator with the ability to switch context, we can write asynchronous code in synchronous way with <a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a> and other third party libraries. Meanwhile <a href="https://github.com/tc39/ecmascript-asyncawait" target="_blank" rel="noopener">async function</a>, the official solution has been published in ECMAScript 2017 and landed in Node.js 8.</p>
+<p>The community has provided many solutions for the problems, the winner is Promise, it is built into ECMAScript 2015. On the basis of Promise, and with the ability of Generator to switch context, we can write asynchronous code in synchronous way with <a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a> and other third party libraries. Meanwhile <a href="https://github.com/tc39/ecmascript-asyncawait" target="_blank" rel="noopener">async function</a>, the official solution has been published in ECMAScript 2017 and landed in Node.js 8.</p>
 <h3 id="async-function"><a class="markdown-anchor" href="#async-function">#</a> Async function</h3>
-<p><a href="https://github.com/tc39/ecmascript-asyncawait" target="_blank" rel="noopener">Async function</a> is a syntactic sugar at the language level. In async function, we can use <code>await</code> to wait a promise resolved(or rejected, which will throw an exception), and Node.js LTS (8.x) is support this feature.</p>
+<p><a href="https://github.com/tc39/ecmascript-asyncawait" target="_blank" rel="noopener">Async function</a> is a syntactic sugar at the language level. In async function, we can use <code>await</code> to wait for a promise to be resolved(or rejected, which will throw an exception), and Node.js LTS (8.x) has supported this feature.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fn = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">await</span> getUser();</span><br><span class="line">  <span class="keyword">const</span> posts = <span class="keyword">await</span> fetchPosts(user.id);</span><br><span class="line">  <span class="keyword">return</span> &#123; user, posts &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">fn().then(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">console</span>.log(res)).catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.error(err.stack));</span><br></pre></td></tr></table></figure>
 <h2 id="koa"><a class="markdown-anchor" href="#koa">#</a> Koa</h2>
 <blockquote>
 <p>Koa is a new Web framework designed by the team behind Express, which aims to be a smaller, more expressive, and more robust foundation for Web applications and APIs.</p>
 </blockquote>
-<p>The design style of Koa and Express are very similar, The underlying base library is the same, <a href="https://github.com/jshttp" target="_blank" rel="noopener">HTTP library</a>. There are several significant differences between them. Besides the asynchronous solution by default metioned above, there are the following points.</p>
+<p>The design styles of Koa and Express are very similar, The underlying basic library is the same, <a href="https://github.com/jshttp" target="_blank" rel="noopener">HTTP library</a>. There are several significant differences between them. Besides the asynchronous solution by default mentioned above, there are the following points.</p>
 <h3 id="midlleware"><a class="markdown-anchor" href="#midlleware">#</a> Midlleware</h3>
 <p>The middleware in Koa is different from Express, Koa use the onion model:</p>
 <ul>
@@ -73,14 +73,14 @@
 <li>Middleware execution sequence diagram:</li>
 </ul>
 <p><img src="https://raw.githubusercontent.com/koajs/koa/a7b6ed0529a58112bac4171e4729b8760a34ab8b/docs/middleware.gif" alt=""></p>
-<p>All the requests will be executed twice during one middleware. Compared to Express middleware, it is very easy to implementing post-processing logic. You can obviously feel the advantage of Koa middleware model comparing to the compress middleware implementing in Koa and Express.</p>
+<p>All the requests will be executed twice during one middleware. Compared to Express middleware, it is very easy to implement post-processing logic. You can obviously feel the advantage of Koa middleware model by comparing the compress middleware implementing in Koa and Express.</p>
 <ul>
 <li><a href="https://github.com/koajs/compress/blob/master/index.js" target="_blank" rel="noopener">koa-compress</a> for Koa.</li>
 <li><a href="https://github.com/expressjs/compression/blob/master/index.js" target="_blank" rel="noopener">compression</a> for Express.</li>
 </ul>
 <h3 id="context"><a class="markdown-anchor" href="#context">#</a> Context</h3>
-<p>Unlike that there are only two objects <code>Request</code> and <code>Response</code> in Express, Koa has one more, <code>Context</code> object in one HTTP request(it is <code>this</code> in Koa 1, while it is the first parameter for middleware function in Koa 2). We can attach all the relative things to the object. Such as <a href="https://github.com/eggjs/egg-tracer/blob/1.0.0/lib/tracer.js#L12" target="_blank" rel="noopener">traceId</a> that runs through the request lifetime (which will be called anywhere afterward) could be attached. It is more semantic other than request and response.</p>
-<p>At the same time Request and Response are attached to Context object. Just like Express, the two objects provide lots of easy ways to help developing. For example:</p>
+<p>Unlike that there are only two objects <code>Request</code> and <code>Response</code> in Express, Koa has one more, <code>Context</code> object in one HTTP request(it is <code>this</code> in Koa 1, while it is the first parameter for middleware function in Koa 2). We can mount all the related properties in one request to this object. Such as <a href="https://github.com/eggjs/egg-tracer/blob/1.0.0/lib/tracer.js#L12" target="_blank" rel="noopener">traceId</a> that runs through the whole request lifetime (which will be called anywhere afterward) could be mounted. It is more semantic other than request and response.</p>
+<p>At the same time Request and Response are mounted to Context object. Just like Express, the two objects provide lots of easy ways to help developing. For example:</p>
 <ul>
 <li><code>get request.query</code></li>
 <li><code>get request.hostname</code></li>
@@ -88,11 +88,11 @@
 <li><code>set response.status</code></li>
 </ul>
 <h3 id="exception-handlering"><a class="markdown-anchor" href="#exception-handlering">#</a> Exception handlering</h3>
-<p>Another enormous advantage for writing asynchronous code in synchronous way is that it is quite at ease to handler exception. You can catch all the exceptions thrown in the codes followed the convention with <code>try catch</code>. We can easily write a customized exception handlering middleware.</p>
+<p>Another enormous advantage for writing asynchronous code in synchronous way is that it is quite at ease to handle exception. You can catch all the exceptions thrown in the codes followed the convention with <code>try catch</code>. We can easily write a customized exception handling middleware.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">onerror</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    ctx.app.emit(<span class="string">'error'</span>, err);</span><br><span class="line">    ctx.body = <span class="string">'server error'</span>;</span><br><span class="line">    ctx.status = err.status || <span class="number">500</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Putting the middleware before others, you can catch all the exceptions thrown by the synchronous or asynchronous code.</p>
-<h2 id="egg-inherit-from-koa"><a class="markdown-anchor" href="#egg-inherit-from-koa">#</a> Egg inherit from Koa</h2>
-<p>As the above words, Koa is an excellent framework. However, it is not enough to building an enterprise-class application.</p>
+<p>Putting this middleware before others, you can catch all the exceptions thrown by the synchronous or asynchronous code.</p>
+<h2 id="egg-inherits-from-koa"><a class="markdown-anchor" href="#egg-inherits-from-koa">#</a> Egg inherits from Koa</h2>
+<p>As described above, Koa is an excellent framework. However, it is not enough to build an enterprise-class application.</p>
 <p>Egg is built around the Koa. On the basis of Koa model, Egg implements enhancements one step further.</p>
 <h3 id="extension"><a class="markdown-anchor" href="#extension">#</a> Extension</h3>
 <p>In the framework or application based on Egg, we can extend the prototype of 4 Koa objects by defining <code>app/extend/{application,context,request,response}.js</code>. With this, we can write more utility methods quickly. For example, we have the following code in <code>app/extend/context.js</code>:</p>
@@ -101,7 +101,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line">exports.handler = <span class="function"><span class="params">ctx</span> =&gt;</span> &#123;</span><br><span class="line">  ctx.body = ctx.isIOS</span><br><span class="line">    ? <span class="string">'Your operating system is iOS.'</span></span><br><span class="line">    : <span class="string">'Your operating system is not iOS.'</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>More about extension, please check <a href="../basics/extend.html">Exception</a> section.</p>
 <h3 id="plugin"><a class="markdown-anchor" href="#plugin">#</a> Plugin</h3>
-<p>As is known to all, Many middlewares are imported to provide different kind of features in Express and Koa. Eg, <a href="https://github.com/koajs/session" target="_blank" rel="noopener">koa-session</a> provides the Session support, <a href="https://github.com/koajs/bodyparser" target="_blank" rel="noopener">koa-bodyparser</a> help to parse request body. Egg has provided a powerful plugin mechanism to make it more easy to write stand alone features.</p>
+<p>As is known to all, Many middlewares are imported to provide different kind of features in Express and Koa. Eg, <a href="https://github.com/koajs/session" target="_blank" rel="noopener">koa-session</a> provides the Session support, <a href="https://github.com/koajs/bodyparser" target="_blank" rel="noopener">koa-bodyparser</a> help to parse request body. Egg has provided a powerful plugin mechanism to make it easier to write stand alone features.</p>
 <p>One plugin can include:</p>
 <ul>
 <li>extend：extend the context of base object, provide utility and attributes.</li>
@@ -113,18 +113,18 @@
 <p>More about plugin, please check <a href="../basics/plugin.html">Plugin</a> section.</p>
 <h3 id="roadmap"><a class="markdown-anchor" href="#roadmap">#</a> Roadmap</h3>
 <h4 id="egg-1x"><a class="markdown-anchor" href="#egg-1x">#</a> Egg 1.x</h4>
-<p>When Egg 1.x released, the Node.js LTS version does not support async function，so Egg 1.x is based on Koa 1.x. On the basis of this, Egg has added full async function support. Egg is completely compatible with middlewares in Koa 2.x, all application could write with <code>async function</code>.</p>
+<p>When Egg 1.x released, the Node.js LTS version did not support async function，so Egg 1.x was based on Koa 1.x. On the basis of this, Egg had added fully async function support. Egg is completely compatible with middlewares in Koa 2.x, all applications could write with <code>async function</code>.</p>
 <ul>
 <li>The underlying is based on Koa 1.x, asynchronous solution is based on generator function wrapped by <a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a>.</li>
 <li>Official plugin and core of Egg are written in generator function,  keep supporting Node.js LTS version, use <a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a> when necessary to be compatiable with async function.</li>
 <li>Application developers can choose either async function (Node.js 8.x+) or generator function (Node.js 6.x+).</li>
 </ul>
 <h4 id="egg-2x"><a class="markdown-anchor" href="#egg-2x">#</a> Egg 2.x</h4>
-<p>When Node.js 8 became LTS version, async function can used in Node.js without any performance problem. Egg released 2.x based on Koa 2.x, the framework and built-in plugins are all written by async function, and Egg 2.x still keep compatibility with generator function and all the usages in Egg 1.x, applications base on Egg 1.x can migrate to Egg 2.x only by upgrade to Node.js 8.</p>
+<p>When Node.js 8 became LTS version, async function could be used in Node.js without any performance problem. Egg released 2.x based on Koa 2.x, the framework and built-in plugins were all written by async function, and Egg 2.x still kept compatibility with generator function and all the usages in Egg 1.x, applications based on Egg 1.x can migrate to Egg 2.x only by upgrading to Node.js 8.</p>
 <ul>
 <li>The underlying will be based on Koa 2.x, asynchronous solution will be based on async function.</li>
-<li>Official plugin and core of egge will be written in async function.</li>
-<li>Recommend user transfer business layer to async function.</li>
+<li>Official plugin and core of egg will be written in async function.</li>
+<li>Recommend user to transfer business layer to async function.</li>
 <li>Only support Node.js 8+.</li>
 </ul>
 
