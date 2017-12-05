@@ -48,11 +48,11 @@
     <div class="page-main">
   <article class="markdown-body">
     <h1>Progressive Development</h1>
-    <p>Egg provides both <a href="../basics/plugin.html">Plugin</a> and <a href="../advanced/framework.html">Framework</a>, and the former has two loading modes includes <code>path</code> and <code>package</code>. Then how should we choose?</p>
+    <p>Egg provides both <a href="../basics/plugin.html">Plugin</a> and <a href="../advanced/framework.html">Framework</a>, and the former has two loading modes which are <code>path</code> and <code>package</code>. Then how should we choose?</p>
 <p>Step-by-step example will be provided to demonstrate how to start coding development progressively.</p>
 <p>Find detail codes on <a href="https://github.com/eggjs/examples/tree/master/progressive" target="_blank" rel="noopener">eggjs/examples/progressive</a>.</p>
 <h2 id="getting-started"><a class="markdown-anchor" href="#getting-started">#</a> Getting Started</h2>
-<p>Assume we are writing a code to analyze UA to implement the function below:</p>
+<p>Assume that we are writing a code to analyze UA to implement the function below:</p>
 <ul>
 <li><code>ctx.isAndroid</code></li>
 <li><code>ctx.isIOS</code></li>
@@ -65,8 +65,8 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/extend/context.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  get isIOS() &#123;</span><br><span class="line">    <span class="keyword">const</span> iosReg = <span class="regexp">/iphone|ipad|ipod/i</span>;</span><br><span class="line">    <span class="keyword">return</span> iosReg.test(<span class="keyword">this</span>.get(<span class="string">'user-agent'</span>));</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="prototype-of-plugin"><a class="markdown-anchor" href="#prototype-of-plugin">#</a> Prototype of Plugin</h2>
 <p>Obviously, the logic is universal that can be written as a plugin.</p>
-<p>But since function might not perfect at the beginning, it might difficult to maintain if encapsulate into a plugin directly.</p>
-<p>We can put the code as the format of plugin, but not separate out.</p>
+<p>But since function might not be perfect at the beginning, it might be difficult to maintain if encapsulated into a plugin directly.</p>
+<p>We can write the code as the format of plugin, but not separate out.</p>
 <p>Codes refer to <a href="https://github.com/eggjs/examples/tree/master/progressive/step2" target="_blank" rel="noopener">step2</a>.</p>
 <p>New directory structure:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">example-app</span><br><span class="line">├── app</span><br><span class="line">│   └── router.js</span><br><span class="line">├── config</span><br><span class="line">│   └── plugin.js</span><br><span class="line">├── lib</span><br><span class="line">│   └── plugin</span><br><span class="line">│       └── egg-ua</span><br><span class="line">│           ├── app</span><br><span class="line">│           │   └── extend</span><br><span class="line">│           │       └── context.js</span><br><span class="line">│           └── package.json</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   └── index.test.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
@@ -76,16 +76,16 @@
 <p><code>app/extend/context.js</code> move to <code>lib/plugin/egg-ua/app/extend/context.js</code>.</p>
 </li>
 <li>
-<p><code>lib/plugin/egg-ua/package.json</code> to declare plugin.</p>
+<p><code>lib/plugin/egg-ua/package.json</code> declares plugin.</p>
 </li>
 </ul>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"ua"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
-<li><code>config/plugin.js</code> use <code>path</code> to mount the plugin.</li>
+<li><code>config/plugin.js</code> uses <code>path</code> to mount the plugin.</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line">exports.ua = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  path: path.join(__dirname, <span class="string">'../lib/plugin/egg-ua'</span>),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="extraction-to-independent-plugin"><a class="markdown-anchor" href="#extraction-to-independent-plugin">#</a> Extraction to Independent Plugin</h2>
-<p>The module's functions become more better after a period of developing so we could extract it out as an independent plugin.</p>
+<h2 id="extract-to-independent-plugin"><a class="markdown-anchor" href="#extract-to-independent-plugin">#</a> Extract to Independent Plugin</h2>
+<p>The functions of module become better after a period of developing so we could extract it out as an independent plugin.</p>
 <p>We extract an egg-ua plugin and have a quick review as below. Details refer to <a href="../advanced/plugin.html">Plugin Development</a>.</p>
 <p>Directory structure:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">egg-ua</span><br><span class="line">├── app</span><br><span class="line">│   └── extend</span><br><span class="line">│       └── context.js</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   ├── fixtures</span><br><span class="line">│   │   └── <span class="built_in">test</span>-app</span><br><span class="line">│   │       ├── app</span><br><span class="line">│   │       │   └── router.js</span><br><span class="line">│   │       └── package.json</span><br><span class="line">│   └── ua.test.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
@@ -100,8 +100,8 @@
 <p><strong>Note：We can use <code>npm link</code> for local test before releasing the plugin. Details refer to  <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="noopener">npm-link</a>.</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> example-app</span><br><span class="line">$ npm link ../egg-ua</span><br><span class="line">$ npm i</span><br><span class="line">$ npm <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 <h2 id="finally-a-framework"><a class="markdown-anchor" href="#finally-a-framework">#</a> Finally: A Framework</h2>
-<p>After repeating the process above, we accumulate a few plugins and configurations, and might found that most of our team projects are using them.</p>
-<p>At that time, you can consider to abstract them as a framework which suitable for business scenarios.</p>
+<p>After repeating the process above, we accumulate a few plugins and configurations, and might find that most of our team projects are using them.</p>
+<p>At that time, you can consider abstracting them as a framework which is suitable for business scenarios.</p>
 <p>Firstly, abstract the example-framework as below. Let's have a quick review, details refer to <a href="../advanced/framework.html">Framework</a>.</p>
 <p>Directory structure:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">example-framework</span><br><span class="line">├── config</span><br><span class="line">│   ├── config.default.js</span><br><span class="line">│   └── plugin.js</span><br><span class="line">├── lib</span><br><span class="line">│   ├── agent.js</span><br><span class="line">│   └── application.js</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   ├── fixtures</span><br><span class="line">│   │   └── <span class="built_in">test</span>-app</span><br><span class="line">│   └── framework.test.j.</span><br><span class="line">├── README.md</span><br><span class="line">├── index.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
@@ -111,18 +111,18 @@
 </ul>
 <p>Then modify the application, details refer to <a href="https://github.com/eggjs/examples/tree/master/progressive/step4/example-app" target="_blank" rel="noopener">step4/example-app</a>.</p>
 <ul>
-<li>Remove declaring dependencies <code>egg-ua</code> in <code>config/plugin.js</code>.</li>
-<li>Remove dependencies <code>egg-ua</code> in <code>package.json</code>.</li>
-<li>declare dependencies <code>example-framework</code>  in <code>package.json</code> and configure the <code>egg.framework</code>.</li>
+<li>Remove <code>egg-ua</code> in <code>config/plugin.js</code>.</li>
+<li>Remove <code>egg-ua</code> in <code>package.json</code>.</li>
+<li>declare <code>example-framework</code>  in <code>package.json</code> and configure the <code>egg.framework</code>.</li>
 </ul>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"progressive"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"private"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"egg"</span>: &#123;</span><br><span class="line">    <span class="attr">"framework"</span>: <span class="string">"example-framework"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"example-framework"</span>: <span class="string">"*"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>Note：We can use <code>npm link</code> for local test before releasing the framework <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="noopener">npm-link</a>.</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> example-app</span><br><span class="line">$ npm link ../egg-framework</span><br><span class="line">$ npm i</span><br><span class="line">$ npm <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
-<h2 id="last"><a class="markdown-anchor" href="#last">#</a> Last</h2>
-<p>In conclusion, we can see how to make the framework evolution step by step which benefits from Egg provides the powerful plugin mechanism, code co-build, reusability and modularity.</p>
+<h2 id="write-in-the-end"><a class="markdown-anchor" href="#write-in-the-end">#</a> Write in the end</h2>
+<p>In conclusion, we can see how to make the framework evolution step by step which benefits from Egg's powerful plugin mechanism, code co-build, reusability and modularity.</p>
 <ul>
 <li>
-<p>in general, put codes into <code>lib/plugin</code> if it can be reused in the application.</p>
+<p>in general, put codes into <code>lib/plugin</code> if they can be reused in the application.</p>
 </li>
 <li>
 <p>separate it into a <code>node module</code> when plugin becomes stable.</p>
@@ -131,13 +131,13 @@
 <p>application with relatively reusable codes will work as a separate plugin.</p>
 </li>
 <li>
-<p>abstract as framework to release after application become certain solutions of specified business scenario.</p>
+<p>abstract it as framework to release after application become certain solutions of specified business scenario.</p>
 </li>
 <li>
-<p>it would be a great improvement of teamwork after plugins extract, modularize and finally as a framework, beacuase other projects could reuse codes by just <code>npm install</code>.</p>
+<p>it would be a great improvement in the efficiency of teamwork after plugins were extracted, modularized and finally became a framework, because other projects could reuse codes by just using <code>npm install</code>.</p>
 </li>
 <li>
-<p><strong>Note：Whether application/plugin/framework, unittest is a must and try to reach 100% coverage</strong></p>
+<p><strong>Note：Whether it's the application/plugin/framework, unittest is necessary and try to reach 100% coverage</strong></p>
 </li>
 </ul>
 
