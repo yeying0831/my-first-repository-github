@@ -65,6 +65,7 @@
 <p>Egg 的理念之一是<code>渐进式增强</code>，故我们为开发者提供<code>渐进升级</code>的体验。</p>
 <ul>
 <li><a href="#%E5%BF%AB%E9%80%9F%E5%8D%87%E7%BA%A7">快速升级</a></li>
+<li><a href="#%E6%8F%92%E4%BB%B6%E5%8F%98%E6%9B%B4%E8%AF%B4%E6%98%8E">插件变更说明</a></li>
 <li><a href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E5%8D%87%E7%BA%A7">进一步升级</a></li>
 <li><a href="#%E6%8F%92%E4%BB%B6%E5%8D%87%E7%BA%A7">针对<code>插件开发者</code>的升级指南</a></li>
 </ul>
@@ -75,7 +76,22 @@
 <li>检查相关插件是否发布新版本（可选）。</li>
 <li>重新安装依赖，跑单元测试。</li>
 </ul>
-<p><strong>搞定！不需要修改任何一行代码，就已经完成了升级。</strong></p>
+<p><strong>搞定！几乎不需要修改任何一行代码，就已经完成了升级。</strong></p>
+<h2 id="插件变更说明"><a class="markdown-anchor" href="#插件变更说明">#</a> 插件变更说明</h2>
+<h3 id="egg-multipart"><a class="markdown-anchor" href="#egg-multipart">#</a> egg-multipart</h3>
+<p><code>yield parts</code> 需修改为 <code>await parts()</code> 或 <code>yield parts()</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// old</span></span><br><span class="line"><span class="keyword">const</span> parts = ctx.multipart();</span><br><span class="line"><span class="keyword">while</span> ((part = <span class="keyword">yield</span> parts) != <span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// yield parts() also work</span></span><br><span class="line"><span class="keyword">while</span> ((part = <span class="keyword">yield</span> parts()) != <span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// new</span></span><br><span class="line"><span class="keyword">const</span> parts = ctx.multipart();</span><br><span class="line"><span class="keyword">while</span> ((part = <span class="keyword">await</span> parts()) != <span class="literal">null</span>) &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://github.com/eggjs/egg-multipart#upload-multiple-files" target="_blank" rel="noopener">egg-multipart#upload-multiple-files</a></li>
+</ul>
+<h3 id="egg-userrole"><a class="markdown-anchor" href="#egg-userrole">#</a> egg-userrole</h3>
+<p>不再兼容 1.x 形式的 role 定义，因为 koa-roles 已经无法兼容了。
+请求上下文 <code>Context</code> 从 this 传入改成了第一个参数 <code>ctx</code> 传入，原有的 <code>scope</code> 变成了第二个参数。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// old</span></span><br><span class="line">app.role.use(<span class="string">'user'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> !!<span class="keyword">this</span>.user;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// new</span></span><br><span class="line">app.role.use(<span class="function">(<span class="params">ctx, scope</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> !!ctx.user</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">app.role.use(<span class="string">'user'</span>, ctx =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> !!ctx.user;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://github.com/koajs/koa-roles/pull/13" target="_blank" rel="noopener">koajs/koa-roles#13</a></li>
+<li><a href="https://github.com/eggjs/egg-userrole/pull/9" target="_blank" rel="noopener">eggjs/egg-userrole#9</a></li>
+</ul>
 <h2 id="进一步升级"><a class="markdown-anchor" href="#进一步升级">#</a> 进一步升级</h2>
 <p>得益于 Egg 对 1.x 的<strong>完全兼容</strong>，我们可以如何非常快速的完成升级。</p>
 <p>不过，为了更好的统一代码风格，以及更佳的性能和错误堆栈，我们建议开发者进一步升级：</p>
@@ -184,6 +200,7 @@
 </ul>
 </li>
 <li>修改 <code>README.md</code> 的示例为 async function。</li>
+<li>编写升级指引。</li>
 <li>修改 <code>test/fixtures</code> 为 async function，可选，建议分开另一个 PR 方便 Review。</li>
 </ul>
 <p>一般还会需要继续维护上一个版本，故需要：</p>
