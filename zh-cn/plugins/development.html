@@ -66,15 +66,18 @@
 <h3 id="about-reload"><a class="markdown-anchor" href="#about-reload">#</a> About Reload</h3>
 <p>Under the following directory (including subdirectories) will watch file changes under development environment by default, trigger an Egg development environment server reload:</p>
 <ul>
-<li>$project/app</li>
-<li>$project/config</li>
-<li>$project/mocks</li>
-<li>$project/mocks_proxy</li>
+<li>${app_root}/app</li>
+<li>${app_root}/config</li>
+<li>${app_root}/mocks</li>
+<li>${app_root}/mocks_proxy</li>
 </ul>
+<blockquote>
+<p>set <code>config.development.overrideDefault</code> to <code>true</code> to skip defaults merge.</p>
+</blockquote>
 <p>Under the following directory (including subdirectories) will ignore file changes under development environment by default:</p>
 <ul>
-<li>$project/app/view</li>
-<li>$project/app/assets</li>
+<li>${app_root}/app/view</li>
+<li>${app_root}/app/assets</li>
 </ul>
 <h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
 <p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
