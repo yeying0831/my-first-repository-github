@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>Passport - 为企业级框架和应用而生</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      <!--
+      <li class="translations">
+        <a class="nav-link">切换语言</a>
+        <span class="arrow"></span>
+        <ul class="dropdown-content">
+          <li><a href="/">中文</a></li>
+          <li><a href="/">English</a></li>
+        </ul>
+      </li>
+      -->
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+
+  <div id="container" class="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Passport</h1>
+    <p>『登录鉴权』是一个常见的业务场景，包括『账号密码登录方式』和『第三方统一登录』。</p>
+<p>其中，后者我们经常使用到，如 Google， GitHub，QQ 统一登录，它们都是基于 <a href="https://oauth.net/2/" target="_blank" rel="noopener">OAuth</a> 规范。</p>
+<p><a href="http://www.passportjs.org/" target="_blank" rel="noopener">Passport</a> 是一个扩展性很强的认证中间件，支持 <code>Github</code>，<code>Twitter</code>，<code>Facebook</code> 等知名服务厂商的 <code>strategy</code>，同时也支持通过用户名和密码的方式进行登录授权校验。</p>
+<p>Egg 在它之上提供了 egg-passport 插件，把初始化、鉴权成功后的回调处理等通用逻辑封装掉，使得开发者仅需调用几个 API 即可方便的使用 Passport 。</p>
+<h2 id="使用-egg-passport"><a class="markdown-anchor" href="#使用-egg-passport">#</a> 使用 egg-passport</h2>
+<p>下面，我们将以 GitHub 登录为例，来演示下如何使用。</p>
+<h3 id="安装"><a class="markdown-anchor" href="#安装">#</a> 安装</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i --save egg-passport</span><br><span class="line">$ npm i --save egg-passport-github</span><br></pre></td></tr></table></figure>
+<h3 id="配置"><a class="markdown-anchor" href="#配置">#</a> 配置</h3>
+<p><strong>开启插件：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.passport = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-passport'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">exports.passportGithub = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-passport-github'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>配置:</strong></p>
+<p>注意：<a href="https://github.com/eggjs/egg-passport" target="_blank" rel="noopener">egg-passport</a> 对配置字段进行的标准化，故这里配置的字段名是 <code>key</code> 和 <code>secret</code> 。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/default.js</span></span><br><span class="line">config.passportGithub = &#123;</span><br><span class="line">  key: <span class="string">'your_clientID'</span>,</span><br><span class="line">  secret: <span class="string">'your_clientSecret'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ul>
+<li>需要创建一个 <a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">GitHub OAuth Apps</a>，得到 <code>clientID</code> 和 <code>clientSecret</code> 信息。</li>
+<li>还需要填写 <code>callbackURL</code>，如 <code>http://127.0.0.1:7001/auth/github/callback</code> (线上部署时需要更新对应的域名)。</li>
+</ul>
+<h3 id="挂载路由"><a class="markdown-anchor" href="#挂载路由">#</a> 挂载路由</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; router, controller &#125; = app;</span><br><span class="line"></span><br><span class="line">  router.get(<span class="string">'/authCallback'</span>, controller.home.githubCallback);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 挂载鉴权路由</span></span><br><span class="line">  app.passport.mount(<span class="string">'github'</span>, &#123;</span><br><span class="line">    callbackURL: <span class="string">'/auth/github/callback'</span>,</span><br><span class="line">    successRedirect: <span class="string">'/authCallback'</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 上面的 mount 是语法糖，等价于</span></span><br><span class="line">  <span class="comment">// const github = app.passport.authenticate('github', &#123; successRedirect: '/authCallback' &#125;);</span></span><br><span class="line">  <span class="comment">// router.get('/passport/github', github);</span></span><br><span class="line">  <span class="comment">// router.get('/auth/github/callback', github);</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="用户信息处理"><a class="markdown-anchor" href="#用户信息处理">#</a> 用户信息处理</h3>
+<p>接着，我们还需要：</p>
+<ul>
+<li>首次登录时，一般需要把用户信息进行入库，并记录 Session 。</li>
+<li>二次登录时，从 OAuth 或 Session 拿到的用户信息，读取数据库拿到完整的用户信息。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.passport.verify(<span class="keyword">async</span> (ctx, user) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 检查用户</span></span><br><span class="line">    assert(user.provider, <span class="string">'user.provider should exists'</span>);</span><br><span class="line">    assert(user.id, <span class="string">'user.id should exists'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 从数据库中查找用户信息</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Authorization Table</span></span><br><span class="line">    <span class="comment">// column   | desc</span></span><br><span class="line">    <span class="comment">// ---      | --</span></span><br><span class="line">    <span class="comment">// provider | provider name, like github, twitter, facebook, weibo and so on</span></span><br><span class="line">    <span class="comment">// uid      | provider unique id</span></span><br><span class="line">    <span class="comment">// user_id  | current application user id</span></span><br><span class="line">    <span class="keyword">const</span> auth = <span class="keyword">await</span> ctx.model.Authorization.findOne(&#123;</span><br><span class="line">      uid: user.id,</span><br><span class="line">      provider: user.provider,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">const</span> existsUser = <span class="keyword">await</span> ctx.model.User.findOne(&#123; <span class="attr">id</span>: auth.user_id &#125;);</span><br><span class="line">    <span class="keyword">if</span> (existsUser) &#123;</span><br><span class="line">      <span class="keyword">return</span> existsUser;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 调用 service 注册新用户</span></span><br><span class="line">    <span class="keyword">const</span> newUser = <span class="keyword">await</span> ctx.service.user.register(user);</span><br><span class="line">    <span class="keyword">return</span> newUser;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 将用户信息序列化后存进 session 里面，一般需要精简，只保存个别字段</span></span><br><span class="line">  app.passport.serializeUser(<span class="keyword">async</span> (ctx, user) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 处理 user</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// return user;</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 反序列化后把用户信息从 session 中取出来，反查数据库拿到完整信息</span></span><br><span class="line">  app.passport.deserializeUser(<span class="keyword">async</span> (ctx, user) =&gt; &#123;</span><br><span class="line">  <span class="comment">// 处理 user</span></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="comment">// return user;</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>至此，我们就完成了所有的配置，完整的示例可以参见：<a href="https://github.com/eggjs/examples/tree/master/passport" target="_blank" rel="noopener">eggjs/examples/passport</a></p>
+<h3 id="api"><a class="markdown-anchor" href="#api">#</a> API</h3>
+<p><a href="https://github.com/eggjs/egg-passport" target="_blank" rel="noopener">egg-passport</a> 提供了以下扩展：</p>
+<ul>
+<li><code>ctx.user</code>：获取当前已登录的用户信息</li>
+<li><code>ctx.isAuthenticated()</code>：检查该请求是否已授权</li>
+<li><code>ctx.login(user[, options])</code>：为用户启动一个登录的 session</li>
+<li><code>ctx.logout()</code>：退出，将用户信息从 session 中清除</li>
+</ul>
+<p>还提供了 API：</p>
+<ul>
+<li><code>app.passport.verify(async (ctx, user) =&gt; {})</code>：校验用户</li>
+<li><code>app.passport.serializeUser(async (ctx, user) =&gt; {})</code>： 序列化用户信息后存储进 session</li>
+<li><code>app.passport.deserializeUser(async (ctx, user) =&gt; {})</code>：反序列化后取出用户信息</li>
+<li><code>app.passport.authenticate(strategy, options)</code>：生成指定的鉴权中间件</li>
+<li><code>app.passport.mount(strategy, options)</code>： 语法糖，方便开发者配置路由</li>
+</ul>
+<h2 id="使用-passport-生态"><a class="markdown-anchor" href="#使用-passport-生态">#</a> 使用 Passport 生态</h2>
+<p><a href="http://www.passportjs.org/" target="_blank" rel="noopener">Passport</a> 的中间件很多，不可能都进行二次封装。
+接下来，我们来看看如何在框架中直接使用 Passport 中间件。
+以『账号密码登录方式』的 [passort-local] 为例：</p>
+<h3 id="安装-2"><a class="markdown-anchor" href="#安装-2">#</a> 安装</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i --save passport-local</span><br></pre></td></tr></table></figure>
+<h3 id="配置-2"><a class="markdown-anchor" href="#配置-2">#</a> 配置</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="keyword">const</span> LocalStrategy = <span class="built_in">require</span>(<span class="string">'passport-local'</span>).Strategy;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 挂载 strategy</span></span><br><span class="line">  app.passport.use(<span class="keyword">new</span> LocalStrategy(&#123;</span><br><span class="line">    passReqToCallback: <span class="literal">true</span>,</span><br><span class="line">  &#125;, (req, username, password, done) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> user = &#123;</span><br><span class="line">      username,</span><br><span class="line">      password,</span><br><span class="line">    &#125;;</span><br><span class="line">    app.passport.doVerify(req, user, done);</span><br><span class="line">  &#125;));</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 处理用户信息</span></span><br><span class="line">  app.passport.verify(<span class="keyword">async</span> (ctx, user) =&gt; &#123;&#125;);</span><br><span class="line">  app.passport.serializeUser(<span class="keyword">async</span> (ctx, user) =&gt; &#123;&#125;);</span><br><span class="line">  app.passport.deserializeUser(<span class="keyword">async</span> (ctx, user) =&gt; &#123;&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="挂载路由-2"><a class="markdown-anchor" href="#挂载路由-2">#</a> 挂载路由</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; router, controller &#125; = app;</span><br><span class="line">  router.get(<span class="string">'/'</span>, controller.home.index);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 鉴权成功后的回调页面</span></span><br><span class="line">  router.get(<span class="string">'/authCallback'</span>, controller.home.authCallback);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 渲染登录页面，用户输入账号密码</span></span><br><span class="line">  router.get(<span class="string">'/login'</span>, controller.home.login);</span><br><span class="line">  <span class="comment">// 登录校验</span></span><br><span class="line">  router.post(<span class="string">'/login'</span>, app.passport.authenticate(<span class="string">'local'</span>, &#123; <span class="attr">successReturnToOrRedirect</span>: <span class="string">'/authCallback'</span> &#125;));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="如何开发一个-egg-passport-插件"><a class="markdown-anchor" href="#如何开发一个-egg-passport-插件">#</a> 如何开发一个 egg-passport 插件</h2>
+<p>在上一节中，我们学会了如何在框架中使用 Passport 中间件，我们可以进一步把它封装成插件，回馈社区。</p>
+<p><strong>初始化：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-init --<span class="built_in">type</span>=plugin egg-passsport-local</span><br></pre></td></tr></table></figure>
+<p>在 <code>package.json</code> 中<strong>配置依赖：</strong></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-passport-local"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"passportLocal"</span>,</span><br><span class="line">    <span class="attr">"dependencies"</span>: [</span><br><span class="line">      <span class="string">"passport"</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="attr">"passport-local"</span>: <span class="string">"^1.0.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>配置：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;plugin_root&#125;/config/config.default.js</span></span><br><span class="line"><span class="comment">// https://github.com/jaredhanson/passport-local</span></span><br><span class="line">exports.passportLocal = &#123;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>注册 passport 中间件：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;plugin_root&#125;/app.js</span></span><br><span class="line"><span class="keyword">const</span> LocalStrategy = <span class="built_in">require</span>(<span class="string">'passport-local'</span>).Strategy;</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = app.config.passportLocal;</span><br><span class="line">  config.passReqToCallback = <span class="literal">true</span>;</span><br><span class="line">  app.passport.use(<span class="keyword">new</span> LocalStrategy(config, (req, username, password, done) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> user = &#123;</span><br><span class="line">      username,</span><br><span class="line">      password,</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 这里不处理应用层逻辑，传给 app.passport.verify 统一处理</span></span><br><span class="line">    app.passport.doVerify(req, user, done);</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul><li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li></ul>
+  </div>
+  <dl><dt>新手指南</dt><dd><ul><li><a href="/zh-cn/intro/index.html">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html">快速入门</a></li><li><a href="/zh-cn/tutorials/progressive.html">渐进式开发</a></li><li><a href="/zh-cn/migration.html">2.x 升级指南</a></li></ul></dd><dt>基础功能</dt><dd><ul><li><a href="/zh-cn/basics/structure.html">目录结构</a></li><li><a href="/zh-cn/basics/objects.html">内置对象</a></li><li><a href="/zh-cn/basics/env.html">运行环境</a></li><li><a href="/zh-cn/basics/config.html">配置</a></li><li><a href="/zh-cn/basics/middleware.html">中间件</a></li><li><a href="/zh-cn/basics/router.html">Router</a></li><li><a href="/zh-cn/basics/controller.html">Controller</a></li><li><a href="/zh-cn/basics/service.html">Service</a></li><li><a href="/zh-cn/basics/plugin.html">插件</a></li><li><a href="/zh-cn/basics/schedule.html">定时任务</a></li><li><a href="/zh-cn/basics/extend.html">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html">启动自定义</a></li></ul></dd><dt>核心功能</dt><dd><ul><li><a href="/zh-cn/core/development.html">本地开发</a></li><li><a href="/zh-cn/core/unittest.html">单元测试</a></li><li><a href="/zh-cn/core/deployment.html">应用部署</a></li><li><a href="/zh-cn/core/logger.html">日志</a></li><li><a href="/zh-cn/core/httpclient.html">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html">异常处理</a></li><li><a href="/zh-cn/core/security.html">安全</a></li><li><a href="/zh-cn/core/i18n.html">国际化</a></li></ul></dd><dt>教程</dt><dd><ul><li><a href="/zh-cn/tutorials/mysql.html">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html">RESTful API</a></li><li><a href="/zh-cn/tutorials/passport.html">Passport 鉴权</a></li></ul></dd><dt>进阶</dt><dd><ul><li><a href="/zh-cn/advanced/loader.html">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html">模板插件开发规范</a></li><li><a href="/zh-cn/style-guide.html">代码风格指南</a></li></ul></dd><dt>社区</dt><dd><ul><li><a href="/zh-cn/plugins/">内置插件列表</a></li><li><a href="/zh-cn/contributing.html">如何贡献</a></li><li><a href="/zh-cn/resource.html">资源</a></li><li><a href="/zh-cn/faq.html">常见问题</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+mobileTrigger.onclick = function(e) {
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
