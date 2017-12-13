@@ -48,10 +48,20 @@
     <div class="page-main">
   <article class="markdown-body">
     <h1>Passport</h1>
-    <p>『登录鉴权』是一个常见的业务场景，包括『账号密码登录方式』和『第三方统一登录』。</p>
+    <p>**『登录鉴权』**是一个常见的业务场景，包括『账号密码登录方式』和『第三方统一登录』。</p>
 <p>其中，后者我们经常使用到，如 Google， GitHub，QQ 统一登录，它们都是基于 <a href="https://oauth.net/2/" target="_blank" rel="noopener">OAuth</a> 规范。</p>
-<p><a href="http://www.passportjs.org/" target="_blank" rel="noopener">Passport</a> 是一个扩展性很强的认证中间件，支持 <code>Github</code>，<code>Twitter</code>，<code>Facebook</code> 等知名服务厂商的 <code>strategy</code>，同时也支持通过用户名和密码的方式进行登录授权校验。</p>
-<p>Egg 在它之上提供了 egg-passport 插件，把初始化、鉴权成功后的回调处理等通用逻辑封装掉，使得开发者仅需调用几个 API 即可方便的使用 Passport 。</p>
+<p><a href="http://www.passportjs.org/" target="_blank" rel="noopener">Passport</a> 是一个扩展性很强的认证中间件，支持 <code>Github</code>，<code>Twitter</code>，<code>Facebook</code> 等知名服务厂商的 <code>strategy</code>，同时也支持通过账号密码的方式进行登录授权校验。</p>
+<p>Egg 在它之上提供了 <a href="https://github.com/eggjs/egg-passport" target="_blank" rel="noopener">egg-passport</a> 插件，把初始化、鉴权成功后的回调处理等通用逻辑封装掉，使得开发者仅需调用几个 API 即可方便的使用 Passport 。</p>
+<p><a href="http://www.passportjs.org/" target="_blank" rel="noopener">Passport</a> 的时序如下：</p>
+<ul>
+<li>用户访问页面</li>
+<li>检查 Session</li>
+<li>拦截跳鉴权登录页面</li>
+<li>Strategy 鉴权</li>
+<li>校验和存储用户信息</li>
+<li>序列化用户信息到 Session</li>
+<li>跳转到指定页面</li>
+</ul>
 <h2 id="使用-egg-passport"><a class="markdown-anchor" href="#使用-egg-passport">#</a> 使用 egg-passport</h2>
 <p>下面，我们将以 GitHub 登录为例，来演示下如何使用。</p>
 <h3 id="安装"><a class="markdown-anchor" href="#安装">#</a> 安装</h3>
@@ -82,7 +92,7 @@
 <ul>
 <li><code>ctx.user</code>：获取当前已登录的用户信息</li>
 <li><code>ctx.isAuthenticated()</code>：检查该请求是否已授权</li>
-<li><code>ctx.login(user[, options])</code>：为用户启动一个登录的 session</li>
+<li><code>ctx.login(user, [options])</code>：为用户启动一个登录的 session</li>
 <li><code>ctx.logout()</code>：退出，将用户信息从 session 中清除</li>
 </ul>
 <p>还提供了 API：</p>
@@ -96,7 +106,7 @@
 <h2 id="使用-passport-生态"><a class="markdown-anchor" href="#使用-passport-生态">#</a> 使用 Passport 生态</h2>
 <p><a href="http://www.passportjs.org/" target="_blank" rel="noopener">Passport</a> 的中间件很多，不可能都进行二次封装。
 接下来，我们来看看如何在框架中直接使用 Passport 中间件。
-以『账号密码登录方式』的 [passort-local] 为例：</p>
+以『账号密码登录方式』的 <a href="https://github.com/jaredhanson/passport-local" target="_blank" rel="noopener">passport-local</a> 为例：</p>
 <h3 id="安装-2"><a class="markdown-anchor" href="#安装-2">#</a> 安装</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i --save passport-local</span><br></pre></td></tr></table></figure>
 <h3 id="配置-2"><a class="markdown-anchor" href="#配置-2">#</a> 配置</h3>
