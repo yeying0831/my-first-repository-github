@@ -160,6 +160,7 @@ In gerenal, transaction must be atomic, consistent, isolated and durable.</p>
 var mobileTrigger = document.getElementById('mobileTrigger');
 var mobileAside = document.getElementById('mobileAside');
 mobileTrigger.onclick = function(e) {
+  e.preventDefault();
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {

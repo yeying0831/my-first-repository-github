@@ -49,6 +49,16 @@
   <article class="markdown-body">
     <h1>常见问题</h1>
     <p>如果下面的内容无法解决你的问题，请查看 <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">Egg issues</a>。</p>
+<h2 id="如何高效的反馈问题"><a class="markdown-anchor" href="#如何高效的反馈问题">#</a> 如何高效的反馈问题？</h2>
+<p>感谢您向我们反馈问题。</p>
+<ol>
+<li>我们推荐如果是小问题（错别字修改，小的 bug fix）直接提交 PR。</li>
+<li>如果是一个新需求，请提供：详细需求描述，最好是有伪代码示意。</li>
+<li>如果是一个 BUG，请提供：复现步骤，错误日志以及相关配置，并尽量填写下面的模板中的条目。</li>
+<li><strong>如果可以，尽可能使用 <code>egg-init --type=simple bug</code> 提供一个最小可复现的代码仓库，方便我们排查问题。</strong></li>
+<li>不要挤牙膏似的交流，扩展阅读：<a href="https://zhuanlan.zhihu.com/p/25795393" target="_blank" rel="noopener">如何向开源项目提交无法解答的问题</a></li>
+</ol>
+<p>最重要的是，请明白一件事：开源项目的用户和维护者之间并不是甲方和乙方的关系，issue 也不是客服工单。在开 issue 的时候，请抱着一种『一起合作来解决这个问题』的心态，不要期待我们单方面地为你服务。</p>
 <h2 id="为什么我的配置不生效"><a class="markdown-anchor" href="#为什么我的配置不生效">#</a> 为什么我的配置不生效？</h2>
 <p>框架的配置功能比较强大，有不同环境变量，又有框架、插件、应用等很多地方配置。</p>
 <p>如果你分析问题时，想知道当前运行时使用的最终配置，可以查看下 <code>${root}/run/application_config.json</code>（worker 进程配置） 和 <code>${root}/run/agent_config.json</code>（agent 进程配置） 这两个文件。（<code>root</code> 为应用根目录，只有在 local 和 unittest 环境下为项目所在目录，其他环境下都为 HOME 目录）</p>
@@ -95,6 +105,7 @@
 var mobileTrigger = document.getElementById('mobileTrigger');
 var mobileAside = document.getElementById('mobileAside');
 mobileTrigger.onclick = function(e) {
+  e.preventDefault();
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {

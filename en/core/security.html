@@ -315,6 +315,7 @@ Use SHTML to output HTML tags, while executing XSS filtering, then it can filter
 var mobileTrigger = document.getElementById('mobileTrigger');
 var mobileAside = document.getElementById('mobileAside');
 mobileTrigger.onclick = function(e) {
+  e.preventDefault();
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {

@@ -306,6 +306,7 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 var mobileTrigger = document.getElementById('mobileTrigger');
 var mobileAside = document.getElementById('mobileAside');
 mobileTrigger.onclick = function(e) {
+  e.preventDefault();
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {

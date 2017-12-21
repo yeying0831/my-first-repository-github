@@ -143,6 +143,7 @@ See <a href="../basics/extend.html">Extend</a> for more details.</p>
 var mobileTrigger = document.getElementById('mobileTrigger');
 var mobileAside = document.getElementById('mobileAside');
 mobileTrigger.onclick = function(e) {
+  e.preventDefault();
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {

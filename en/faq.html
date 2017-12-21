@@ -49,7 +49,17 @@
   <article class="markdown-body">
     <h1>FAQ</h1>
     <p>If you have questions that is not contained below, please check <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">Egg issues</a>.</p>
-<h2 id="why-my-config-dont-work"><a class="markdown-anchor" href="#why-my-config-dont-work">#</a> Why my config don't work ?</h2>
+<h2 id="how-to-feedback-efficiently"><a class="markdown-anchor" href="#how-to-feedback-efficiently">#</a> How to feedback efficiently?</h2>
+<p>Thank you for reporting an issue.</p>
+<ol>
+<li>It's RECOMMENDED to submit PR for typo or tiny bug fix.</li>
+<li>If this's a FEATURE request, please provide: details, pseudo codes if necessary.</li>
+<li>If this's a BUG, please provide: course repetition, error log and configuration. Fill in as much of the template below as you're able.</li>
+<li><strong>It will be nice to use <code>egg-init --type=simple bug</code> to provide a mini GitHub repository which can reproduce the issue.</strong></li>
+</ol>
+<p>Most importantly, please understand one thing: the relationship between the <code>user</code> and <code>the maintainer of open source project</code> is not <code>Buyer</code> and <code>Seller</code>, the issue is not a customer order either.
+When you're opening an issue, please hold a mentality of &quot;working together to solve this problem.&quot; Do not expect us to serve you unilaterally.</p>
+<h2 id="why-my-config-dont-work"><a class="markdown-anchor" href="#why-my-config-dont-work">#</a> Why my config don't work?</h2>
 <p>Framework <a href="./basics/config.html">Config</a> settings is powerfull, support different environments and different places(framework, plugins, app).</p>
 <p>When you got some trouble, and want to find out what is the final config using at runtime, you can checkout <code>${root}/run/application_config.json</code>(workers' configurations) and <code>${root}/run/agent_config.json</code>(agent's configurations).(<code>root</code> is application's root directory, in <code>local</code> and <code>unittest</code> environments, it will be project base directory, in other environments will be HOME directory)</p>
 <h2 id="where-are-my-log-files-in-prod-environment"><a class="markdown-anchor" href="#where-are-my-log-files-in-prod-environment">#</a> Where are my log files in prod environment?</h2>
@@ -94,6 +104,7 @@
 var mobileTrigger = document.getElementById('mobileTrigger');
 var mobileAside = document.getElementById('mobileAside');
 mobileTrigger.onclick = function(e) {
+  e.preventDefault();
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
