@@ -1,7 +1,7 @@
 .mobile-menu {
   display: none;
 }
-@media screen and (max-width: 1004px) {
+@media screen and (max-width: 1136px) {
   .nav ul.nav-item {
     display: none;
   }

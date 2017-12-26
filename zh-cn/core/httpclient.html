@@ -22,16 +22,13 @@
         </form>
       </li>
       <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
-      <!--
-      <li class="translations">
-        <a class="nav-link">切换语言</a>
-        <span class="arrow"></span>
-        <ul class="dropdown-content">
-          <li><a href="/">中文</a></li>
-          <li><a href="/">English</a></li>
-        </ul>
-      </li>
-      -->
+      
+      
+        <li class="translations">
+          <a class="nav-link">切换语言</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="zh-cn" href="/zh-cn/core/httpclient.html" style="color: #22ab28">中文</a></li><li><a id="en" href="/en/core/httpclient.html" >English</a></li></ul>
+        </li>
+      
       <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
     </ul>
     <a id="mobileTrigger" href="#" class="mobile-trigger">
@@ -43,7 +40,6 @@
     </a>
   </header>
 </div>
-
   <div id="container" class="container">
     <div class="page-main">
   <article class="markdown-body">
@@ -288,13 +284,69 @@ Stream 实际会以 <code>Transfer-Encoding: chunked</code> 传输编码格式�
   </article>
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
-    <ul><li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li></ul>
+    <ul>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">切换语言</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="zh-cn" href="/zh-cn/core/httpclient.html" style="color: #22ab28">中文</a></li><li><a id="en" href="/en/core/httpclient.html" >English</a></li></ul>
+        </li>
+      
+    </ul>
   </div>
-  <dl><dt>新手指南</dt><dd><ul><li><a href="/zh-cn/intro/index.html">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html">快速入门</a></li><li><a href="/zh-cn/tutorials/progressive.html">渐进式开发</a></li><li><a href="/zh-cn/migration.html">2.x 升级指南</a></li></ul></dd><dt>基础功能</dt><dd><ul><li><a href="/zh-cn/basics/structure.html">目录结构</a></li><li><a href="/zh-cn/basics/objects.html">内置对象</a></li><li><a href="/zh-cn/basics/env.html">运行环境</a></li><li><a href="/zh-cn/basics/config.html">配置</a></li><li><a href="/zh-cn/basics/middleware.html">中间件</a></li><li><a href="/zh-cn/basics/router.html">Router</a></li><li><a href="/zh-cn/basics/controller.html">Controller</a></li><li><a href="/zh-cn/basics/service.html">Service</a></li><li><a href="/zh-cn/basics/plugin.html">插件</a></li><li><a href="/zh-cn/basics/schedule.html">定时任务</a></li><li><a href="/zh-cn/basics/extend.html">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html">启动自定义</a></li></ul></dd><dt>核心功能</dt><dd><ul><li><a href="/zh-cn/core/development.html">本地开发</a></li><li><a href="/zh-cn/core/unittest.html">单元测试</a></li><li><a href="/zh-cn/core/deployment.html">应用部署</a></li><li><a href="/zh-cn/core/logger.html">日志</a></li><li><a href="/zh-cn/core/httpclient.html">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html">异常处理</a></li><li><a href="/zh-cn/core/security.html">安全</a></li><li><a href="/zh-cn/core/i18n.html">国际化</a></li></ul></dd><dt>教程</dt><dd><ul><li><a href="/zh-cn/tutorials/mysql.html">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html">RESTful API</a></li><li><a href="/zh-cn/tutorials/passport.html">Passport 鉴权</a></li></ul></dd><dt>进阶</dt><dd><ul><li><a href="/zh-cn/advanced/loader.html">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html">模板插件开发规范</a></li><li><a href="/zh-cn/style-guide.html">代码风格指南</a></li></ul></dd><dt>社区</dt><dd><ul><li><a href="/zh-cn/plugins/">内置插件列表</a></li><li><a href="/zh-cn/contributing.html">如何贡献</a></li><li><a href="/zh-cn/resource.html">资源</a></li><li><a href="/zh-cn/faq.html">常见问题</a></li></ul></dd></dl>
+  <dl><dt id="title-Intro" style="cursor: pointer;" class="aside-title">新手指南<a id="collapse-icon-Intro" class="icon closed"></a></dt><dd id=panel-Intro><ul><li><a href="/zh-cn/intro/index.html" class="menu-link">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html" class="menu-link">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html" class="menu-link">快速入门</a></li><li><a href="/zh-cn/tutorials/progressive.html" class="menu-link">渐进式开发</a></li><li><a href="/zh-cn/migration.html" class="menu-link">2.x 升级指南</a></li></ul></dd><dt id="title-Basics" style="cursor: pointer;" class="aside-title">基础功能<a id="collapse-icon-Basics" class="icon closed"></a></dt><dd id=panel-Basics><ul><li><a href="/zh-cn/basics/structure.html" class="menu-link">目录结构</a></li><li><a href="/zh-cn/basics/objects.html" class="menu-link">内置对象</a></li><li><a href="/zh-cn/basics/env.html" class="menu-link">运行环境</a></li><li><a href="/zh-cn/basics/config.html" class="menu-link">配置</a></li><li><a href="/zh-cn/basics/middleware.html" class="menu-link">中间件</a></li><li><a href="/zh-cn/basics/router.html" class="menu-link">Router</a></li><li><a href="/zh-cn/basics/controller.html" class="menu-link">Controller</a></li><li><a href="/zh-cn/basics/service.html" class="menu-link">Service</a></li><li><a href="/zh-cn/basics/plugin.html" class="menu-link">插件</a></li><li><a href="/zh-cn/basics/schedule.html" class="menu-link">定时任务</a></li><li><a href="/zh-cn/basics/extend.html" class="menu-link">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html" class="menu-link">启动自定义</a></li></ul></dd><dt id="title-Core" style="cursor: pointer;" class="aside-title">核心功能<a id="collapse-icon-Core" class="icon closed"></a></dt><dd id=panel-Core><ul><li><a href="/zh-cn/core/development.html" class="menu-link">本地开发</a></li><li><a href="/zh-cn/core/unittest.html" class="menu-link">单元测试</a></li><li><a href="/zh-cn/core/deployment.html" class="menu-link">应用部署</a></li><li><a href="/zh-cn/core/logger.html" class="menu-link">日志</a></li><li><a href="/zh-cn/core/httpclient.html" class="menu-link">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html" class="menu-link">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html" class="menu-link">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html" class="menu-link">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html" class="menu-link">异常处理</a></li><li><a href="/zh-cn/core/security.html" class="menu-link">安全</a></li><li><a href="/zh-cn/core/i18n.html" class="menu-link">国际化</a></li></ul></dd><dt id="title-Tutorials" style="cursor: pointer;" class="aside-title">教程<a id="collapse-icon-Tutorials" class="icon closed"></a></dt><dd id=panel-Tutorials><ul><li><a href="/zh-cn/tutorials/mysql.html" class="menu-link">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html" class="menu-link">RESTful API</a></li><li><a href="/zh-cn/tutorials/passport.html" class="menu-link">Passport 鉴权</a></li></ul></dd><dt id="title-Advanced" style="cursor: pointer;" class="aside-title">进阶<a id="collapse-icon-Advanced" class="icon closed"></a></dt><dd id=panel-Advanced><ul><li><a href="/zh-cn/advanced/loader.html" class="menu-link">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html" class="menu-link">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html" class="menu-link">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html" class="menu-link">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html" class="menu-link">模板插件开发规范</a></li><li><a href="/zh-cn/style-guide.html" class="menu-link">代码风格指南</a></li></ul></dd><dt id="title-Community" style="cursor: pointer;" class="aside-title">社区<a id="collapse-icon-Community" class="icon closed"></a></dt><dd id=panel-Community><ul><li><a href="/zh-cn/plugins/" class="menu-link">内置插件列表</a></li><li><a href="/zh-cn/contributing.html" class="menu-link">如何贡献</a></li><li><a href="/zh-cn/resource.html" class="menu-link">资源</a></li><li><a href="/zh-cn/faq.html" class="menu-link">常见问题</a></li></ul></dd></dl>
 </aside>
 <script>
 var mobileTrigger = document.getElementById('mobileTrigger');
 var mobileAside = document.getElementById('mobileAside');
+
+var expandMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon opend';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = '';
+  }
+}
+
+var collapseMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon closed';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = 'aside-panel-hidden';
+  }
+}
+
+mobileAside.onclick = function(e) {
+  const targetId = e.target.id;
+  if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
+    const title = targetId.replace('title-', '').replace('collapse-icon-', '');
+    try { 
+      // the the browser may have no localStroage or JSON.parse may throw exception.
+      const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+      // current menu status
+      const curClosed = menuInfo[title].closed;
+
+      // change UI
+      curClosed ? expandMenu(title) : collapseMenu(title);
+
+      // save menuInfo to localStorage
+      menuInfo[title] = { closed: !curClosed } // opposite
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    } catch (e) {}
+  }
+};
+
 mobileTrigger.onclick = function(e) {
   e.preventDefault();
   if (mobileAside.className.indexOf('mobile-show') === -1) {
@@ -303,6 +355,35 @@ mobileTrigger.onclick = function(e) {
     mobileAside.className = 'toc';
   }
 };
+
+(function() {
+  // save data to localStorage because the page will refresh when user change the url.
+  let menuInfo;
+  try { 
+    // the the browser may have no localStroage or JSON.parse may throw exception.
+    menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+    if (!menuInfo) {
+      menuInfo = {};
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    }
+  } catch (e) {
+    menuInfo = {}; // default {}
+  }
+
+  for (const title in menuInfo) {
+    if (menuInfo[title] && menuInfo[title].closed) { // menu in closed status.
+      collapseMenu(title);
+    } else {
+      expandMenu(title);
+    }
+  }
+
+  // highlight menu
+  const pathname = window.location.pathname;
+  const selector = `a[href="${pathname}"].menu-link,a[href="${pathname}index.html"].menu-link`;
+  const menuItem = mobileAside.querySelector(selector);
+  if (menuItem) { menuItem.className += ' highlight'; }
+})();
 </script>
 
 </div>
