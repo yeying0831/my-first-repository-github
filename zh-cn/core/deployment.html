@@ -108,6 +108,36 @@
 <li><code>--title=egg-server</code> 用于杀死指定的 egg 应用，未传递则会终止所有的 Egg 应用。</li>
 </ul>
 <p>你也可以直接通过 <code>ps -eo &quot;pid,command&quot; | grep &quot;--type=egg-server&quot;</code> 来找到 master 进程，并 <code>kill</code> 掉，无需 <code>kill -9</code>。</p>
+<h2 id="监控"><a class="markdown-anchor" href="#监控">#</a> 监控</h2>
+<p>我们还需要对服务进行性能监控，内存泄露分析，故障排除等。</p>
+<p>业界常用的有：</p>
+<ul>
+<li><a href="https://www.aliyun.com/product/nodejs" target="_blank" rel="noopener">Node.js 性能平台（alinode）</a></li>
+<li><a href="https://nodesource.com/products/nsolid/" target="_blank" rel="noopener">NSolid</a></li>
+</ul>
+<h3 id="nodejs-性能平台alinode"><a class="markdown-anchor" href="#nodejs-性能平台alinode">#</a> Node.js 性能平台（alinode）</h3>
+<p><a href="https://www.aliyun.com/product/nodejs" target="_blank" rel="noopener">Node.js 性能平台</a> 是面向所有 Node.js 应用提供 性能监控、安全提醒、故障排查、性能优化 等服务的整体性解决方案，凭借对 Node.js 内核深入的理解,提供完善的工具链和服务,协助客户主动、快速发现和定位线上问题。</p>
+<h4 id="安装-runtime"><a class="markdown-anchor" href="#安装-runtime">#</a> 安装 runtime</h4>
+<p>全局安装方式参见<a href="https://help.aliyun.com/document_detail/60338.html" target="_blank" rel="noopener">文档</a>。</p>
+<p>有时候，同机会部署多个项目，期望多版本共存时，则可以把 runtime 安装到当前项目：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i nodeinstall -g</span><br><span class="line">$ nodeinstall --install-alinode ^3</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/cnpm/nodeinstall" target="_blank" rel="noopener">nodeinstall</a> 会把对应版本的 <code>alinode</code> 安装到项目的 <code>node_modules</code> 目录下。</p>
+<p>注意：打包机的操作系统和线上系统需保持一致，否则对应的 runtime 不一定能正常运行。</p>
+<h4 id="安装及配置"><a class="markdown-anchor" href="#安装及配置">#</a> 安装及配置</h4>
+<p>我们提供了 <a href="https://github.com/eggjs/egg-alinode" target="_blank" rel="noopener">egg-alinode</a> 来快速接入，无需安装 <code>agenthub</code> 等额外的常驻服务。</p>
+<p><strong>安装依赖：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-alinode --save</span><br></pre></td></tr></table></figure>
+<p><strong>开启插件：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.alinode = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-alinode'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>配置：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">config.alinode = &#123;</span><br><span class="line">  <span class="comment">// 从 `Node.js 性能平台` 获取对应的接入参数</span></span><br><span class="line">  appid: <span class="string">'&lt;YOUR_APPID&gt;'</span>,</span><br><span class="line">  secret: <span class="string">'&lt;YOUR_SECRET&gt;'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="启动应用"><a class="markdown-anchor" href="#启动应用">#</a> 启动应用</h3>
+<p><code>npm scripts</code> 配置的 <code>start</code> 指令无需改变，通过 <code>egg-scripts</code> 即可。</p>
+<p>启动命令需使用 <code>npm start</code>，因为 <code>npm scripts</code> 执行时会把 <code>node_module/.bin</code> 目录加入 <code>PATH</code>，故会优先使用当前项目执行的 Node 版本。</p>
+<p>启动后会看到 master 日志包含以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ [master] node version v8.9.4</span><br><span class="line">$ [master] alinode version v3.8.4</span><br></pre></td></tr></table></figure>
+<h4 id="访问控制台"><a class="markdown-anchor" href="#访问控制台">#</a> 访问控制台</h4>
+<p>控制台地址：https://node.console.aliyun.com</p>
 
   </article>
   <aside id="mobileAside" class="toc">
