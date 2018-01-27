@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>egg - Born to build better enterprise frameworks and apps</title>
+  <title>Loader - Born to build better enterprise frameworks and apps</title>
   <meta charset="utf-8">
   <meta name="description" content="index.description">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -57,8 +57,266 @@
   <div id="container" class="container">
     <div class="page-main">
   <article class="markdown-body">
-    <h1></h1>
-    <p>this document is still waiting for translation, see <a href="/zh-cn/advanced/loader.html">Chinese Version</a></p>
+    <h1>Loader</h1>
+    <p>The most important of Egg enhance Koa is Egg based on a certain agreement, code will be placed in different directories according to the functional differences, it significantly reduce development costs. Loader supports this set of conventions and abstracts that many low-level APIs could be extended.</p>
+<h2 id="application-framework-and-plugin"><a class="markdown-anchor" href="#application-framework-and-plugin">#</a> Application, Framework and Plugin</h2>
+<p>Egg is a low-level framework, applications could use it directly, but Egg only has a little default plugins, applications need to configure plugins to extend features, such as MySQL.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// application configuration</span></span><br><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"egg"</span>: <span class="string">"^2.0.0"</span>,</span><br><span class="line">    <span class="string">"egg-mysql"</span>: <span class="string">"^3.0.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  mysql: &#123;</span><br><span class="line">    enable: <span class="literal">true</span>,</span><br><span class="line">    package: <span class="string">'egg-mysql'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>With the increase number of applications, we find most of them have similar configurations, then we could extend a new framework based on Egg, which make the application configuration simpler.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// framework configuration</span></span><br><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"name"</span>: <span class="string">"framework1"</span>,</span><br><span class="line">  <span class="string">"version"</span>: <span class="string">"1.0.0"</span>,</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"egg-mysql"</span>: <span class="string">"^3.0.0"</span>,</span><br><span class="line">    <span class="string">"egg-view-nunjucks"</span>: <span class="string">"^2.0.0"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  mysql: &#123;</span><br><span class="line">    enable: <span class="literal">false</span>,</span><br><span class="line">    package: <span class="string">'egg-mysql'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  view: &#123;</span><br><span class="line">    enable: <span class="literal">false</span>,</span><br><span class="line">    package: <span class="string">'egg-view-nunjucks'</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// application configuration</span></span><br><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"dependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"framework1"</span>: <span class="string">"^1.0.0"</span>,</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// enable plugins</span></span><br><span class="line">  mysql: <span class="literal">true</span>,</span><br><span class="line">  view: <span class="literal">true</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>From the above scene we can see the relationship of application, plugin and framework.</p>
+<ul>
+<li>We implement business logics in application, we need to specify a framework to run, we could configure plugin to meet a special scene feature (such as MySQL).</li>
+<li>Plugin only performs specific function, when two separate functions are interdependent, they still need to be separated into two plugins, and requires configuration.</li>
+<li>Framework is a launcher (default is Egg), which is indispensable to run. Framework is also a wrapper, it aggregates plugins to provide functions unitedly, framework can also configure plugins.</li>
+<li>We can extend a new framework based on framework, which means that <strong>framework can be inherited infinitely</strong>, like class inheritance.</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">+-----------------------------------+--------+</span><br><span class="line">|      app1, app2, app3, app4       |        |</span><br><span class="line">+-----+--------------+--------------+        |</span><br><span class="line">|     |              |  framework3  |        |</span><br><span class="line">+     |  framework1  +--------------+ plugin |</span><br><span class="line">|     |              |  framework2  |        |</span><br><span class="line">+     +--------------+--------------+        |</span><br><span class="line">|                   Egg             |        |</span><br><span class="line">+-----------------------------------+--------|</span><br><span class="line">|                   Koa                      |</span><br><span class="line">+-----------------------------------+--------+</span><br></pre></td></tr></table></figure>
+<h2 id="loadunit"><a class="markdown-anchor" href="#loadunit">#</a> loadUnit</h2>
+<p>Egg regard application, framework and plugin as loadUnit, because they are similar in code structure, here is the directory structure</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">loadUnit</span><br><span class="line">├── package.json</span><br><span class="line">├── app.js</span><br><span class="line">├── agent.js</span><br><span class="line">├── app</span><br><span class="line">│   ├── extend</span><br><span class="line">│   |   ├── helper.js</span><br><span class="line">│   |   ├── request.js</span><br><span class="line">│   |   ├── response.js</span><br><span class="line">│   |   ├── context.js</span><br><span class="line">│   |   ├── application.js</span><br><span class="line">│   |   └── agent.js</span><br><span class="line">│   ├── service</span><br><span class="line">│   ├── middleware</span><br><span class="line">│   └── router.js</span><br><span class="line">└── config</span><br><span class="line">    ├── config.default.js</span><br><span class="line">    ├── config.prod.js</span><br><span class="line">    ├── config.test.js</span><br><span class="line">    ├── config.local.js</span><br><span class="line">    └── config.unittest.js</span><br></pre></td></tr></table></figure>
+<p>However, there are still some differences</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Application</th>
+<th>Framework</th>
+<th>Plugin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app/router.js</td>
+<td>✔︎</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>app/controller</td>
+<td>✔︎</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>app/middleware</td>
+<td>✔︎</td>
+<td>✔︎</td>
+<td>✔︎</td>
+</tr>
+<tr>
+<td>app/service</td>
+<td>✔︎</td>
+<td>✔︎</td>
+<td>✔︎</td>
+</tr>
+<tr>
+<td>app/extend</td>
+<td>✔︎</td>
+<td>✔︎</td>
+<td>✔︎</td>
+</tr>
+<tr>
+<td>app.js</td>
+<td>✔︎</td>
+<td>✔︎</td>
+<td>✔︎</td>
+</tr>
+<tr>
+<td>agent.js</td>
+<td>✔︎</td>
+<td>✔︎</td>
+<td>✔︎</td>
+</tr>
+<tr>
+<td>config/config.{env}.js</td>
+<td>✔︎</td>
+<td>✔︎</td>
+<td>✔︎</td>
+</tr>
+<tr>
+<td>config/plugin.js</td>
+<td>✔︎</td>
+<td>✔︎</td>
+<td></td>
+</tr>
+<tr>
+<td>package.json</td>
+<td>✔︎</td>
+<td>✔︎</td>
+<td>✔︎</td>
+</tr>
+</tbody>
+</table>
+<p>During the loading process, Egg will traverse all loadUnits to load the above files (application, framework and plugin are different), the loading process has priority.</p>
+<ul>
+<li>follow the order Plugin =&gt; Framework =&gt; Application to load</li>
+<li>The order of loading plugins depends on the dependencies, depended plugins will be loaded first, no dependencies plugins are loaded by the object key configuration order, see <a href="./plugin.html">Plugin</a> for details.</li>
+<li>Frameworks are loaded by the order of inheritance, the lower the more priority.</li>
+</ul>
+<p>For example, an application is configured with the following dependencies</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app</span><br><span class="line">| ├── plugin2 (depends plugin3)</span><br><span class="line">| └── plugin3</span><br><span class="line">└── framework1</span><br><span class="line">    | └── plugin1</span><br><span class="line">    └── egg</span><br></pre></td></tr></table></figure>
+<p>The final loading order is</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">=&gt; plugin1</span><br><span class="line">=&gt; plugin3</span><br><span class="line">=&gt; plugin2</span><br><span class="line">=&gt; egg</span><br><span class="line">=&gt; framework1</span><br><span class="line">=&gt; app</span><br></pre></td></tr></table></figure>
+<p>The plugin1 is framework1 depended plugin, the object key order of plugin1 after configuration merger is prior to plugin2/plugin3. Because of the dependencies between plugin2 and plugin3, the order is swapped. The framework1 inherits the Egg, so the order it after the egg. The application is the last to be loaded.</p>
+<p>See <a href="https://github.com/eggjs/egg-core/blob/65ea778a4f2156a9cebd3951dac12c4f9455e636/lib/loader/egg_loader.js#L233" target="_blank" rel="noopener">Loader.getLoadUnits</a> method for details.</p>
+<h3 id="file-order"><a class="markdown-anchor" href="#file-order">#</a> File order</h3>
+<p>The above lists default loading files, Egg will load files by the following order, each file or directory will be loaded according to loadUnit order (application, framework and plugin are different).</p>
+<ul>
+<li>Loading <a href="./plugin.html">plugin</a>, find application and framework, loading <code>config/plugin.js</code></li>
+<li>Loading <a href="../basics/config.html">config</a>, traverse loadUnit to load <code>config/config.{env}.js</code></li>
+<li>Loading <a href="../basics/extend.html">extend</a>, traverse loadUnit to load <code>app/extend/xx.js</code></li>
+<li><a href="../basics/app-start.html">Application startup configuration</a>, traverse loadUnit to load <code>app.js</code> and <code>agent.js</code></li>
+<li>Loading <a href="../basics/service.html">service</a>, traverse loadUnit to load <code>app/service</code> directory</li>
+<li>Loading <a href="../basics/middleware.html">middleware</a>, traverse loadUnit to load <code>app/middleware</code> directory</li>
+<li>Loading <a href="../basics/controller.html">controller</a>, loading application's <code>app/controller</code> directory</li>
+<li>Loading <a href="../basics/router.html">router</a>, loading application's <code>app/router.js</code></li>
+</ul>
+<p>Note</p>
+<ul>
+<li>Same name will be override in loading, for example, if we want to override <code>ctx.ip</code> we could define ip in application's <code>app/extend/context.js</code> directly.</li>
+<li>See <a href="./framework.html">framework development</a> for detail application launch order.</li>
+</ul>
+<h3 id="loading-file-rules"><a class="markdown-anchor" href="#loading-file-rules">#</a> Loading File rules</h3>
+<p>The framework will convert file names when loading files, because there is a difference between the file naming style and the API style. We recommend that files use underscores, while APIs use lower camel case. For examplem <code>app/service/user_info.js</code> will be converted to <code>app.service.userInfo</code>.</p>
+<p>The framework also supports hyphens and camel case.</p>
+<ul>
+<li><code>app/service/user-info.js</code> =&gt; <code>app.service.userInfo</code></li>
+<li><code>app/service/userInfo.js</code> =&gt; <code>app.service.userInfo</code></li>
+</ul>
+<p>Loader also provides <a href="#caseStyle-string">caseStyle</a> to force the first letter case, such as make the first letter of the API upper case when loading the model, <code>app/model/user.js</code> =&gt; <code>app.model.User</code>, we can set <code>caseStyle: 'upper'</code>.</p>
+<h2 id="extend-loader"><a class="markdown-anchor" href="#extend-loader">#</a> Extend Loader</h2>
+<p><a href="https://github.com/eggjs/egg-core/blob/master/lib/loader/egg_loader.js" target="_blank" rel="noopener">Loader</a> is a base class and provides some built-in methods based on the rules of the file loading, but itself does not call them in most cases, inherited classes call those methods.</p>
+<ul>
+<li>loadPlugin()</li>
+<li>loadConfig()</li>
+<li>loadAgentExtend()</li>
+<li>loadApplicationExtend()</li>
+<li>loadRequestExtend()</li>
+<li>loadResponseExtend()</li>
+<li>loadContextExtend()</li>
+<li>loadHelperExtend()</li>
+<li>loadCustomAgent()</li>
+<li>loadCustomApp()</li>
+<li>loadService()</li>
+<li>loadMiddleware()</li>
+<li>loadController()</li>
+<li>loadRouter()</li>
+</ul>
+<p>Egg implements <a href="https://github.com/eggjs/egg/blob/master/lib/loader/app_worker_loader.js" target="_blank" rel="noopener">AppWorkerLoader</a> and <a href="https://github.com/eggjs/egg/blob/master/lib/loader/agent_worker_loader.js" target="_blank" rel="noopener">AgentWorkerLoader</a> based on the Loader, inherited frameworks could make extensions based on these two classes, and <strong>Extensions of the Loader can only be done in the framework</strong>.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// custom AppWorkerLoader</span></span><br><span class="line"><span class="comment">// lib/framework.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</span><br><span class="line"><span class="keyword">const</span> EGG_PATH = <span class="built_in">Symbol</span>.for(<span class="string">'egg#eggPath'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">YadanAppWorkerLoader</span> <span class="keyword">extends</span> <span class="title">egg</span>.<span class="title">AppWorkerLoader</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(opt) &#123;</span><br><span class="line">    <span class="keyword">super</span>(opt);</span><br><span class="line">    <span class="comment">// custom initialization</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  loadConfig() &#123;</span><br><span class="line">    <span class="keyword">super</span>.loadConfig();</span><br><span class="line">    <span class="comment">// process config</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  load() &#123;</span><br><span class="line">    <span class="keyword">super</span>.load();</span><br><span class="line">    <span class="comment">// custom loading other directories</span></span><br><span class="line">    <span class="comment">// or processing loaded files</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Application</span> <span class="keyword">extends</span> <span class="title">egg</span>.<span class="title">Application</span> </span>&#123;</span><br><span class="line">  get [EGG_PATH]() &#123;</span><br><span class="line">    <span class="keyword">return</span> path.dirname(__dirname);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// override Egg's Loader, use this Loader when launching</span></span><br><span class="line">  get [EGG_LOADER]() &#123;</span><br><span class="line">    <span class="keyword">return</span> YadanAppWorkerLoader;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="built_in">Object</span>.assign(egg, &#123;</span><br><span class="line">  Application,</span><br><span class="line">  <span class="comment">// custom Loader also need export, inherited framework make extensions based on it</span></span><br><span class="line">  AppWorkerLoader: YadanAppWorkerLoader,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>It's convenient for development team to customize loading via the Loader supported APIs. such as <code>this.model.xx</code>, <code>app/extend/filter.js</code> and so on.</p>
+<p>The above is just a description of the Loader wording, see <a href="./framework.html">Framework Development</a> for details.</p>
+<h2 id="loader-api"><a class="markdown-anchor" href="#loader-api">#</a> Loader API</h2>
+<p>Loader also supports some low level APIs to simplify code when extending, <a href="https://github.com/eggjs/egg-core#eggloader" target="_blank" rel="noopener">here</a> are all APIs.</p>
+<h3 id="loadfile"><a class="markdown-anchor" href="#loadfile">#</a> loadFile</h3>
+<p>Used to load a file, such as loading <code>app.js</code> is using this method.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/xx.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(app.config);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">// app/xx.js, as an example, we could load this file in app.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.loader.loadFile(path.join(app.config.baseDir, <span class="string">'app/xx.js'</span>));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>If the file export a function, then the function will be called with app as a parameter, otherwise using this value directly.</p>
+<h3 id="loadtoapp"><a class="markdown-anchor" href="#loadtoapp">#</a> loadToApp</h3>
+<p>Used to load files from a directory into the app, such as <code>app/controller/home.js</code> to <code>app.controller.home</code>.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">// The following is just an example, using loadController to load controller in practice</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> directory = path.join(app.config.baseDir, <span class="string">'app/controller'</span>);</span><br><span class="line">  app.loader.loadToApp(directory, <span class="string">'controller'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>The method has three parameters <code>loadToApp(directory, property, LoaderOptions)</code></p>
+<ol>
+<li>directory could be String or Array, Loader will load files in those directories.</li>
+<li>property is app's property.</li>
+<li><a href="#LoaderOptions">LoaderOptions</a> are some configurations.</li>
+</ol>
+<h3 id="loadtocontext"><a class="markdown-anchor" href="#loadtocontext">#</a> loadToContext</h3>
+<p>The difference between loadToApp and loadToContext is that loadToContext loading files into ctx instead of app, and it is lazy loading. Putting files into a temp object when loading, and instantiate object when calling ctx API.</p>
+<p>For example, service loading is this mode</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// The following is just an example, using loadService in practice</span></span><br><span class="line"><span class="comment">// app/service/user.js</span></span><br><span class="line"><span class="keyword">const</span> Service = <span class="built_in">require</span>(<span class="string">'egg'</span>).Service;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserService;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">// get all loadUnit</span></span><br><span class="line"><span class="keyword">const</span> servicePaths = app.loader.getLoadUnits().map(<span class="function"><span class="params">unit</span> =&gt;</span> path.join(unit.path, <span class="string">'app/service'</span>));</span><br><span class="line"></span><br><span class="line">app.loader.loadToContext(servicePaths, <span class="string">'service'</span>, &#123;</span><br><span class="line">  <span class="comment">// service needs to inherit app.Service, so needs app as parameter</span></span><br><span class="line">  <span class="comment">// enable call will return UserService when loading</span></span><br><span class="line">  call: <span class="literal">true</span>,</span><br><span class="line">  <span class="comment">// loading file into app.serviceClasses</span></span><br><span class="line">  fieldClass: <span class="string">'serviceClasses'</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>app.serviceClasses.user</code> becomes UserService after file loading, instantiating UserService when calling <code>ctx.service.user</code>.
+So this class will only be instantiated when first calling, and will be cached after instantiation, multiple calling same request will only instantiating once.</p>
+<h3 id="loaderoptions"><a class="markdown-anchor" href="#loaderoptions">#</a> LoaderOptions</h3>
+<h4 id="ignore-string"><a class="markdown-anchor" href="#ignore-string">#</a> ignore [String]</h4>
+<p>ignore could ignore some files, supports glob, the default is empty</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.loader.loadToApp(directory, <span class="string">'controller'</span>, &#123;</span><br><span class="line">  <span class="comment">// ignore files in app/controller/util</span></span><br><span class="line">  ignore: <span class="string">'util/**'</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="initializer-function"><a class="markdown-anchor" href="#initializer-function">#</a> initializer [Function]</h4>
+<p>Processing each file exported values, the default is empty.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/model/user.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(app, path) &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Loading from app/model, could do some initializations when loading.</span></span><br><span class="line"><span class="keyword">const</span> directory = path.join(app.config.baseDir, <span class="string">'app/model'</span>);</span><br><span class="line">app.loader.loadToApp(directory, <span class="string">'model'</span>, &#123;</span><br><span class="line">  initializer(model, opt) &#123;</span><br><span class="line">    <span class="comment">// The first parameter is export's object</span></span><br><span class="line">    <span class="comment">// The second parameter is an object that only contains current file path.</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> model(app, opt.path);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="casestyle-string"><a class="markdown-anchor" href="#casestyle-string">#</a> caseStyle [String]</h4>
+<p>File conversion rules, could be <code>camel</code>, <code>upper</code>, <code>lower</code>, the default is <code>camel</code>.</p>
+<p>All three convert file name to camel case, but deal with the initials differently.</p>
+<ul>
+<li><code>camel</code>: initials unchanged.</li>
+<li><code>upper</code>: initials upper case.</li>
+<li><code>lower</code>: initials lower case.</li>
+</ul>
+<p>Loading different files using different configurations.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app/controller</td>
+<td>lower</td>
+</tr>
+<tr>
+<td>app/middleware</td>
+<td>lower</td>
+</tr>
+<tr>
+<td>app/service</td>
+<td>lower</td>
+</tr>
+</tbody>
+</table>
+<h4 id="override-boolean"><a class="markdown-anchor" href="#override-boolean">#</a> override [Boolean]</h4>
+<p>Overriding or throwing exception when encounter existing files, the default is false</p>
+<p>For example, the <code>app/service/user.js</code> is both loaded by the application and the plugin, if the setting is true, the application will override the plugin, otherwise an error will be throwed when loading.</p>
+<p>Loading different files using different configurations.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app/controller</td>
+<td>true</td>
+</tr>
+<tr>
+<td>app/middleware</td>
+<td>false</td>
+</tr>
+<tr>
+<td>app/service</td>
+<td>false</td>
+</tr>
+</tbody>
+</table>
+<h4 id="call-boolean"><a class="markdown-anchor" href="#call-boolean">#</a> call [Boolean]</h4>
+<p>Calling when export's object is function, and get the return value, the default is true</p>
+<p>Loading different files using different configurations.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Configuration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>app/controller</td>
+<td>true</td>
+</tr>
+<tr>
+<td>app/middleware</td>
+<td>false</td>
+</tr>
+<tr>
+<td>app/service</td>
+<td>true</td>
+</tr>
+</tbody>
+</table>
 
   </article>
   <aside id="mobileAside" class="toc">

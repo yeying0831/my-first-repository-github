@@ -158,24 +158,24 @@
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">app</span><br><span class="line">| ├── plugin2 (依赖 plugin3)</span><br><span class="line">| └── plugin3</span><br><span class="line">└── framework1</span><br><span class="line">    | └── plugin1</span><br><span class="line">    └── egg</span><br></pre></td></tr></table></figure>
 <p>最终的加载顺序为</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">=&gt; plugin1</span><br><span class="line">=&gt; plugin3</span><br><span class="line">=&gt; plugin2</span><br><span class="line">=&gt; egg</span><br><span class="line">=&gt; framework1</span><br><span class="line">=&gt; app</span><br></pre></td></tr></table></figure>
-<p>plugin1 为 framework1 依赖的插件，配置合并后 object key 的顺序会优先级于 plugin2/plugin3。因为 plugin2 和 plugin3 的依赖关系，所以交换了位置。framework1 继承了 egg，顺序会晚于 egg。应用最后加载。</p>
+<p>plugin1 为 framework1 依赖的插件，配置合并后 object key 的顺序会优先于 plugin2/plugin3。因为 plugin2 和 plugin3 的依赖关系，所以交换了位置。framework1 继承了 egg，顺序会晚于 egg。应用最后加载。</p>
 <p>请查看 <a href="https://github.com/eggjs/egg-core/blob/65ea778a4f2156a9cebd3951dac12c4f9455e636/lib/loader/egg_loader.js#L233" target="_blank" rel="noopener">Loader.getLoadUnits</a> 方法</p>
 <h3 id="文件顺序"><a class="markdown-anchor" href="#文件顺序">#</a> 文件顺序</h3>
 <p>上面已经列出了默认会加载的文件，Egg 会按如下文件顺序加载，每个文件或目录再根据 loadUnit 的顺序去加载（应用、框架、插件各有不同）。</p>
 <ul>
 <li>加载 <a href="./plugin.html">plugin</a>，找到应用和框架，加载 <code>config/plugin.js</code></li>
-<li>加载 <a href="../basics/config.html">config</a>, 遍历 loadUnit 加载 <code>config/config.{env}.js</code></li>
-<li>加载 <a href="../basics/extend.html">extend</a>, 遍历 loadUnit 加载 <code>app/extend/xx.js</code></li>
+<li>加载 <a href="../basics/config.html">config</a>，遍历 loadUnit 加载 <code>config/config.{env}.js</code></li>
+<li>加载 <a href="../basics/extend.html">extend</a>，遍历 loadUnit 加载 <code>app/extend/xx.js</code></li>
 <li><a href="../basics/app-start.html">自定义初始化</a>，遍历 loadUnit 加载 <code>app.js</code> 和 <code>agent.js</code></li>
-<li>加载 <a href="../basics/service.html">service</a>, 遍历 loadUnit 加载 <code>app/service</code> 目录</li>
-<li>加载 <a href="../basics/middleware.html">middleware</a>, 遍历 loadUnit 加载 <code>app/middleware</code> 目录</li>
-<li>加载 <a href="../basics/controller.html">controller</a>, 加载应用的 <code>app/controller</code> 目录</li>
-<li>加载 <a href="../basics/router.html">router</a>, 加载应用的 <code>app/router.js</code></li>
+<li>加载 <a href="../basics/service.html">service</a>，遍历 loadUnit 加载 <code>app/service</code> 目录</li>
+<li>加载 <a href="../basics/middleware.html">middleware</a>，遍历 loadUnit 加载 <code>app/middleware</code> 目录</li>
+<li>加载 <a href="../basics/controller.html">controller</a>，加载应用的 <code>app/controller</code> 目录</li>
+<li>加载 <a href="../basics/router.html">router</a>，加载应用的 <code>app/router.js</code></li>
 </ul>
 <p>注意</p>
 <ul>
 <li>加载时如果遇到同名的会覆盖，比如想要覆盖 <code>ctx.ip</code> 可以直接在应用的 <code>app/extend/context.js</code> 定义 ip 就可以了。</li>
-<li><a href="./framework.html">应用完整启动顺序查看框架开发</a></li>
+<li>应用完整启动顺序查看<a href="./framework.html">框架开发</a></li>
 </ul>
 <h3 id="文件加载规则"><a class="markdown-anchor" href="#文件加载规则">#</a> 文件加载规则</h3>
 <p>框架在加载文件时会进行转换，因为文件命名风格和 API 风格存在差异。我们推荐文件使用下划线，而 API 使用驼峰。比如 <code>app/service/user_info.js</code> 会转换成 <code>app.service.userInfo</code>。</p>
