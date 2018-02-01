@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>Socket.IO - 为企业级框架和应用而生</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+    <script>
+    !function(t,e,a,r,c){t.TracertCmdCache=t.TracertCmdCache||[],t[c]=window[c]||
+      {_isInit:!0,call:function(){t.TracertCmdCache.push(arguments)},
+      start:function(t){this.call('start',t)}},t[c].l=new Date;
+      var n=e.createElement(a),s=e.getElementsByTagName(a)[0];
+      n.async=!0,n.src=r,s.parentNode.insertBefore(n,s)}
+    (window,document,'script','https://tracert.alipay.com/tracert.js','Tracert');
+      Tracert.start({
+        plugins: [ 'BucName' ],
+        spmAPos: 'a454',
+        spmBPos: 'b4893',
+      });
+    </script>
+  
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">Translations</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="zh-cn" href="/zh-cn/tutorials/socketio.html" style="color: #22ab28">中文</a></li><li><a id="en" href="/en/tutorials/socketio.html" >English</a></li></ul>
+        </li>
+      
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+  <div id="container" class="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Socket.IO</h1>
+    <p><strong>Socket.IO</strong> 是一个基于 Node.js 的实时应用程序框架，在即时通讯、通知与消息推送，实时分析等场景中有较为广泛的应用。</p>
+<p>WebSocket 的产生源于 Web 开发中日益增长的实时通信需求，对比基于 http 的轮询方式，它大大节省了网络带宽，同时也降低了服务器的性能消耗； <a href="https://socket.io" target="_blank" rel="noopener">socket.io</a> 支持 websocket、polling 两种数据传输方式以兼容浏览器不支持 WebSocket 场景下的通信需求。</p>
+<p>框架提供了 <a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> 插件，增加了以下开发规约：</p>
+<ul>
+<li>namespace: 通过配置的方式定义 namespace（命名空间）</li>
+<li>middleware: 对每一次 socket 连接的建立/断开、每一次消息/数据传递进行预处理</li>
+<li>controller: 响应 socket.io 的 event 事件</li>
+<li>router: 统一了 socket.io 的 event 与 框架路由的处理配置方式</li>
+</ul>
+<h2 id="安装-egg-socketio"><a class="markdown-anchor" href="#安装-egg-socketio">#</a> 安装 egg-socket.io</h2>
+<h3 id="安装"><a class="markdown-anchor" href="#安装">#</a> 安装</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-socket.io --save</span><br></pre></td></tr></table></figure>
+<p><strong>开启插件：</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/plugin.js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-socket.io'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="配置"><a class="markdown-anchor" href="#配置">#</a> 配置</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  init: &#123; &#125;, <span class="comment">// passed to engine.io</span></span><br><span class="line">  namespace: &#123;</span><br><span class="line">    <span class="string">'/'</span>: &#123;</span><br><span class="line">      connectionMiddleware: [],</span><br><span class="line">      packetMiddleware: [],</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'/example'</span>: &#123;</span><br><span class="line">      connectionMiddleware: [],</span><br><span class="line">      packetMiddleware: [],</span><br><span class="line">    &#125;,    </span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>命名空间为 <code>/</code> 与 <code>/example</code>, 不是 <code>example</code></p>
+</blockquote>
+<p><strong>uws:</strong></p>
+<p>如果想要使用 <a href="https://github.com/uWebSockets/uWebSockets" target="_blank" rel="noopener">uws</a> 替代默认的 <code>us</code> 可以做如下配置</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  init: &#123; <span class="attr">wsEngine</span>: <span class="string">'uws'</span> &#125;, <span class="comment">// default: us </span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>redis:</strong></p>
+<p><a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> 内置了 <code>socket.io-redis</code>，在 cluster 模式下，使用 redis 可以较为简单的实现 clients/rooms 等信息共享</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  redis: &#123;</span><br><span class="line">    host: &#123; redis server host &#125;,</span><br><span class="line">    port: &#123; redis server prot &#125;,</span><br><span class="line">    auth_pass: &#123; redis server password &#125;,</span><br><span class="line">    db: <span class="number">0</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>开启 <code>redis</code> 后，程序在启动时会尝试连接到 redis 服务器<br>
+此处 <code>redis</code> 仅用于存储连接实例信息，参见 <a href="https://socket.io/docs/server-api/#server-adapter-value" target="_blank" rel="noopener">#server.adapter</a></p>
+</blockquote>
+<p><strong>注意：</strong>
+如果项目中同时使用了 <code>egg-redis</code>， 请单独配置，不可共用。</p>
+<h3 id="部署"><a class="markdown-anchor" href="#部署">#</a> 部署</h3>
+<p>框架是以 Cluster 方式启动的，而 socket.io 协议实现需要 sticky 特性支持，否则在多进程模式下无法正常工作。</p>
+<p>由于 <a href="https://socket.io" target="_blank" rel="noopener">socket.io</a> 的设计，在多进程中服务器必须在 <code>sticky</code> 模式下工作，故需要给 startCluster 传递 sticky 参数。</p>
+<p>修改 <code>package.json</code> 中 <code>npm scripts</code> 脚本：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;dev&quot;: &quot;egg-bin dev --sticky&quot;,</span><br><span class="line">    &quot;start&quot;: &quot;egg-scripts start --sticky&quot; </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Nginx 配置</strong></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">  proxy_set_header Upgrade $http_upgrade;</span><br><span class="line">  proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">  proxy_set_header Host $host;</span><br><span class="line">  proxy_pass   http://127.0.0.1:7001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用-egg-socketio"><a class="markdown-anchor" href="#使用-egg-socketio">#</a> 使用 egg-socket.io</h2>
+<p>开启 <a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> 的项目目录结构如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chat</span><br><span class="line">├── app</span><br><span class="line">│   ├── extend</span><br><span class="line">│   │   └── helper.js</span><br><span class="line">│   ├── io</span><br><span class="line">│   │   ├── controller</span><br><span class="line">│   │   │   └── default.js</span><br><span class="line">│   │   └── middleware</span><br><span class="line">│   │       ├── connection.js</span><br><span class="line">│   │       └── packet.js</span><br><span class="line">│   └── router.js</span><br><span class="line">├── config</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：对应的文件都在 app/io 目录下</p>
+</blockquote>
+<h3 id="middleware"><a class="markdown-anchor" href="#middleware">#</a> Middleware</h3>
+<p>中间件有如下两种场景：</p>
+<ul>
+<li>Connection</li>
+<li>Packet</li>
+</ul>
+<p>其配置于各个命名空间下，根据上述两种场景分别发生作用。</p>
+<p><strong>注意：</strong></p>
+<p>如果我们启用了框架中间件，则会发现项目中有以下目录：</p>
+<ul>
+<li><code>app/middleware</code>：框架中间件</li>
+<li><code>app/io/middleware</code>：插件中间件</li>
+</ul>
+<p>区别：</p>
+<ul>
+<li>框架中间件基于 http 模型设计，处理 http 请求。</li>
+<li>插件中间件基于 socket 模型设计，处理 socket.io 请求。</li>
+</ul>
+<p>虽然框架通过插件尽量统一了它们的风格，但务必注意，它们的使用场景是不一样的。详情参见 issue：<a href="https://github.com/eggjs/egg/issues/1416" target="_blank" rel="noopener">#1416</a></p>
+<h4 id="connection"><a class="markdown-anchor" href="#connection">#</a> Connection</h4>
+<p>在每一个客户端连接或者退出时发生作用，故而我们通常在这一步进行授权认证，对认证失败的客户端做出相应的处理</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/io/middleware/connection.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    ctx.socket.emit(<span class="string">'res'</span>, <span class="string">'connected!'</span>);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">    <span class="comment">// execute when disconnect.</span></span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'disconnection!'</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>踢出用户示例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> tick = <span class="function">(<span class="params">id, msg</span>) =&gt;</span> &#123;</span><br><span class="line">  logger.debug(<span class="string">'#tick'</span>, id, msg);</span><br><span class="line">  socket.emit(id, msg);</span><br><span class="line">  app.io.of(<span class="string">'/'</span>).adapter.remoteDisconnect(id, <span class="literal">true</span>, err =&gt; &#123;</span><br><span class="line">    logger.error(err);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>同时，针对当前的连接也可以简单处理：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/io/middleware/connection.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">      ctx.socket.disconnet();</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'disconnection!'</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="packet"><a class="markdown-anchor" href="#packet">#</a> Packet</h4>
+<p>作用于每一个数据包（每一条消息）；在生产环境中，通常用于对消息做预处理，又或者是对加密消息的解密等操作</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/io/middleware/packet.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    ctx.socket.emit(<span class="string">'res'</span>, <span class="string">'packet received!'</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'packet:'</span>, <span class="keyword">this</span>.packet);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="controller"><a class="markdown-anchor" href="#controller">#</a> Controller</h3>
+<p>Controller 对客户端发送的 event 进行处理；由于其继承于 <code>egg.Contoller</code>, 拥有如下成员对象:</p>
+<ul>
+<li>ctx</li>
+<li>app</li>
+<li>service</li>
+<li>config</li>
+<li>logger</li>
+</ul>
+<blockquote>
+<p>详情参考 <a href="../basics/controller.html">Controller</a> 文档</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/io/controller/default.js</span></span><br><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Controller = <span class="built_in">require</span>(<span class="string">'egg'</span>).Controller;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DefaultController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> ping() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx, app &#125; = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> message = ctx.args[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">await</span> ctx.socket.emit(<span class="string">'res'</span>, <span class="string">`Hi! I've got your message: <span class="subst">$&#123;message&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = DefaultController;</span><br><span class="line"></span><br><span class="line"><span class="comment">// or async functions </span></span><br><span class="line"></span><br><span class="line">exports.ping = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> message = <span class="keyword">this</span>.args[<span class="number">0</span>];</span><br><span class="line">  <span class="keyword">await</span> <span class="keyword">this</span>.socket.emit(<span class="string">'res'</span>, <span class="string">`Hi! I've got your message: <span class="subst">$&#123;message&#125;</span>`</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="router"><a class="markdown-anchor" href="#router">#</a> Router</h3>
+<p>路由负责将 socket 连接的不同 events 分发到对应的 controller，框架统一了其使用方式</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/router.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; router, controller, io &#125; = app;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// default</span></span><br><span class="line">  router.get(<span class="string">'/'</span>, controller.home.index);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// socket.io</span></span><br><span class="line">  io.of(<span class="string">'/'</span>).route(<span class="string">'server'</span>, io.controller.home.server);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<p>nsp 有如下的系统事件:</p>
+<ul>
+<li><code>disconnecting</code> doing the disconnect</li>
+<li><code>disconnect</code> connection has disconnected.</li>
+<li><code>error</code> Error occured</li>
+</ul>
+<h3 id="namespaceroom"><a class="markdown-anchor" href="#namespaceroom">#</a> Namespace/Room</h3>
+<h4 id="namespace-nsp"><a class="markdown-anchor" href="#namespace-nsp">#</a> Namespace (nsp)</h4>
+<p>namespace 通常意味分配到不同的接入点或者路径，如果客户端没有指定 nsp，则默认分配到 &quot;/&quot; 这个默认的命名空间。</p>
+<p>在 socket.io 中我们通过 <code>of</code> 来划分命名空间；鉴于 nsp 通常是预定义且相对固定的存在，框架将其进行了封装，采用配置的方式来划分不同的命名空间。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// socket.io</span></span><br><span class="line"><span class="keyword">var</span> nsp = io.of(<span class="string">'/my-namespace'</span>);</span><br><span class="line">nsp.on(<span class="string">'connection'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">socket</span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'someone connected'</span>);</span><br><span class="line">&#125;);</span><br><span class="line">nsp.emit(<span class="string">'hi'</span>, <span class="string">'everyone!'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// egg</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  namespace: &#123;</span><br><span class="line">    <span class="string">'/'</span>: &#123;</span><br><span class="line">      connectionMiddleware: [],</span><br><span class="line">      packetMiddleware: [],</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="room"><a class="markdown-anchor" href="#room">#</a> Room</h4>
+<p>room 存在于 nsp 中，通过 join/leave 方法来加入或者离开; 框架中使用方法相同；</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> room = <span class="string">'default_room'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    ctx.socket.join(room);</span><br><span class="line">    ctx.app.io.of(<span class="string">'/'</span>).to(room).emit(<span class="string">'online'</span>, &#123; <span class="attr">msg</span>: <span class="string">'welcome'</span>, <span class="attr">id</span>: ctx.socket.id &#125;);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'disconnection!'</span>);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong> 每一个 socket 连接都会拥有一个随机且不可预测的唯一 id <code>Socket#id</code>，并且会自动加入到以这个 <code>id</code> 命名的 room 中</p>
+<h2 id="实例"><a class="markdown-anchor" href="#实例">#</a> 实例</h2>
+<p>这里我们使用 <a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> 来做一个支持 p2p 聊天的小例子</p>
+<h3 id="client"><a class="markdown-anchor" href="#client">#</a> client</h3>
+<p>UI 相关的内容不重复写了，通过 window.socket 调用即可</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// browser</span></span><br><span class="line"><span class="keyword">const</span> log = <span class="built_in">console</span>.log;</span><br><span class="line"></span><br><span class="line"><span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// init</span></span><br><span class="line">  <span class="keyword">const</span> socket = io(<span class="string">'/'</span>, &#123;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 实际使用中可以在这里传递参数</span></span><br><span class="line">    query: &#123;</span><br><span class="line">      room: <span class="string">'demo'</span>,     </span><br><span class="line">      userId: <span class="string">`client_<span class="subst">$&#123;<span class="built_in">Math</span>.random()&#125;</span>`</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    </span><br><span class="line">    transports: [<span class="string">'websocket'</span>]</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  socket.on(<span class="string">'connect'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> id = socket.id;</span><br><span class="line"></span><br><span class="line">    log(<span class="string">'#connect,'</span>, id, socket);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 接收在线用户信息</span></span><br><span class="line">    socket.on(<span class="string">'online'</span>, msg =&gt; &#123;</span><br><span class="line">      log(<span class="string">'#online,'</span>, msg);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 监听自身 id 以实现 p2p 通讯</span></span><br><span class="line">    socket.on(id, msg =&gt; &#123;</span><br><span class="line">      log(<span class="string">'#receive,'</span>, msg);</span><br><span class="line">    &#125;);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 系统事件</span></span><br><span class="line">    socket.on(<span class="string">'disconnect'</span>, msg =&gt; &#123;      </span><br><span class="line">      log(<span class="string">'#disconnect'</span>, msg);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    socket.on(<span class="string">'disconnecting'</span>, () =&gt; &#123;</span><br><span class="line">      log(<span class="string">'#disconnecting'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    socket.on(<span class="string">'error'</span>, () =&gt; &#123;</span><br><span class="line">      log(<span class="string">'#error'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">window</span>.socket = socket;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="server"><a class="markdown-anchor" href="#server">#</a> server</h3>
+<p>以下是 demo 的部分代码并解释了各个方法的作用</p>
+<h4 id="config"><a class="markdown-anchor" href="#config">#</a> config</h4>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  namespace: &#123;</span><br><span class="line">    <span class="string">'/'</span>: &#123;</span><br><span class="line">      connectionMiddleware: [ <span class="string">'auth'</span> ],</span><br><span class="line">      packetMiddleware: [ ], <span class="comment">// 针对消息的处理暂时不实现</span></span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// cluster 模式下，通过 redis 实现数据共享</span></span><br><span class="line">  redis: &#123;</span><br><span class="line">    host: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">    port: <span class="number">6379</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="helper"><a class="markdown-anchor" href="#helper">#</a> helper</h4>
+<p>框架扩展用于封装数据格式</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/extend/helper.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  parseMsg(action, payload = &#123;&#125;, metadata = &#123;&#125;) &#123;</span><br><span class="line">    <span class="keyword">const</span> meta = <span class="built_in">Object</span>.assign(&#123;&#125;, &#123;</span><br><span class="line">      timestamp: <span class="built_in">Date</span>.now(),</span><br><span class="line">    &#125;, metadata);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      data: &#123;</span><br><span class="line">        action,</span><br><span class="line">        payload,</span><br><span class="line">      &#125;,</span><br><span class="line">      meta,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Format：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  data: &#123;</span><br><span class="line">    action: <span class="string">'exchange'</span>,  <span class="comment">// 'deny' || 'exchange' || 'broadcast'</span></span><br><span class="line">    payload: &#123;&#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">  meta:&#123;</span><br><span class="line">    timestamp: <span class="number">1512116201597</span>,</span><br><span class="line">    client: <span class="string">'/webrtc#nNx88r1c5WuHf9XuAAAB'</span>,</span><br><span class="line">    target: <span class="string">'/webrtc#nNx88r1c5WuHf9XuAAAB'</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="middleware-2"><a class="markdown-anchor" href="#middleware-2">#</a> middleware</h4>
+<p><a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> 中间件负责 socket 连接的处理</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/io/middleware/auth.js</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> PREFIX = <span class="string">'room'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; app, socket, logger, helper &#125; = ctx;</span><br><span class="line">    <span class="keyword">const</span> id = socket.id;</span><br><span class="line">    <span class="keyword">const</span> nsp = app.io.of(<span class="string">'/'</span>);</span><br><span class="line">    <span class="keyword">const</span> query = socket.handshake.query;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 用户信息</span></span><br><span class="line">    <span class="keyword">const</span> &#123; room, userId &#125; = query;</span><br><span class="line">    <span class="keyword">const</span> rooms = [room];</span><br><span class="line"></span><br><span class="line">    logger.debug(<span class="string">'#user_info'</span>, id, room, userId);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> tick = <span class="function">(<span class="params">id, msg</span>) =&gt;</span> &#123;</span><br><span class="line">      logger.debug(<span class="string">'#tick'</span>, id, msg);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 踢出用户前发送消息</span></span><br><span class="line">      socket.emit(id, helper.parseMsg(<span class="string">'deny'</span>, msg));</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 调用 adapter 方法踢出用户，客户端触发 disconnect 事件</span></span><br><span class="line">      nsp.adapter.remoteDisconnect(id, <span class="literal">true</span>, err =&gt; &#123;</span><br><span class="line">        logger.error(err);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 检查房间是否存在，不存在则踢出用户</span></span><br><span class="line">    <span class="comment">// 备注：此处 app.redis 与插件无关，可用其他存储代替</span></span><br><span class="line">    <span class="keyword">const</span> hasRoom = <span class="keyword">await</span> app.redis.get(<span class="string">`<span class="subst">$&#123;PREFIX&#125;</span>:<span class="subst">$&#123;room&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line">    logger.debug(<span class="string">'#has_exist'</span>, hasRoom);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!hasRoom) &#123;</span><br><span class="line">      tick(id, &#123;</span><br><span class="line">        type: <span class="string">'deleted'</span>,</span><br><span class="line">        message: <span class="string">'deleted, room has been deleted.'</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当用户加入时</span></span><br><span class="line">    nsp.adapter.clients(rooms, (err, clients) =&gt; &#123;</span><br><span class="line">    </span><br><span class="line">       <span class="comment">// 追加当前 socket 信息到clients</span></span><br><span class="line">      clients[id] = query;</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 加入房间</span></span><br><span class="line">      socket.join(room);</span><br><span class="line"></span><br><span class="line">      logger.debug(<span class="string">'#online_join'</span>, _clients);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 更新在线用户列表</span></span><br><span class="line">      nsp.to(room).emit(<span class="string">'online'</span>, &#123;</span><br><span class="line">        clients,</span><br><span class="line">        action: <span class="string">'join'</span>,</span><br><span class="line">        target: <span class="string">'participator'</span>,</span><br><span class="line">        message: <span class="string">`User(<span class="subst">$&#123;id&#125;</span>) joined.`</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 当用户离开时</span></span><br><span class="line">    nsp.adapter.clients(rooms, (err, clients) =&gt; &#123;</span><br><span class="line">      logger.debug(<span class="string">'#leave'</span>, room);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> _clients = &#123;&#125;;</span><br><span class="line">      clients.forEach(<span class="function"><span class="params">client</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> _id = client.split(<span class="string">'#'</span>)[<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">const</span> _client = app.io.sockets.sockets[_id];</span><br><span class="line">        <span class="keyword">const</span> _query = _client.handshake.query;</span><br><span class="line">        _clients[client] = _query;</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">      logger.debug(<span class="string">'#online_leave'</span>, _clients);</span><br><span class="line">      </span><br><span class="line">      <span class="comment">// 更新在线用户列表</span></span><br><span class="line">      nsp.to(room).emit(<span class="string">'online'</span>, &#123;</span><br><span class="line">        clients: _clients,</span><br><span class="line">        action: <span class="string">'leave'</span>,</span><br><span class="line">        target: <span class="string">'participator'</span>,</span><br><span class="line">        message: <span class="string">`User(<span class="subst">$&#123;id&#125;</span>) leaved.`</span>,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="controller-2"><a class="markdown-anchor" href="#controller-2">#</a> controller</h4>
+<p>p2p 通信，通过 exchange 进行数据交换</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/io/controller/nsp.js</span></span><br><span class="line"><span class="keyword">const</span> Controller = <span class="built_in">require</span>(<span class="string">'egg'</span>).Controller;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NspController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> exchange() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx, app &#125; = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> nsp = app.io.of(<span class="string">'/'</span>);</span><br><span class="line">    <span class="keyword">const</span> message = ctx.args[<span class="number">0</span>] || &#123;&#125;;</span><br><span class="line">    <span class="keyword">const</span> socket = ctx.socket;</span><br><span class="line">    <span class="keyword">const</span> client = socket.id;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; target, payload &#125; = message;</span><br><span class="line">      <span class="keyword">if</span> (!target) <span class="keyword">return</span>;</span><br><span class="line">      <span class="keyword">const</span> msg = ctx.helper.parseMsg(<span class="string">'exchange'</span>, payload, &#123; client, target &#125;);</span><br><span class="line">      nsp.emit(target, msg);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (error) &#123;</span><br><span class="line">      app.logger.error(error);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = NspController;</span><br></pre></td></tr></table></figure>
+<h4 id="router-2"><a class="markdown-anchor" href="#router-2">#</a> router</h4>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; router, controller, io &#125; = app;</span><br><span class="line">  router.get(<span class="string">'/'</span>, controller.home.index);</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// socket.io</span></span><br><span class="line">  io.of(<span class="string">'/'</span>).route(<span class="string">'exchange'</span>, io.controller.nsp.exchange);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>开两个 tab 页面，并调出控制台：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">socket.emit(<span class="string">'exchange'</span>, &#123; </span><br><span class="line">	target: <span class="string">'/webrtc#Dkn3UXSu8_jHvKBmAAHW'</span>, </span><br><span class="line">	payload: &#123; </span><br><span class="line">		msg : <span class="string">'test'</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/eggjs/egg/master/docs/assets/socketio-console.png" alt=""></p>
+<h2 id="参考链接"><a class="markdown-anchor" href="#参考链接">#</a> 参考链接</h2>
+<ul>
+<li><a href="https://socket.io" target="_blank" rel="noopener">socket.io</a></li>
+<li><a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a></li>
+<li><a href="https://github.com/eggjs/egg-socket.io/tree/master/example" target="_blank" rel="noopener">egg-socket.io example</a></li>
+</ul>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">Translations</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="zh-cn" href="/zh-cn/tutorials/socketio.html" style="color: #22ab28">中文</a></li><li><a id="en" href="/en/tutorials/socketio.html" >English</a></li></ul>
+        </li>
+      
+    </ul>
+  </div>
+  <dl><dt id="title-Intro" style="cursor: pointer;" class="aside-title">新手指南<a id="collapse-icon-Intro" class="icon opend"></a></dt><dd id=panel-Intro><ul><li><a href="/zh-cn/intro/index.html" class="menu-link">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html" class="menu-link">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html" class="menu-link">快速入门</a></li><li><a href="/zh-cn/tutorials/progressive.html" class="menu-link">渐进式开发</a></li><li><a href="/zh-cn/migration.html" class="menu-link">2.x 升级指南</a></li></ul></dd><dt id="title-Basics" style="cursor: pointer;" class="aside-title">基础功能<a id="collapse-icon-Basics" class="icon opend"></a></dt><dd id=panel-Basics><ul><li><a href="/zh-cn/basics/structure.html" class="menu-link">目录结构</a></li><li><a href="/zh-cn/basics/objects.html" class="menu-link">内置对象</a></li><li><a href="/zh-cn/basics/env.html" class="menu-link">运行环境</a></li><li><a href="/zh-cn/basics/config.html" class="menu-link">配置</a></li><li><a href="/zh-cn/basics/middleware.html" class="menu-link">中间件</a></li><li><a href="/zh-cn/basics/router.html" class="menu-link">Router</a></li><li><a href="/zh-cn/basics/controller.html" class="menu-link">Controller</a></li><li><a href="/zh-cn/basics/service.html" class="menu-link">Service</a></li><li><a href="/zh-cn/basics/plugin.html" class="menu-link">插件</a></li><li><a href="/zh-cn/basics/schedule.html" class="menu-link">定时任务</a></li><li><a href="/zh-cn/basics/extend.html" class="menu-link">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html" class="menu-link">启动自定义</a></li></ul></dd><dt id="title-Core" style="cursor: pointer;" class="aside-title">核心功能<a id="collapse-icon-Core" class="icon opend"></a></dt><dd id=panel-Core><ul><li><a href="/zh-cn/core/development.html" class="menu-link">本地开发</a></li><li><a href="/zh-cn/core/unittest.html" class="menu-link">单元测试</a></li><li><a href="/zh-cn/core/deployment.html" class="menu-link">应用部署</a></li><li><a href="/zh-cn/core/logger.html" class="menu-link">日志</a></li><li><a href="/zh-cn/core/httpclient.html" class="menu-link">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html" class="menu-link">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html" class="menu-link">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html" class="menu-link">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html" class="menu-link">异常处理</a></li><li><a href="/zh-cn/core/security.html" class="menu-link">安全</a></li><li><a href="/zh-cn/core/i18n.html" class="menu-link">国际化</a></li></ul></dd><dt id="title-Tutorials" style="cursor: pointer;" class="aside-title">教程<a id="collapse-icon-Tutorials" class="icon opend"></a></dt><dd id=panel-Tutorials><ul><li><a href="/zh-cn/tutorials/mysql.html" class="menu-link">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html" class="menu-link">RESTful API</a></li><li><a href="/zh-cn/tutorials/passport.html" class="menu-link">Passport 鉴权</a></li><li><a href="/zh-cn/tutorials/socketio.html" class="menu-link">Socket.IO</a></li></ul></dd><dt id="title-Advanced" style="cursor: pointer;" class="aside-title">进阶<a id="collapse-icon-Advanced" class="icon opend"></a></dt><dd id=panel-Advanced><ul><li><a href="/zh-cn/advanced/loader.html" class="menu-link">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html" class="menu-link">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html" class="menu-link">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html" class="menu-link">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html" class="menu-link">模板插件开发规范</a></li><li><a href="/zh-cn/style-guide.html" class="menu-link">代码风格指南</a></li></ul></dd><dt id="title-Community" style="cursor: pointer;" class="aside-title">社区<a id="collapse-icon-Community" class="icon opend"></a></dt><dd id=panel-Community><ul><li><a href="/zh-cn/plugins/" class="menu-link">内置插件列表</a></li><li><a href="/zh-cn/contributing.html" class="menu-link">如何贡献</a></li><li><a href="/zh-cn/resource.html" class="menu-link">资源</a></li><li><a href="/zh-cn/faq.html" class="menu-link">常见问题</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+
+var expandMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon opend';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = '';
+  }
+}
+
+var collapseMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon closed';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = 'aside-panel-hidden';
+  }
+}
+
+mobileAside.onclick = function(e) {
+  const targetId = e.target.id;
+  if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
+    const title = targetId.replace('title-', '').replace('collapse-icon-', '');
+    try { 
+      // the the browser may have no localStroage or JSON.parse may throw exception.
+      const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+        
+      // current menu status
+      const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
+
+      // change UI
+      curClosed ? expandMenu(title) : collapseMenu(title);
+
+      // save menuInfo to localStorage
+      menuInfo[title] = { closed: !curClosed } // opposite
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    } catch (e) {}
+  }
+};
+
+mobileTrigger.onclick = function(e) {
+  e.preventDefault();
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+
+(function() {
+  // save data to localStorage because the page will refresh when user change the url.
+  let menuInfo;
+  try { 
+    // the the browser may have no localStroage or JSON.parse may throw exception.
+    menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+    if (!menuInfo) {
+      menuInfo = {};
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    }
+  } catch (e) {
+    menuInfo = {}; // default {}
+  }
+
+  for (const title in menuInfo) {
+    if (menuInfo[title] && menuInfo[title].closed) { // menu in closed status.
+      collapseMenu(title);
+    } else {
+      expandMenu(title);
+    }
+  }
+
+  // highlight menu
+  const pathname = window.location.pathname;
+  const selector = `a[href="${pathname}"].menu-link,a[href="${pathname}index.html"].menu-link`;
+  const menuItem = mobileAside.querySelector(selector);
+  if (menuItem) { menuItem.className += ' highlight'; }
+})();
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
