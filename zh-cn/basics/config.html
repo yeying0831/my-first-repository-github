@@ -110,6 +110,8 @@
 </tbody>
 </table>
 <p><code>appInfo.root</code> 是一个优雅的适配，比如在服务器环境我们会使用 <code>/home/admin/logs</code> 作为日志目录，而本地开发时又不想污染用户目录，这样的适配就很好解决这个问题。</p>
+<p>请根据具体场合选择合适的写法，但请确保没有写出以下代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.someKeys = <span class="string">'abc'</span>;</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;&#125;;</span><br><span class="line">  config.keys = <span class="string">'123456'</span>;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="配置加载顺序"><a class="markdown-anchor" href="#配置加载顺序">#</a> 配置加载顺序</h3>
 <p>应用、插件、框架都可以定义这些配置，而且目录结构都是一致的，但存在优先级（应用 &gt; 框架 &gt; 插件），相对于此运行环境的优先级会更高。</p>
 <p>比如在 prod 环境加载一个配置的加载顺序如下，后加载的会覆盖前面的同名配置。</p>

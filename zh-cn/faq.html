@@ -73,6 +73,8 @@
 <p>框架的配置功能比较强大，有不同环境变量，又有框架、插件、应用等很多地方配置。</p>
 <p>如果你分析问题时，想知道当前运行时使用的最终配置，可以查看下 <code>${root}/run/application_config.json</code>（worker 进程配置） 和 <code>${root}/run/agent_config.json</code>（agent 进程配置） 这两个文件。（<code>root</code> 为应用根目录，只有在 local 和 unittest 环境下为项目所在目录，其他环境下都为 HOME 目录）</p>
 <p>也可参见<a href="https://eggjs.org/zh-cn/basics/config.html#%E9%85%8D%E7%BD%AE%E7%BB%93%E6%9E%9C">配置文件</a>。</p>
+<p>PS：请确保没有写出以下代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.someKeys = <span class="string">'abc'</span>;</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;&#125;;</span><br><span class="line">  config.keys = <span class="string">'123456'</span>;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="线上的日志打印去哪里了"><a class="markdown-anchor" href="#线上的日志打印去哪里了">#</a> 线上的日志打印去哪里了？</h2>
 <p>默认配置下，本地开发环境的日志都会打印在应用根目录的 <code>logs</code> 文件夹下(<code>${baseDir}/logs</code>) ，但是在非开发期的环境（非 local 和 unittest 环境），所有的日志都会打印到 <code>$HOME/logs</code> 文件夹下（例如 <code>/home/admin/logs</code>）。这样可以让本地开发时应用日志互不影响，服务器运行时又有统一的日志输出目录。</p>
 <h2 id="进程管理为什么没有选型-pm2"><a class="markdown-anchor" href="#进程管理为什么没有选型-pm2">#</a> 进程管理为什么没有选型 PM2 ？</h2>

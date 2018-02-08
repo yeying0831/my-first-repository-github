@@ -110,6 +110,8 @@
 </tbody>
 </table>
 <p><code>appInfo.root</code> is an elegant adaption. for example, we tend to use <code>/home/admin/logs</code> as the catalog of log in the server environment, while we don't want to pollute the user catalog in local development. This adaptation is very good at solving this problem.</p>
+<p>Choose the appropriate style according to the specific situation, but please make sure you don't make mistake like the code below:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.someKeys = <span class="string">'abc'</span>;</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;&#125;;</span><br><span class="line">  config.keys = <span class="string">'123456'</span>;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="sequence-of-loading-configurations"><a class="markdown-anchor" href="#sequence-of-loading-configurations">#</a> Sequence of loading configurations</h3>
 <p>Applications, plugin components and framework are able to define those configs. Even though the structure of catalog is identical but there is priority (application &gt; framework &gt; plugin). Besides, the running environment has the higher priority.</p>
 <p>Here is one sequence of loading configurations under &quot;prod&quot; environment, in which the following configuration will overwrite the previous configuration with the same name.</p>
