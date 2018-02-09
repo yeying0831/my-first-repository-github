@@ -67,21 +67,21 @@
 <h2 id="usage-scenario"><a class="markdown-anchor" href="#usage-scenario">#</a> Usage Scenario</h2>
 <ul>
 <li>Processing complex data, e.g. information to be shown need to be got from databases, and should be processed in specific rules before it can be sent and seen by the user. Or when the process is done, the database should be updated.</li>
-<li>Calling 3rd party services, e.g. getting Github information etc.</li>
+<li>Calling third party services, e.g. getting Github information etc.</li>
 </ul>
 <h2 id="defining-service"><a class="markdown-anchor" href="#defining-service">#</a> Defining Service</h2>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/user.js</span></span><br><span class="line"><span class="keyword">const</span> Service = <span class="built_in">require</span>(<span class="string">'egg'</span>).Service;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> find(uid) &#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> <span class="keyword">this</span>.ctx.db.query(<span class="string">'select * from user where uid = ?'</span>, uid);</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = UserService;</span><br></pre></td></tr></table></figure>
 <h3 id="properties"><a class="markdown-anchor" href="#properties">#</a> Properties</h3>
-<p>Framework will initializes a new Service instance for every request accessing the server, and, for the example above, several attributes are attached to <code>this</code> since the Service class inherits <code>egg.Service</code>.</p>
+<p>Framework will initialize a new Service instance for every request accessing the server, and, for the example above, several attributes are attached to <code>this</code> since the Service class inherits <code>egg.Service</code>.</p>
 <ul>
 <li><code>this.ctx</code>: the instance of <a href="./extend.html#context">Context</a> for current request, through which we can access many attributes and methods, encapsulated by the framework, of current request conveniently.</li>
 <li><code>this.app</code>: the instance of <a href="./extend.html#application">Application</a> for current request, through which we can access global objects and methods provided by the framework.</li>
 <li><code>this.service</code>: <a href="./service.html">Service</a> defined by the application, through which we can access the abstract business layer, equivalent to <code>this.ctx.service</code>.</li>
 <li><code>this.config</code>: the application's run-time <a href="./config.html">config</a>.</li>
-<li><code>this.logger</code>：logger with <code>debug</code>，<code>info</code>，<code>warn</code>，<code>error</code>, use to print different level log, almost the same as <a href="../core/logger.html#context-logger">context logger</a>, but it will append Service file path for quickly track.</li>
+<li><code>this.logger</code>：logger with <code>debug</code>，<code>info</code>，<code>warn</code>，<code>error</code>, use to print different level logs, almost the same as <a href="../core/logger.html#context-logger">context logger</a>, but it will append Service file path for quickly track.</li>
 </ul>
 <h3 id="service-ctx-in-detail"><a class="markdown-anchor" href="#service-ctx-in-detail">#</a> Service ctx in Detail</h3>
-<p>To get the path chain of user request, the request context is injected by us during the Service initialization, so you are able to get context related information directly by <code>this.ctx</code> in methods. For detailed information about context, please refer to <a href="./extend.html#context">Context</a>.
+<p>To get the path chain of user request, the request context is injected by us during the Service initialization, so you are able to get the related information of context directly by <code>this.ctx</code> in methods. For detailed information about context, please refer to <a href="./extend.html#context">Context</a>.
 With <code>ctx</code>, we can get various convenient attributes and methods encapsulated by the framework. For example we can use:</p>
 <ul>
 <li><code>this.ctx.curl</code> to make network calls.</li>
