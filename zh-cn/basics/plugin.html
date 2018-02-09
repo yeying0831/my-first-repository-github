@@ -109,13 +109,17 @@
 <p>在上层框架内部内置的插件，应用在使用时就不用配置 package 或者 path，只需要指定 enable 与否：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 对于内置插件，可以用下面的简洁方式开启或关闭</span></span><br><span class="line">exports.onerror = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
 <h3 id="根据环境配置"><a class="markdown-anchor" href="#根据环境配置">#</a> 根据环境配置</h3>
-<p>虽然上述有 <code>env</code> 字段可以配置，但我们更推荐 <code>plugin.{env}.js</code> 这种模式，会根据<a href="../basics/env.html">运行环境</a>加载插件配置。</p>
+<p>同时，我们还支持 <code>plugin.{env}.js</code> 这种模式，会根据<a href="../basics/env.html">运行环境</a>加载插件配置。</p>
 <p>比如定义了一个开发环境使用的插件 <code>egg-dev</code>，只希望在本地环境加载，可以安装到 <code>devDependencies</code>。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// npm i egg-dev --save-dev</span></span><br><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"egg-dev"</span>: <span class="string">"*"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然后在 <code>plugin.local.js</code> 中声明：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.local.js</span></span><br><span class="line">exports.dev = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-dev'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>这样在生产环境可以 <code>npm i --production</code> 不需要下载 <code>egg-dev</code> 的包了。</p>
-<p><strong>注意: 不存在 <code>plugin.default.js</code>。</strong></p>
+<p>**注意: **</p>
+<ul>
+<li>不存在 <code>plugin.default.js</code></li>
+<li><strong>只能在应用层使用，在框架层请勿使用。</strong></li>
+</ul>
 <h3 id="package-和-path"><a class="markdown-anchor" href="#package-和-path">#</a> package 和 path</h3>
 <ul>
 <li><code>package</code> 是 <code>npm</code> 方式引入，也是最常见的引入方式</li>
