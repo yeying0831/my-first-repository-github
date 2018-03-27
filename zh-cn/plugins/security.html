@@ -265,6 +265,15 @@ If you want to output json string in your views, please use <code>${ctx.helper.s
 <ul>
 <li>disable Defaulting to <code>false</code>，same as <code>1; mode=block</code>.</li>
 </ul>
+<h3 id="ssrf-protection"><a class="markdown-anchor" href="#ssrf-protection">#</a> SSRF Protection</h3>
+<p>In a <a href="(https://www.owasp.org/index.php/Server_Side_Request_Forgery)">Server-Side Request Forgery (SSRF)</a> attack, the attacker can abuse functionality on the server to read or update internal resources.</p>
+<p><code>egg-security</code> provide <code>ctx.safeCurl</code>, <code>app.safeCurl</code> and <code>agent.safeCurl</code> to provide http request(like <code>ctx.curl</code>, <code>app.curl</code> and <code>agent.curl</code>) with SSRF protection.</p>
+<h4 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h4>
+<ul>
+<li>ipBlackList(Array) - specific which ip are illegal when request with <code>safeCurl</code>.</li>
+<li>checkAddress(Function) - determine the ip by the function's return value, <code>false</code> means illegal ip.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.security = &#123;</span><br><span class="line">  ssrf: &#123;</span><br><span class="line">    <span class="comment">// support both cidr subnet or specific ip</span></span><br><span class="line">    ipBlackList: [</span><br><span class="line">      <span class="string">'10.0.0.0/8'</span>,</span><br><span class="line">      <span class="string">'127.0.0.1'</span>,</span><br><span class="line">      <span class="string">'0.0.0.0/32'</span>,</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// checkAddress has higher priority than ipBlackList</span></span><br><span class="line">    checkAddress(ip) &#123;</span><br><span class="line">      <span class="keyword">return</span> ip !== <span class="string">'127.0.0.1'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="other"><a class="markdown-anchor" href="#other">#</a> Other</h2>
 <ul>
 <li>Forbidden <code>trace</code> <code>track</code> <code>options</code> http method.</li>
