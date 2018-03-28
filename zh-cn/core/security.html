@@ -295,6 +295,24 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 <li>maxAge 默认一年 <code>365 * 24 * 3600</code>。</li>
 <li>includeSubdomains 默认 false, 可以添加子域名，保证所有子域名都使用 HTTPS 访问。</li>
 </ul>
+<h2 id="安全威胁-ssrf-的防范"><a class="markdown-anchor" href="#安全威胁-ssrf-的防范">#</a> 安全威胁 SSRF 的防范</h2>
+<p>通过 <a href="https://www.owasp.org/index.php/Server_Side_Request_Forgery" target="_blank" rel="noopener">Server-Side Request Forgery(SSRF)</a> 攻击，攻击者可以发起网络请求访问或者操作内部网络的资源。</p>
+<p>一般来说，SSRF 安全漏洞常见于开发者在服务端直接请求客户端传递进来的 URL 资源，一旦攻击者传入一些内部的 URL 即可发起 SSRF 攻击。</p>
+<h3 id="如何防范-2"><a class="markdown-anchor" href="#如何防范-2">#</a> 如何防范</h3>
+<p>通常我们会基于内网 IP 黑名单的形式来防范 SSRF 攻击，通过对解析域名后得到的 IP 做过滤，禁止访问内部 IP 地址来达到防范 SSRF 攻击的目的。</p>
+<p>框架在 <code>ctx</code>, <code>app</code> 和 <code>agent</code> 上都提供了 <code>safeCurl</code> 方法，在发起网络请求的同时会对指定的内网 IP 地址过滤，除此之外，该方法和框架提供的 <code>curl</code> 方法一致。</p>
+<ul>
+<li><code>ctx.safeCurl(url, options)</code></li>
+<li><code>app.safeCurl(url, options)</code></li>
+<li><code>agent.safeCurl(url, options)</code></li>
+</ul>
+<h4 id="配置"><a class="markdown-anchor" href="#配置">#</a> 配置</h4>
+<p>直接调用 <code>safeCurl</code> 方法其实并没有任何作用，还需要配合安全配置项。</p>
+<ul>
+<li><code>ipBlackList</code>(Array) - 配置内网 IP 名单，在这些网段内的 IP 地址无法被访问。</li>
+<li><code>checkAddress</code>(Function) - 直接配置一个检查 IP 地址的函数，根据函数的返回值来判断是否允许在 <code>safeCurl</code> 中被访问，当返回非 <code>true</code> 时，该 IP 无法被访问。<code>checkAddress</code> 优先级高于 <code>ipBlackList</code>。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.security = &#123;</span><br><span class="line">  ssrf: &#123;</span><br><span class="line">    ipBlackList: [</span><br><span class="line">      <span class="string">'10.0.0.0/8'</span>, <span class="comment">// 支持 IP 网段</span></span><br><span class="line">      <span class="string">'0.0.0.0/32'</span>,</span><br><span class="line">      <span class="string">'127.0.0.1'</span>,  <span class="comment">// 支持指定 IP 地址</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// 配置了 checkAddress 时，ipBlackList 不会生效</span></span><br><span class="line">    checkAddress(ip) &#123;</span><br><span class="line">      <span class="keyword">return</span> ip !== <span class="string">'127.0.0.1'</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="其他安全工具"><a class="markdown-anchor" href="#其他安全工具">#</a> 其他安全工具</h2>
 <h3 id="ctxissafedomaindomain"><a class="markdown-anchor" href="#ctxissafedomaindomain">#</a> ctx.isSafeDomain(domain)</h3>
 <p>是否为安全域名。安全域名在配置中配置，见 <code>ctx.redirect</code> 部分。</p>

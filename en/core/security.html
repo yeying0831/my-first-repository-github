@@ -304,6 +304,24 @@ Use SHTML to output HTML tags, while executing XSS filtering, then it can filter
 <li>maxAge one yeah for default <code>365 * 24 * 3600</code>。</li>
 <li>includeSubdomains default is false, you can add subdomain to confirm all subdomains could be accessed by HTTPS.</li>
 </ul>
+<h2 id="ssrf-protection"><a class="markdown-anchor" href="#ssrf-protection">#</a> SSRF Protection</h2>
+<p>In a <a href="https://www.owasp.org/index.php/Server_Side_Request_Forgery" target="_blank" rel="noopener">Server-Side Request Forgery (SSRF)</a> attack, the attacker can abuse functionality on the server to read or update internal resources.</p>
+<p>Generally, SSRF are common in that developers directly request the URL resources passed in by the client on the server side. Once an attacker passes in some internal URLs, an SSRF attack can be initiated.</p>
+<h3 id="how-to-protect-2"><a class="markdown-anchor" href="#how-to-protect-2">#</a> How to Protect</h3>
+<p>Usually, we will prevent SSRF attacks based on the IP blacklist of intranets. By filtering the IP addresses obtained after resolving domain names, we prohibit access to internal IP addresses to prevent SSRF attacks.</p>
+<p>The framework provides the <code>safeCurl</code> method on <code>ctx</code>, ʻapp<code>and</code>agent<code>, which will filter the specified intranet IP address while doing the network request. In additon of the method are the same as</code>curl`.</p>
+<ul>
+<li><code>ctx.safeCurl(url, options)</code></li>
+<li><code>app.safeCurl(url, options)</code></li>
+<li><code>agent.safeCurl(url, options)</code></li>
+</ul>
+<h4 id="configurations"><a class="markdown-anchor" href="#configurations">#</a> Configurations</h4>
+<p>Calling the <code>safeCurl</code> method directly does not have any effect. It also needs to work with security configurations.</p>
+<ul>
+<li><code>ipBlackList</code>(Array) - Configure the intranet IP address list. IP addresses on these network segments cannot be accessed.</li>
+<li><code>checkAddress</code>(Function) - Directly configure a function to check the IP address, and determine whether it is allowed to be accessed in <code>safeCurl</code> according to the return value of the function. When returning is not <code>true</code>, this IP cannot be accessed. <code>checkAddress</code> has a higher priority than <code>ipBlackList</code>.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.security = &#123;</span><br><span class="line">  ssrf: &#123;</span><br><span class="line">    ipBlackList: [</span><br><span class="line">      <span class="string">'10.0.0.0/8'</span>, <span class="comment">// support CIDR subnet</span></span><br><span class="line">      <span class="string">'0.0.0.0/32'</span>,</span><br><span class="line">      <span class="string">'127.0.0.1'</span>,  <span class="comment">// support specific IP address</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// ipBlackList does not take effect when checkAddress is configured</span></span><br><span class="line">    checkAddress(ip) &#123;</span><br><span class="line">      <span class="keyword">return</span> ip !== <span class="string">'127.0.0.1'</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="other-build-in-security-tools"><a class="markdown-anchor" href="#other-build-in-security-tools">#</a> Other build-in security tools</h2>
 <h3 id="ctxissafedomaindomain"><a class="markdown-anchor" href="#ctxissafedomaindomain">#</a> ctx.isSafeDomain(domain)</h3>
 <p>To judge whether a domain is a secure domain. It is configured in the security  configuration, see <code>ctx.redirect</code> parts.</p>
