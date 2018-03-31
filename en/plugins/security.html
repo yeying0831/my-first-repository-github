@@ -266,7 +266,7 @@ If you want to output json string in your views, please use <code>${ctx.helper.s
 <li>disable Defaulting to <code>false</code>，same as <code>1; mode=block</code>.</li>
 </ul>
 <h3 id="ssrf-protection"><a class="markdown-anchor" href="#ssrf-protection">#</a> SSRF Protection</h3>
-<p>In a <a href="(https://www.owasp.org/index.php/Server_Side_Request_Forgery)">Server-Side Request Forgery (SSRF)</a> attack, the attacker can abuse functionality on the server to read or update internal resources.</p>
+<p>In a <a href="https://www.owasp.org/index.php/Server_Side_Request_Forgery" target="_blank" rel="noopener">Server-Side Request Forgery (SSRF)</a> attack, the attacker can abuse functionality on the server to read or update internal resources.</p>
 <p><code>egg-security</code> provide <code>ctx.safeCurl</code>, <code>app.safeCurl</code> and <code>agent.safeCurl</code> to provide http request(like <code>ctx.curl</code>, <code>app.curl</code> and <code>agent.curl</code>) with SSRF protection.</p>
 <h4 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h4>
 <ul>
