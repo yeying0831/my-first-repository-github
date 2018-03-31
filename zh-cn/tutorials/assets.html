@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>静态资源 - 为企业级框架和应用而生</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+    <script>
+    !function(t,e,a,r,c){t.TracertCmdCache=t.TracertCmdCache||[],t[c]=window[c]||
+      {_isInit:!0,call:function(){t.TracertCmdCache.push(arguments)},
+      start:function(t){this.call('start',t)}},t[c].l=new Date;
+      var n=e.createElement(a),s=e.getElementsByTagName(a)[0];
+      n.async=!0,n.src=r,s.parentNode.insertBefore(n,s)}
+    (window,document,'script','https://tracert.alipay.com/tracert.js','Tracert');
+      Tracert.start({
+        plugins: [ 'BucName' ],
+        spmAPos: 'a454',
+        spmBPos: 'b4893',
+      });
+    </script>
+  
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">Translations</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="zh-cn" href="/zh-cn/tutorials/assets.html" style="color: #22ab28">中文</a></li><li><a id="en" href="/en/tutorials/assets.html" >English</a></li></ul>
+        </li>
+      
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+  <div id="container" class="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>静态资源</h1>
+    <p><a href="https://github.com/eggjs/egg-view-assets" target="_blank" rel="noopener">egg-view-assets</a> 提供了通用的静态资源管理和本地开发方案，有如下功能</p>
+<ol>
+<li>一体化本地开发方案</li>
+<li>生产环境静态资源映射</li>
+<li>和模板引擎集成</li>
+<li>在<a href="#%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7%E7%BA%A6%E5%AE%9A">约定下</a>可使用多种构建工具，如 <a href="https://webpack.js.org/" target="_blank" rel="noopener">webpack</a>、<a href="https://github.com/sorrycc/roadhog" target="_blank" rel="noopener">roadhog</a>、<a href="https://umijs.org/" target="_blank" rel="noopener">umi</a> 等</li>
+</ol>
+<p>可以先查看示例</p>
+<ul>
+<li><a href="https://github.com/eggjs/examples/tree/master/assets-with-roadhog" target="_blank" rel="noopener">roadhog 工具示例</a></li>
+<li><a href="https://github.com/eggjs/examples/tree/master/assets-with-umi" target="_blank" rel="noopener">umi 工具示例</a></li>
+<li><a href="https://github.com/eggjs/egg-ant-design-pro" target="_blank" rel="noopener">Ant Design Pro 示例</a></li>
+</ul>
+<h2 id="页面渲染"><a class="markdown-anchor" href="#页面渲染">#</a> 页面渲染</h2>
+<p>可通过自动或手动的方式添加静态资源，以下有两种方式</p>
+<h3 id="使用-assets-模板引擎"><a class="markdown-anchor" href="#使用-assets-模板引擎">#</a> 使用 assets 模板引擎</h3>
+<p>assets 模板引擎并非服务端渲染，而是以一个静态资源文件作为入口，使用基础模板渲染出 html，并将这个文件插入到 html 的一种方式，查看<a href="https://github.com/eggjs/examples/tree/master/assets-with-roadhog" target="_blank" rel="noopener">使用 roadhog 的例子</a>。</p>
+<p>配置插件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.assets = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-view-assets'</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置 assets 模板引擎</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.view = &#123;</span><br><span class="line">  mapping: &#123;</span><br><span class="line">    <span class="string">'.js'</span>: <span class="string">'assets'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>添加静态资源入口文件 <code>app/view/index.js</code>，然后调用 render 方法进行渲染</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> render() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.render(<span class="string">'index.js'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>渲染的结果如下</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"http://127.0.0.1:8000/index.css"</span>&gt;</span><span class="tag">&lt;/<span class="name">link</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"http://127.0.0.1:8000/index.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>注意：这个路径生成规则是有映射的，如 <code>index.js</code> -&gt; <code>http://127.0.0.1:8000/index.js</code>。如果本地开发工具不支持这层映射，比如自定义了 entry 配置，可以使用其他模板引擎。</strong></p>
+<h4 id="全局自定义-html-模板"><a class="markdown-anchor" href="#全局自定义-html-模板">#</a> 全局自定义 html 模板</h4>
+<p>一般默认的 html 无法满足需求，可以指定模板路径和模板引擎。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> (&#123;</span><br><span class="line">  assets: &#123;</span><br><span class="line">    templatePath: path.join(appInfo.baseDir, <span class="string">'app/view/template.html'</span>),</span><br><span class="line">    templateViewEngine: <span class="string">'nunjucks'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>添加模板文件</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    &#123;&#123; helper.assets.getStyle() | safe &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    &#123;&#123; helper.assets.getScript() | safe &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/eggjs/egg-view-assets" target="_blank" rel="noopener">egg-view-assets</a> 插件提供了 <code>helper.assets</code> 根据自己的场景调用，<code>helper.assets.getScript()</code> 可以不用传参，会将 <code>render</code> 函数的参数透传。</p>
+<h4 id="页面自定义-html-模板"><a class="markdown-anchor" href="#页面自定义-html-模板">#</a> 页面自定义 html 模板</h4>
+<p>支持根据不同页面指定模板，可以在 <code>render</code> 方法传参</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> render() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.render(<span class="string">'index.js'</span>, &#123;&#125;, &#123;</span><br><span class="line">      templatePath: path.join(<span class="keyword">this</span>.app.config.baseDir, <span class="string">'app/view/template.html'</span>),</span><br><span class="line">      templateViewEngine: <span class="string">'nunjucks'</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="修改静态资源目录"><a class="markdown-anchor" href="#修改静态资源目录">#</a> 修改静态资源目录</h4>
+<p>以上例子是将静态资源放到 <code>app/view</code> 目录下，但大部分情况希望放到独立目录，如 <code>app/assets</code>。因为 assets 模板引擎使用 <code>egg-view</code> 的加载器，所以直接修改其配置</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> (&#123;</span><br><span class="line">  view: &#123;</span><br><span class="line">    <span class="comment">// 如果还有其他模板引擎，需要合并多个目录</span></span><br><span class="line">    root: path.join(appInfo.baseDir, <span class="string">'app/assets'</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="使用其他模板引擎"><a class="markdown-anchor" href="#使用其他模板引擎">#</a> 使用其他模板引擎</h3>
+<p>如果无法满足<a href="#%E6%98%A0%E5%B0%84%E5%85%B3%E7%B3%BB">文件映射</a>，可以配合其他模板引擎使用，这时不需要配置 assets 模板引擎，查看<a href="https://github.com/eggjs/examples/tree/master/assets-with-umi" target="_blank" rel="noopener">使用 umi 的例子</a>。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.view = &#123;</span><br><span class="line">  mapping: &#123;</span><br><span class="line">    <span class="string">'.html'</span>: <span class="string">'nunjucks'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>渲染模板</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> render() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.render(<span class="string">'index.html'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>添加模板文件（简化了 umi 的模板）</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="meta">&lt;!doctype html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    &#123;&#123; helper.assets.getStyle('umi.css') | safe &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"root"</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    &#123;&#123; helper.assets.getScript('umi.js') | safe &#125;&#125;</span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>在其他模板中必须添加参数生成需要的静态资源路径</strong></p>
+<h3 id="上下文数据"><a class="markdown-anchor" href="#上下文数据">#</a> 上下文数据</h3>
+<p>有时候前端需要获取服务端数据，所以在渲染页面时会向 window 全局对象设置数据。</p>
+<p>assets 模板引擎可直接传入参数，默认前端代码可以从 <code>window.context</code> 获取数据。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> render() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.render(<span class="string">'index.js'</span>, &#123; <span class="attr">data</span>: <span class="number">1</span> &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其他模板引擎需要调用 <code>helper.assets.getContext(__context__)</code> 并传入上下文的参数</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> render() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.render(<span class="string">'index.html'</span>, &#123;</span><br><span class="line">      __context__: &#123; <span class="attr">data</span>: <span class="number">1</span> &#125;,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>默认属性为 <code>context</code>，这个可以通过配置修改</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.assets = &#123;</span><br><span class="line">  contextKey: <span class="string">'__context__'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="构建工具"><a class="markdown-anchor" href="#构建工具">#</a> 构建工具</h2>
+<p>这种模式最重要的是和构建工具整合，保证本地开发体验及自动部署，所以构建工具和框架需要有一层约定。</p>
+<p>下面以 <a href="https://github.com/sorrycc/roadhog" target="_blank" rel="noopener">roadhog</a> 为例</p>
+<h3 id="映射关系"><a class="markdown-anchor" href="#映射关系">#</a> 映射关系</h3>
+<p>构建工具的 entry 配置决定了映射关系，如基于 <a href="https://webpack.js.org/" target="_blank" rel="noopener">webpack</a> 封装的 <a href="https://github.com/sorrycc/roadhog" target="_blank" rel="noopener">roadhog</a>、<a href="https://umijs.org/" target="_blank" rel="noopener">umi</a> 等工具内置了映射关系，如果单独使用 <a href="https://webpack.js.org/" target="_blank" rel="noopener">webpack</a> 需要根据这层映射来选择用哪种方式。</p>
+<ul>
+<li>
+<p>文件源码 <code>app/assets/index.js</code>，对应的 entry 为 <code>index.js</code></p>
+</li>
+<li>
+<p>本地静态服务接收以此为 entry，如请求 <code>http://127.0.0.1:8000/index.js</code></p>
+</li>
+<li>
+<p>构建生成的文件需要有这层映射关系，如生成 index.{hash}.js 并生成 manifest 文件描述关系如</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"index.js"</span>: <span class="string">"index.&#123;hash&#125;.js"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="https://github.com/sorrycc/roadhog" target="_blank" rel="noopener">roadhog</a> 完全满足这个映射关系使用 <a href="#%E4%BD%BF%E7%94%A8-assets-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E">assets 模板引擎</a>。而 <a href="https://umijs.org/" target="_blank" rel="noopener">umi</a> 不满足文件映射，因为他只有一个入口 <code>umi.js</code> 文件，所以选择<a href="#%E4%BD%BF%E7%94%A8%E5%85%B6%E4%BB%96%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E">其他模板引擎</a>的方案。</p>
+<p><strong>其他构建工具的接入需要满足这层映射关系。</strong></p>
+<h3 id="本地开发"><a class="markdown-anchor" href="#本地开发">#</a> 本地开发</h3>
+<p>查看<a href="https://github.com/eggjs/examples/blob/master/assets-with-roadhog/config/config.default.js" target="_blank" rel="noopener">示例配置</a>，本地服务配置成 <code>roadhog dev</code>，配置 <code>port</code> 来检查服务是否启动完成，因为 roadhog 默认启动端口为 8000，所以这里配置成 8000。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.assets = &#123;</span><br><span class="line">  devServer: &#123;</span><br><span class="line">    command: <span class="string">'roadhog dev'</span>,</span><br><span class="line">    port: <span class="number">8000</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="部署"><a class="markdown-anchor" href="#部署">#</a> 部署</h3>
+<p>静态资源部署之前需要构建，配置 <code>roadhog build</code> 命令，并执行 <code>npm run build</code></p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"build"</span>: <span class="string">"SET_PUBLIC_PATH=true roadhog build"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：这里添加了 <code>SET_PUBLIC_PATH</code> 变量是因为 roadhog 这样才能开启 publicPath</strong></p>
+<p>构建的结果根据 <code>.webpackrc</code> 配置的 output 决定，示例是放到 <code>app/public</code> 目录下，由 <code>egg-static</code> 提供服务。</p>
+<p>同时根据 <code>.webpackrc</code> 配置的 manifest 生成一个 <code>manifest.json</code> 文件到 <code>config</code> 目录下（egg 需要读取这个文件作为映射关系）。</p>
+<h4 id="应用提供服务"><a class="markdown-anchor" href="#应用提供服务">#</a> 应用提供服务</h4>
+<p>现在应用启动后可以通过 <code>http://127.0.0.1:7001/public/index.{hash}.js</code> 访问静态资源，发现这里多了一层 public 的路径，所以需要添加 publicPath 配置。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.prod.js</span></span><br><span class="line">exports.assets = &#123;</span><br><span class="line">  publicPath: <span class="string">'/public/'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="使用-cdn"><a class="markdown-anchor" href="#使用-cdn">#</a> 使用 CDN</h4>
+<p>一般静态资源都会发到 CDN，所以在构建完成后需要平台将构建产物发布到 CDN 上，如 <code>https://cdn/myapp/index.{hash}.js</code>。</p>
+<p>现在除了 publichPath 还需要修改静态资源地址</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.prod.js</span></span><br><span class="line">exports.assets = &#123;</span><br><span class="line">  url: <span class="string">'https://cdn'</span>,</span><br><span class="line">  publicPath: <span class="string">'/myapp/'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">Translations</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="zh-cn" href="/zh-cn/tutorials/assets.html" style="color: #22ab28">中文</a></li><li><a id="en" href="/en/tutorials/assets.html" >English</a></li></ul>
+        </li>
+      
+    </ul>
+  </div>
+  <dl><dt id="title-Intro" style="cursor: pointer;" class="aside-title">新手指南<a id="collapse-icon-Intro" class="icon opend"></a></dt><dd id=panel-Intro><ul><li><a href="/zh-cn/intro/index.html" class="menu-link">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html" class="menu-link">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html" class="menu-link">快速入门</a></li><li><a href="/zh-cn/tutorials/progressive.html" class="menu-link">渐进式开发</a></li><li><a href="/zh-cn/migration.html" class="menu-link">2.x 升级指南</a></li></ul></dd><dt id="title-Basics" style="cursor: pointer;" class="aside-title">基础功能<a id="collapse-icon-Basics" class="icon opend"></a></dt><dd id=panel-Basics><ul><li><a href="/zh-cn/basics/structure.html" class="menu-link">目录结构</a></li><li><a href="/zh-cn/basics/objects.html" class="menu-link">内置对象</a></li><li><a href="/zh-cn/basics/env.html" class="menu-link">运行环境</a></li><li><a href="/zh-cn/basics/config.html" class="menu-link">配置</a></li><li><a href="/zh-cn/basics/middleware.html" class="menu-link">中间件</a></li><li><a href="/zh-cn/basics/router.html" class="menu-link">Router</a></li><li><a href="/zh-cn/basics/controller.html" class="menu-link">Controller</a></li><li><a href="/zh-cn/basics/service.html" class="menu-link">Service</a></li><li><a href="/zh-cn/basics/plugin.html" class="menu-link">插件</a></li><li><a href="/zh-cn/basics/schedule.html" class="menu-link">定时任务</a></li><li><a href="/zh-cn/basics/extend.html" class="menu-link">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html" class="menu-link">启动自定义</a></li></ul></dd><dt id="title-Core" style="cursor: pointer;" class="aside-title">核心功能<a id="collapse-icon-Core" class="icon opend"></a></dt><dd id=panel-Core><ul><li><a href="/zh-cn/core/development.html" class="menu-link">本地开发</a></li><li><a href="/zh-cn/core/unittest.html" class="menu-link">单元测试</a></li><li><a href="/zh-cn/core/deployment.html" class="menu-link">应用部署</a></li><li><a href="/zh-cn/core/logger.html" class="menu-link">日志</a></li><li><a href="/zh-cn/core/httpclient.html" class="menu-link">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html" class="menu-link">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html" class="menu-link">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html" class="menu-link">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html" class="menu-link">异常处理</a></li><li><a href="/zh-cn/core/security.html" class="menu-link">安全</a></li><li><a href="/zh-cn/core/i18n.html" class="menu-link">国际化</a></li></ul></dd><dt id="title-Tutorials" style="cursor: pointer;" class="aside-title">教程<a id="collapse-icon-Tutorials" class="icon opend"></a></dt><dd id=panel-Tutorials><ul><li><a href="/zh-cn/tutorials/mysql.html" class="menu-link">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html" class="menu-link">RESTful API</a></li><li><a href="/zh-cn/tutorials/passport.html" class="menu-link">Passport 鉴权</a></li><li><a href="/zh-cn/tutorials/socketio.html" class="menu-link">Socket.IO</a></li><li><a href="/zh-cn/tutorials/assets.html" class="menu-link">静态资源</a></li></ul></dd><dt id="title-Advanced" style="cursor: pointer;" class="aside-title">进阶<a id="collapse-icon-Advanced" class="icon opend"></a></dt><dd id=panel-Advanced><ul><li><a href="/zh-cn/advanced/loader.html" class="menu-link">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html" class="menu-link">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html" class="menu-link">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html" class="menu-link">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html" class="menu-link">模板插件开发规范</a></li><li><a href="/zh-cn/style-guide.html" class="menu-link">代码风格指南</a></li></ul></dd><dt id="title-Community" style="cursor: pointer;" class="aside-title">社区<a id="collapse-icon-Community" class="icon opend"></a></dt><dd id=panel-Community><ul><li><a href="/zh-cn/plugins/" class="menu-link">内置插件列表</a></li><li><a href="/zh-cn/contributing.html" class="menu-link">如何贡献</a></li><li><a href="/zh-cn/resource.html" class="menu-link">资源</a></li><li><a href="/zh-cn/faq.html" class="menu-link">常见问题</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+
+var expandMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon opend';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = '';
+  }
+}
+
+var collapseMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon closed';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = 'aside-panel-hidden';
+  }
+}
+
+mobileAside.onclick = function(e) {
+  const targetId = e.target.id;
+  if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
+    const title = targetId.replace('title-', '').replace('collapse-icon-', '');
+    try { 
+      // the the browser may have no localStroage or JSON.parse may throw exception.
+      const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+        
+      // current menu status
+      const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
+
+      // change UI
+      curClosed ? expandMenu(title) : collapseMenu(title);
+
+      // save menuInfo to localStorage
+      menuInfo[title] = { closed: !curClosed } // opposite
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    } catch (e) {}
+  }
+};
+
+mobileTrigger.onclick = function(e) {
+  e.preventDefault();
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+
+(function() {
+  // save data to localStorage because the page will refresh when user change the url.
+  let menuInfo;
+  try { 
+    // the the browser may have no localStroage or JSON.parse may throw exception.
+    menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+    if (!menuInfo) {
+      menuInfo = {};
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    }
+  } catch (e) {
+    menuInfo = {}; // default {}
+  }
+
+  for (const title in menuInfo) {
+    if (menuInfo[title] && menuInfo[title].closed) { // menu in closed status.
+      collapseMenu(title);
+    } else {
+      expandMenu(title);
+    }
+  }
+
+  // highlight menu
+  const pathname = window.location.pathname;
+  const selector = `a[href="${pathname}"].menu-link,a[href="${pathname}index.html"].menu-link`;
+  const menuItem = mobileAside.querySelector(selector);
+  if (menuItem) { menuItem.className += ' highlight'; }
+})();
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
