@@ -82,7 +82,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.passport = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-passport'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">exports.passportGithub = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-passport-github'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><strong>配置:</strong></p>
 <p>注意：<a href="https://github.com/eggjs/egg-passport" target="_blank" rel="noopener">egg-passport</a> 标准化了配置字段，统一为 <code>key</code> 和 <code>secret</code> 。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/default.js</span></span><br><span class="line">config.passportGithub = &#123;</span><br><span class="line">  key: <span class="string">'your_clientID'</span>,</span><br><span class="line">  secret: <span class="string">'your_clientSecret'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/default.js</span></span><br><span class="line">config.passportGithub = &#123;</span><br><span class="line">  key: <span class="string">'your_clientID'</span>,</span><br><span class="line">  secret: <span class="string">'your_clientSecret'</span>,</span><br><span class="line">  <span class="comment">// callbackURL: '/passport/github/callback',</span></span><br><span class="line">  <span class="comment">// proxy: false,</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><strong>注意：</strong></p>
 <ul>
 <li>创建一个 <a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">GitHub OAuth Apps</a>，得到 <code>clientID</code> 和 <code>clientSecret</code> 信息。</li>
@@ -90,6 +90,12 @@
 <ul>
 <li>线上部署时需要更新为对应的域名</li>
 <li>路径为配置的 <code>options.callbackURL</code>，默认为 <code>/passport/${strategy}/callback</code></li>
+</ul>
+</li>
+<li>如应用部署在 Nginx/HAProxy 之后，需设置插件 <code>proxy</code> 选项为 <code>true</code>, 并检查以下配置：
+<ul>
+<li>代理附加 HTTP 头字段：<code>x-forwarded-proto</code> 与 <code>x-forwarded-host</code></li>
+<li>配置中 <code>config.proxy</code> 应设置为 <code>true</code></li>
 </ul>
 </li>
 </ul>
