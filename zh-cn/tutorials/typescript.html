@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>TypeScript - 为企业级框架和应用而生</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+    <script>
+    !function(t,e,a,r,c){t.TracertCmdCache=t.TracertCmdCache||[],t[c]=window[c]||
+      {_isInit:!0,call:function(){t.TracertCmdCache.push(arguments)},
+      start:function(t){this.call('start',t)}},t[c].l=new Date;
+      var n=e.createElement(a),s=e.getElementsByTagName(a)[0];
+      n.async=!0,n.src=r,s.parentNode.insertBefore(n,s)}
+    (window,document,'script','https://tracert.alipay.com/tracert.js','Tracert');
+      Tracert.start({
+        plugins: [ 'BucName' ],
+        spmAPos: 'a454',
+        spmBPos: 'b4893',
+      });
+    </script>
+  
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/zh-cn/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">Translations</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="zh-cn" href="/zh-cn/tutorials/typescript.html" style="color: #22ab28">中文</a></li><li><a id="en" href="/en/tutorials/typescript.html" >English</a></li></ul>
+        </li>
+      
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+  <div id="container" class="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>TypeScript</h1>
+    <blockquote>
+<p><a href="https://www.typescriptlang.org/" target="_blank" rel="noopener">TypeScript</a> is a typed superset of JavaScript that compiles to plain JavaScript.</p>
+</blockquote>
+<p>TypeScript 的静态类型检查，智能提示，IDE 友好性等特性，对于大规模企业级应用，是非常的有价值的。详见：<a href="https://juejin.im/post/59c46bc86fb9a00a4636f939" target="_blank" rel="noopener">TypeScript体系调研报告</a> 。</p>
+<p>然而，此前使用 TypeScript 开发 Egg ，会遇到一些影响 <strong>开发者体验</strong> 问题：</p>
+<ul>
+<li>Egg 最精髓的 Loader 自动加载机制，导致 TS 无法静态分析出部分依赖。</li>
+<li>Config 自动合并机制下，如何在 <code>config.{env}.js</code> 里面修改插件提供的配置时，能校验并智能提示？</li>
+<li>开发期需要独立开一个 <code>tsc -w</code> 独立进程来构建代码，带来临时文件位置纠结以及 <code>npm scripts</code> 复杂化。</li>
+<li>单元测试，覆盖率测试，线上错误堆栈如何指向 TS 源文件，而不是编译后的 js 文件。</li>
+</ul>
+<p>本文主要阐述：</p>
+<ul>
+<li><strong>应用层 TS 开发规范</strong></li>
+<li><strong>我们在工具链方面的支持，是如何来解决上述问题，让开发者几乎无感知并保持一致性。</strong></li>
+</ul>
+<p>具体的折腾过程参见：<a href="https://github.com/eggjs/egg/issues/2272" target="_blank" rel="noopener">[RFC] TypeScript tool support</a></p>
+<hr>
+<h2 id="快速入门"><a class="markdown-anchor" href="#快速入门">#</a> 快速入门</h2>
+<p>通过骨架快速初始化：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npx egg-init --<span class="built_in">type</span>=ts showcase</span><br><span class="line">$ <span class="built_in">cd</span> showcase &amp;&amp; npm i</span><br><span class="line">$ npm run dev</span><br></pre></td></tr></table></figure>
+<p>上述骨架会生成一个极简版的示例，更完整的示例参见：<a href="https://github.com/eggjs/examples/tree/master/hackernews-async-ts" target="_blank" rel="noopener">eggjs/examples/hackernews-async-ts</a></p>
+<p><img src="https://user-images.githubusercontent.com/227713/38358019-bf7890fa-38f6-11e8-8955-ea072ac6dc8c.gif" alt="tegg.gif"></p>
+<hr>
+<h2 id="目录规范"><a class="markdown-anchor" href="#目录规范">#</a> 目录规范</h2>
+<p><strong>一些约束：</strong></p>
+<ul>
+<li>Egg 目前没有计划使用 TS 重写。</li>
+<li>Egg 以及它对应的插件，会提供对应的 <code>index.d.ts</code> 文件方便开发者使用。</li>
+<li>TypeScript 只是其中一种社区实践，我们通过工具链给予一定程度的支持。</li>
+<li>TypeScript 最低要求 2.8+ 版本。</li>
+</ul>
+<p>整体目录结构上跟 Egg 普通项目没啥区别:</p>
+<ul>
+<li><code>typescript</code> 代码风格，后缀名为 <code>ts</code></li>
+<li><code>typings</code> 目录用于放置 <code>d.ts</code> 文件（大部分会自动生成）</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">showcase</span><br><span class="line">├── app</span><br><span class="line">│   ├── controller</span><br><span class="line">│   │   └── home.ts</span><br><span class="line">│   ├── service</span><br><span class="line">│   │   └── news.ts</span><br><span class="line">│   └── router.ts</span><br><span class="line">├── config</span><br><span class="line">│   ├── config.default.ts</span><br><span class="line">│   ├── config.local.ts</span><br><span class="line">│   ├── config.prod.ts</span><br><span class="line">│   └── plugin.ts</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   └── **/*.test.ts</span><br><span class="line">├── typings</span><br><span class="line">│   └── **/*.d.ts</span><br><span class="line">├── README.md</span><br><span class="line">├── package.json</span><br><span class="line">├── tsconfig.json</span><br><span class="line">└── tslint.json</span><br></pre></td></tr></table></figure>
+<h3 id="controller"><a class="markdown-anchor" href="#controller">#</a> Controller</h3>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Controller &#125; <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> HomeController <span class="keyword">extends</span> Controller &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; ctx, service &#125; = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">const</span> page = ctx.query.page;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> service.news.list(page);</span><br><span class="line">    <span class="keyword">await</span> ctx.render(<span class="string">'home.tpl'</span>, result);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="router"><a class="markdown-anchor" href="#router">#</a> Router</h3>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Application &#125; <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (app: Application) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; router, controller &#125; = app;</span><br><span class="line">  router.get(<span class="string">'/'</span>, controller.home.index);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="service"><a class="markdown-anchor" href="#service">#</a> Service</h3>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/news.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Service &#125; <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> NewsService <span class="keyword">extends</span> Service &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">async</span> list(page?: <span class="built_in">number</span>): <span class="built_in">Promise</span>&lt;NewsItem[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> NewsItem &#123;</span><br><span class="line">  id: <span class="built_in">number</span>;</span><br><span class="line">  title: <span class="built_in">string</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="middleware"><a class="markdown-anchor" href="#middleware">#</a> Middleware</h3>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/middleware/robot.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Context &#125; <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">robotMiddleware</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx: Context, next: <span class="built_in">any</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为 Middleware 定义是支持入参的，第一个参数为同名的 Config，如有需求，可以用完整版：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/middleware/news.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; Context, Application &#125; <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; BizConfig &#125; <span class="keyword">from</span> <span class="string">'../../config/config.default'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 注意，这里必须要用 ['news'] 而不能用 .news，因为 BizConfig 是 type，不是实例</span></span><br><span class="line">export default function newsMiddleware(options: BizConfig['news'], app: Application) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">async</span> (ctx: Context, next: <span class="function"><span class="params">()</span> =&gt;</span> <span class="built_in">Promise</span>&lt;<span class="built_in">any</span>&gt;) =&gt; &#123;</span><br><span class="line">    <span class="built_in">console</span>.info(options.serverUrl);</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="extend"><a class="markdown-anchor" href="#extend">#</a> Extend</h3>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/extend/context.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; Context &#125; <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  isAjax(<span class="keyword">this</span>: Context) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.get(<span class="string">'X-Requested-With'</span>) === <span class="string">'XMLHttpRequest'</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> app =&gt; &#123;</span><br><span class="line">  app.beforeStart(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="built_in">Promise</span>.resolve(<span class="string">'egg + ts'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="config"><a class="markdown-anchor" href="#config">#</a> Config</h3>
+<p><code>Config</code> 这块稍微有点复杂，因为要支持：</p>
+<ul>
+<li>在 Controller，Service 那边使用配置，需支持多级提示，并自动关联。</li>
+<li>Config 内部， <code>config.view = {}</code> 的写法，也应该支持提示。</li>
+<li>在 <code>config.{env}.ts</code> 里可以用到 <code>config.default.ts</code> 自定义配置的提示。</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/config/config.default.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; EggAppInfo, EggAppConfig, PowerPartial &#125; <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 提供给 config.&#123;env&#125;.ts 使用</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> DefaultConfig = PowerPartial&lt;EggAppConfig &amp; BizConfig&gt;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 应用本身的配置 Scheme</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> BizConfig &#123;</span><br><span class="line">  news: &#123;</span><br><span class="line">    pageSize: <span class="built_in">number</span>;</span><br><span class="line">    serverUrl: <span class="built_in">string</span>;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> (appInfo: EggAppInfo) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;&#125; <span class="keyword">as</span> PowerPartial&lt;EggAppConfig&gt; &amp; BizConfig;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 覆盖框架，插件的配置</span></span><br><span class="line">  config.keys = appInfo.name + <span class="string">'123456'</span>;</span><br><span class="line">  config.view = &#123;</span><br><span class="line">    defaultViewEngine: <span class="string">'nunjucks'</span>,</span><br><span class="line">    mapping: &#123;</span><br><span class="line">      <span class="string">'.tpl'</span>: <span class="string">'nunjucks'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 应用本身的配置</span></span><br><span class="line">  config.news = &#123;</span><br><span class="line">    pageSize: <span class="number">30</span>,</span><br><span class="line">    serverUrl: <span class="string">'https://hacker-news.firebaseio.com/v0'</span>,</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>简单版：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/config/config.local.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; DefaultConfig &#125; <span class="keyword">from</span> <span class="string">'./config.default'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> config: DefaultConfig = &#123;&#125;;</span><br><span class="line">  config.news = &#123;</span><br><span class="line">    pageSize: <span class="number">20</span>,</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>备注：</p>
+<ul>
+<li>TS 的 <code>Conditional Types</code> 是我们能完美解决 Config 提示的关键。</li>
+<li>有兴趣的可以看下 <a href="https://github.com/eggjs/egg/blob/master/index.d.ts" target="_blank" rel="noopener">egg/index.d.ts</a> 里面的 <code>PowerPartial</code> 实现。</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;egg&#125;/index.d.ts</span></span><br><span class="line"><span class="keyword">type</span> PowerPartial&lt;T&gt; = &#123;</span><br><span class="line">  [U <span class="keyword">in</span> keyof T]?: T[U] <span class="keyword">extends</span> &#123;&#125;</span><br><span class="line">    ? PowerPartial&lt;T[U]&gt;</span><br><span class="line">    : T[U]</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="plugin"><a class="markdown-anchor" href="#plugin">#</a> Plugin</h3>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; EggPlugin &#125; <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> plugin: EggPlugin = &#123;</span><br><span class="line">  <span class="keyword">static</span>: <span class="literal">true</span>,</span><br><span class="line">  nunjucks: &#123;</span><br><span class="line">    enable: <span class="literal">true</span>,</span><br><span class="line">    package: <span class="string">'egg-view-nunjucks'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin;</span><br></pre></td></tr></table></figure>
+<h3 id="typings"><a class="markdown-anchor" href="#typings">#</a> Typings</h3>
+<p>该目录为 TS 的规范，在里面的 <code>\*\*/\*.d.ts</code> 文件将被自动识别。</p>
+<ul>
+<li>开发者需要手写的建议放在 <code>typings/index.d.ts</code> 中。</li>
+<li>工具会自动生成 <code>typings/{app,config}/\*\*.d.ts</code> ，请勿自行修改，避免被覆盖。（见下文）</li>
+</ul>
+<hr>
+<h2 id="开发期"><a class="markdown-anchor" href="#开发期">#</a> 开发期</h2>
+<h3 id="ts-node"><a class="markdown-anchor" href="#ts-node">#</a> ts-node</h3>
+<p><code>egg-bin</code> 已经内建了 <a href="https://github.com/TypeStrong/ts-node" target="_blank" rel="noopener">ts-node</a> ，<code>egg loader</code> 在开发期会自动加载 <code>*.ts</code> 并内存编译。</p>
+<p>目前已支持 <code>dev</code> / <code>debug</code> / <code>test</code> / <code>cov</code> 。</p>
+<p>开发者仅需简单配置下 <code>package.json</code> ：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"showcase"</span>,</span><br><span class="line">  <span class="attr">"egg"</span>: &#123;</span><br><span class="line">    <span class="attr">"typescript"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="egg-ts-helper"><a class="markdown-anchor" href="#egg-ts-helper">#</a> egg-ts-helper</h3>
+<p>由于 Egg 的自动加载机制，导致 TS 无法静态分析依赖，关联提示。</p>
+<p>幸亏 TS 黑魔法比较多，我们可以通过 TS 的 <a href="https://www.typescriptlang.org/docs/handbook/declaration-merging.html" target="_blank" rel="noopener">Declaration Merging</a> 编写 <code>d.ts</code> 来辅助。</p>
+<p>譬如 <code>app/service/news.ts</code> 会自动挂载为 <code>ctx.service.news</code> ，通过如下写法即识别到：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// typings/app/service/index.d.ts</span></span><br><span class="line"><span class="keyword">import</span> News <span class="keyword">from</span> <span class="string">'../../../app/service/News'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">module</span> 'egg' &#123;</span><br><span class="line">  <span class="keyword">interface</span> IService &#123;</span><br><span class="line">    news: News;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>手动写这些文件，未免有点繁琐，因此我们提供了 <a href="https://github.com/whxaxes/egg-ts-helper" target="_blank" rel="noopener">egg-ts-helper</a> 工具来自动分析源码生成对应的 <code>d.ts</code> 文件。</p>
+<p>只需配置下 <code>package.json</code> :</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"egg-ts-helper"</span>: <span class="string">"^1"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"dev"</span>: <span class="string">"egg-bin dev -r egg-ts-helper/register"</span>,</span><br><span class="line">    <span class="string">"test-local"</span>: <span class="string">"egg-bin test -r egg-ts-helper/register"</span>,</span><br><span class="line">    <span class="string">"clean"</span>: <span class="string">"ets clean"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>开发期将自动生成对应的 <code>d.ts</code> 到 <code>typings/{app,config}/</code> 下，<strong>请勿自行修改，避免被覆盖</strong>。</p>
+<blockquote>
+<p>后续该工具也会考虑支持  js 版 egg 应用的分析，可以一定程度上提升 js 开发体验。</p>
+</blockquote>
+<h3 id="unit-test-cov"><a class="markdown-anchor" href="#unit-test-cov">#</a> Unit Test &amp;&amp; Cov</h3>
+<p>单元测试当然少不了：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// test/app/service/news.test.ts</span></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> assert <span class="keyword">from</span> <span class="string">'assert'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; Context &#125; <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; app &#125; <span class="keyword">from</span> <span class="string">'egg-mock/bootstrap'</span>;</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'test/app/service/news.test.js'</span>, <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> ctx: Context;</span><br><span class="line"></span><br><span class="line">  before(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    ctx = app.mockContext();</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  it(<span class="string">'list()'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> list = <span class="keyword">await</span> ctx.service.news.list();</span><br><span class="line">    assert(list.length === <span class="number">30</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>运行命令也跟之前一样，并内置了 <code>错误堆栈和覆盖率</code> 的支持：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"showcase"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"npm run lint -- --fix &amp;&amp; npm run test-local"</span>,</span><br><span class="line">    <span class="attr">"test-local"</span>: <span class="string">"egg-bin test -r egg-ts-helper/register"</span>,</span><br><span class="line">    <span class="attr">"cov"</span>: <span class="string">"egg-bin cov -r egg-ts-helper/register"</span>,</span><br><span class="line">    <span class="attr">"lint"</span>: <span class="string">"tslint ."</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="debug"><a class="markdown-anchor" href="#debug">#</a> Debug</h3>
+<p>断点调试跟之前也没啥区别，会自动通过 <code>sourcemap</code> 断点到正确的位置。</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"showcase"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"debug"</span>: <span class="string">"egg-bin debug -r egg-ts-helper/register"</span>,</span><br><span class="line">    <span class="attr">"debug-test"</span>: <span class="string">"npm run test-local -- --inspect"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://eggjs.org/zh-cn/core/development.html#%E4%BD%BF%E7%94%A8-vscode-%E8%BF%9B%E8%A1%8C%E8%B0%83%E8%AF%95">使用 VSCode 进行调试</a></li>
+<li><a href="https://github.com/atian25/blog/issues/25" target="_blank" rel="noopener">VSCode 调试 Egg 完美版 - 进化史</a></li>
+</ul>
+<hr>
+<h2 id="部署"><a class="markdown-anchor" href="#部署">#</a> 部署</h2>
+<h3 id="构建"><a class="markdown-anchor" href="#构建">#</a> 构建</h3>
+<ul>
+<li>正式环境下，我们更倾向于把 ts 构建为 js ，建议在 <code>ci</code> 上构建并打包。</li>
+</ul>
+<p>配置 <code>package.json</code> :</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"egg"</span>: &#123;</span><br><span class="line">    <span class="attr">"typescript"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;，</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"egg-scripts start --title=egg-server-showcase"</span>,</span><br><span class="line">    <span class="attr">"stop"</span>: <span class="string">"egg-scripts stop --title=egg-server-showcase"</span>,</span><br><span class="line">    <span class="attr">"tsc"</span>: <span class="string">"ets &amp;&amp; tsc -p tsconfig.json"</span>,</span><br><span class="line">    <span class="attr">"ci"</span>: <span class="string">"npm run lint &amp;&amp; npm run cov &amp;&amp; npm run tsc"</span>,</span><br><span class="line">    <span class="attr">"clean"</span>: <span class="string">"ets clean"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>对应的 <code>tsconfig.json</code> :</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compileOnSave"</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"es2017"</span>,</span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"commonjs"</span>,</span><br><span class="line">    <span class="attr">"strict"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"noImplicitAny"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"experimentalDecorators"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"emitDecoratorMetadata"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"charset"</span>: <span class="string">"utf8"</span>,</span><br><span class="line">    <span class="attr">"allowJs"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"pretty"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"noEmitOnError"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"noUnusedLocals"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"noUnusedParameters"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"allowUnreachableCode"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"allowUnusedLabels"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"strictPropertyInitialization"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"noFallthroughCasesInSwitch"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"skipLibCheck"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"skipDefaultLibCheck"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"inlineSourceMap"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"importHelpers"</span>: <span class="literal">true</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"exclude"</span>: [</span><br><span class="line">    <span class="string">"app/public"</span>,</span><br><span class="line">    <span class="string">"app/web"</span>,</span><br><span class="line">    <span class="string">"app/views"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<ul>
+<li><strong>当有同名的 ts 和 js 文件时，egg 会优先加载 js 文件。</strong></li>
+<li>因此在开发期， <code>egg-ts-helper</code> 会自动调用清除同名的 <code>js</code> 文件，也可 <code>npm run clean</code> 手动清除。</li>
+</ul>
+<h3 id="错误堆栈"><a class="markdown-anchor" href="#错误堆栈">#</a> 错误堆栈</h3>
+<p>线上服务的代码是经过编译后的 js，而我们期望看到的错误堆栈是指向 TS 源码。
+因此：</p>
+<ul>
+<li>在构建的时候，需配置 <code>inlineSourceMap: true</code> 在 js 底部插入 sourcemap 信息。</li>
+<li>在 <code>egg-scripts</code> 内建了处理，会自动纠正为正确的错误堆栈，应用开发者无需担心。</li>
+</ul>
+<p>具体内幕参见：</p>
+<ul>
+<li><a href="https://zhuanlan.zhihu.com/p/26267678" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/26267678</a></li>
+<li><a href="https://github.com/eggjs/egg-scripts/pull/19" target="_blank" rel="noopener">https://github.com/eggjs/egg-scripts/pull/19</a></li>
+</ul>
+<hr>
+<h2 id="插件框架开发指南"><a class="markdown-anchor" href="#插件框架开发指南">#</a> 插件/框架开发指南</h2>
+<p><strong>指导原则：</strong></p>
+<ul>
+<li>不建议使用 TS 直接开发插件/框架，发布到 npm 的插件应该是 js 形式。</li>
+<li>当你开发了一个插件/框架后，需要提供对应的 <code>index.d.ts</code> 。</li>
+<li>通过 <a href="https://www.typescriptlang.org/docs/handbook/declaration-merging.html" target="_blank" rel="noopener">Declaration Merging</a> 将插件/框架的功能注入到 Egg 中。</li>
+<li>都挂载到 <code>egg</code> 这个 module，不要用上层框架。</li>
+</ul>
+<h3 id="插件"><a class="markdown-anchor" href="#插件">#</a> 插件</h3>
+<p>可以参考 <code>egg-ts-helper</code> 自动生成的格式</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;plugin_root&#125;/index.d.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> News <span class="keyword">from</span> <span class="string">'../../../app/service/News'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">module</span> 'egg' &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 扩展 service</span></span><br><span class="line">  <span class="keyword">interface</span> IService &#123;</span><br><span class="line">    news: News;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 扩展 app</span></span><br><span class="line">  <span class="keyword">interface</span> Application &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 扩展 context</span></span><br><span class="line">  <span class="keyword">interface</span> Context &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 扩展你的配置</span></span><br><span class="line">  <span class="keyword">interface</span> EggAppConfig &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 扩展自定义环境</span></span><br><span class="line">  <span class="keyword">type</span> EggEnvType = <span class="string">'local'</span> | <span class="string">'unittest'</span> | <span class="string">'prod'</span> | <span class="string">'sit'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="上层框架"><a class="markdown-anchor" href="#上层框架">#</a> 上层框架</h3>
+<p>定义：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;framework_root&#125;/index.d.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Egg <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将该上层框架用到的插件 import 进来</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'my-plugin'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">module</span> 'egg' &#123;</span><br><span class="line">  <span class="comment">// 跟插件一样拓展 egg ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将 Egg 整个 export 出去</span></span><br><span class="line"><span class="keyword">export</span> = Egg;</span><br></pre></td></tr></table></figure>
+<p>开发者使用的时候，可以直接 import 你的框架：</p>
+<figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/news.ts</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 开发者引入你的框架，也可以使用到提示到所有 Egg 的提示</span></span><br><span class="line"><span class="keyword">import</span> &#123; Service &#125; <span class="keyword">from</span> <span class="string">'duck-egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> NewsService <span class="keyword">extends</span> Service &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">async</span> list(page?: <span class="built_in">number</span>): <span class="built_in">Promise</span>&lt;NewsItem[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">Translations</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="zh-cn" href="/zh-cn/tutorials/typescript.html" style="color: #22ab28">中文</a></li><li><a id="en" href="/en/tutorials/typescript.html" >English</a></li></ul>
+        </li>
+      
+    </ul>
+  </div>
+  <dl><dt id="title-Intro" style="cursor: pointer;" class="aside-title">新手指南<a id="collapse-icon-Intro" class="icon opend"></a></dt><dd id=panel-Intro><ul><li><a href="/zh-cn/intro/index.html" class="menu-link">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html" class="menu-link">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html" class="menu-link">快速入门</a></li><li><a href="/zh-cn/tutorials/progressive.html" class="menu-link">渐进式开发</a></li><li><a href="/zh-cn/migration.html" class="menu-link">2.x 升级指南</a></li></ul></dd><dt id="title-Basics" style="cursor: pointer;" class="aside-title">基础功能<a id="collapse-icon-Basics" class="icon opend"></a></dt><dd id=panel-Basics><ul><li><a href="/zh-cn/basics/structure.html" class="menu-link">目录结构</a></li><li><a href="/zh-cn/basics/objects.html" class="menu-link">内置对象</a></li><li><a href="/zh-cn/basics/env.html" class="menu-link">运行环境</a></li><li><a href="/zh-cn/basics/config.html" class="menu-link">配置</a></li><li><a href="/zh-cn/basics/middleware.html" class="menu-link">中间件</a></li><li><a href="/zh-cn/basics/router.html" class="menu-link">Router</a></li><li><a href="/zh-cn/basics/controller.html" class="menu-link">Controller</a></li><li><a href="/zh-cn/basics/service.html" class="menu-link">Service</a></li><li><a href="/zh-cn/basics/plugin.html" class="menu-link">插件</a></li><li><a href="/zh-cn/basics/schedule.html" class="menu-link">定时任务</a></li><li><a href="/zh-cn/basics/extend.html" class="menu-link">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html" class="menu-link">启动自定义</a></li></ul></dd><dt id="title-Core" style="cursor: pointer;" class="aside-title">核心功能<a id="collapse-icon-Core" class="icon opend"></a></dt><dd id=panel-Core><ul><li><a href="/zh-cn/core/development.html" class="menu-link">本地开发</a></li><li><a href="/zh-cn/core/unittest.html" class="menu-link">单元测试</a></li><li><a href="/zh-cn/core/deployment.html" class="menu-link">应用部署</a></li><li><a href="/zh-cn/core/logger.html" class="menu-link">日志</a></li><li><a href="/zh-cn/core/httpclient.html" class="menu-link">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html" class="menu-link">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html" class="menu-link">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html" class="menu-link">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html" class="menu-link">异常处理</a></li><li><a href="/zh-cn/core/security.html" class="menu-link">安全</a></li><li><a href="/zh-cn/core/i18n.html" class="menu-link">国际化</a></li></ul></dd><dt id="title-Tutorials" style="cursor: pointer;" class="aside-title">教程<a id="collapse-icon-Tutorials" class="icon opend"></a></dt><dd id=panel-Tutorials><ul><li><a href="/zh-cn/tutorials/mysql.html" class="menu-link">MySQL</a></li><li><a href="/zh-cn/tutorials/restful.html" class="menu-link">RESTful API</a></li><li><a href="/zh-cn/tutorials/passport.html" class="menu-link">Passport 鉴权</a></li><li><a href="/zh-cn/tutorials/socketio.html" class="menu-link">Socket.IO</a></li><li><a href="/zh-cn/tutorials/assets.html" class="menu-link">静态资源</a></li><li><a href="/zh-cn/tutorials/typescript.html" class="menu-link">TypeScript</a></li></ul></dd><dt id="title-Advanced" style="cursor: pointer;" class="aside-title">进阶<a id="collapse-icon-Advanced" class="icon opend"></a></dt><dd id=panel-Advanced><ul><li><a href="/zh-cn/advanced/loader.html" class="menu-link">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html" class="menu-link">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html" class="menu-link">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html" class="menu-link">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html" class="menu-link">模板插件开发规范</a></li><li><a href="/zh-cn/style-guide.html" class="menu-link">代码风格指南</a></li></ul></dd><dt id="title-Community" style="cursor: pointer;" class="aside-title">社区<a id="collapse-icon-Community" class="icon opend"></a></dt><dd id=panel-Community><ul><li><a href="/zh-cn/plugins/" class="menu-link">内置插件列表</a></li><li><a href="/zh-cn/contributing.html" class="menu-link">如何贡献</a></li><li><a href="/zh-cn/resource.html" class="menu-link">资源</a></li><li><a href="/zh-cn/faq.html" class="menu-link">常见问题</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+
+var expandMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon opend';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = '';
+  }
+}
+
+var collapseMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon closed';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = 'aside-panel-hidden';
+  }
+}
+
+mobileAside.onclick = function(e) {
+  const targetId = e.target.id;
+  if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
+    const title = targetId.replace('title-', '').replace('collapse-icon-', '');
+    try { 
+      // the the browser may have no localStroage or JSON.parse may throw exception.
+      const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+        
+      // current menu status
+      const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
+
+      // change UI
+      curClosed ? expandMenu(title) : collapseMenu(title);
+
+      // save menuInfo to localStorage
+      menuInfo[title] = { closed: !curClosed } // opposite
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    } catch (e) {}
+  }
+};
+
+mobileTrigger.onclick = function(e) {
+  e.preventDefault();
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+
+(function() {
+  // save data to localStorage because the page will refresh when user change the url.
+  let menuInfo;
+  try { 
+    // the the browser may have no localStroage or JSON.parse may throw exception.
+    menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+    if (!menuInfo) {
+      menuInfo = {};
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    }
+  } catch (e) {
+    menuInfo = {}; // default {}
+  }
+
+  for (const title in menuInfo) {
+    if (menuInfo[title] && menuInfo[title].closed) { // menu in closed status.
+      collapseMenu(title);
+    } else {
+      expandMenu(title);
+    }
+  }
+
+  // highlight menu
+  const pathname = window.location.pathname;
+  const selector = `a[href="${pathname}"].menu-link,a[href="${pathname}index.html"].menu-link`;
+  const menuItem = mobileAside.querySelector(selector);
+  if (menuItem) { menuItem.className += ' highlight'; }
+})();
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
