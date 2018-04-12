@@ -315,6 +315,15 @@ Egg itself does not integrate any template engine, but it establishes the <a hre
 <p>We identify whether the request is successful or not by using the status code and set response content in the body. By setting the response header, extended information can be set as well.</p>
 <p><code>ctx.set(key, value)</code> sets one response header and <code>ctx.set(headers)</code> sets many in one time.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/api.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProxyController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> show() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    <span class="keyword">const</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line">    ctx.body = <span class="keyword">await</span> ctx.service.post.get();</span><br><span class="line">    <span class="keyword">const</span> used = <span class="built_in">Date</span>.now() - start;</span><br><span class="line">    <span class="comment">// set one response header</span></span><br><span class="line">    ctx.set(<span class="string">'show-response-time'</span>, used.toString());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="redirect"><a class="markdown-anchor" href="#redirect">#</a> Redirect</h3>
+<p>The framework overwrites koa's native <code>ctx.redirect</code> implementation with a security plugin to provide a more secure redirect.</p>
+<ul>
+<li><code>ctx.redirect(url)</code> Forbids redirect if it is not in the configured whitelist domain name.</li>
+<li><code>ctx.unsafeRedirect(url)</code> does not determine the domain name and redirect directly. Generally, it is not recommended to use it. Use it after clearly understanding the possible risks.</li>
+</ul>
+<p>If you use the <code>ctx.redirect</code> method, you need to configure the application configuration file as follows:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.security = &#123;</span><br><span class="line">  domainWhiteList:[<span class="string">'.domain.com'</span>],  <span class="comment">// Security whitelist, starts with `.`</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>If the user does not configure the <code>domainWhiteList</code> or the <code>domainWhiteList</code> array to be empty, then all redirect requests will be released by default, which is equivalent to <code>ctx.unsafeRedirect(url)</code>.</p>
 
   </article>
   <aside id="mobileAside" class="toc">

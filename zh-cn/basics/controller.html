@@ -315,6 +315,15 @@
 <p>我们通过状态码标识请求成功与否、状态如何，在 body 中设置响应的内容。而通过响应的 Header，还可以设置一些扩展信息。</p>
 <p>通过 <code>ctx.set(key, value)</code> 方法可以设置一个响应头，<code>ctx.set(headers)</code> 设置多个 Header。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/api.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProxyController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> show() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    <span class="keyword">const</span> start = <span class="built_in">Date</span>.now();</span><br><span class="line">    ctx.body = <span class="keyword">await</span> ctx.service.post.get();</span><br><span class="line">    <span class="keyword">const</span> used = <span class="built_in">Date</span>.now() - start;</span><br><span class="line">    <span class="comment">// 设置一个响应头</span></span><br><span class="line">    ctx.set(<span class="string">'show-response-time'</span>, used.toString());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="重定向"><a class="markdown-anchor" href="#重定向">#</a> 重定向</h3>
+<p>框架通过 security 插件覆盖了 koa 原生的 <code>ctx.redirect</code> 实现，以提供更加安全的重定向。</p>
+<ul>
+<li><code>ctx.redirect(url)</code> 如果不在配置的白名单域名内，则禁止跳转。</li>
+<li><code>ctx.unsafeRedirect(url)</code> 不判断域名，直接跳转，一般不建议使用，明确了解可能带来的风险后使用。</li>
+</ul>
+<p>用户如果使用<code>ctx.redirect</code>方法，需要在应用的配置文件中做如下配置：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.security = &#123;</span><br><span class="line">  domainWhiteList:[<span class="string">'.domain.com'</span>],  <span class="comment">// 安全白名单，以 . 开头</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>若用户没有配置 <code>domainWhiteList</code> 或者 <code>domainWhiteList</code>数组内为空，则默认会对所有跳转请求放行，即等同于<code>ctx.unsafeRedirect(url)</code></p>
 
   </article>
   <aside id="mobileAside" class="toc">
