@@ -127,10 +127,10 @@
 <h3 id="plugin"><a class="markdown-anchor" href="#plugin">#</a> Plugin</h3>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.ts</span></span><br><span class="line"><span class="keyword">import</span> &#123; EggPlugin &#125; <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> plugin: EggPlugin = &#123;</span><br><span class="line">  <span class="keyword">static</span>: <span class="literal">true</span>,</span><br><span class="line">  nunjucks: &#123;</span><br><span class="line">    enable: <span class="literal">true</span>,</span><br><span class="line">    package: <span class="string">'egg-view-nunjucks'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> plugin;</span><br></pre></td></tr></table></figure>
 <h3 id="typings"><a class="markdown-anchor" href="#typings">#</a> Typings</h3>
-<p>该目录为 TS 的规范，在里面的 <code>\*\*/\*.d.ts</code> 文件将被自动识别。</p>
+<p>该目录为 TS 的规范，在里面的 <code>**/*.d.ts</code> 文件将被自动识别。</p>
 <ul>
 <li>开发者需要手写的建议放在 <code>typings/index.d.ts</code> 中。</li>
-<li>工具会自动生成 <code>typings/{app,config}/\*\*.d.ts</code> ，请勿自行修改，避免被覆盖。（见下文）</li>
+<li>工具会自动生成 <code>typings/{app,config}/**.d.ts</code> ，请勿自行修改，避免被覆盖。（见下文）</li>
 </ul>
 <hr>
 <h2 id="开发期"><a class="markdown-anchor" href="#开发期">#</a> 开发期</h2>
