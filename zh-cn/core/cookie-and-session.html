@@ -99,6 +99,8 @@
 <li>如果设置的时候指定为 signed，获取时未指定，则不会在获取时对取到的值做验签，导致可能被客户端篡改。</li>
 <li>如果设置的时候指定为 encrypt，获取时未指定，则无法获取到真实的值，而是加密过后的密文。</li>
 </ul>
+<p>如果要获取前端或者其他系统设置的 cookie，需要指定参数 <code>signed</code> 为 <code>false</code>，避免对它做验签导致获取不到 cookie 的值。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ctx.cookies.get(<span class="string">'frontend-cookie'</span>, &#123;</span><br><span class="line">  signed: <span class="literal">false</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="cookie-秘钥"><a class="markdown-anchor" href="#cookie-秘钥">#</a> Cookie 秘钥</h3>
 <p>由于我们在 Cookie 中需要用到加解密和验签，所以需要配置一个秘钥供加密使用。在 <code>config/config.default.js</code> 中</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  keys: <span class="string">'key1,key2'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>

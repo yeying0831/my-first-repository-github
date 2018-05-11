@@ -114,6 +114,8 @@ the corresponding options also need to be used in <code>get</code> method.</p>
 <li>If <code>signed</code> is true when <code>set</code> Cookie but false when <code>get</code> Cookie, egg.js doesn't verify Cookie value, so the value could have been modified by client.</li>
 <li>If <code>encrypt</code> is true when <code>set</code> Cookie but false when <code>get</code> Cookie, what you get is encrypted text rather than the raw plain text.</li>
 </ul>
+<p>If you want to get the cookie set by frontend or other system, you need to specify the parameter <code>signed</code> as <code>false</code>, avoid varify the cookie and not getting the vlaue.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ctx.cookies.get(<span class="string">'frontend-cookie'</span>, &#123;</span><br><span class="line">  signed: <span class="literal">false</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h3 id="cookie-secret-key"><a class="markdown-anchor" href="#cookie-secret-key">#</a> Cookie Secret Key</h3>
 <p>Since we need to sign and encrypt Cookie, a secret key is required.
 In <code>config/config.default.js</code>:</p>
