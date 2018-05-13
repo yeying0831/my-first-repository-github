@@ -4,6 +4,7 @@ import * as KoaRouter from 'koa-router';
 import { RequestOptions } from 'urllib';
 import { Readable } from 'stream';
 import { Socket } from 'net';
+import { EggLogger, EggContextLogger, EggLoggers, EggLoggersOptions } from 'egg-logger';
 import 'egg-onerror';
 import 'egg-session';
 import 'egg-i18n';
@@ -50,16 +51,9 @@ declare module 'egg' {
     /**
      * logger
      */
-    logger: Logger;
+    logger: EggLogger;
 
     constructor(ctx: Context);
-  }
-
-  export interface Logger {
-    info(msg: any, ...args: any[]): void;
-    warn(msg: any, ...args: any[]): void;
-    debug(msg: any, ...args: any[]): void;
-    error(msg: any, ...args: any[]): void;
   }
 
   export type RequestArrayBody = any[];
@@ -179,8 +173,6 @@ declare module 'egg' {
     renderString(name: string, locals?: any, options?: any): Promise<string>;
   }
 
-  export type LoggerLevel = 'DEBUG' | 'INFO' | 'WARN' | 'ERROR' | 'NONE';
-
   /**
    * egg app info
    * @example
@@ -251,18 +243,7 @@ declare module 'egg' {
      * @property {String} agentLogName - file name of agent worker log
      * @property {Object} coreLogger - custom config of coreLogger
      */
-    logger: {
-      dir: string;
-      encoding: string;
-      env: EggEnvType;
-      level: LoggerLevel;
-      consoleLevel: LoggerLevel;
-      outputJSON: boolean;
-      buffer: boolean;
-      appLogName: string;
-      coreLogName: string;
-      agentLogName: string;
-      errorLogName: string;
+    logger: EggLoggersOptions & {
       coreLogger: any;
     };
 
@@ -461,7 +442,7 @@ declare module 'egg' {
     /**
      * core logger for framework and plugins, log file is $HOME/logs/{appname}/egg-web
      */
-    coreLogger: Logger;
+    coreLogger: EggLogger;
 
     /**
      * Alias to https://npmjs.com/package/depd
@@ -479,22 +460,19 @@ declare module 'egg' {
     loader: any;
 
     /**
-     * Logger for Application, wrapping app.coreLogger with context infomation
-     *
-     * @member {ContextLogger} Context#logger
-     * @since 1.0.0
-     * @example
-     * ```js
-     * this.logger.info('some request data: %j', this.request.body);
-     * this.logger.warn('WARNING!!!!');
-     * ```
+     * Core logger for Application
      */
-    logger: Logger;
+    coreLogger: EggLogger;
+
+    /**
+     * Logger for Application
+     */
+    logger: EggLogger;
 
     /**
      * All loggers contain logger, coreLogger and customLogger
      */
-    loggers: { [loggerName: string]: Logger };
+    loggers: EggLoggers;
 
     /**
      * messenger instance
@@ -550,7 +528,7 @@ declare module 'egg' {
     /**
      * Get logger by name, it's equal to app.loggers['name'], but you can extend it with your own logical
      */
-    getLogger(name: string): Logger;
+    getLogger(name: string): EggLogger;
 
     /**
      * print the infomation when console.log(app)
@@ -810,7 +788,7 @@ declare module 'egg' {
      * this.logger.warn('WARNING!!!!');
      * ```
      */
-    logger: Logger;
+    logger: EggContextLogger;
 
     /**
      * Request start time
@@ -832,7 +810,7 @@ declare module 'egg' {
     /**
      * Get logger by name, it's equal to app.loggers['name'], but you can extend it with your own logical
      */
-    getLogger(name: string): Logger;
+    getLogger(name: string): EggLogger;
 
     /**
      * Render a file by view engine
