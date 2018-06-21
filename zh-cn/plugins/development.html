@@ -91,6 +91,8 @@
 </ul>
 <p>Developer can use <code>config.reloadPattern</code>(<a href="https://github.com/sindresorhus/multimatch" target="_blank" rel="noopener">multimatch</a>) to control whether to reload.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.development = &#123;</span><br><span class="line">  <span class="comment">// don't reload when ts fileChanged</span></span><br><span class="line">  <span class="comment">// https://github.com/sindresorhus/multimatch</span></span><br><span class="line">  reloadPattern: [<span class="string">'**'</span>, <span class="string">'!**/*.ts'</span>],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="loader-trace"><a class="markdown-anchor" href="#loader-trace">#</a> Loader Trace</h3>
+<p>You can view loader trace for performance issue from <code>http://127.0.0.1:7001/__loader_trace__</code></p>
 <h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
 <p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
 <h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
