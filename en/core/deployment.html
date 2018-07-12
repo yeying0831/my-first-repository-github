@@ -80,7 +80,7 @@
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"egg-scripts start --daemon"</span>,</span><br><span class="line">    <span class="attr">"stop"</span>: <span class="string">"egg-scripts stop"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Then we are able to use <code>npm start</code> and <code>npm stop</code> to manage application.</p>
 <blockquote>
-<p>Note: <code>egg-scripts</code> don't support Windows.</p>
+<p>Note: <code>egg-scripts</code> has limited support for Windows, see <a href="https://github.com/eggjs/egg-scripts/pull/22" target="_blank" rel="noopener">#22</a>.</p>
 </blockquote>
 <h3 id="start"><a class="markdown-anchor" href="#start">#</a> Start</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-scripts start --port=7001 --daemon --title=egg-server-showcase</span><br></pre></td></tr></table></figure>

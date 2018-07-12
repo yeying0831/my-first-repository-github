@@ -80,7 +80,7 @@
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"egg-scripts start --daemon"</span>,</span><br><span class="line">    <span class="attr">"stop"</span>: <span class="string">"egg-scripts stop"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这样我们就可以通过 <code>npm start</code> 和 <code>npm stop</code> 命令启动或停止应用。</p>
 <blockquote>
-<p>注意：<code>egg-scripts</code> 不支持 Windows 系统。</p>
+<p>注意：<code>egg-scripts</code> 对 Windows 系统的支持有限，参见 <a href="https://github.com/eggjs/egg-scripts/pull/22" target="_blank" rel="noopener">#22</a>。</p>
 </blockquote>
 <h3 id="启动命令"><a class="markdown-anchor" href="#启动命令">#</a> 启动命令</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-scripts start --port=7001 --daemon --title=egg-server-showcase</span><br></pre></td></tr></table></figure>
