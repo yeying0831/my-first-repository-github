@@ -118,6 +118,9 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.logger = &#123;</span><br><span class="line">  level: <span class="string">'DEBUG'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>关闭所有打印到文件的日志：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.logger = &#123;</span><br><span class="line">  level: <span class="string">'NONE'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="生产环境打印-debug-日志"><a class="markdown-anchor" href="#生产环境打印-debug-日志">#</a> 生产环境打印 debug 日志</h4>
+<p>为了避免一些插件的调试日志在生产环境打印导致性能问题，生产环境默认禁止打印 DEBUG 级别的日志，如果确实有需求在生产环境打印 DEBUG 日志进行调试，需要打开 <code>allowDebugAtProd</code> 配置项。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.prod.js</span></span><br><span class="line">exports.logger = &#123;</span><br><span class="line">  level: <span class="string">'DEBUG'</span>,</span><br><span class="line">  allowDebugAtProd: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="终端日志级别"><a class="markdown-anchor" href="#终端日志级别">#</a> 终端日志级别</h3>
 <p>默认只会输出 <code>INFO</code> 及以上（<code>WARN</code> 和 <code>ERROR</code>）的日志到终端中。</p>
 <ul>
