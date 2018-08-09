@@ -59,7 +59,7 @@
   <article class="markdown-body">
     <h1></h1>
     <h2 id="title-socketio"><a class="markdown-anchor" href="#title-socketio">#</a> title: Socket.IO</h2>
-<p>** Socket.IO ** is a real-time application framework based on Node.js, which has a wide range of applications including instant messaging, notification and message push, real-time analysis and other scenarios.</p>
+<p><strong>Socket.IO</strong> is a real-time application framework based on Node.js, which has a wide range of applications including instant messaging, notification and message push, real-time analysis and other scenarios.</p>
 <p>WebSocket originated from the growing demand for real-time communication in web development, compared with http-based polling, which greatly saves network bandwidth and reduces server performance consumption. <a href="https://socket.io" target="_blank" rel="noopener">Socket.IO</a> supports both websockets and polling. The data transmission method is compatible with the browser and does not support the communication requirements under the WebSocket scenario.</p>
 <p>The framework provides the <a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> plugin with the following development rules added:</p>
 <ul>
@@ -71,7 +71,7 @@
 <h2 id="install-egg-socketio"><a class="markdown-anchor" href="#install-egg-socketio">#</a> install egg-socket.io</h2>
 <h3 id="installation"><a class="markdown-anchor" href="#installation">#</a> Installation</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-socket.io --save</span><br></pre></td></tr></table></figure>
-<p>** Enable the plugin: **</p>
+<p><strong>Enable the plugin:</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125; /config/plugin.js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-socket.io'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h3>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125; / config / config. $ &#123;env&#125; .js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  init: &#123;&#125;, <span class="comment">// passed to engine.io</span></span><br><span class="line">  namespace: &#123;</span><br><span class="line">    <span class="string">'/'</span>: &#123;</span><br><span class="line">      connectionMiddleware: [],</span><br><span class="line">      packetMiddleware: []</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">'/ example'</span>: &#123;</span><br><span class="line">      connectionMiddleware: [],</span><br><span class="line">      packetMiddleware: []</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -81,7 +81,10 @@
 <p><strong>uws:</strong></p>
 <p>If you want to use <a href="https://github.com/uWebSockets/uWebSockets" target="_blank" rel="noopener">uws</a> instead of the default <code>ws</code> you can do the following configuration</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125; / config / config. $ &#123;env&#125; .js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  init: &#123; <span class="attr">wsEngine</span>: <span class="string">'uws'</span> &#125; <span class="comment">// default: ws</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>** redis: **</p>
+<blockquote>
+<p>As µWS engine has been deprecated, maybe you should consider the default engine.</p>
+</blockquote>
+<p><strong>redis:</strong></p>
 <p><a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> has built-in redis support via <code>socket.io-redis</code>. In cluster mode, the use of redis can make it relatively simple to achieve information sharing of clients/rooms and so on</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125; / config / config. $ &#123;env&#125; .js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  redis: &#123;</span><br><span class="line">    host: &#123;redis server host&#125;</span><br><span class="line">    port: &#123;redis server prot&#125;,</span><br><span class="line">    auth_pass: &#123;redis server password&#125;,</span><br><span class="line">    db: <span class="number">0</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -95,7 +98,7 @@ If the project also uses the <code>egg-redis</code>, please configure it separat
 <p>Due to the design of socket.io, a multi-process server must be in the sticky working mode. As a result, you need the need to pass parameter <code>--sticky</code> when starting the cluster.</p>
 <p>Modify the <code>npm scripts</code> script in<code>package.json</code>:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"dev"</span>: <span class="string">"egg-bin dev --sticky"</span>,</span><br><span class="line">    <span class="string">"start"</span>: <span class="string">"egg-scripts start --sticky"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>** Nginx configuration **</p>
+<p><strong>Nginx configuration</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">  proxy_set_header Upgrade $ http_upgrade;</span><br><span class="line">  proxy_set_header Connection &quot;upgrade&quot;;</span><br><span class="line">  proxy_set_header X-Forwarded-For $ proxy_add_x_forwarded_for;</span><br><span class="line">  proxy_set_header Host $ host;</span><br><span class="line">  proxy_pass http://127.0.0.1:7001;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="using-egg-socketio"><a class="markdown-anchor" href="#using-egg-socketio">#</a> Using egg-socket.io</h2>
 <p>The directory structure of project which has enabled the <a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> is as follows:</p>
@@ -163,7 +166,7 @@ If the project also uses the <code>egg-redis</code>, please configure it separat
 <h4 id="room"><a class="markdown-anchor" href="#room">#</a> Room</h4>
 <p>Room exists in nsp and is added or left by the join/leave method; the method used in the framework is the same;</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">Const room = <span class="string">'default_room'</span>;</span><br><span class="line"></span><br><span class="line">Module.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">     ctx.socket.join(room);</span><br><span class="line">     ctx.app.io.of(<span class="string">'/'</span>).to(room).emit(<span class="string">'online'</span>, &#123; <span class="attr">msg</span>: <span class="string">'welcome'</span>, <span class="attr">id</span>: ctx.socket.id &#125;);</span><br><span class="line">     <span class="keyword">await</span> next();</span><br><span class="line">     <span class="built_in">console</span>.log(<span class="string">'disconnection!'</span>);</span><br><span class="line">   &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>**Note: ** Each socket connection will have a random and unpredictable unique id <code>Socket#id</code> and will automatically be added to the room named after this <code>id</code></p>
+<p><strong>Note:</strong> Each socket connection will have a random and unpredictable unique id <code>Socket#id</code> and will automatically be added to the room named after this <code>id</code></p>
 <h2 id="examples"><a class="markdown-anchor" href="#examples">#</a> Examples</h2>
 <p>Here we use <a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> to do a small example which supports p2p chat</p>
 <h3 id="client"><a class="markdown-anchor" href="#client">#</a> client</h3>

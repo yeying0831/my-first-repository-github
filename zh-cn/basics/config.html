@@ -68,7 +68,7 @@
 <p>我们选择了最后一种配置方案，<strong>配置即代码</strong>，配置的变更也应该经过 review 后才能发布。应用包本身是可以部署在多个环境的，只需要指定运行环境即可。</p>
 <h3 id="多环境配置"><a class="markdown-anchor" href="#多环境配置">#</a> 多环境配置</h3>
 <p>框架支持根据环境来加载配置，定义多个环境的配置文件，具体环境请查看<a href="./env.html">运行环境配置</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">config</span><br><span class="line">|- config.default.js</span><br><span class="line">|- config.test.js</span><br><span class="line">|- config.prod.js</span><br><span class="line">|- config.unittest.js</span><br><span class="line">`- config.local.js</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">config</span><br><span class="line">|- config.default.js</span><br><span class="line">|- config.prod.js</span><br><span class="line">|- config.unittest.js</span><br><span class="line">`- config.local.js</span><br></pre></td></tr></table></figure>
 <p><code>config.default.js</code> 为默认的配置文件，所有环境都会加载这个配置文件，一般也会作为开发环境的默认配置文件。</p>
 <p>当指定 env 时会同时加载对应的配置文件，并覆盖默认配置文件的同名配置。如 <code>prod</code> 环境会加载 <code>config.prod.js</code> 和 <code>config.default.js</code> 文件，<code>config.prod.js</code> 会覆盖 <code>config.default.js</code> 的同名配置。</p>
 <h3 id="配置写法"><a class="markdown-anchor" href="#配置写法">#</a> 配置写法</h3>

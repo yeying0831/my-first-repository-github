@@ -81,7 +81,8 @@
 <p>如果想要使用 <a href="https://github.com/uWebSockets/uWebSockets" target="_blank" rel="noopener">uws</a> 替代默认的 <code>ws</code> 可以做如下配置</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  init: &#123; <span class="attr">wsEngine</span>: <span class="string">'uws'</span> &#125;, <span class="comment">// default: ws</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>已知默认 <code>wsEngine</code> 在 <code>Chrome</code> 浏览器中断开连接存在异常，建议优先使用 <a href="https://github.com/uWebSockets/uWebSockets" target="_blank" rel="noopener">uws</a></p>
+<p><s>已知默认 <code>wsEngine</code> 在 <code>Chrome</code> 浏览器中断开连接存在异常，建议优先使用 <a href="https://github.com/uWebSockets/uWebSockets" target="_blank" rel="noopener">uws</a></s></p>
+<p>µWS 不再建议使用，请优先考虑默认引擎。</p>
 </blockquote>
 <p><strong>redis:</strong></p>
 <p><a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> 内置了 <code>socket.io-redis</code>，在 cluster 模式下，使用 redis 可以较为简单的实现 clients/rooms 等信息共享</p>
