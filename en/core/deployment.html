@@ -103,7 +103,7 @@
 <h3 id="stop"><a class="markdown-anchor" href="#stop">#</a> Stop</h3>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-scripts stop</span><br></pre></td></tr></table></figure>
 <p>This command will kill master process which will handler and notice worker and agent to gracefull exit.</p>
-<p>Also you can manually call <code>ps -eo &quot;pid,command&quot; | grep &quot;--type=egg-server&quot;</code> to find master process then <code>kill</code> without <code>-9</code>.</p>
+<p>Also you can manually call <code>ps -eo &quot;pid,command&quot; | grep -- &quot;--title=egg-server&quot;</code> to find master process then <code>kill</code> without <code>-9</code>.</p>
 
   </article>
   <aside id="mobileAside" class="toc">

@@ -107,7 +107,7 @@
 <ul>
 <li><code>--title=egg-server</code> 用于杀死指定的 egg 应用，未传递则会终止所有的 Egg 应用。</li>
 </ul>
-<p>你也可以直接通过 <code>ps -eo &quot;pid,command&quot; | grep &quot;--type=egg-server&quot;</code> 来找到 master 进程，并 <code>kill</code> 掉，无需 <code>kill -9</code>。</p>
+<p>你也可以直接通过 <code>ps -eo &quot;pid,command&quot; | grep -- &quot;--title=egg-server&quot;</code> 来找到 master 进程，并 <code>kill</code> 掉，无需 <code>kill -9</code>。</p>
 <h2 id="监控"><a class="markdown-anchor" href="#监控">#</a> 监控</h2>
 <p>我们还需要对服务进行性能监控，内存泄露分析，故障排除等。</p>
 <p>业界常用的有：</p>
