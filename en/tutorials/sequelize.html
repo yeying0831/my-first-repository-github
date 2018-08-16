@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sequelize - Born to build better enterprise frameworks and apps</title>
+  <meta charset="utf-8">
+  <meta name="description" content="index.description">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.css" />
+<link rel="stylesheet" href="/css/index.css">
+
+    <script>
+    !function(t,e,a,r,c){t.TracertCmdCache=t.TracertCmdCache||[],t[c]=window[c]||
+      {_isInit:!0,call:function(){t.TracertCmdCache.push(arguments)},
+      start:function(t){this.call('start',t)}},t[c].l=new Date;
+      var n=e.createElement(a),s=e.getElementsByTagName(a)[0];
+      n.async=!0,n.src=r,s.parentNode.insertBefore(n,s)}
+    (window,document,'script','https://tracert.alipay.com/tracert.js','Tracert');
+      Tracert.start({
+        plugins: [ 'BucName' ],
+        spmAPos: 'a454',
+        spmBPos: 'b4893',
+      });
+    </script>
+  
+</head>
+<body>
+  <div class="nav" >
+  <header>
+    <a href="/en/" class="nav-logo leftpadding" alt="egg"><img src="https://zos.alipayobjects.com/rmsportal/VTcUYAaoKqXyHJbLAPyF.svg"></a>
+    <ul class="nav-item">
+      <li>
+        <form id="search-form">
+          <input type="text" id="search-query" class="search-query st-default-search-input">
+        </form>
+      </li>
+      <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">切换语言</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/tutorials/sequelize.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/tutorials/sequelize.html" >中文</a></li></ul>
+        </li>
+      
+      <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
+    </ul>
+    <a id="mobileTrigger" href="#" class="mobile-trigger">
+      <ul>
+        <li></li>
+        <li></li>
+        <li></li>
+      </ul>
+    </a>
+  </header>
+</div>
+  <div id="container" class="container">
+    <div class="page-main">
+  <article class="markdown-body">
+    <h1>Sequelize</h1>
+    <p>[In the previous section] (./mysql.html), we showed how to access the database through the [egg-mysql] plugin in the framework. In some more complex applications, we may need an ORM framework to help us manage the data layer code. In the Node.js community, [sequelize] is a widely used ORM framework that supports multiple data sources such as MySQL, PostgreSQL, SQLite, and MSSQL.</p>
+<p>In this chapter, we will walk through the steps of how to use sequelize in an egg project by developing an example of doing CURD on the data in the <code>users</code> table in MySQL.</p>
+<h2 id="preparing"><a class="markdown-anchor" href="#preparing">#</a> Preparing</h2>
+<p>In this example, we will use sequelize to connect to the MySQL data source, so we need to install MySQL on the machine before we start writing code. If it is MacOS, we can quickly install it via homebrew:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install mysql</span><br><span class="line">brew service start mysql</span><br></pre></td></tr></table></figure>
+<h2 id="init"><a class="markdown-anchor" href="#init">#</a> Init</h2>
+<p>Init project by <code>egg-init</code>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">egg-init --<span class="built_in">type</span>=simple --dir=sequelize-project</span><br><span class="line"><span class="built_in">cd</span> sequelize-project</span><br><span class="line">npm i</span><br></pre></td></tr></table></figure>
+<p>Install and configure the [egg-sequelize] plugin (which will help us load the defined Model object onto <code>app</code> and <code>ctx</code> ) and the [mysql2] module:</p>
+<ul>
+<li>Install</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install --save egg-sequelize mysql2</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Import egg-sequelize in <code>config/plugin.js</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.sequelize = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-sequelize'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Write the sequelize configuration in <code>config/config.default.js</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">config.sequelize = &#123;</span><br><span class="line">  dialect: <span class="string">'mysql'</span>,</span><br><span class="line">  hostname: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">  port: <span class="number">3306</span>,</span><br><span class="line">  database: <span class="string">'egg-sequelize-doc-default'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>We can configure different data source addresses in different environment configurations to distinguish the databases used by different environments. For example, we can create a new <code>config/config.unittest.js</code> configuration file and write the following configuration. The connected database points to <code>egg-sequelize-doc-unittest</code>.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.sequelize = &#123;</span><br><span class="line">  dialect: <span class="string">'mysql'</span>,</span><br><span class="line">  hostname: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">  port: <span class="number">3306</span>,</span><br><span class="line">  database: <span class="string">'egg-sequelize-doc-unittest'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>After completing the above configuration, a project using sequelize is initialized. [egg-sequelize] and [sequelize] also support more configuration items, which can be found in their documentation.</p>
+<h2 id="init-database-and-migrations"><a class="markdown-anchor" href="#init-database-and-migrations">#</a> Init Database and Migrations</h2>
+<p>Next, let's temporarily leave the code of the egg project, design and initialize our database. First, we quickly create two databases for development and testing locally using the mysql command:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mysql -u root -e <span class="string">'CREATE DATABASE IF NOT EXISTS `egg-sequelize-doc-default`;'</span></span><br><span class="line">mysql -u root -e <span class="string">'CREATE DATABASE IF NOT EXISTS `egg-sequelize-doc-unittest`;'</span></span><br></pre></td></tr></table></figure>
+<p>Then we started designing the <code>users</code> table, which has the following data structure:</p>
+<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> <span class="string">`users`</span> (</span><br><span class="line">  <span class="string">`id`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> AUTO_INCREMENT <span class="keyword">COMMENT</span> <span class="string">'primary key'</span>,</span><br><span class="line">  <span class="string">`name`</span> <span class="built_in">varchar</span>(<span class="number">30</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'user name'</span>,</span><br><span class="line">  <span class="string">`age`</span> <span class="built_in">int</span>(<span class="number">11</span>) <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'user age'</span>,</span><br><span class="line">  <span class="string">`created_at`</span> datetime <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'created time'</span>,</span><br><span class="line">  <span class="string">`updated_at`</span> datetime <span class="keyword">DEFAULT</span> <span class="literal">NULL</span> <span class="keyword">COMMENT</span> <span class="string">'updated time'</span>,</span><br><span class="line">  PRIMARY <span class="keyword">KEY</span> (<span class="string">`id`</span>)</span><br><span class="line">) <span class="keyword">ENGINE</span>=<span class="keyword">InnoDB</span> <span class="keyword">DEFAULT</span> <span class="keyword">CHARSET</span>=utf8mb4 <span class="keyword">COMMENT</span>=<span class="string">'user'</span>;</span><br></pre></td></tr></table></figure>
+<p>We can build the table directly through the mysql command, but this is not a good practist for multiplayer collaboration. During the evolution of the project, each iteration is possible to make changes to the database data structure, how to track the data changes of each iteration, and quickly change the data structure in different environments (development, testing, CI) and switch bettween iterative? At this point we need [Migrations] to help us manage the changes in the data structure.</p>
+<p>Sequelize provides the [sequelize-cli] tool to implement [Migrations], and we can also introduce sequelize-cli in the egg project.</p>
+<ul>
+<li>Install <code>sequelize-cli</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install --save-dev sequelize-cli</span><br></pre></td></tr></table></figure>
+<p>In the egg project, we want to put all the database Migrations related content in the <code>database</code> directory, so we create a new <code>.sequelizerc</code> configuration file in the project root directory:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  config: path.join(__dirname, <span class="string">'database/config.json'</span>),</span><br><span class="line">  <span class="string">'migrations-path'</span>: path.join(__dirname, <span class="string">'database/migrations'</span>),</span><br><span class="line">  <span class="string">'seeders-path'</span>: path.join(__dirname, <span class="string">'database/seeders'</span>),</span><br><span class="line">  <span class="string">'models-path'</span>: path.join(__dirname, <span class="string">'app/model'</span>),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Init Migrations Configuration Files and Directories</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx sequelize init:config</span><br><span class="line">npx sequelize init:migrations</span><br></pre></td></tr></table></figure>
+<p>After the execution, the <code>database/config.json</code> file and the <code>database/migrations</code>, <code>database/seeders</code>, <code>app/model</code> directories will be generated. We will modify the contents of <code>database/config.json</code>. It was changed to the database configuration used in our project:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;development&quot;: &#123;</span><br><span class="line">    &quot;username&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;password&quot;: null,</span><br><span class="line">    &quot;database&quot;: &quot;egg-sequelize-doc-default&quot;,</span><br><span class="line">    &quot;host&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;dialect&quot;: &quot;mysql&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;test&quot;: &#123;</span><br><span class="line">    &quot;username&quot;: &quot;root&quot;,</span><br><span class="line">    &quot;password&quot;: null,</span><br><span class="line">    &quot;database&quot;: &quot;egg-sequelize-doc-unittest&quot;,</span><br><span class="line">    &quot;host&quot;: &quot;127.0.0.1&quot;,</span><br><span class="line">    &quot;dialect&quot;: &quot;mysql&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>At this point sequelize-cli and related configuration are also initialized, we can start writing the project's first Migration file to create one of our <code>users</code> table.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npx sequelize migration:generate --name=init-users</span><br></pre></td></tr></table></figure>
+<p>After execution, a migration file (<code>${timestamp}-init-users.js</code>) is generated in the <code>database/migrations</code> directory. We modify it to handle initializing the <code>users</code> table:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// The function called when performing a database upgrade, create a `users` table</span></span><br><span class="line">  up: <span class="keyword">async</span> (queryInterface, Sequelize) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; INTEGER, DATE, STRING &#125; = Sequelize;</span><br><span class="line">    <span class="keyword">await</span> queryInterface.createTable(<span class="string">'users'</span>, &#123;</span><br><span class="line">      id: &#123; <span class="attr">type</span>: INTEGER, <span class="attr">primaryKey</span>: <span class="literal">true</span>, <span class="attr">autoIncrement</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">      name: STRING(<span class="number">30</span>),</span><br><span class="line">      age: INTEGER,</span><br><span class="line">      created_at: DATE,</span><br><span class="line">      updated_at: DATE,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// The function called when performing a database downgrade, delete the `users` table</span></span><br><span class="line">  down: <span class="keyword">async</span> queryInterface =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> queryInterface.dropTable(<span class="string">'users'</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Execute migrate for database changes</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># upgrade database</span></span><br><span class="line">npx sequelize db:migrate</span><br><span class="line"><span class="comment"># if there is a problem that needs to be rolled back, you can roll back a change via `db:migrate:undo`</span></span><br><span class="line"><span class="comment"># npx sequelize db:migrate:undo</span></span><br><span class="line"><span class="comment"># can be rolled back to the initial state via `db:migrate:undo:all`</span></span><br><span class="line"><span class="comment"># npx sequelize db:migrate:undo:all</span></span><br></pre></td></tr></table></figure>
+<p>After execution, our database initialization is complete.</p>
+<h2 id="coding"><a class="markdown-anchor" href="#coding">#</a> Coding</h2>
+<p>Finally we can start writing code to implement business logic. First, let's write the user model in the <code>app/model/</code> directory:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; STRING, INTEGER, DATE &#125; = app.Sequelize;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> User = app.model.define(<span class="string">'user'</span>, &#123;</span><br><span class="line">    id: &#123; <span class="attr">type</span>: INTEGER, <span class="attr">primaryKey</span>: <span class="literal">true</span>, <span class="attr">autoIncrement</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">    name: STRING(<span class="number">30</span>),</span><br><span class="line">    age: INTEGER,</span><br><span class="line">    created_at: DATE,</span><br><span class="line">    updated_at: DATE,</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> User;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>This model can be accessed in the Controller and Service via <code>app.model.User</code> or <code>ctx.model.User</code>, for example we write <code>app/controller/users.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/users.js</span></span><br><span class="line"><span class="keyword">const</span> Controller = <span class="built_in">require</span>(<span class="string">'egg'</span>).Controller;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toInt</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> str === <span class="string">'number'</span>) <span class="keyword">return</span> str;</span><br><span class="line">  <span class="keyword">if</span> (!str) <span class="keyword">return</span> str;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">parseInt</span>(str, <span class="number">10</span>) || <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    <span class="keyword">const</span> query = &#123; <span class="attr">limit</span>: toInt(ctx.query.limit), <span class="attr">offset</span>: toInt(ctx.query.offset) &#125;;</span><br><span class="line">    ctx.body = <span class="keyword">await</span> ctx.model.User.findAll(query);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> show() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    ctx.body = <span class="keyword">await</span> ctx.model.User.findById(toInt(ctx.params.id));</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> create() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    <span class="keyword">const</span> &#123; name, age &#125; = ctx.request.body;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> ctx.model.User.create(&#123; name, age &#125;);</span><br><span class="line">    ctx.status = <span class="number">201</span>;</span><br><span class="line">    ctx.body = user;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> update() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    <span class="keyword">const</span> id = toInt(ctx.params.id);</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> ctx.model.User.findById(id);</span><br><span class="line">    <span class="keyword">if</span> (!user) &#123;</span><br><span class="line">      ctx.status = <span class="number">404</span>;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> &#123; name, age &#125; = ctx.request.body;</span><br><span class="line">    <span class="keyword">await</span> user.update(&#123; name, age &#125;);</span><br><span class="line">    ctx.body = user;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> destroy() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    <span class="keyword">const</span> id = toInt(ctx.params.id);</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> ctx.model.User.findById(id);</span><br><span class="line">    <span class="keyword">if</span> (!user) &#123;</span><br><span class="line">      ctx.status = <span class="number">404</span>;</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">await</span> user.destroy();</span><br><span class="line">    ctx.status = <span class="number">200</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = UserController;</span><br></pre></td></tr></table></figure>
+<p>Finally we will mount this controller on the route:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; router, controller &#125; = app;</span><br><span class="line">  router.resources(<span class="string">'users'</span>, <span class="string">'/users'</span>, controller.users);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>The interface for the CURD operation of the <code>users</code> table is developed. To verify that the code logic is correct, we need to write some testcases to verify.</p>
+<h2 id="unit-test"><a class="markdown-anchor" href="#unit-test">#</a> Unit Test</h2>
+<p>Before writing the test, because in the previous egg configuration, we pointed the unit test environment and development environment to different databases, so we need to initialize the data structure of the test database through Migrations:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">NODE_ENV=<span class="built_in">test</span> npx sequelize db:migrate:up</span><br></pre></td></tr></table></figure>
+<p>Unit tests with database access are particularly cumbersome to write directly, We need to create a series of data to prepare the test data is a very cumbersome process. To simplify single testing, we can quickly create test data with the [factory-girl] module.</p>
+<ul>
+<li>Install <code>factory-girl</code></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm install --save-dev factory-girl</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Define the data model of factory-girl into <code>test/factories.js</code></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// test/factories.js</span></span><br><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> &#123; factory &#125; = <span class="built_in">require</span>(<span class="string">'factory-girl'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// Factory instance can be accessed via app.factory</span></span><br><span class="line">  app.factory = factory;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Define user and default data</span></span><br><span class="line">  factory.define(<span class="string">'user'</span>, app.model.User, &#123;</span><br><span class="line">    name: factory.sequence(<span class="string">'User.name'</span>, n =&gt; <span class="string">`name_<span class="subst">$&#123;n&#125;</span>`</span>),</span><br><span class="line">    age: <span class="number">18</span>,</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>- Initialize the file <code>test/.setup.js</code>, introduce the factory, and ensure that the data is cleaned after the test is executed to avoid being affected.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; app &#125; = <span class="built_in">require</span>(<span class="string">'egg-mock/bootstrap'</span>);</span><br><span class="line"><span class="keyword">const</span> factories = <span class="built_in">require</span>(<span class="string">'./factories'</span>);</span><br><span class="line"></span><br><span class="line">before(<span class="function"><span class="params">()</span> =&gt;</span> factories(app));</span><br><span class="line">afterEach(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// clear database after each test case</span></span><br><span class="line">  <span class="keyword">await</span> <span class="built_in">Promise</span>.all([</span><br><span class="line">    app.model.User.destroy(&#123; <span class="attr">truncate</span>: <span class="literal">true</span>, <span class="attr">force</span>: <span class="literal">true</span> &#125;),</span><br><span class="line">    app.model.Post.destroy(&#123; <span class="attr">truncate</span>: <span class="literal">true</span>, <span class="attr">force</span>: <span class="literal">true</span> &#125;),</span><br><span class="line">  ]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Then we can start writing real test cases:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// test/app/controller/users.test.js</span></span><br><span class="line"><span class="keyword">const</span> &#123; assert, app &#125; = <span class="built_in">require</span>(<span class="string">'egg-mock/bootstrap'</span>);</span><br><span class="line"></span><br><span class="line">describe(<span class="string">'test/app/service/users.test.js'</span>, () =&gt; &#123;</span><br><span class="line">  describe(<span class="string">'GET /users'</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">'should work'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="comment">// Quickly create some users object into the database via factory-girl</span></span><br><span class="line">      <span class="keyword">await</span> app.factory.createMany(<span class="string">'user'</span>, <span class="number">3</span>);</span><br><span class="line">      <span class="keyword">const</span> res = <span class="keyword">await</span> app.httpRequest().get(<span class="string">'/users?limit=2'</span>);</span><br><span class="line">      assert(res.status === <span class="number">200</span>);</span><br><span class="line">      assert(res.body.length === <span class="number">2</span>);</span><br><span class="line">      assert(res.body[<span class="number">0</span>].name);</span><br><span class="line">      assert(res.body[<span class="number">0</span>].age);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">'GET /users/:id'</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">'should work'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> user = <span class="keyword">await</span> app.factory.create(<span class="string">'user'</span>);</span><br><span class="line">      <span class="keyword">const</span> res = <span class="keyword">await</span> app.httpRequest().get(<span class="string">`/users/<span class="subst">$&#123;user.id&#125;</span>`</span>);</span><br><span class="line">      assert(res.status === <span class="number">200</span>);</span><br><span class="line">      assert(res.body.age === user.age);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">'POST /users'</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">'should work'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      app.mockCsrf();</span><br><span class="line">      <span class="keyword">let</span> res = <span class="keyword">await</span> app.httpRequest().post(<span class="string">'/users'</span>)</span><br><span class="line">        .send(&#123;</span><br><span class="line">          age: <span class="number">10</span>,</span><br><span class="line">          name: <span class="string">'name'</span>,</span><br><span class="line">        &#125;);</span><br><span class="line">      assert(res.status === <span class="number">201</span>);</span><br><span class="line">      assert(res.body.id);</span><br><span class="line"></span><br><span class="line">      res = <span class="keyword">await</span> app.httpRequest().get(<span class="string">`/users/<span class="subst">$&#123;res.body.id&#125;</span>`</span>);</span><br><span class="line">      assert(res.status === <span class="number">200</span>);</span><br><span class="line">      assert(res.body.name === <span class="string">'name'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  describe(<span class="string">'DELETE /users/:id'</span>, () =&gt; &#123;</span><br><span class="line">    it(<span class="string">'should work'</span>, <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> user = <span class="keyword">await</span> app.factory.create(<span class="string">'user'</span>);</span><br><span class="line"></span><br><span class="line">      app.mockCsrf();</span><br><span class="line">      <span class="keyword">const</span> res = <span class="keyword">await</span> app.httpRequest().delete(<span class="string">`/users/<span class="subst">$&#123;user.id&#125;</span>`</span>);</span><br><span class="line">      assert(res.status === <span class="number">200</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Finally, if we need to run unit tests in the CI, we need to ensure that we perform a migration to ensure data structure updates before executing the test code. For example, we declare <code>scripts.ci</code> in <code>package.json</code> to execute the unit test in the CI environment:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"scripts"</span>: &#123;</span><br><span class="line">    <span class="string">"ci"</span>: <span class="string">"eslint . &amp;&amp; NODE_ENV=test npx sequelize db:migrate &amp;&amp; egg-bin cov"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="full-example"><a class="markdown-anchor" href="#full-example">#</a> Full Example</h2>
+<p>A more complete example can be found in [eggjs/examples/sequelize].</p>
+<h2 id="boilerplate"><a class="markdown-anchor" href="#boilerplate">#</a> Boilerplate</h2>
+<p>We also provide sequelize boilerplate that integrates the modules [egg-sequelize], [sequelize-cli] and [factory-girl] provided in this documentation. You can quickly initialize a new application based on it by <code>egg-init --type=sequelize</code>.</p>
+<p><a href="https://github.com/sidorares/node-mysql2" target="_blank" rel="noopener">mysql2</a>
+<a href="http://docs.sequelizejs.com/" target="_blank" rel="noopener">sequelize</a>
+<a href="https://github.com/sequelize/cli" target="_blank" rel="noopener">sequelize-cli</a>
+<a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>
+<a href="http://docs.sequelizejs.com/manual/tutorial/migrations.html" target="_blank" rel="noopener">Migrations</a>
+<a href="https://github.com/aexmachina/factory-girl" target="_blank" rel="noopener">factory-girl</a>
+<a href="https://github.com/eggjs/examples/tree/master/sequelize" target="_blank" rel="noopener">eggjs/examples/sequelize</a></p>
+
+  </article>
+  <aside id="mobileAside" class="toc">
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">切换语言</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/tutorials/sequelize.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/tutorials/sequelize.html" >中文</a></li></ul>
+        </li>
+      
+    </ul>
+  </div>
+  <dl><dt id="title-Intro" style="cursor: pointer;" class="aside-title">Guide<a id="collapse-icon-Intro" class="icon opend"></a></dt><dd id=panel-Intro><ul><li><a href="/en/intro/index.html" class="menu-link">What is Egg?</a></li><li><a href="/en/intro/egg-and-koa.html" class="menu-link">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html" class="menu-link">Quick Start</a></li><li><a href="/en/tutorials/progressive.html" class="menu-link">Progressive</a></li><li><a href="/en/migration.html" class="menu-link">Migration to 2.x</a></li></ul></dd><dt id="title-Basics" style="cursor: pointer;" class="aside-title">Basis Function<a id="collapse-icon-Basics" class="icon opend"></a></dt><dd id=panel-Basics><ul><li><a href="/en/basics/structure.html" class="menu-link">Directory Structure</a></li><li><a href="/en/basics/objects.html" class="menu-link">Built-in Objects</a></li><li><a href="/en/basics/env.html" class="menu-link">Environment</a></li><li><a href="/en/basics/config.html" class="menu-link">Configuration</a></li><li><a href="/en/basics/middleware.html" class="menu-link">Middleware</a></li><li><a href="/en/basics/router.html" class="menu-link">Router</a></li><li><a href="/en/basics/controller.html" class="menu-link">Controller</a></li><li><a href="/en/basics/service.html" class="menu-link">Service</a></li><li><a href="/en/basics/plugin.html" class="menu-link">Plugin</a></li><li><a href="/en/basics/schedule.html" class="menu-link">Schedule</a></li><li><a href="/en/basics/extend.html" class="menu-link">Extend</a></li><li><a href="/en/basics/app-start.html" class="menu-link">Custom Init</a></li></ul></dd><dt id="title-Core" style="cursor: pointer;" class="aside-title">Core<a id="collapse-icon-Core" class="icon opend"></a></dt><dd id=panel-Core><ul><li><a href="/en/core/development.html" class="menu-link">Development</a></li><li><a href="/en/core/unittest.html" class="menu-link">Unit Testing</a></li><li><a href="/en/core/deployment.html" class="menu-link">Deployment</a></li><li><a href="/en/core/logger.html" class="menu-link">Logger</a></li><li><a href="/en/core/httpclient.html" class="menu-link">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html" class="menu-link">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html" class="menu-link">Cluster and IPC</a></li><li><a href="/en/core/view.html" class="menu-link">View</a></li><li><a href="/en/core/error-handling.html" class="menu-link">Error Handling</a></li><li><a href="/en/core/security.html" class="menu-link">Security</a></li><li><a href="/en/core/i18n.html" class="menu-link">i18n</a></li></ul></dd><dt id="title-Tutorials" style="cursor: pointer;" class="aside-title">Tutorials<a id="collapse-icon-Tutorials" class="icon opend"></a></dt><dd id=panel-Tutorials><ul><li><a href="/en/tutorials/mysql.html" class="menu-link">MySQL</a></li><li><a href="/en/tutorials/sequelize.html" class="menu-link">Sequelize</a></li><li><a href="/en/tutorials/restful.html" class="menu-link">RESTful API</a></li><li><a href="/en/tutorials/passport.html" class="menu-link">Passport</a></li><li><a href="/en/tutorials/socketio.html" class="menu-link">Socket.IO</a></li><li><a href="/en/tutorials/assets.html" class="menu-link">Assets</a></li><li><a href="/en/tutorials/typescript.html" class="menu-link">TypeScript</a></li></ul></dd><dt id="title-Advanced" style="cursor: pointer;" class="aside-title">Advanced<a id="collapse-icon-Advanced" class="icon opend"></a></dt><dd id=panel-Advanced><ul><li><a href="/en/advanced/loader.html" class="menu-link">Loader</a></li><li><a href="/en/advanced/plugin.html" class="menu-link">Plugin Development</a></li><li><a href="/en/advanced/framework.html" class="menu-link">Framework</a></li><li><a href="/en/advanced/cluster-client.html" class="menu-link">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html" class="menu-link">View Plugin</a></li><li><a href="/en/style-guide.html" class="menu-link">Style Guide</a></li></ul></dd><dt id="title-Community" style="cursor: pointer;" class="aside-title">Community<a id="collapse-icon-Community" class="icon opend"></a></dt><dd id=panel-Community><ul><li><a href="/en/plugins/" class="menu-link">Plugin List</a></li><li><a href="/en/contributing.html" class="menu-link">Contributing</a></li><li><a href="/en/resource.html" class="menu-link">Resource</a></li><li><a href="/en/faq.html" class="menu-link">FAQ</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+
+var expandMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon opend';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = '';
+  }
+}
+
+var collapseMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon closed';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = 'aside-panel-hidden';
+  }
+}
+
+mobileAside.onclick = function(e) {
+  const targetId = e.target.id;
+  if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
+    const title = targetId.replace('title-', '').replace('collapse-icon-', '');
+    try { 
+      // the the browser may have no localStroage or JSON.parse may throw exception.
+      const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+        
+      // current menu status
+      const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
+
+      // change UI
+      curClosed ? expandMenu(title) : collapseMenu(title);
+
+      // save menuInfo to localStorage
+      menuInfo[title] = { closed: !curClosed } // opposite
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    } catch (e) {}
+  }
+};
+
+mobileTrigger.onclick = function(e) {
+  e.preventDefault();
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'toc';
+  }
+};
+
+(function() {
+  // save data to localStorage because the page will refresh when user change the url.
+  let menuInfo;
+  try { 
+    // the the browser may have no localStroage or JSON.parse may throw exception.
+    menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+    if (!menuInfo) {
+      menuInfo = {};
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    }
+  } catch (e) {
+    menuInfo = {}; // default {}
+  }
+
+  for (const title in menuInfo) {
+    if (menuInfo[title] && menuInfo[title].closed) { // menu in closed status.
+      collapseMenu(title);
+    } else {
+      expandMenu(title);
+    }
+  }
+
+  // highlight menu
+  const pathname = window.location.pathname;
+  const selector = `a[href="${pathname}"].menu-link,a[href="${pathname}index.html"].menu-link`;
+  const menuItem = mobileAside.querySelector(selector);
+  if (menuItem) { menuItem.className += ' highlight'; }
+})();
+</script>
+
+</div>
+
+  </div>
+</body>
+<script src="https://cdn.jsdelivr.net/docsearch.js/2/docsearch.min.js"></script>
+<script>
+docsearch({
+  apiKey: '1561de31a86f79507ea00cdb54ce647c',
+  indexName: 'eggjs',
+  inputSelector: '#search-query',
+});
+</script>
+<div class="cnzz">
+<script src="https://s11.cnzz.com/z_stat.php?id=1261142226&web_id=1261142226" language="JavaScript"></script>
+</div>
+
+</html>
