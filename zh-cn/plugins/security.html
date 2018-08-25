@@ -255,7 +255,7 @@ If you want to output json string in your views, please use <code>${ctx.helper.s
 <h3 id="x-download-optionsnoopen"><a class="markdown-anchor" href="#x-download-optionsnoopen">#</a> X-Download-Options:noopen</h3>
 <p>Default enabled, disable IE download dialog automatically open download file and will cause XSS</p>
 <h3 id="x-content-type-optionsnosniff"><a class="markdown-anchor" href="#x-content-type-optionsnosniff">#</a> X-Content-Type-Options:nosniff</h3>
-<p>禁用IE8自动嗅探mime功能例如 text/plain 却当成 text/html 渲染，特别当本站点 serve 的内容未必可信的时候。</p>
+<p>Disable IE8's auto MIME sniffing. E.g: take <code>text/plain</code> as <code>text/html</code> by mistake and render it, especially when there's something untrusted in the local service.</p>
 <h3 id="x-frame-options"><a class="markdown-anchor" href="#x-frame-options">#</a> X-Frame-Options</h3>
 <p>Defaulting to &quot;SAMEORIGIN&quot;, only allow iframe embed by same origin.</p>
 <ul>
@@ -276,7 +276,7 @@ If you want to output json string in your views, please use <code>${ctx.helper.s
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.security = &#123;</span><br><span class="line">  ssrf: &#123;</span><br><span class="line">    <span class="comment">// support both cidr subnet or specific ip</span></span><br><span class="line">    ipBlackList: [</span><br><span class="line">      <span class="string">'10.0.0.0/8'</span>,</span><br><span class="line">      <span class="string">'127.0.0.1'</span>,</span><br><span class="line">      <span class="string">'0.0.0.0/32'</span>,</span><br><span class="line">    ],</span><br><span class="line">    <span class="comment">// checkAddress has higher priority than ipBlackList</span></span><br><span class="line">    checkAddress(ip) &#123;</span><br><span class="line">      <span class="keyword">return</span> ip !== <span class="string">'127.0.0.1'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="other"><a class="markdown-anchor" href="#other">#</a> Other</h2>
 <ul>
-<li>Forbidden <code>trace</code> <code>track</code> <code>options</code> http method.</li>
+<li>Forbid <code>trace</code> <code>track</code> http methods.</li>
 </ul>
 <h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
 <p><a href="https://github.com/eggjs/egg-security/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
