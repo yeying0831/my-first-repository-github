@@ -97,7 +97,7 @@
 <li><code>set response.body</code></li>
 <li><code>set response.status</code></li>
 </ul>
-<h3 id="exception-handlering"><a class="markdown-anchor" href="#exception-handlering">#</a> Exception handlering</h3>
+<h3 id="exception-handling"><a class="markdown-anchor" href="#exception-handling">#</a> Exception handling</h3>
 <p>Another enormous advantage for writing asynchronous code in synchronous way is that it is quite at ease to handle exception. You can catch all the exceptions thrown in the codes followed the convention with <code>try catch</code>. We can easily write a customized exception handling middleware.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">onerror</span>(<span class="params">ctx, next</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> next();</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    ctx.app.emit(<span class="string">'error'</span>, err);</span><br><span class="line">    ctx.body = <span class="string">'server error'</span>;</span><br><span class="line">    ctx.status = err.status || <span class="number">500</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Putting this middleware before others, you can catch all the exceptions thrown by the synchronous or asynchronous code.</p>
