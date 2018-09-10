@@ -59,8 +59,8 @@
   <article class="markdown-body">
     <h1></h1>
     <h2 id="title-view-plugin-development"><a class="markdown-anchor" href="#title-view-plugin-development">#</a> Title: View Plugin Development</h2>
-<p>In most cases, we need to read the data, render the template and then present it to the user. The framework does not force the use of a template engine, allowing developers to select the <a href="../core/view.html">template</a> themselves. For details, see <a href="../core/view.html">Template Rendering</a>.</p>
-<p>This article describes the framework's specification constraints on the View plugin, and we can use this to encapsulate the corresponding template engine plugin. The following takes <a href="https://github.com/eggjs/egg-view-ejs" target="_blank" rel="noopener">egg-view-ejs</a> as an example</p>
+<p>In most cases, we need to read the data, render the template and then present it to the user. The framework does not force to use one template engine, but allows developers to select the <a href="../core/view.html">template</a> by themselves. For details, see <a href="../core/view.html">Template Rendering</a>.</p>
+<p>This article describes the framework's specification constraints on the View plugin, and we can use this to encapsulate the corresponding template engine plugin. The following takes <a href="https://github.com/eggjs/egg-view-ejs" target="_blank" rel="noopener">egg-view-ejs</a> as an example.</p>
 <h2 id="plugin-directory-structure"><a class="markdown-anchor" href="#plugin-directory-structure">#</a> Plugin directory structure</h2>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">egg-view-ejs</span><br><span class="line">├── config</span><br><span class="line">│ ├── config.default.js</span><br><span class="line">│ └── config.local.js</span><br><span class="line">├── lib</span><br><span class="line">│ └── view.js</span><br><span class="line">├── app.js</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">├── History.md</span><br><span class="line">├── README.md</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
 <h2 id="plugin-naming-convention"><a class="markdown-anchor" href="#plugin-naming-convention">#</a> Plugin naming convention</h2>
@@ -80,40 +80,44 @@
 <p>The following is a simplified code that can be directly <a href="https://github.com/eggjs/egg-view-ejs/blob/master/lib/view.js" target="_blank" rel="noopener">view source</a></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> ejs = <span class="built_in">require</span>(<span class="string">'ejs'</span>);</span><br><span class="line"></span><br><span class="line">Mmdule.exports = <span class="class"><span class="keyword">class</span> <span class="title">EjsView</span> </span>&#123;</span><br><span class="line">  render(filename, locals) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="comment">// Asynchronous API call</span></span><br><span class="line">      ejs.renderFile(filename, locals, (err, result) =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span> (err) &#123;</span><br><span class="line">          reject(err);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          resolve(result);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  renderString(tpl, locals) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">// Synchronous API call</span></span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.resolve(ejs.render(tpl, locals));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">Promise</span>.reject(err);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="parameters"><a class="markdown-anchor" href="#parameters">#</a> Parameters</h3>
-<p>The three parameters of the <code>render</code> method are</p>
+<p>The three parameters of the <code>render</code> method are:</p>
 <ul>
-<li>filename: is the path to the complete file. The framework determines if the file exists when it looks for the file. It does not need to be processed here.</li>
-<li>locals: The data needed for rendering. The data comes from <code>app.locals</code>, <code>ctx.locals</code> and calls <code>render</code> methods. The framework also has built in <code>ctx</code>, <code>request</code>, <code>ctx.helper</code> objects.</li>
+<li>filename: is the path to the complete file. The framework determines if the file exists when looking for the file. It does not need to be processed here.</li>
+<li>locals: The data needs rendering. It comes from <code>app.locals</code>, <code>ctx.locals</code> and calls <code>render</code> methods. The framework also has built in <code>ctx</code>, <code>request</code>, <code>ctx.helper</code> objects.</li>
 <li>viewOptions: The incoming configuration of the user, which can override the default configuration of the template engine. This can be considered based on the characteristics of the template engine. For example, the cache is enabled by default but a page does not need to be cached.</li>
 </ul>
-<p>The three parameters of the <code>renderString</code> method</p>
+<p>The three parameters of the <code>renderString</code> method:</p>
 <ul>
-<li>tpl: template string, not file path</li>
-<li>locals: same with <code>render</code></li>
-<li>viewOptions: same with <code>render</code></li>
+<li>tpl: template string, not file path.</li>
+<li>locals: same with <code>render</code>.</li>
+<li>viewOptions: same with <code>render</code>.</li>
 </ul>
 <h2 id="plugin-configuration"><a class="markdown-anchor" href="#plugin-configuration">#</a> Plugin configuration</h2>
-<p>According to the naming conventions mentioned above, the configuration name is generally the name of the template engine, such as ejs</p>
-<p>The configuration of the plugin mainly comes from the configuration of the template engine, and the configuration items can be defined according to the specific conditions, such as the <a href="https://github.com/mde/ejs#options" target="_blank" rel="noopener">configuration of ejs</a></p>
+<p>According to the naming conventions mentioned above, the configuration name is generally the name of the template engine, such as ejs.</p>
+<p>The configuration of the plugin mainly comes from the configuration of the template engine, and the configuration items can be defined according to the specific conditions, such as the <a href="https://github.com/mde/ejs#options" target="_blank" rel="noopener">configuration of ejs</a>.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  ejs: &#123;</span><br><span class="line">    cache: <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="helper"><a class="markdown-anchor" href="#helper">#</a> Helper</h3>
 <p>The framework provides <code>ctx.helper</code> for developer use, but in some cases we want to override the helper method and only take effect when the template is rendered.</p>
 <p>In template rendering, we often need to output a user-supplied html fragment, in which case, we often use the <code>helper.shtml</code> provided by the <code>egg-security</code> plugin.</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123; helper.shtml(data.content) | safe &#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>However, as shown in the above code, we need to use <code>| safe</code> to tell the template engine that the html is safe and it doesn't need to run <code>escape</code> again.</p>
+<p>However, as shown in the code above, we need to use <code>| safe</code> to tell the template engine that the html is safe and it doesn't need to run <code>escape</code> again.</p>
 <p>This is more cumbersome to use and easy to forget, so we can package it:</p>
-<p>First provide a helper subclass:</p>
+<ul>
+<li>First provide a helper subclass:</li>
+</ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;plugin_root&#125;/lib/helper.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewHelper</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Helper</span> </span>&#123;</span><br><span class="line">    <span class="comment">// safe is injected by [egg-view-nunjucks] and will not be escaped during rendering.</span></span><br><span class="line">    <span class="comment">// Otherwise, the template call shtml will be escaped</span></span><br><span class="line">    shtml(str) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">this</span>.safe(<span class="keyword">super</span>.shtml(str));</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>Use a custom helper when rendering</p>
+<ul>
+<li>Use a custom helper when rendering:</li>
+</ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;plugin_root&#125;/lib/view.js</span></span><br><span class="line"><span class="keyword">const</span> ViewHelper = <span class="built_in">require</span>(<span class="string">'./helper'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="class"><span class="keyword">class</span> <span class="title">MyCustomView</span> </span>&#123;</span><br><span class="line">  render(filename, locals) &#123;</span><br><span class="line">    locals.helper = <span class="keyword">new</span> ViewHelper(<span class="keyword">this</span>.ctx); <span class="comment">// call Nunjucks render</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>You can <a href="https://github.com/eggjs/egg-view-nunjucks/blob/2ee5ee992cfd95bc0bb5b822fbd72a6778edb118/lib/view.js#L11" target="_blank" rel="noopener">view</a> the specific code here</p>
 <h3 id="security-related"><a class="markdown-anchor" href="#security-related">#</a> Security Related</h3>
 <p>Templates and security are related and <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a> also provides some methods for the template. The template engine can be used according to requirements.</p>
-<p>First declare a dependency on <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a></p>
+<p>First declare a dependency on <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a>:</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-view-nunjucks"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"nunjucks"</span>,</span><br><span class="line">    <span class="attr">"dep"</span>: [<span class="string">"security"</span>]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>The framework provides <a href="../core/security.html#appinjectcsrfstr">app.injectCsrf</a> and <a href="../core/security.html#appinjectnonncestr">app.injectNonce</a>, for more information on <a href="../core/security.html">security section</a>.</p>
+<p>Besides, the framework provides <a href="../core/security.html#appinjectcsrfstr">app.injectCsrf</a> and <a href="../core/security.html#appinjectnonncestr">app.injectNonce</a>, for more information on <a href="../core/security.html">security section</a>.</p>
 <h3 id="unit-tests"><a class="markdown-anchor" href="#unit-tests">#</a> Unit tests</h3>
-<p>As a high-quality plugin, perfect unit testing is indispensable, and we also provide a lot of auxiliary tools to make it painless for plugin developers to write tests, see <a href="../core/unittest.html">unit testing</a> and <a href="./plugin.html">plugin</a> docs.</p>
+<p>As a high-quality plugin, perfect unit testing is indispensable, and we also provide lots of auxiliary tools to make it painless for plugin developers to write tests with, see <a href="../core/unittest.html">unit testing</a> and <a href="./plugin.html">plugin</a> docs.</p>
 
   </article>
   <aside id="mobileAside" class="toc">

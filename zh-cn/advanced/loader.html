@@ -250,7 +250,7 @@
 <h2 id="loader-api"><a class="markdown-anchor" href="#loader-api">#</a> Loader API</h2>
 <p>Loader 还提供一些底层的 API，在扩展时可以简化代码，全部 API 请<a href="https://github.com/eggjs/egg-core#eggloader" target="_blank" rel="noopener">查看</a></p>
 <h3 id="loadfile"><a class="markdown-anchor" href="#loadfile">#</a> loadFile</h3>
-<p>用于加载一个文件，比如加载 <code>app.js</code> 就是使用这个方法。</p>
+<p>用于加载一个文件，比如加载 <code>app/xx.js</code> 就是使用这个方法。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/xx.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(app.config);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">// 以 app/xx.js 为例，我们可以在 app.js 加载这个文件</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.loader.loadFile(path.join(app.config.baseDir, <span class="string">'app/xx.js'</span>));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>如果文件 export 一个函数会被调用，并将 app 作为参数，否则直接使用这个值。</p>
 <h3 id="loadtoapp"><a class="markdown-anchor" href="#loadtoapp">#</a> loadToApp</h3>
@@ -270,7 +270,7 @@
 所以这个类只有每次请求中首次访问时才会实例化，实例化后会被缓存，同一个请求多次调用也只会实例化一次。</p>
 <h3 id="loaderoptions"><a class="markdown-anchor" href="#loaderoptions">#</a> LoaderOptions</h3>
 <h4 id="ignore-string"><a class="markdown-anchor" href="#ignore-string">#</a> ignore [String]</h4>
-<p>ignore 可以忽略一些文件，支持 glob，默认为空</p>
+<p><code>ignore</code> 可以忽略一些文件，支持 glob，默认为空</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.loader.loadToApp(directory, <span class="string">'controller'</span>, &#123;</span><br><span class="line">  <span class="comment">// 忽略 app/controller/util 下的文件</span></span><br><span class="line">  ignore: <span class="string">'util/**'</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h4 id="initializer-function"><a class="markdown-anchor" href="#initializer-function">#</a> initializer [Function]</h4>
 <p>对每个文件 export 出来的值进行处理，默认为空</p>
