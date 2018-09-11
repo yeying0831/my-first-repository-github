@@ -64,7 +64,7 @@
 <h3 id="事件"><a class="markdown-anchor" href="#事件">#</a> 事件</h3>
 <p>在框架运行时，会在 Application 实例上触发一些事件，应用开发者或者插件开发者可以监听这些事件做一些操作。作为应用开发者，我们一般会在<a href="./app-start.html">启动自定义脚本</a>中进行监听。</p>
 <ul>
-<li><code>server</code>: 该事件一个 worker 进程只会触发一次，在 HTTP 服务完成启动后，会将 HTTP server 通过这个事件暴露出来给开发者。</li>
+<li><code>server</code>: 该事件一个 worker 进程只会触发一次，在 HTTP 服务完成启动后，会将 HTTP server 通过这个事件暴露出来给开发者。</li>
 <li><code>error</code>: 运行时有任何的异常被 onerror 插件捕获后，都会触发 <code>error</code> 事件，将错误对象和关联的上下文（如果有）暴露给开发者，可以进行自定义的日志记录上报等处理。</li>
 <li><code>request</code> 和 <code>response</code>: 应用收到请求和响应请求时，分别会触发 <code>request</code> 和 <code>response</code> 事件，并将当前请求上下文暴露出来，开发者可以监听这两个事件来进行日志记录。</li>
 </ul>
