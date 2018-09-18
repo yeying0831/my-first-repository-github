@@ -116,11 +116,14 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  gzip: &#123;</span><br><span class="line">    match: <span class="string">'/static'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>match 和 ignore 支持多种类型的配置方式</p>
 <ol>
-<li>字符串：当参数为字符串类型时，配置的是一个 url 的路径前缀，所有以配置的字符串作为前缀的 url 都会匹配上。</li>
+<li>字符串：当参数为字符串类型时，配置的是一个 url 的路径前缀，所有以配置的字符串作为前缀的 url 都会匹配上。
+当然，你也可以直接使用字符串数组。</li>
 <li>正则：当参数为正则时，直接匹配满足正则验证的 url 的路径。</li>
 <li>函数：当参数为一个函数时，会将请求上下文传递给这个函数，最终取函数返回的结果（ture/false）来判断是否匹配。</li>
 </ol>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  gzip: &#123;</span><br><span class="line">    match(ctx) &#123;</span><br><span class="line">      <span class="comment">// 只有 ios 设备才开启</span></span><br><span class="line">      <span class="keyword">const</span> reg = <span class="regexp">/iphone|ipad|ipod/i</span>;</span><br><span class="line">      <span class="keyword">return</span> reg.test(ctx.get(<span class="string">'user-agent'</span>));</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>有关更多的 match 和 ignore 配置情况，详见
+<a href="https://github.com/eggjs/egg-path-matching" target="_blank" rel="noopener">egg-path-matching</a>.</p>
 
   </article>
   <aside id="mobileAside" class="toc">

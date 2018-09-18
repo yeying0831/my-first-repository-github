@@ -117,11 +117,12 @@ we can edit <code>config.default.js</code> like this:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  gzip: &#123;</span><br><span class="line">    match: <span class="string">'/static'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>match and ignore support various types of configuration ways:</p>
 <ol>
-<li>String: when string, it sets the prefix of a url path, and all urls starting with this prefix will be matched.</li>
+<li>String: when string, it sets the prefix of a url path, and all urls starting with this prefix will be matched. A string array is also accepted.</li>
 <li>Regular expression: when regular expression, all urls satisfy this regular expression will be matched.</li>
 <li>Function: when function, the request context will be passed to it and what it returns(true/false) determines whether the request is matched or not.</li>
 </ol>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  gzip: &#123;</span><br><span class="line">    match(ctx) &#123;</span><br><span class="line">      <span class="comment">// enabled on ios devices</span></span><br><span class="line">      <span class="keyword">const</span> reg = <span class="regexp">/iphone|ipad|ipod/i</span>;</span><br><span class="line">      <span class="keyword">return</span> reg.test(ctx.get(<span class="string">'user-agent'</span>));</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>For more configs about <code>match</code> and <code>ignore</code>, please refer to <a href="https://github.com/eggjs/egg-path-matching" target="_blank" rel="noopener">egg-path-matching</a>.</p>
 
   </article>
   <aside id="mobileAside" class="toc">
