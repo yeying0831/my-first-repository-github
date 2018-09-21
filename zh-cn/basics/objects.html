@@ -79,7 +79,7 @@
 </li>
 <li>
 <p><a href="./controller.html">Controller 文件</a></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/user.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> fetch() &#123;</span><br><span class="line">    <span class="keyword">this</span>.ctx.body = app.cache.get(<span class="keyword">this</span>.ctx.query.id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/user.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> fetch() &#123;</span><br><span class="line">    <span class="keyword">this</span>.ctx.body = <span class="keyword">this</span>.app.cache.get(<span class="keyword">this</span>.ctx.query.id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>和 <a href="http://koajs.com" target="_blank" rel="noopener">Koa</a> 一样，在 Context 对象上，可以通过 <code>ctx.app</code> 访问到 Application 对象。以上面的 Controller 文件举例：</p>
@@ -138,7 +138,7 @@
 <h3 id="获取方式-5"><a class="markdown-anchor" href="#获取方式-5">#</a> 获取方式</h3>
 <p>我们可以通过 <code>app.config</code> 从 Application 实例上获取到 config 对象，也可以在 Controller, Service, Helper 的实例上通过 <code>this.config</code> 获取到 config 对象。</p>
 <h2 id="logger"><a class="markdown-anchor" href="#logger">#</a> Logger</h2>
-<p>框架内置了功能强大的<a href="../core/logger.html">日志功能</a>，可以非常方便的打印各种级别的日志到对应的日志文件中，每一个 logger 对象都提供了 5 个级别的方法：</p>
+<p>框架内置了功能强大的<a href="../core/logger.html">日志功能</a>，可以非常方便的打印各种级别的日志到对应的日志文件中，每一个 logger 对象都提供了 4 个级别的方法：</p>
 <ul>
 <li><code>logger.debug()</code></li>
 <li><code>logger.info()</code></li>

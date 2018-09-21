@@ -79,7 +79,7 @@
 </li>
 <li>
 <p><a href="./controller.html">Controller file</a></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/user.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> fetch() &#123;</span><br><span class="line">    <span class="keyword">this</span>.ctx.body = app.cache.get(<span class="keyword">this</span>.ctx.query.id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/user.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> fetch() &#123;</span><br><span class="line">    <span class="keyword">this</span>.ctx.body = <span class="keyword">this</span>.app.cache.get(<span class="keyword">this</span>.ctx.query.id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>Like the <a href="http://koajs.com" target="_blank" rel="noopener">Koa</a>, on the Context object, we can access the Application object via <code>ctx.app</code>. Use the above Controller file as an example:</p>
@@ -138,7 +138,7 @@
 <h3 id="how-to-get-5"><a class="markdown-anchor" href="#how-to-get-5">#</a> How to Get</h3>
 <p>We can get the config object from the Application instance via <code>app.config</code>, or get the config object via<code>this.config</code> on the instance of Controller, Service or Helper.</p>
 <h2 id="logger"><a class="markdown-anchor" href="#logger">#</a> Logger</h2>
-<p>Egg builds in powerful <a href="../core/logger.html">logger</a>, it is very convenient to print a variety of levels of logs to the corresponding log file, each logger object provides 5 level methods:</p>
+<p>Egg builds in powerful <a href="../core/logger.html">logger</a>, it is very convenient to print a variety of levels of logs to the corresponding log file, each logger object provides 4 level methods:</p>
 <ul>
 <li><code>logger.debug()</code></li>
 <li><code>logger.info()</code></li>
