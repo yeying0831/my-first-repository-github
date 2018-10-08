@@ -78,13 +78,11 @@
 <blockquote>
 <p>Namespaces are <code>/</code> and <code>/ example</code>, not<code>example</code></p>
 </blockquote>
-<p><strong>uws:</strong></p>
-<p>If you want to use <a href="https://github.com/uWebSockets/uWebSockets" target="_blank" rel="noopener">uws</a> instead of the default <code>ws</code> you can do the following configuration</p>
+<h4 id="uws"><a class="markdown-anchor" href="#uws">#</a> uws</h4>
+<p><strong>Egg's socket is using <code>ws</code>, <a href="https://www.npmjs.com/package/uws" target="_blank" rel="noopener">uws</a> is deprecated due to <a href="https://github.com/socketio/socket.io/issues/3319" target="_blank" rel="noopener">some reasons</a>.</strong></p>
+<p>If you insist using <a href="https://www.npmjs.com/package/uws" target="_blank" rel="noopener">uws</a> instead of the default <code>ws</code>, you can config like this:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125; / config / config. $ &#123;env&#125; .js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  init: &#123; <span class="attr">wsEngine</span>: <span class="string">'uws'</span> &#125; <span class="comment">// default: ws</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>As µWS engine has been deprecated, maybe you should consider the default engine.</p>
-</blockquote>
-<p><strong>redis:</strong></p>
+<h4 id="redis"><a class="markdown-anchor" href="#redis">#</a> redis</h4>
 <p><a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> has built-in redis support via <code>socket.io-redis</code>. In cluster mode, the use of redis can make it relatively simple to achieve information sharing of clients/rooms and so on</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125; / config / config. $ &#123;env&#125; .js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  redis: &#123;</span><br><span class="line">    host: &#123;redis server host&#125;</span><br><span class="line">    port: &#123;redis server prot&#125;,</span><br><span class="line">    auth_pass: &#123;redis server password&#125;,</span><br><span class="line">    db: <span class="number">0</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <blockquote>

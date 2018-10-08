@@ -77,14 +77,11 @@
 <blockquote>
 <p>命名空间为 <code>/</code> 与 <code>/example</code>, 不是 <code>example</code></p>
 </blockquote>
-<p><strong>uws:</strong></p>
-<p>如果想要使用 <a href="https://github.com/uWebSockets/uWebSockets" target="_blank" rel="noopener">uws</a> 替代默认的 <code>ws</code> 可以做如下配置</p>
+<h4 id="uws"><a class="markdown-anchor" href="#uws">#</a> uws</h4>
+<p><strong>Egg Socket 内部默认使用 <code>ws</code> 引擎，<a href="https://www.npmjs.com/package/uws" target="_blank" rel="noopener">uws</a> 因为<a href="https://github.com/socketio/socket.io/issues/3319" target="_blank" rel="noopener">某些原因</a>被废止。</strong></p>
+<p>如坚持需要使用，请按照以下配置即可：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  init: &#123; <span class="attr">wsEngine</span>: <span class="string">'uws'</span> &#125;, <span class="comment">// default: ws</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p><s>已知默认 <code>wsEngine</code> 在 <code>Chrome</code> 浏览器中断开连接存在异常，建议优先使用 <a href="https://github.com/uWebSockets/uWebSockets" target="_blank" rel="noopener">uws</a></s></p>
-<p>µWS 不再建议使用，请优先考虑默认引擎。</p>
-</blockquote>
-<p><strong>redis:</strong></p>
+<h4 id="redis"><a class="markdown-anchor" href="#redis">#</a> redis</h4>
 <p><a href="https://github.com/eggjs/egg-socket.io" target="_blank" rel="noopener">egg-socket.io</a> 内置了 <code>socket.io-redis</code>，在 cluster 模式下，使用 redis 可以较为简单的实现 clients/rooms 等信息共享</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.io = &#123;</span><br><span class="line">  redis: &#123;</span><br><span class="line">    host: &#123; redis server host &#125;,</span><br><span class="line">    port: &#123; redis server prot &#125;,</span><br><span class="line">    auth_pass: &#123; redis server password &#125;,</span><br><span class="line">    db: <span class="number">0</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <blockquote>
