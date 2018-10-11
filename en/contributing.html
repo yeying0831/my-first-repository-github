@@ -139,9 +139,9 @@ All demos should be compiled at <a href="https://github.com/eggjs/examples" targ
 </ul>
 <p>e.g.</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fix($compile): [BREAKING_CHANGE] couple of unit tests for IE9</span><br><span class="line"></span><br><span class="line">Older IEs serialize html uppercased, but IE9 does not...</span><br><span class="line">Would be better to expect case insensitive, unfortunately jasmine does</span><br><span class="line">not allow to user regexps for throw expectations.</span><br><span class="line"></span><br><span class="line">Document change on eggjs/egg#123</span><br><span class="line"></span><br><span class="line">Closes #392</span><br><span class="line"></span><br><span class="line">BREAKING CHANGE:</span><br><span class="line"></span><br><span class="line">  Breaks foo.bar api, foo.baz should be used instead</span><br></pre></td></tr></table></figure>
-<p>Look at <a href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit" target="_blank" rel="noopener">these files</a> for more detials.</p>
+<p>Look at <a href="https://docs.google.com/document/d/1QrDFcIiPjSLDn3EL15IJygNPiHORgU1_OOAqWjiDU5Y/edit" target="_blank" rel="noopener">these files</a> for more details.</p>
 <h2 id="release"><a class="markdown-anchor" href="#release">#</a> Release</h2>
-<p>egg uses semantic versioning in release process based on <a href="http://semver.org/lang/zh-CN/" target="_blank" rel="noopener">semver</a>.</p>
+<p>Egg uses semantic versioning in release process based on <a href="https://semver.org/" target="_blank" rel="noopener">semver</a>.</p>
 <h3 id="branch-strategy"><a class="markdown-anchor" href="#branch-strategy">#</a> Branch Strategy</h3>
 <p><code>master</code> branch is the latest stable version. <code>next</code> branch is the next stable version working in progress.</p>
 <ul>
@@ -165,14 +165,20 @@ All demos should be compiled at <a href="https://github.com/eggjs/examples" targ
 </li>
 <li>
 <p>Open a new <a href="https://github.com/nodejs/node/pull/4181" target="_blank" rel="noopener">Release Proposal MR</a>, and write <code>History</code> as <a href="https://github.com/nodejs/node/blob/master/CHANGELOG.md" target="_blank" rel="noopener">node CHANGELOG</a>. Don't forget to correct content in documentation which is related to the releasing version. Commits can be generated automatically.</p>
-  <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ npm run commits</span><br></pre></td></tr></table></figure>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm run commits</span><br></pre></td></tr></table></figure>
 </li>
 <li>
 <p>Nominate PM for next stable version.</p>
 </li>
 </ul>
 <h4 id="during-release"><a class="markdown-anchor" href="#during-release">#</a> During Release</h4>
-<p>All tags mentioned above refere to adding tags from npm in <code>package.json</code>.</p>
+<ul>
+<li>Back up the stable version (master) onto the branch named after the current major (e.g: <code>1.x</code>), and set the tag to <code>release-{v}.x</code> (v is the current version like <code>release-1.x</code>).</li>
+<li>Push the <code>next</code> branch to <code>master</code>, make it to the last stable one and remove <code>next</code> tag, change the contents corresponding to the branch in README.</li>
+<li>Publish the latest stable version to <a href="http://npmjs.com/" target="_blank" rel="noopener">npm</a>, and notify the previous framework to be upgraded.</li>
+<li>Before doing <code>npm publish</code>, please read <a href="https://fengmk2.com/blog/2016/how-i-publish-a-npm-package" target="_blank" rel="noopener">How to deploy an npm package</a>.</li>
+</ul>
+<p>All tags mentioned above means the tags of npm in <code>package.json</code>.</p>
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">"publishConfig": &#123;</span><br><span class="line">  "tag": "next"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
   </article>
