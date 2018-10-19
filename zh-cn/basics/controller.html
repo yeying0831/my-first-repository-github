@@ -159,7 +159,7 @@
 <p><strong>注意：在调整 bodyParser 支持的 body 长度时，如果我们应用前面还有一层反向代理（Nginx），可能也需要调整它的配置，确保反向代理也支持同样长度的请求 body。</strong></p>
 <p><strong>一个常见的错误是把 <code>ctx.request.body</code> 和 <code>ctx.body</code> 混淆，后者其实是 <code>ctx.response.body</code> 的简写。</strong></p>
 <h3 id="获取上传的文件"><a class="markdown-anchor" href="#获取上传的文件">#</a> 获取上传的文件</h3>
-<p>请求 body 除了可以带参数之外，还可以发送文件。一般来说，浏览器上都是通过 <code>multipart/form-data</code> 格式发送文件的，在 Egg 的 Multipart 插件中，我们为你提供了两种方式上传和接受文件：</p>
+<p>请求 body 除了可以带参数之外，还可以发送文件，一般来说，浏览器上都是通过 <code>Multipart/form-data</code> 格式发送文件的，框架通过内置 <a href="https://github.com/eggjs/egg-multipart" target="_blank" rel="noopener">Multipart</a> 插件来支持获取用户上传的文件，我们为你提供了两种方式：</p>
 <ul>
 <li>
 <h4 id="file-模式"><a class="markdown-anchor" href="#file-模式">#</a> File 模式：</h4>

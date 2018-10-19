@@ -159,7 +159,7 @@
 <p><strong>Note: when adjusting the maximum length of the body for bodyParser, if we have a reverse proxy(Nginx) in front of our application, we may need to adjust its configuration, so that the reverse proxy also supports the same length of request body.</strong></p>
 <p><strong>A common mistake is to confuse <code>ctx.request.body</code> and <code>ctx.body</code>(which is alias for <code>ctx.response.body</code>).</strong></p>
 <h3 id="acquire-the-submitted-files"><a class="markdown-anchor" href="#acquire-the-submitted-files">#</a> Acquire the submitted files</h3>
-<p>The <code>body</code> in the request can carry parameters as well as files. Generally speaking, our browsers always send files in <code>multipart/form-data</code>, and we now have two kinds of ways supporting submitting and acquiring files with the help of Egg's Multipart as a plug-in.</p>
+<p>The <code>body</code> in the request can carry parameters as well as files. Generally speaking, our browsers always send files in <code>multipart/form-data</code>, and we now have two kinds of ways supporting submitting and acquiring files with the help of the framework's plug-in <a href="https://github.com/eggjs/egg-multipart" target="_blank" rel="noopener">Multipart</a>.</p>
 <ul>
 <li>
 <h4 id="file-mode"><a class="markdown-anchor" href="#file-mode">#</a> <code>File</code> Mode:</h4>
