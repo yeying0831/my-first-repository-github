@@ -1118,7 +1118,6 @@ p {
 }
 .nav {
   background: #f9f9f9;
-  height: 56px;
   border-bottom: 1px solid rgba(230, 230, 230, 0.99);
   z-index: 2;
   width: 100%;
