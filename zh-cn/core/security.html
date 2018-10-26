@@ -326,6 +326,7 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 <p>对于没有开启 HTTPS 的网站，这个函数可以有限的防止运营商劫持。</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -431,6 +432,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#web-安全概念"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Web 安全概念</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#开启与关闭配置"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 开启与关闭配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#match-和-ignore"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># match 和 ignore</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#安全威胁xss的防范"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 安全威胁XSS的防范</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#reflected-xss"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Reflected XSS</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#stored-xss"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Stored XSS</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#jsonp-xss"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># JSONP XSS</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#其他-xss-的防范方式"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># 其他 XSS 的防范方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#安全威胁-csrf-的防范"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 安全威胁 CSRF  的防范</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#防范方式-3"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 防范方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#安全威胁-xst-的防范"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 安全威胁 XST 的防范</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#拓展阅读"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 拓展阅读</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#防范方式-4"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 防范方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#安全威胁-钓鱼攻击-的防范"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 安全威胁 钓鱼攻击 的防范</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#url-钓鱼"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># url 钓鱼</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#防范方式-5"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># 防范方式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#图片钓鱼"><span class="toc-detail-number">5.3.</span> <span class="toc-detail-text"># 图片钓鱼</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#防范方式-6"><span class="toc-detail-number">5.4.</span> <span class="toc-detail-text"># 防范方式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#iframe-钓鱼"><span class="toc-detail-number">5.5.</span> <span class="toc-detail-text"># iframe 钓鱼</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#安全威胁-hpp-的防范"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 安全威胁 HPP 的防范</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#拓展阅读-2"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># 拓展阅读</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#如何防范"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># 如何防范</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#中间人攻击"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># 中间人攻击与 HTTP / HTTPS</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#安全威胁-ssrf-的防范"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># 安全威胁 SSRF 的防范</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#如何防范-2"><span class="toc-detail-number">8.1.</span> <span class="toc-detail-text"># 如何防范</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#其他安全工具"><span class="toc-detail-number">9.</span> <span class="toc-detail-text"># 其他安全工具</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ctxissafedomaindomain"><span class="toc-detail-number">9.1.</span> <span class="toc-detail-text"># ctx.isSafeDomain(domain)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#appinjectcsrfstr"><span class="toc-detail-number">9.2.</span> <span class="toc-detail-text"># app.injectCsrf(str)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#appinjectnoncestr"><span class="toc-detail-number">9.3.</span> <span class="toc-detail-text"># app.injectNonce(str)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#appinjecthijackingdefensestr"><span class="toc-detail-number">9.4.</span> <span class="toc-detail-text"># app.injectHijackingDefense(str)</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

@@ -129,6 +129,7 @@ You can schedule the task to be executed by one random worker or all workers wit
 <p><a href="https://github.com/eggjs/egg-schedule/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -234,6 +235,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#usage"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Usage</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#overview"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Overview</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#task"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Task</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#scheduling"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Scheduling</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cron-style-scheduling"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Cron-style Scheduling</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#interval-style-scheduling"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Interval-style Scheduling</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#schedule-type"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># Schedule Type</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#dynamic-schedule"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Dynamic schedule</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#logging"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Logging</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#testing"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Testing</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#questions-suggestions"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># Questions &amp; Suggestions</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#license"><span class="toc-detail-number">9.</span> <span class="toc-detail-text"># License</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

@@ -362,6 +362,7 @@
 <p>若用户没有配置 <code>domainWhiteList</code> 或者 <code>domainWhiteList</code>数组内为空，则默认会对所有跳转请求放行，即等同于<code>ctx.unsafeRedirect(url)</code></p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -467,6 +468,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#什么是-controller"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 什么是 Controller</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#如何编写-controller"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 如何编写 Controller</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-类推荐"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Controller 类（推荐）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-方法不推荐使用只是为了兼容"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Controller 方法（不推荐使用，只是为了兼容）</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#http-基础"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># HTTP 基础</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#获取-http-请求参数"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 获取 HTTP 请求参数</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#query"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># query</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#router-params"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Router params</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#body"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># body</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取上传的文件"><span class="toc-detail-number">4.4.</span> <span class="toc-detail-text"># 获取上传的文件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#header"><span class="toc-detail-number">4.5.</span> <span class="toc-detail-text"># header</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cookie"><span class="toc-detail-number">4.6.</span> <span class="toc-detail-text"># Cookie</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#session"><span class="toc-detail-number">4.7.</span> <span class="toc-detail-text"># Session</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#参数校验"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 参数校验</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#校验规则"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># 校验规则</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#调用-service"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 调用 Service</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#发送-http-响应"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># 发送 HTTP 响应</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#设置-status"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># 设置 status</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#设置-body"><span class="toc-detail-number">7.2.</span> <span class="toc-detail-text"># 设置 body</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#设置-header"><span class="toc-detail-number">7.3.</span> <span class="toc-detail-text"># 设置 Header</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#重定向"><span class="toc-detail-number">7.4.</span> <span class="toc-detail-text"># 重定向</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

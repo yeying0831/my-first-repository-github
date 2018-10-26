@@ -145,6 +145,7 @@
 <p>我们也提供了 sequelize 的脚手架，集成了文档中提供的 <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>, <a href="https://github.com/sequelize/cli" target="_blank" rel="noopener">sequelize-cli</a> 与 <a href="https://github.com/aexmachina/factory-girl" target="_blank" rel="noopener">factory-girl</a> 等模块。可以通过 <code>egg-init --type=sequelize</code> 来基于它快速初始化一个新的应用。</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -250,6 +251,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#准备工作"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 准备工作</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#初始化项目"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 初始化项目</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#初始化数据库和-migrations"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 初始化数据库和 Migrations</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#编写代码"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 编写代码</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#单元测试"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 单元测试</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#完整示例"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 完整示例</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#脚手架"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># 脚手架</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

@@ -217,6 +217,7 @@ Here we just briefly explain how to use the middleware, and refer to <a href="./
 <p>or using <a href="https://github.com/eggjs/egg-router-plus" target="_blank" rel="noopener">egg-router-plus</a>.</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -322,6 +323,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#how-to-define-router"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># How to Define Router</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#router-config-in-detail"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Router config in detail</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#notices"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Notices</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#restful-style-url-definition"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># RESTful style URL definition</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#router-in-action"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Router in Action</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#acquiring-form-contents"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Acquiring Form Contents</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#form-verification"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># Form Verification</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#redirection"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Redirection</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#using-middleware"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># Using Middleware</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#too-many-routing-maps"><span class="toc-detail-number">3.5.</span> <span class="toc-detail-text"># Too Many Routing Maps?</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

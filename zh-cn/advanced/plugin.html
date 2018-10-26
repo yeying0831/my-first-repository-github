@@ -256,6 +256,7 @@
 <p><strong>将相同功能的插件赋予相同的插件名，具备相同的 API，可以快速切换</strong>。这在模板、数据库等领域非常适用。</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -361,6 +362,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件开发"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 插件开发</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#使用脚手架快速开发"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 使用脚手架快速开发</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件的目录结构"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 插件的目录结构</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件的依赖管理"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 插件的依赖管理</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件能做什么"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 插件能做什么？</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#扩展内置对象的接口"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 扩展内置对象的接口</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#插入自定义中间件"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 插入自定义中间件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#在应用启动时做一些初始化工作"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># 在应用启动时做一些初始化工作</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#设置定时任务"><span class="toc-detail-number">4.4.</span> <span class="toc-detail-text"># 设置定时任务</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#全局实例插件的最佳实践"><span class="toc-detail-number">4.5.</span> <span class="toc-detail-text"># 全局实例插件的最佳实践</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#插件的寻址规则"><span class="toc-detail-number">4.6.</span> <span class="toc-detail-text"># 插件的寻址规则</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#插件规范"><span class="toc-detail-number">4.7.</span> <span class="toc-detail-text"># 插件规范</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#为何不使用-npm-包名来做插件名"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 为何不使用 npm 包名来做插件名？</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

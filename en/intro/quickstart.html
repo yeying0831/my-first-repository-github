@@ -199,6 +199,7 @@ Where to go from here? read our documentation to better understand the framework
 </ul>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -304,6 +305,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#prerequisites"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Prerequisites</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#the-quick-way"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># the Quick Way</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#step-by-step"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Step by Step</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#initialization"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Initialization</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#create-a-controller"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># Create a Controller</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#add-static-assets"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Add Static Assets</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#add-templates-for-rendering"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># Add Templates for Rendering</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#create-a-service"><span class="toc-detail-number">3.5.</span> <span class="toc-detail-text"># Create a Service</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#add-extensions"><span class="toc-detail-number">3.6.</span> <span class="toc-detail-text"># Add Extensions</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#add-middlewares"><span class="toc-detail-number">3.7.</span> <span class="toc-detail-text"># Add Middlewares</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#add-configurations"><span class="toc-detail-number">3.8.</span> <span class="toc-detail-text"># Add Configurations</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#add-unit-testing"><span class="toc-detail-number">3.9.</span> <span class="toc-detail-text"># Add Unit Testing</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#conclusions"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Conclusions</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

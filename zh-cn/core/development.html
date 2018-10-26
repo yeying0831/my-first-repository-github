@@ -166,6 +166,7 @@
 <p>如果想了解更多本地开发相关的内容，例如为你的团队定制一个本地开发工具，请参考 <a href="https://github.com/eggjs/egg-bin" target="_blank" rel="noopener">egg-bin</a>。</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -271,6 +272,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#启动应用"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 启动应用</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#添加命令"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 添加命令</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#环境配置"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 环境配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#指定端口"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># 指定端口</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#单元测试"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 单元测试</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#添加命令-2"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 添加命令</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#环境配置-2"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 环境配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#运行特定用例文件"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># 运行特定用例文件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#指定-reporter"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># 指定 reporter</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#指定用例超时时间"><span class="toc-detail-number">2.5.</span> <span class="toc-detail-text"># 指定用例超时时间</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#通过-argv-方式传参"><span class="toc-detail-number">2.6.</span> <span class="toc-detail-text"># 通过 argv 方式传参</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#代码覆盖率"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 代码覆盖率</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#环境配置-3"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 环境配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#忽略指定文件"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># 忽略指定文件</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#调试"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 调试</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#日志输出"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 日志输出</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#使用-logger-模块"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 使用 logger 模块</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#使用-debug-模块"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># 使用 debug 模块</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#使用-egg-bin-调试"><span class="toc-detail-number">4.4.</span> <span class="toc-detail-text"># 使用 egg-bin 调试</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#更多"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 更多</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

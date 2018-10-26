@@ -204,6 +204,7 @@
 </ul>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -309,6 +310,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#安装-egg-socketio"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 安装 egg-socket.io</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#安装"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 安装</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#部署"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># 部署</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#使用-egg-socketio"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 使用 egg-socket.io</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#middleware"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Middleware</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Controller</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#router"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Router</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#namespaceroom"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># Namespace/Room</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#实例"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 实例</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#client"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># client</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#server"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># server</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#参考链接"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 参考链接</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

@@ -174,6 +174,7 @@
 </ul>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -279,6 +280,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#环境准备"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 环境准备</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#快速初始化"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 快速初始化</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#逐步搭建"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 逐步搭建</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#初始化项目"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 初始化项目</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#编写-controller"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># 编写 Controller</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#静态资源"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># 静态资源</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#模板渲染"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># 模板渲染</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#编写-service"><span class="toc-detail-number">3.5.</span> <span class="toc-detail-text"># 编写 service</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#编写扩展"><span class="toc-detail-number">3.6.</span> <span class="toc-detail-text"># 编写扩展</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#编写-middleware"><span class="toc-detail-number">3.7.</span> <span class="toc-detail-text"># 编写 Middleware</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置文件"><span class="toc-detail-number">3.8.</span> <span class="toc-detail-text"># 配置文件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#单元测试"><span class="toc-detail-number">3.9.</span> <span class="toc-detail-text"># 单元测试</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#后记"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 后记</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

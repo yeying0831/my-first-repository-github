@@ -144,6 +144,7 @@
 <p>控制台地址：<a href="https://node.console.aliyun.com" target="_blank" rel="noopener">https://node.console.aliyun.com</a></p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -249,6 +250,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#构建"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 构建</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#部署"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 部署</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#启动命令"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 启动命令</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#停止命令"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 停止命令</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#监控"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 监控</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#nodejs-性能平台alinode"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Node.js 性能平台（alinode）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#启动应用"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># 启动应用</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

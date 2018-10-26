@@ -143,6 +143,7 @@
 <p>We also provide sequelize boilerplate that integrates the modules <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>, <a href="https://github.com/sequelize/cli" target="_blank" rel="noopener">sequelize-cli</a> and <a href="https://github.com/aexmachina/factory-girl" target="_blank" rel="noopener">factory-girl</a> provided in this documentation. You can quickly initialize a new application based on it by <code>egg-init --type=sequelize</code>.</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -248,6 +249,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#preparing"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Preparing</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#init"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Init</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#init-database-and-migrations"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Init Database and Migrations</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#coding"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Coding</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#unit-test"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Unit Test</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#full-example"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Full Example</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#boilerplate"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Boilerplate</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

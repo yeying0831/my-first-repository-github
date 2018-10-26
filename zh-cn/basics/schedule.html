@@ -136,6 +136,7 @@
 </ul>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -241,6 +242,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#编写定时任务"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 编写定时任务</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#任务"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 任务</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#定时方式"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 定时方式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#类型"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># 类型</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#其他参数"><span class="toc-detail-number">1.4.</span> <span class="toc-detail-text"># 其他参数</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#执行日志"><span class="toc-detail-number">1.5.</span> <span class="toc-detail-text"># 执行日志</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#动态配置定时任务"><span class="toc-detail-number">1.6.</span> <span class="toc-detail-text"># 动态配置定时任务</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#手动执行定时任务"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 手动执行定时任务</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#扩展定时任务类型"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 扩展定时任务类型</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

@@ -140,6 +140,7 @@
 </ul>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -245,6 +246,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#异步编程模型"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 异步编程模型</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#async-function"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># async function</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#koa"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Koa</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#middleware"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Middleware</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Context</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#异常处理"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># 异常处理</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#egg-继承于-koa"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Egg 继承于 Koa</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#扩展"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 扩展</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#插件"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># 插件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#egg-与-koa-的版本关系"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Egg 与 Koa 的版本关系</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

@@ -248,6 +248,7 @@
 <p>In the above example, we runs a subscriber on Agent process to listen messages sent by the message-oriented middleware. What if Worker processes need to listen messages? How to create connections by Agent process and transmit messages to Worker processes? Answers to these questions can be found in <a href="../advanced/cluster-client.html">Advanced Multi-Process Developing Pattern</a>.</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -353,6 +354,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-1"><a class="toc-detail-link" href="#what-is-cluster"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># What is Cluster?</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#multi-process-model-of-the-framework"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Multi-Process Model of the Framework</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#daemon-process"><span class="toc-detail-number">1.1.1.</span> <span class="toc-detail-text"># Daemon Process</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#agent-mechanism"><span class="toc-detail-number">1.1.2.</span> <span class="toc-detail-text"># Agent Mechanism</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#agent-usage"><span class="toc-detail-number">1.1.3.</span> <span class="toc-detail-text"># Agent Usage</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#master-vs-agent-vs-worker"><span class="toc-detail-number">1.1.4.</span> <span class="toc-detail-text"># Master VS Agent VS Worker</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#inter-process-communicationipc"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># Inter-Process Communication(IPC)</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#send"><span class="toc-detail-number">1.2.1.</span> <span class="toc-detail-text"># Send</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#receive"><span class="toc-detail-number">1.2.2.</span> <span class="toc-detail-text"># Receive</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#ipc-in-practice"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># IPC in Practice</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#requisition"><span class="toc-detail-number">1.3.1.</span> <span class="toc-detail-text"># Requisition</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#implementation"><span class="toc-detail-number">1.3.2.</span> <span class="toc-detail-text"># Implementation</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#more-complexed-scenario"><span class="toc-detail-number">1.4.</span> <span class="toc-detail-text"># More Complexed Scenario</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

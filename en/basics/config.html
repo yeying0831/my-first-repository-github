@@ -139,6 +139,7 @@
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"logger"</span>: &#123;</span><br><span class="line">    <span class="attr">"dir"</span>: <span class="string">"/path/to/config/config.default.js"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -244,6 +245,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#multiple-environment-configuration"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Multiple environment configuration</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-write-configuration"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># How to write configuration</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#sequence-of-loading-configurations"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Sequence of loading configurations</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#merging-rule"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Merging rule</span></a></li></ol><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#configuration-result"><span class="toc-detail-number"></span> <span class="toc-detail-text"># Configuration result</span></a>
+</li></div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

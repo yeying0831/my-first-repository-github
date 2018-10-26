@@ -140,6 +140,7 @@
 </ul>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -245,6 +246,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#asynchronous-programming-model"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Asynchronous programming model</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#async-function"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Async function</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#koa"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Koa</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#midlleware"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Midlleware</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Context</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#exception-handling"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Exception handling</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#egg-inherits-from-koa"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Egg inherits from Koa</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#extension"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Extension</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#plugin"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># Plugin</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#roadmap"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Roadmap</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

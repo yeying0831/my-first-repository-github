@@ -110,6 +110,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.router.get(<span class="string">'/user/:id'</span>, app.controller.user.info);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/controller/user.js</span></span><br><span class="line"><span class="keyword">const</span> Controller = <span class="built_in">require</span>(<span class="string">'egg'</span>).Controller;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> info() &#123;</span><br><span class="line">    <span class="keyword">const</span> userId = ctx.params.id;</span><br><span class="line">    <span class="keyword">const</span> userInfo = <span class="keyword">await</span> ctx.service.user.find(userId);</span><br><span class="line">    ctx.body = userInfo;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserController;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/service/user.js</span></span><br><span class="line"><span class="keyword">const</span> Service = <span class="built_in">require</span>(<span class="string">'egg'</span>).Service;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 默认不需要提供构造函数。</span></span><br><span class="line">  <span class="comment">// constructor(ctx) &#123;</span></span><br><span class="line">  <span class="comment">//   super(ctx); 如果需要在构造函数做一些处理，一定要有这句话，才能保证后面 `this.ctx`的使用。</span></span><br><span class="line">  <span class="comment">//   // 就可以直接通过 this.ctx 获取 ctx 了</span></span><br><span class="line">  <span class="comment">//   // 还可以直接通过 this.app 获取 app 了</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">  <span class="keyword">async</span> find(uid) &#123;</span><br><span class="line">    <span class="comment">// 假如 我们拿到用户 id 从数据库获取用户详细信息</span></span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> <span class="keyword">this</span>.ctx.db.query(<span class="string">'select * from user where uid = ?'</span>, uid);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 假定这里还有一些复杂的计算，然后返回需要的信息。</span></span><br><span class="line">    <span class="keyword">const</span> picture = <span class="keyword">await</span> <span class="keyword">this</span>.getPicture(uid);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      name: user.user_name,</span><br><span class="line">      age: user.age,</span><br><span class="line">      picture,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> getPicture(uid) &#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="keyword">this</span>.ctx.curl(<span class="string">`http://photoserver/uid=<span class="subst">$&#123;uid&#125;</span>`</span>, &#123; <span class="attr">dataType</span>: <span class="string">'json'</span> &#125;);</span><br><span class="line">    <span class="keyword">return</span> result.data;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserService;</span><br><span class="line"></span><br><span class="line"><span class="comment">// curl http://127.0.0.1:7001/user/1234</span></span><br></pre></td></tr></table></figure>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -215,6 +216,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#使用场景"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 使用场景</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#定义-service"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 定义 Service</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#属性"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 属性</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#service-ctx-详解"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Service ctx 详解</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#注意事项"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># 注意事项</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#使用-service"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 使用 Service</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

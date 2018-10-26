@@ -146,6 +146,7 @@ A example of <code>topics</code> is shown below:</p>
 <p>See the full example at <a href="https://github.com/eggjs/examples/tree/master/cnode-api" target="_blank" rel="noopener">eggjs/examples/cnode-api</a>.</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -251,6 +252,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#response-formatting"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Response Formatting</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#get-topics-list"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Get topics list</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#retrieve-one-topic"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># Retrieve one topic</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#create-topics"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># Create topics</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#update-topics"><span class="toc-detail-number">1.4.</span> <span class="toc-detail-text"># Update topics</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#error-handling"><span class="toc-detail-number">1.5.</span> <span class="toc-detail-text"># Error handling</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#getting-started"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Getting Started</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#application-initialization"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Application initialization</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#enable-validate-plugin"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Enable validate plugin</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#router-registry"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Router registry</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#developing-controller"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># Developing controller</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#developing-service"><span class="toc-detail-number">2.5.</span> <span class="toc-detail-text"># Developing service</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#unified-error-handling"><span class="toc-detail-number">2.6.</span> <span class="toc-detail-text"># Unified error handling</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#testing"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Testing</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-testing"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Controller Testing</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#service-testing"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># Service Testing</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

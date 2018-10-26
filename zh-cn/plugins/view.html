@@ -149,6 +149,7 @@ When you implement view engine, you will receive this options from <code>render<
 <p><a href="https://github.com/eggjs/egg-view/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -254,6 +255,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#install"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Install</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#usage"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Usage</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#use-a-template-engine"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Use a template engine</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#use-multiple-view-engine"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Use multiple view engine</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#how-to-write-a-view-plugin"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># How to write a view plugin</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#view-engine"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># View engine</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#register"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># Register</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configure"><span class="toc-detail-number">5.3.</span> <span class="toc-detail-text"># Configure</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#configuration"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Configuration</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#root"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># Root</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#defaultextension"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># defaultExtension</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#viewengine-and-defaultviewengine"><span class="toc-detail-number">6.3.</span> <span class="toc-detail-text"># viewEngine and defaultViewEngine</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#questions-suggestions"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Questions &amp; Suggestions</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#license"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># License</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

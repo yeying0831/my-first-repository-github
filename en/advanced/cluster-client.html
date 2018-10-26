@@ -194,6 +194,7 @@
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> APIClientBase = <span class="built_in">require</span>(<span class="string">'cluster-client'</span>).APIClientBase;</span><br><span class="line"><span class="keyword">const</span> RegistryClient = <span class="built_in">require</span>(<span class="string">'./registry_client'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">APIClient</span> <span class="keyword">extends</span> <span class="title">APIClientBase</span> </span>&#123;</span><br><span class="line">  get DataClient() &#123;</span><br><span class="line">    <span class="keyword">return</span> RegistryClient;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get clusterOptions() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      responseTimeout: <span class="number">120</span> * <span class="number">1000</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = APIClient;</span><br></pre></td></tr></table></figure>
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -299,6 +300,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#core-idea"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># core idea</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#client-interface-type-abstraction"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Client interface type abstraction</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#exception-handling"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># exception handling</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#protocol-and-time-series-to-invoke"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># protocol and time series to invoke</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#specific-use"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># specific use</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#the-configuration-items-related-to-cluster-client-in-the-framework"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># the configuration items related to cluster-client in the framework</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

@@ -144,6 +144,7 @@ See <a href="../basics/extend.html">Extend</a> for more details.</p>
 <p>The built-in plugin <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a> provides common security helper functions, including <code>helper.shtml / surl / sjs</code> and so on. It's strongly recommended to read <a href="./security.html">Security</a>.</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -249,6 +250,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#install-view-engine-plugin"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Install view engine plugin</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#enable-view-engine-plugin"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Enable view engine plugin</span></a></li></ol><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#configure-view-plugins"><span class="toc-detail-number"></span> <span class="toc-detail-text"># Configure view plugins</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#root-string"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># root {String}</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cache-boolean"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># cache {Boolean}</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mapping-and-defaultviewengine"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># mapping and defaultViewEngine</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#defaultextension"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># defaultExtension</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#render-page"><span class="toc-detail-number"></span> <span class="toc-detail-text"># Render Page</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#locals"><span class="toc-detail-number"></span> <span class="toc-detail-text"># Locals</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number"></span> <span class="toc-detail-text"># Helper</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#security"><span class="toc-detail-number"></span> <span class="toc-detail-text"># Security</span></a>
+</li></div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

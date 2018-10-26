@@ -126,6 +126,7 @@
 <p>作为一个高质量的插件，完善的单元测试是必不可少的，我们也提供了很多辅助工具使插件开发者可以无痛的编写测试，具体参见<a href="../core/unittest.html">单元测试</a>和<a href="./plugin.html">插件</a>中的相关内容。</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -231,6 +232,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件目录结构"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 插件目录结构</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件命名规范"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 插件命名规范</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#view-基类"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># View 基类</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#参数"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 参数</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件配置"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 插件配置</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># helper</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#安全相关"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 安全相关</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#单元测试"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># 单元测试</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

@@ -373,6 +373,7 @@
 </table>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -478,6 +479,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#应用-框架和插件"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 应用、框架和插件</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#loadunit"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># loadUnit</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#文件顺序"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 文件顺序</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#生命周期"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 生命周期</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#beforestart"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># beforeStart</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#ready"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># ready</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#beforeclose"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># beforeClose</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#文件加载规则"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># 文件加载规则</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#扩展-loader"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 扩展 Loader</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#loader-api"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Loader API</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#loadfile"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># loadFile</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#loadtoapp"><span class="toc-detail-number">7.2.</span> <span class="toc-detail-text"># loadToApp</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#loadtocontext"><span class="toc-detail-number">7.3.</span> <span class="toc-detail-text"># loadToContext</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#loaderoptions"><span class="toc-detail-number">7.4.</span> <span class="toc-detail-text"># LoaderOptions</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

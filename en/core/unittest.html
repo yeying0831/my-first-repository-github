@@ -248,6 +248,7 @@ Egg does some basic conventions for unit testing.</p>
 <p>All sample code can be found in <a href="https://github.com/eggjs/examples/blob/master/unittest" target="_blank" rel="noopener">eggjs/exmaples/unittest</a></p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -353,6 +354,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#why-unit-testing"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Why Unit Testing</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#test-framework"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Test Framework</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mocha"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Mocha</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ava"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># AVA</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#assertion-library"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Assertion Library</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#test-rule"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Test Rule</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#directory-structure"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Directory Structure</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#test-tool"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Test Tool</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#test-preparation"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Test Preparation</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mock"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># mock</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#app"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># app</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ctx"><span class="toc-detail-number">5.3.</span> <span class="toc-detail-text"># ctx</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#testing-order"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Testing Order</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#asynchronous-test"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Asynchronous Test</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#controller-test"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># Controller Test</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mock-csrf"><span class="toc-detail-number">8.1.</span> <span class="toc-detail-text"># mock CSRF</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#service-test"><span class="toc-detail-number">9.</span> <span class="toc-detail-text"># Service Test</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#extend-test"><span class="toc-detail-number">10.</span> <span class="toc-detail-text"># Extend Test</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#application"><span class="toc-detail-number">10.1.</span> <span class="toc-detail-text"># Application</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context"><span class="toc-detail-number">10.2.</span> <span class="toc-detail-text"># Context</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#request"><span class="toc-detail-number">10.3.</span> <span class="toc-detail-text"># Request</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#response"><span class="toc-detail-number">10.4.</span> <span class="toc-detail-text"># Response</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">10.5.</span> <span class="toc-detail-text"># Helper</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#mock-function"><span class="toc-detail-number">11.</span> <span class="toc-detail-text"># Mock Function</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mock-properties-and-functions"><span class="toc-detail-number">11.1.</span> <span class="toc-detail-text"># Mock Properties And Functions</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mock-service"><span class="toc-detail-number">11.2.</span> <span class="toc-detail-text"># Mock Service</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mock-httpclient"><span class="toc-detail-number">11.3.</span> <span class="toc-detail-text"># Mock HttpClient</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#sample-code"><span class="toc-detail-number">12.</span> <span class="toc-detail-text"># Sample Code</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

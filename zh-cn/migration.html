@@ -223,6 +223,7 @@
 </ul>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -328,6 +329,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#背景"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 背景</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#快速升级"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 快速升级</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件变更说明"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 插件变更说明</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#egg-multipart"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># egg-multipart</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#egg-userrole"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># egg-userrole</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#进一步升级"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 进一步升级</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#中间件使用-koa2-风格"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 中间件使用 Koa2 风格</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#yieldable-to-awaitable"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># yieldable to awaitable</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件升级"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 插件升级</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#升级事项"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># 升级事项</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#接口兼容"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># 接口兼容</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#插件发布规则"><span class="toc-detail-number">5.3.</span> <span class="toc-detail-text"># 插件发布规则</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

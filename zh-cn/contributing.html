@@ -186,6 +186,7 @@
 <figure class="highlight"><table><tr><td class="code"><pre><span class="line">"publishConfig": &#123;</span><br><span class="line">  "tag": "next"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -291,6 +292,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#提交-issue"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 提交 issue</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#常用标签说明"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 常用标签说明</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#编写文档"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 编写文档</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#提交代码"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 提交代码</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#提交-pull-request"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 提交 Pull Request</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#代码风格"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># 代码风格</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#commit-提交规范"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Commit 提交规范</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#发布管理"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 发布管理</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#分支策略"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 分支策略</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#发布策略"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 发布策略</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

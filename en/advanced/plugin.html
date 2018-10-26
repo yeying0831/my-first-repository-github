@@ -256,6 +256,7 @@
 <p><strong>Giving the same plugin name and the same API to the same plugin can make quick switch between them</strong>. This is really really useful in template and database.</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -361,6 +362,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#plugin-development"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Plugin Development</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#quick-start-with-scaffold"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Quick Start with Scaffold</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#directory-of-plugin"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Directory of Plugin</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#dependencies-management-of-plugins"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Dependencies Management of Plugins</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#what-can-plugin-do"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># What can plugin do?</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#built-in-objects-api-extension"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Built-in Objects API Extension</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#insert-custom-middlewares"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Insert Custom Middlewares</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#initialization-on-application-starting"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># Initialization on application starting</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#setup-schedule-task"><span class="toc-detail-number">4.4.</span> <span class="toc-detail-text"># Setup Schedule Task</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#best-practice-of-global-instance-plugins"><span class="toc-detail-number">4.5.</span> <span class="toc-detail-text"># Best Practice of Global Instance Plugins</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#plugin-locate-rule"><span class="toc-detail-number">4.6.</span> <span class="toc-detail-text"># Plugin Locate Rule</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#plugin-specification"><span class="toc-detail-number">4.7.</span> <span class="toc-detail-text"># Plugin Specification</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#why-do-not-use-the-npm-package-name-as-the-plugin-name"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Why do not use the npm package name as the plugin name?</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

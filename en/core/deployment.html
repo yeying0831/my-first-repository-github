@@ -107,6 +107,7 @@
 <p>Also you can manually call <code>ps -eo &quot;pid,command&quot; | grep -- &quot;--title=egg-server&quot;</code> to find master process then <code>kill</code> without <code>-9</code>.</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -212,6 +213,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#build"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Build</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#deploy"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Deploy</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#start"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Start</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#stop"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Stop</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

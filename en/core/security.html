@@ -335,6 +335,7 @@ Use SHTML to output HTML tags, while executing XSS filtering, then it can filter
 <p>For sites that do not open HTTPS, this function can be limited to preventing ISP hijacking.</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -440,6 +441,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#concept-of-web-security"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Concept of Web Security</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#open-or-close-the-configuration"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Open or close the configuration</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#match-and-ignore"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># match and ignore</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#prevention-of-security-threat-xss"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Prevention of security threat XSS</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#reflected-xss"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Reflected XSS</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#stored-xss"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Stored XSS</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#jsonp-xss"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># JSONP XSS</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#other-xss-precautions"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># Other XSS precautions</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#prevention-of-security-threat-csrf"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Prevention of Security Threat CSRF</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#prevention-3"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Prevention</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#prevention-of-security-threat-xst"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Prevention of Security Threat XST</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#more"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># More</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#prevention-4"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Prevention</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#prevention-of-security-threats-phishing-attacks"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Prevention of Security threats phishing attacks</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#url-phishing"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># URL Phishing</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#prevention-5"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># Prevention</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#photo-phishing"><span class="toc-detail-number">5.3.</span> <span class="toc-detail-text"># Photo Phishing</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#prevention-6"><span class="toc-detail-number">5.4.</span> <span class="toc-detail-text"># Prevention</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#iframe-phishing"><span class="toc-detail-number">5.5.</span> <span class="toc-detail-text"># Iframe Phishing</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#prevention-of-security-threats-hpp"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Prevention of Security threats HPP</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#more-2"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># More</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-protect"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># How to Protect</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#man-in-middle-attack"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># man-in-middle attack with HTTP / HTTPS</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#ssrf-protection"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># SSRF Protection</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-protect-2"><span class="toc-detail-number">8.1.</span> <span class="toc-detail-text"># How to Protect</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#other-build-in-security-tools"><span class="toc-detail-number">9.</span> <span class="toc-detail-text"># Other build-in security tools</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ctxissafedomaindomain"><span class="toc-detail-number">9.1.</span> <span class="toc-detail-text"># ctx.isSafeDomain(domain)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#appinjectcsrfstr"><span class="toc-detail-number">9.2.</span> <span class="toc-detail-text"># app.injectCsrf(str)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#appinjectnoncestr"><span class="toc-detail-number">9.3.</span> <span class="toc-detail-text"># app.injectNonce(str)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#appinjecthijackingdefensestr"><span class="toc-detail-number">9.4.</span> <span class="toc-detail-text"># app.injectHijackingDefense(str)</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

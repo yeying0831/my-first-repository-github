@@ -164,6 +164,7 @@
 <p>插件开发者可以根据自己的需求基于它定制订阅规范，如<a href="./schedule.html">定时任务</a>就是使用这种规范实现的。</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -269,6 +270,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#application"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Application</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#事件"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 事件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取方式"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 获取方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#context"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Context</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取方式-2"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 获取方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#request-response"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Request &amp; Response</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取方式-3"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 获取方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#controller"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Controller</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#service"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Service</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Helper</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取方式-4"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># 获取方式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#自定义-helper-方法"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># 自定义 helper 方法</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#config"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Config</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取方式-5"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># 获取方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#logger"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># Logger</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#app-logger"><span class="toc-detail-number">8.1.</span> <span class="toc-detail-text"># App Logger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#app-corelogger"><span class="toc-detail-number">8.2.</span> <span class="toc-detail-text"># App CoreLogger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context-logger"><span class="toc-detail-number">8.3.</span> <span class="toc-detail-text"># Context Logger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context-corelogger"><span class="toc-detail-number">8.4.</span> <span class="toc-detail-text"># Context CoreLogger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-logger-service-logger"><span class="toc-detail-number">8.5.</span> <span class="toc-detail-text"># Controller Logger &amp; Service Logger</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#subscription"><span class="toc-detail-number">9.</span> <span class="toc-detail-text"># Subscription</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

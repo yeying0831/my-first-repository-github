@@ -283,6 +283,7 @@ If you want to output json string in your views, please use <code>${ctx.helper.s
 <p><a href="https://github.com/eggjs/egg-security/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -388,6 +389,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#install"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Install</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#usage-configuration"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Usage &amp; configuration</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#disable-security-precautions"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Disable security precautions</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#match-ignore"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># match &amp; ignore</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#dynamic-configuration-for-security-plugins-depend-on-context"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Dynamic configuration for security plugins depend on context</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#api"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># API</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ctxissafedomaindomain"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># ctx.isSafeDomain(domain)</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#interface-restriction"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Interface restriction</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#csrf"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># CSRF</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#safe-redirect"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># safe redirect</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#jsonp"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># jsonp</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># helper</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#escape"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># .escape()</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#surl"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># .surl()</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#sjs"><span class="toc-detail-number">5.3.</span> <span class="toc-detail-text"># .sjs()</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#shtml"><span class="toc-detail-number">5.4.</span> <span class="toc-detail-text"># .shtml()</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#spath"><span class="toc-detail-number">5.5.</span> <span class="toc-detail-text"># .spath()</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#sjson"><span class="toc-detail-number">5.6.</span> <span class="toc-detail-text"># .sjson()</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#clifilter"><span class="toc-detail-number">5.7.</span> <span class="toc-detail-text"># .cliFilter()</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#security-headers"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Security Headers</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#hsts-strict-transport-security"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># hsts Strict-Transport-Security</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#csp"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># csp</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#x-download-optionsnoopen"><span class="toc-detail-number">6.3.</span> <span class="toc-detail-text"># X-Download-Options:noopen</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#x-content-type-optionsnosniff"><span class="toc-detail-number">6.4.</span> <span class="toc-detail-text"># X-Content-Type-Options:nosniff</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#x-frame-options"><span class="toc-detail-number">6.5.</span> <span class="toc-detail-text"># X-Frame-Options</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#x-xss-protection"><span class="toc-detail-number">6.6.</span> <span class="toc-detail-text"># X-XSS-Protection</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ssrf-protection"><span class="toc-detail-number">6.7.</span> <span class="toc-detail-text"># SSRF Protection</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#other"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Other</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#license"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># License</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

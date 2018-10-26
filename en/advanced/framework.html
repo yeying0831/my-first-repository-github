@@ -158,6 +158,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> mock = <span class="built_in">require</span>(<span class="string">'egg-mock'</span>);</span><br><span class="line">describe(<span class="string">'/test/index.test.js'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> app;</span><br><span class="line">  before(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    app = mock.cluster(&#123;</span><br><span class="line">      baseDir: <span class="string">'apps/example'</span>,</span><br><span class="line">      framework: <span class="literal">true</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> app.ready();</span><br><span class="line">  &#125;);</span><br><span class="line">  after(<span class="function"><span class="params">()</span> =&gt;</span> app.close());</span><br><span class="line">  it(<span class="string">'should get `started`'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// set the expectation of console</span></span><br><span class="line">    app.expect(<span class="string">'stdout'</span>, /started/);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -263,6 +264,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#framework-and-multiprocess"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Framework and Multiprocess</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#how-to-customize-a-framework"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># How to Customize a Framework</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#framework-api"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Framework API</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#framework-extension"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Framework Extension</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#principle-of-framework-extension"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Principle of Framework Extension</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#custom-agent"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># Custom Agent</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#custom-loader"><span class="toc-detail-number">2.5.</span> <span class="toc-detail-text"># Custom Loader</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#the-principle-of-launch"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># The principle of Launch</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#framework-testing"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Framework Testing</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#initiation"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Initiation</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cache"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Cache</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#multipleprocess-testing"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># Multipleprocess Testing</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

@@ -145,6 +145,7 @@ We will use <a href="https://github.com/jaredhanson/passport-local" target="_bla
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;plugin_root&#125;/app.js</span></span><br><span class="line"><span class="keyword">const</span> LocalStrategy = <span class="built_in">require</span>(<span class="string">'passport-local'</span>).Strategy;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = app.config.passportLocal;</span><br><span class="line">  config.passReqToCallback = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  app.passport.use(<span class="keyword">new</span> LocalStrategy(config, (req, username, password, done) =&gt; &#123;</span><br><span class="line">    <span class="comment">// Cleans up the data returned by the Passport plugin and returns the User object</span></span><br><span class="line">    <span class="keyword">const</span> user = &#123;</span><br><span class="line">      provider: <span class="string">'local'</span>,</span><br><span class="line">      username,</span><br><span class="line">      password,</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// This does not process application-level logic and passes it to app.passport.verify for unified processing.</span></span><br><span class="line">    app.passport.doVerify(req, user, done);</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -250,6 +251,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#title-passport"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Title: Passport</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-egg-passport"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Using egg-passport</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#installation"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Installation</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configuration"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Configuration</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mounting-routes"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Mounting Routes</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#user-information-processing"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># User Information Processing</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#api"><span class="toc-detail-number">2.5.</span> <span class="toc-detail-text"># API</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-passport-ecosystem"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Using Passport Ecosystem</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#installation-2"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Installation</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configuration-2"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># Configuration</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mounting-routes-2"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Mounting Routes</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#how-to-develop-an-egg-passport-plugin"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># How to develop an egg-passport plugin</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

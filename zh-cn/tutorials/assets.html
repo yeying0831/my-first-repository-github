@@ -150,6 +150,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.prod.js</span></span><br><span class="line">exports.assets = &#123;</span><br><span class="line">  url: <span class="string">'https://cdn'</span>,</span><br><span class="line">  publicPath: <span class="string">'/myapp/'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -255,6 +256,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#页面渲染"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 页面渲染</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#使用-assets-模板引擎"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 使用 assets 模板引擎</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#使用其他模板引擎"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 使用其他模板引擎</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#上下文数据"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># 上下文数据</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#构建工具"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 构建工具</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#映射关系"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 映射关系</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#本地开发"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 本地开发</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#部署"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># 部署</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

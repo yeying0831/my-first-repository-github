@@ -126,6 +126,7 @@ we can edit <code>config.default.js</code> like this:</p>
 <p>For more configs about <code>match</code> and <code>ignore</code>, please refer to <a href="https://github.com/eggjs/egg-path-matching" target="_blank" rel="noopener">egg-path-matching</a>.</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -231,6 +232,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#writing-middleware"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Writing Middleware</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-write"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># How to write</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configuration"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># Configuration</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-middleware"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Using Middleware</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#using-middleware-in-application"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Using Middleware in Application</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-middleware-in-framework-and-plugin"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Using Middleware in Framework and Plugin</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-middleware-in-router"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Using Middleware in Router</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#default-framework-middleware"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Default Framework Middleware</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#use-koas-middleware"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Use Koa&#39;s Middleware</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#general-configuration"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># General Configuration</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#enable"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># enable</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#match-and-ignore"><span class="toc-detail-number">7.2.</span> <span class="toc-detail-text"># match and ignore</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

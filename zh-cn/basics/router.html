@@ -220,6 +220,7 @@
 <p>也可直接使用 <a href="https://github.com/eggjs/egg-router-plus" target="_blank" rel="noopener">egg-router-plus</a>。</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -325,6 +326,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#如何定义-router"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 如何定义 Router</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#router-详细定义说明"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Router 详细定义说明</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#注意事项"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 注意事项</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#restful-风格的-url-定义"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># RESTful 风格的 URL 定义</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#router-实战"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># router 实战</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#参数获取"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 参数获取</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#表单内容的获取"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># 表单内容的获取</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#表单校验"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># 表单校验</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#重定向"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># 重定向</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#中间件的使用"><span class="toc-detail-number">3.5.</span> <span class="toc-detail-text"># 中间件的使用</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#太多路由映射"><span class="toc-detail-number">3.6.</span> <span class="toc-detail-text"># 太多路由映射？</span></a></li></ol></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

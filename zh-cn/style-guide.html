@@ -75,6 +75,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/extend/application.js</span></span><br><span class="line"><span class="keyword">const</span> CACHE = <span class="built_in">Symbol</span>(<span class="string">'Application#cache'</span>);</span><br><span class="line"><span class="keyword">const</span> CacheManager = <span class="built_in">require</span>(<span class="string">'../../lib/cache_manager'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  get cache() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>[CACHE]) &#123;</span><br><span class="line">      <span class="keyword">this</span>[CACHE] = <span class="keyword">new</span> CacheManager(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>[CACHE];</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -180,6 +181,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#classify"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Classify</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#private-property-lazy-initialization"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Private property &amp;&amp; Lazy Initialization</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>

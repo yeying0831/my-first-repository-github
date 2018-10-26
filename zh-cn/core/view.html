@@ -120,6 +120,7 @@
 <p>框架内置的 <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a> 插件，为我们提供了常见的安全辅助函数，包括 <code>helper.shtml / surl / sjs</code> 等等等，强烈建议阅读下<a href="./security.html">安全</a>。</p>
 
   </article>
+
   <aside id="mobileAside" class="toc">
   <div class="mobile-menu">
     <ul>
@@ -225,6 +226,39 @@ mobileTrigger.onclick = function(e) {
 })();
 </script>
 
+
+  <div class="post-toc" id="post-toc">
+  <a id="toc-toggle" class="toc-toggle"></a>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#引入-view-插件"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 引入 view 插件</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#启用插件"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 启用插件</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#配置插件"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 配置插件</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#root-string"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># root {String}</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cache-boolean"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># cache {Boolean}</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mapping-和-defaultviewengine"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># mapping 和 defaultViewEngine</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#defaultextension"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># defaultExtension</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#渲染页面"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 渲染页面</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#locals"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Locals</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Helper</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#security"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Security</span></a></li></ol>
+</div>
+
+<script>
+
+var tocContainer = document.getElementById('post-toc');
+var tocToggle = document.getElementById('toc-toggle');
+var tocDetail = document.getElementsByClassName('toc-detail')[0];
+
+tocToggle.onclick = function(e) {  
+  var className = tocContainer.className;
+  if(className.indexOf('collapsed') !== -1){
+    tocContainer.className = 'post-toc';
+  } else {
+    tocContainer.className = 'post-toc collapsed';
+  }  
+};
+
+(function(){
+  if(!tocDetail){
+    tocContainer.style.display = 'none';
+  }
+
+  if(tocDetail){
+    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+  }
+})();
+</script>
+
+  
 </div>
 
   </div>
