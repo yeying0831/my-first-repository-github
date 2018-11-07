@@ -57,71 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>View 模板渲染</h1>
-    <p>绝大多数情况，我们都需要读取数据后渲染模板，然后呈现给用户。故我们需要引入对应的模板引擎。</p>
-<p>框架内置 <a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> 作为模板解决方案，并支持多模板渲染，每个模板引擎都以插件的方式引入，但保持渲染的 API 一致。如果想更深入的了解，可以查看<a href="../advanced/view-plugin.html">模板插件开发</a>。</p>
-<p>以下以官方支持的 View 插件 <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a> 为例</p>
-<h2 id="引入-view-插件"><a class="markdown-anchor" href="#引入-view-插件">#</a> 引入 view 插件</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-view-nunjucks --save</span><br></pre></td></tr></table></figure>
-<h3 id="启用插件"><a class="markdown-anchor" href="#启用插件">#</a> 启用插件</h3>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.nunjucks = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-view-nunjucks'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="配置插件"><a class="markdown-anchor" href="#配置插件">#</a> 配置插件</h2>
-<p><a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> 提供了 <code>config.view</code> 通用配置</p>
-<h3 id="root-string"><a class="markdown-anchor" href="#root-string">#</a> root {String}</h3>
-<p>模板文件的根目录，为绝对路径，默认为 <code>${baseDir}/app/view</code>。支持配置多个目录，以 <code>,</code> 分割，会从多个目录查找文件。</p>
-<p>如下示例演示了如何配置多个 <code>view</code> 目录：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;&#125;;</span><br><span class="line">  config.view = &#123;</span><br><span class="line">    root: [</span><br><span class="line">      path.join(appInfo.baseDir, <span class="string">'app/view'</span>),</span><br><span class="line">      path.join(appInfo.baseDir, <span class="string">'path/to/another'</span>),</span><br><span class="line">    ].join(<span class="string">','</span>)</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="cache-boolean"><a class="markdown-anchor" href="#cache-boolean">#</a> cache {Boolean}</h3>
-<p>模板路径缓存，默认开启。框架会根据 root 配置的目录依次查找，如果匹配则会缓存文件路径，下次渲染相同路径时不会重新查找。</p>
-<h3 id="mapping-和-defaultviewengine"><a class="markdown-anchor" href="#mapping-和-defaultviewengine">#</a> mapping 和 defaultViewEngine</h3>
-<p>每个模板在注册时都会指定一个模板名（viewEngineName），在使用时需要根据后缀来匹配模板名，比如指定 <code>.nj</code> 后缀的文件使用 Nunjucks 进行渲染。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  view: &#123;</span><br><span class="line">    mapping: &#123;</span><br><span class="line">      <span class="string">'.nj'</span>: <span class="string">'nunjucks'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>调用 render 渲染文件时，会根据上述配置的后缀名去寻找对应的模板引擎。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">await</span> ctx.render(<span class="string">'home.nj'</span>);</span><br></pre></td></tr></table></figure>
-<p>必须配置文件后缀和模板引擎的映射，否则无法找到对应的模板引擎，但是可以使用 <code>defaultViewEngine</code> 做全局配置。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  view: &#123;</span><br><span class="line">    defaultViewEngine: <span class="string">'nunjucks'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>如果根据文件后缀没有找到对应的模板引擎，会使用默认的模板引擎进行渲染。对于只使用一种模板引擎的应用，建议配置此选项。</p>
-<h3 id="defaultextension"><a class="markdown-anchor" href="#defaultextension">#</a> defaultExtension</h3>
-<p>一般在调用 render 时的第一个参数需要包含文件后缀，如果配置了 defaultExtension 可以省略后缀。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  view: &#123;</span><br><span class="line">    defaultExtension: <span class="string">'.nj'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// render app/view/home.nj</span></span><br><span class="line"><span class="keyword">await</span> ctx.render(<span class="string">'home'</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="渲染页面"><a class="markdown-anchor" href="#渲染页面">#</a> 渲染页面</h2>
-<p>框架在 Context 上提供了 3 个接口，返回值均为 Promise:</p>
-<ul>
-<li><code>render(name, locals)</code> 渲染模板文件, 并赋值给 ctx.body</li>
-<li><code>renderView(name, locals)</code> 渲染模板文件, 仅返回不赋值</li>
-<li><code>renderString(tpl, locals)</code> 渲染模板字符串, 仅返回不赋值</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/controller/home.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="keyword">const</span> data = &#123; <span class="attr">name</span>: <span class="string">'egg'</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// render a template, path relate to `app/view`</span></span><br><span class="line">    <span class="keyword">await</span> ctx.render(<span class="string">'home/index.tpl'</span>, data);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// or manually set render result to ctx.body</span></span><br><span class="line">    ctx.body = <span class="keyword">await</span> ctx.renderView(<span class="string">'path/to/file.tpl'</span>, data);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// or render string directly</span></span><br><span class="line">    ctx.body = <span class="keyword">await</span> ctx.renderString(<span class="string">'hi, &#123;&#123; name &#125;&#125;'</span>, data, &#123;</span><br><span class="line">      viewEngine: <span class="string">'nunjucks'</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>当使用 <code>renderString</code> 时需要指定模板引擎，如果已经定义 <code>defaultViewEngine</code> 这里可以省略。</p>
-<h2 id="locals"><a class="markdown-anchor" href="#locals">#</a> Locals</h2>
-<p>在渲染页面的过程中，我们通常需要一个变量来收集需要传递给模板的变量，在框架里面，我们提供了 <code>app.locals</code> 和 <code>ctx.locals</code>。</p>
-<ul>
-<li><code>app.locals</code> 为全局的，一般在 <code>app.js</code> 里面配置全局变量。</li>
-<li><code>ctx.locals</code> 为单次请求的，会合并 <code>app.locals</code>。</li>
-<li>可以直接赋值对象，框架在对应的 setter 里面会自动 merge。</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// `app.locals` 会合并到 `ctx.locals</span></span><br><span class="line">ctx.app.locals = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;;</span><br><span class="line">ctx.locals.b = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(ctx.locals); <span class="comment">// &#123; a: 1, b: 2 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 一次请求过程中，仅会在第一次使用 `ctx.locals` 时把 `app.locals` 合并进去。</span></span><br><span class="line">ctx.app.locals = &#123; <span class="attr">a</span>: <span class="number">2</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(ctx.locals); <span class="comment">// 上面已经合并过一次，故输出还是 &#123; a: 1, b: 2 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以直接赋值整个对象，不用担心会覆盖前面的值，我们通过 setter 做了自动合并。</span></span><br><span class="line">ctx.locals.c = <span class="number">3</span>;</span><br><span class="line">ctx.locals = &#123; <span class="attr">d</span>: <span class="number">4</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(ctx.locals); <span class="comment">// &#123; a: 1, b: 2, c: 3, d: 4 &#125;</span></span><br></pre></td></tr></table></figure>
-<p>但在实际业务开发中，controller 中一般不会直接使用这 2 个对象，直接使用 <code>ctx.render(name, data)</code> 即可：</p>
-<ul>
-<li>框架会自动把 <code>data</code> 合并到 <code>ctx.locals</code>。</li>
-<li>框架会自动注入 <code>ctx</code>, <code>request</code>, <code>helper</code> 方便使用。</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ctx.app.locals = &#123; <span class="attr">appName</span>: <span class="string">'showcase'</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> data = &#123; <span class="attr">name</span>: <span class="string">'egg'</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// will auto merge `data` to `ctx.locals`, output: egg - showcase</span></span><br><span class="line"><span class="keyword">await</span> ctx.renderString(<span class="string">'&#123;&#123; name &#125;&#125; - &#123;&#123; appName &#125;&#125;'</span>, data);</span><br><span class="line"></span><br><span class="line"><span class="comment">// helper, ctx, request will auto inject</span></span><br><span class="line"><span class="keyword">await</span> ctx.renderString(<span class="string">'&#123;&#123; name &#125;&#125; - &#123;&#123; helper.lowercaseFirst(ctx.app.config.baseDir) &#125;&#125;'</span>, data);</span><br></pre></td></tr></table></figure>
-<p>注意：</p>
-<ul>
-<li><strong>ctx.locals 有缓存，只在第一次访问 ctx.locals 时合并 app.locals。</strong></li>
-<li>原 Koa 中的 <code>ctx.state</code>，由于容易产生歧义，在框架中被覆盖为 locals，即 <code>ctx.state</code> 和 <code>ctx.locals</code> 等价，我们建议使用后者。</li>
-</ul>
-<h2 id="helper"><a class="markdown-anchor" href="#helper">#</a> Helper</h2>
-<p>在模板中可以直接使用 <code>helper</code> 上注册的方法，具体可以参见<a href="../basics/extend.html">扩展</a>。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/extend/helper.js</span></span><br><span class="line">exports.lowercaseFirst = <span class="function"><span class="params">str</span> =&gt;</span> str[<span class="number">0</span>].toLowerCase() + str.substring(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="keyword">await</span> ctx.renderString(<span class="string">'&#123;&#123; helper.lowercaseFirst(name) &#125;&#125;'</span>, data);</span><br></pre></td></tr></table></figure>
-<h2 id="security"><a class="markdown-anchor" href="#security">#</a> Security</h2>
-<p>框架内置的 <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a> 插件，为我们提供了常见的安全辅助函数，包括 <code>helper.shtml / surl / sjs</code> 等等等，强烈建议阅读下<a href="./security.html">安全</a>。</p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
@@ -192,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -227,25 +163,81 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>View 模板渲染</h1>
+          <p>绝大多数情况，我们都需要读取数据后渲染模板，然后呈现给用户。故我们需要引入对应的模板引擎。</p>
+<p>框架内置 <a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> 作为模板解决方案，并支持多模板渲染，每个模板引擎都以插件的方式引入，但保持渲染的 API 一致。如果想更深入的了解，可以查看<a href="../advanced/view-plugin.html">模板插件开发</a>。</p>
+<p>以下以官方支持的 View 插件 <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a> 为例</p>
+<h2 id="引入-view-插件"><a class="markdown-anchor" href="#引入-view-插件">#</a> 引入 view 插件</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-view-nunjucks --save</span><br></pre></td></tr></table></figure>
+<h3 id="启用插件"><a class="markdown-anchor" href="#启用插件">#</a> 启用插件</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.nunjucks = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-view-nunjucks'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="配置插件"><a class="markdown-anchor" href="#配置插件">#</a> 配置插件</h2>
+<p><a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> 提供了 <code>config.view</code> 通用配置</p>
+<h3 id="root-string"><a class="markdown-anchor" href="#root-string">#</a> root {String}</h3>
+<p>模板文件的根目录，为绝对路径，默认为 <code>${baseDir}/app/view</code>。支持配置多个目录，以 <code>,</code> 分割，会从多个目录查找文件。</p>
+<p>如下示例演示了如何配置多个 <code>view</code> 目录：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;&#125;;</span><br><span class="line">  config.view = &#123;</span><br><span class="line">    root: [</span><br><span class="line">      path.join(appInfo.baseDir, <span class="string">'app/view'</span>),</span><br><span class="line">      path.join(appInfo.baseDir, <span class="string">'path/to/another'</span>),</span><br><span class="line">    ].join(<span class="string">','</span>)</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="cache-boolean"><a class="markdown-anchor" href="#cache-boolean">#</a> cache {Boolean}</h3>
+<p>模板路径缓存，默认开启。框架会根据 root 配置的目录依次查找，如果匹配则会缓存文件路径，下次渲染相同路径时不会重新查找。</p>
+<h3 id="mapping-和-defaultviewengine"><a class="markdown-anchor" href="#mapping-和-defaultviewengine">#</a> mapping 和 defaultViewEngine</h3>
+<p>每个模板在注册时都会指定一个模板名（viewEngineName），在使用时需要根据后缀来匹配模板名，比如指定 <code>.nj</code> 后缀的文件使用 Nunjucks 进行渲染。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  view: &#123;</span><br><span class="line">    mapping: &#123;</span><br><span class="line">      <span class="string">'.nj'</span>: <span class="string">'nunjucks'</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>调用 render 渲染文件时，会根据上述配置的后缀名去寻找对应的模板引擎。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">await</span> ctx.render(<span class="string">'home.nj'</span>);</span><br></pre></td></tr></table></figure>
+<p>必须配置文件后缀和模板引擎的映射，否则无法找到对应的模板引擎，但是可以使用 <code>defaultViewEngine</code> 做全局配置。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  view: &#123;</span><br><span class="line">    defaultViewEngine: <span class="string">'nunjucks'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>如果根据文件后缀没有找到对应的模板引擎，会使用默认的模板引擎进行渲染。对于只使用一种模板引擎的应用，建议配置此选项。</p>
+<h3 id="defaultextension"><a class="markdown-anchor" href="#defaultextension">#</a> defaultExtension</h3>
+<p>一般在调用 render 时的第一个参数需要包含文件后缀，如果配置了 defaultExtension 可以省略后缀。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  view: &#123;</span><br><span class="line">    defaultExtension: <span class="string">'.nj'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// render app/view/home.nj</span></span><br><span class="line"><span class="keyword">await</span> ctx.render(<span class="string">'home'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="渲染页面"><a class="markdown-anchor" href="#渲染页面">#</a> 渲染页面</h2>
+<p>框架在 Context 上提供了 3 个接口，返回值均为 Promise:</p>
+<ul>
+<li><code>render(name, locals)</code> 渲染模板文件, 并赋值给 ctx.body</li>
+<li><code>renderView(name, locals)</code> 渲染模板文件, 仅返回不赋值</li>
+<li><code>renderString(tpl, locals)</code> 渲染模板字符串, 仅返回不赋值</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/controller/home.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="keyword">const</span> data = &#123; <span class="attr">name</span>: <span class="string">'egg'</span> &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// render a template, path relate to `app/view`</span></span><br><span class="line">    <span class="keyword">await</span> ctx.render(<span class="string">'home/index.tpl'</span>, data);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// or manually set render result to ctx.body</span></span><br><span class="line">    ctx.body = <span class="keyword">await</span> ctx.renderView(<span class="string">'path/to/file.tpl'</span>, data);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// or render string directly</span></span><br><span class="line">    ctx.body = <span class="keyword">await</span> ctx.renderString(<span class="string">'hi, &#123;&#123; name &#125;&#125;'</span>, data, &#123;</span><br><span class="line">      viewEngine: <span class="string">'nunjucks'</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当使用 <code>renderString</code> 时需要指定模板引擎，如果已经定义 <code>defaultViewEngine</code> 这里可以省略。</p>
+<h2 id="locals"><a class="markdown-anchor" href="#locals">#</a> Locals</h2>
+<p>在渲染页面的过程中，我们通常需要一个变量来收集需要传递给模板的变量，在框架里面，我们提供了 <code>app.locals</code> 和 <code>ctx.locals</code>。</p>
+<ul>
+<li><code>app.locals</code> 为全局的，一般在 <code>app.js</code> 里面配置全局变量。</li>
+<li><code>ctx.locals</code> 为单次请求的，会合并 <code>app.locals</code>。</li>
+<li>可以直接赋值对象，框架在对应的 setter 里面会自动 merge。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// `app.locals` 会合并到 `ctx.locals</span></span><br><span class="line">ctx.app.locals = &#123; <span class="attr">a</span>: <span class="number">1</span> &#125;;</span><br><span class="line">ctx.locals.b = <span class="number">2</span>;</span><br><span class="line"><span class="built_in">console</span>.log(ctx.locals); <span class="comment">// &#123; a: 1, b: 2 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 一次请求过程中，仅会在第一次使用 `ctx.locals` 时把 `app.locals` 合并进去。</span></span><br><span class="line">ctx.app.locals = &#123; <span class="attr">a</span>: <span class="number">2</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(ctx.locals); <span class="comment">// 上面已经合并过一次，故输出还是 &#123; a: 1, b: 2 &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 也可以直接赋值整个对象，不用担心会覆盖前面的值，我们通过 setter 做了自动合并。</span></span><br><span class="line">ctx.locals.c = <span class="number">3</span>;</span><br><span class="line">ctx.locals = &#123; <span class="attr">d</span>: <span class="number">4</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(ctx.locals); <span class="comment">// &#123; a: 1, b: 2, c: 3, d: 4 &#125;</span></span><br></pre></td></tr></table></figure>
+<p>但在实际业务开发中，controller 中一般不会直接使用这 2 个对象，直接使用 <code>ctx.render(name, data)</code> 即可：</p>
+<ul>
+<li>框架会自动把 <code>data</code> 合并到 <code>ctx.locals</code>。</li>
+<li>框架会自动注入 <code>ctx</code>, <code>request</code>, <code>helper</code> 方便使用。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ctx.app.locals = &#123; <span class="attr">appName</span>: <span class="string">'showcase'</span> &#125;;</span><br><span class="line"><span class="keyword">const</span> data = &#123; <span class="attr">name</span>: <span class="string">'egg'</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// will auto merge `data` to `ctx.locals`, output: egg - showcase</span></span><br><span class="line"><span class="keyword">await</span> ctx.renderString(<span class="string">'&#123;&#123; name &#125;&#125; - &#123;&#123; appName &#125;&#125;'</span>, data);</span><br><span class="line"></span><br><span class="line"><span class="comment">// helper, ctx, request will auto inject</span></span><br><span class="line"><span class="keyword">await</span> ctx.renderString(<span class="string">'&#123;&#123; name &#125;&#125; - &#123;&#123; helper.lowercaseFirst(ctx.app.config.baseDir) &#125;&#125;'</span>, data);</span><br></pre></td></tr></table></figure>
+<p>注意：</p>
+<ul>
+<li><strong>ctx.locals 有缓存，只在第一次访问 ctx.locals 时合并 app.locals。</strong></li>
+<li>原 Koa 中的 <code>ctx.state</code>，由于容易产生歧义，在框架中被覆盖为 locals，即 <code>ctx.state</code> 和 <code>ctx.locals</code> 等价，我们建议使用后者。</li>
+</ul>
+<h2 id="helper"><a class="markdown-anchor" href="#helper">#</a> Helper</h2>
+<p>在模板中可以直接使用 <code>helper</code> 上注册的方法，具体可以参见<a href="../basics/extend.html">扩展</a>。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/extend/helper.js</span></span><br><span class="line">exports.lowercaseFirst = <span class="function"><span class="params">str</span> =&gt;</span> str[<span class="number">0</span>].toLowerCase() + str.substring(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="keyword">await</span> ctx.renderString(<span class="string">'&#123;&#123; helper.lowercaseFirst(name) &#125;&#125;'</span>, data);</span><br></pre></td></tr></table></figure>
+<h2 id="security"><a class="markdown-anchor" href="#security">#</a> Security</h2>
+<p>框架内置的 <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a> 插件，为我们提供了常见的安全辅助函数，包括 <code>helper.shtml / surl / sjs</code> 等等等，强烈建议阅读下<a href="./security.html">安全</a>。</p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#引入-view-插件"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 引入 view 插件</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#启用插件"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 启用插件</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#配置插件"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 配置插件</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#root-string"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># root {String}</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cache-boolean"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># cache {Boolean}</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mapping-和-defaultviewengine"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># mapping 和 defaultViewEngine</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#defaultextension"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># defaultExtension</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#渲染页面"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 渲染页面</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#locals"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Locals</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Helper</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#security"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Security</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -253,12 +245,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

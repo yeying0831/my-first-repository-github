@@ -57,20 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1></h1>
-    <h1 id="application-startup-configuration"><a class="markdown-anchor" href="#application-startup-configuration">#</a> Application Startup Configuration</h1>
-<p>When the application starts up, we often need to set up some initialization logic. The application bootstraps with those specific configurations. It is in a healthy state and be able to take external service requests after those configurations successfully applied. Otherwise, it failed.</p>
-<p>The framework starts with a file called <code>app.js</code> that executes the application initialization logic, if present, and it returns a function.</p>
-<p>For example, we need to load a list of national cities from the remote server during application startup for subsequent use in the controller:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.beforeStart(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="comment">// The lifecycle method runs before the application bootstraps</span></span><br><span class="line">    app.cities = <span class="keyword">await</span> app.curl(<span class="string">'http://example.com/city.json'</span>, &#123;</span><br><span class="line">      method: <span class="string">'GET'</span>,</span><br><span class="line">      dataType: <span class="string">'json'</span>,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// also could create an anonymous context to call Service</span></span><br><span class="line">    <span class="comment">// const ctx = app.createAnonymousContext();</span></span><br><span class="line">    <span class="comment">// app.cities = await ctx.service.cities.load();</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><code>cities</code> attribute has attached on the global <code>app</code>. It can be accessed in the controller,</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="comment">// 'app.cities' is loaded, and you can access it by 'this.ctx.app.cities'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><strong>Note: When the framework executes the lifecycle method <code>beforeStart</code>, do not run time-consuming operation. The framework enables a <em>Timeout</em> setting by default when it starts up.</strong></p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -141,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -176,25 +163,30 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1></h1>
+          <h1 id="application-startup-configuration"><a class="markdown-anchor" href="#application-startup-configuration">#</a> Application Startup Configuration</h1>
+<p>When the application starts up, we often need to set up some initialization logic. The application bootstraps with those specific configurations. It is in a healthy state and be able to take external service requests after those configurations successfully applied. Otherwise, it failed.</p>
+<p>The framework starts with a file called <code>app.js</code> that executes the application initialization logic, if present, and it returns a function.</p>
+<p>For example, we need to load a list of national cities from the remote server during application startup for subsequent use in the controller:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.beforeStart(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="comment">// The lifecycle method runs before the application bootstraps</span></span><br><span class="line">    app.cities = <span class="keyword">await</span> app.curl(<span class="string">'http://example.com/city.json'</span>, &#123;</span><br><span class="line">      method: <span class="string">'GET'</span>,</span><br><span class="line">      dataType: <span class="string">'json'</span>,</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// also could create an anonymous context to call Service</span></span><br><span class="line">    <span class="comment">// const ctx = app.createAnonymousContext();</span></span><br><span class="line">    <span class="comment">// app.cities = await ctx.service.cities.load();</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>cities</code> attribute has attached on the global <code>app</code>. It can be accessed in the controller,</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="comment">// 'app.cities' is loaded, and you can access it by 'this.ctx.app.cities'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Note: When the framework executes the lifecycle method <code>beforeStart</code>, do not run time-consuming operation. The framework enables a <em>Timeout</em> setting by default when it starts up.</strong></p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-1"><a class="toc-detail-link" href="#application-startup-configuration"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Application Startup Configuration</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -202,12 +194,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

@@ -57,67 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>教程</h1>
-    <ul>
-<li><a href="../intro/quickstart.html">快速入门</a></li>
-<li><a href="./progressive.html">渐进式开发</a></li>
-<li><a href="./restful.html">RESTful API</a></li>
-</ul>
-<h2 id="骨架类型说明"><a class="markdown-anchor" href="#骨架类型说明">#</a> 骨架类型说明</h2>
-<p>你可以使用骨架类型，像下面这样:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-init --<span class="built_in">type</span>=simple</span><br></pre></td></tr></table></figure>
-<h3 id="选项"><a class="markdown-anchor" href="#选项">#</a> 选项</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">骨架类型</th>
-<th style="text-align:right">说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">simple</td>
-<td style="text-align:right">简单 egg 应用程序骨架</td>
-</tr>
-<tr>
-<td style="text-align:center">empty</td>
-<td style="text-align:right">空的 egg 应用程序骨架</td>
-</tr>
-<tr>
-<td style="text-align:center">plugin</td>
-<td style="text-align:right">egg plugin 骨架</td>
-</tr>
-<tr>
-<td style="text-align:center">framework</td>
-<td style="text-align:right">egg framework 骨架</td>
-</tr>
-</tbody>
-</table>
-<h2 id="模板引擎"><a class="markdown-anchor" href="#模板引擎">#</a> 模板引擎</h2>
-<p>框架内置 <a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> 作为模板解决方案，并支持多模板渲染，每个模板引擎都以插件的方式引入，但保持渲染的 API 一致。查看<a href="../core/view.html">如何使用模板</a>，如果想更深入的了解，可以查看<a href="../advanced/view-plugin.html">模板插件开发</a>。</p>
-<p>可使用以下模板引擎，更多<a href="https://github.com/search?utf8=%E2%9C%93&amp;q=topic%3Aegg-view&amp;type=Repositories&amp;ref=searchresults" target="_blank" rel="noopener">查看</a></p>
-<ul>
-<li><a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a></li>
-<li><a href="https://github.com/eggjs/egg-view-react" target="_blank" rel="noopener">egg-view-react</a></li>
-<li><a href="https://github.com/eggjs/egg-view-vue" target="_blank" rel="noopener">egg-view-vue</a></li>
-<li><a href="https://github.com/eggjs/egg-view-ejs" target="_blank" rel="noopener">egg-view-ejs</a></li>
-<li><a href="https://github.com/eggjs/egg-view-handlebars" target="_blank" rel="noopener">egg-view-handlebars</a></li>
-<li><a href="https://github.com/chrisyip/egg-view-pug" target="_blank" rel="noopener">egg-view-pug</a></li>
-<li><a href="https://github.com/eggjs/egg-view-xtpl" target="_blank" rel="noopener">egg-view-xtpl</a></li>
-</ul>
-<h2 id="数据库"><a class="markdown-anchor" href="#数据库">#</a> 数据库</h2>
-<p>官方 <a href="https://github.com/eggjs/egg/issues/388" target="_blank" rel="noopener">ORM 模型还在设计中</a>，但现在可以使用</p>
-<ul>
-<li><a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a></li>
-<li><a href="https://github.com/eggjs/egg-mongoose" target="_blank" rel="noopener">egg-mongoose</a></li>
-<li><a href="https://github.com/eggjs/egg-mysql" target="_blank" rel="noopener">egg-mysql</a>，可查看 <a href="./mysql.html">MySQL 教程</a></li>
-<li><a href="https://github.com/eggjs/egg-graphql" target="_blank" rel="noopener">egg-graphql</a></li>
-</ul>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
@@ -188,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -223,25 +163,77 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>教程</h1>
+          <ul>
+<li><a href="../intro/quickstart.html">快速入门</a></li>
+<li><a href="./progressive.html">渐进式开发</a></li>
+<li><a href="./restful.html">RESTful API</a></li>
+</ul>
+<h2 id="骨架类型说明"><a class="markdown-anchor" href="#骨架类型说明">#</a> 骨架类型说明</h2>
+<p>你可以使用骨架类型，像下面这样:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-init --<span class="built_in">type</span>=simple</span><br></pre></td></tr></table></figure>
+<h3 id="选项"><a class="markdown-anchor" href="#选项">#</a> 选项</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">骨架类型</th>
+<th style="text-align:right">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">simple</td>
+<td style="text-align:right">简单 egg 应用程序骨架</td>
+</tr>
+<tr>
+<td style="text-align:center">empty</td>
+<td style="text-align:right">空的 egg 应用程序骨架</td>
+</tr>
+<tr>
+<td style="text-align:center">plugin</td>
+<td style="text-align:right">egg plugin 骨架</td>
+</tr>
+<tr>
+<td style="text-align:center">framework</td>
+<td style="text-align:right">egg framework 骨架</td>
+</tr>
+</tbody>
+</table>
+<h2 id="模板引擎"><a class="markdown-anchor" href="#模板引擎">#</a> 模板引擎</h2>
+<p>框架内置 <a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> 作为模板解决方案，并支持多模板渲染，每个模板引擎都以插件的方式引入，但保持渲染的 API 一致。查看<a href="../core/view.html">如何使用模板</a>，如果想更深入的了解，可以查看<a href="../advanced/view-plugin.html">模板插件开发</a>。</p>
+<p>可使用以下模板引擎，更多<a href="https://github.com/search?utf8=%E2%9C%93&amp;q=topic%3Aegg-view&amp;type=Repositories&amp;ref=searchresults" target="_blank" rel="noopener">查看</a></p>
+<ul>
+<li><a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a></li>
+<li><a href="https://github.com/eggjs/egg-view-react" target="_blank" rel="noopener">egg-view-react</a></li>
+<li><a href="https://github.com/eggjs/egg-view-vue" target="_blank" rel="noopener">egg-view-vue</a></li>
+<li><a href="https://github.com/eggjs/egg-view-ejs" target="_blank" rel="noopener">egg-view-ejs</a></li>
+<li><a href="https://github.com/eggjs/egg-view-handlebars" target="_blank" rel="noopener">egg-view-handlebars</a></li>
+<li><a href="https://github.com/chrisyip/egg-view-pug" target="_blank" rel="noopener">egg-view-pug</a></li>
+<li><a href="https://github.com/eggjs/egg-view-xtpl" target="_blank" rel="noopener">egg-view-xtpl</a></li>
+</ul>
+<h2 id="数据库"><a class="markdown-anchor" href="#数据库">#</a> 数据库</h2>
+<p>官方 <a href="https://github.com/eggjs/egg/issues/388" target="_blank" rel="noopener">ORM 模型还在设计中</a>，但现在可以使用</p>
+<ul>
+<li><a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a></li>
+<li><a href="https://github.com/eggjs/egg-mongoose" target="_blank" rel="noopener">egg-mongoose</a></li>
+<li><a href="https://github.com/eggjs/egg-mysql" target="_blank" rel="noopener">egg-mysql</a>，可查看 <a href="./mysql.html">MySQL 教程</a></li>
+<li><a href="https://github.com/eggjs/egg-graphql" target="_blank" rel="noopener">egg-graphql</a></li>
+</ul>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#骨架类型说明"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 骨架类型说明</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#选项"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 选项</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#模板引擎"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 模板引擎</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#数据库"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 数据库</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -249,12 +241,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

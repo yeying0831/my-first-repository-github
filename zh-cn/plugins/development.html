@@ -57,51 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>egg-development</h1>
-    <p><a href="https://npmjs.org/package/egg-development" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-development.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-development" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-development.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-development?branch=master" target="_blank" rel="noopener"><img src="https://img.shields.io/codecov/c/github/eggjs/egg-development.svg?style=flat-square" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-development" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-development.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-development" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-development/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-development" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-development.svg?style=flat-square" alt="npm download"></a></p>
-<p>This is an egg plugin for local development, under development environment enabled by default, and closed under other environment.</p>
-<p><code>egg-development</code> has been built-in for egg. It is enabled by default.</p>
-<h2 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h2>
-<p>see <a href="https://github.com/eggjs/egg-development/blob/master/config/config.default.js" target="_blank" rel="noopener">config/config.default.js</a> for more detail.</p>
-<h2 id="features"><a class="markdown-anchor" href="#features">#</a> Features</h2>
-<ul>
-<li>Under development environment, Output request log in STDOUT, statistic and output all key parts time-consuming;</li>
-<li>Watch file changes, and reload application；</li>
-</ul>
-<h3 id="about-reload"><a class="markdown-anchor" href="#about-reload">#</a> About Reload</h3>
-<p>Under the following directory (including subdirectories) will watch file changes under development environment by default, trigger an Egg development environment server reload:</p>
-<ul>
-<li>${app_root}/app</li>
-<li>${app_root}/config</li>
-<li>${app_root}/mocks</li>
-<li>${app_root}/mocks_proxy</li>
-</ul>
-<blockquote>
-<p>set <code>config.development.overrideDefault</code> to <code>true</code> to skip defaults merge.</p>
-</blockquote>
-<p>Under the following directory (including subdirectories) will ignore file changes under development environment by default:</p>
-<ul>
-<li>${app_root}/app/view</li>
-<li>${app_root}/app/assets</li>
-</ul>
-<p>Developer can use <code>config.reloadPattern</code>(<a href="https://github.com/sindresorhus/multimatch" target="_blank" rel="noopener">multimatch</a>) to control whether to reload.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.development = &#123;</span><br><span class="line">  <span class="comment">// don't reload when ts fileChanged</span></span><br><span class="line">  <span class="comment">// https://github.com/sindresorhus/multimatch</span></span><br><span class="line">  reloadPattern: [<span class="string">'**'</span>, <span class="string">'!**/*.ts'</span>],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="loader-trace"><a class="markdown-anchor" href="#loader-trace">#</a> Loader Trace</h3>
-<p>You can view loader trace for performance issue from <code>http://127.0.0.1:7001/__loader_trace__</code></p>
-<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
-<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
-<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="https://github.com/eggjs/egg-development/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
@@ -172,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -207,25 +163,61 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>egg-development</h1>
+          <p><a href="https://npmjs.org/package/egg-development" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-development.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-development" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-development.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-development?branch=master" target="_blank" rel="noopener"><img src="https://img.shields.io/codecov/c/github/eggjs/egg-development.svg?style=flat-square" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-development" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-development.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-development" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-development/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-development" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-development.svg?style=flat-square" alt="npm download"></a></p>
+<p>This is an egg plugin for local development, under development environment enabled by default, and closed under other environment.</p>
+<p><code>egg-development</code> has been built-in for egg. It is enabled by default.</p>
+<h2 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h2>
+<p>see <a href="https://github.com/eggjs/egg-development/blob/master/config/config.default.js" target="_blank" rel="noopener">config/config.default.js</a> for more detail.</p>
+<h2 id="features"><a class="markdown-anchor" href="#features">#</a> Features</h2>
+<ul>
+<li>Under development environment, Output request log in STDOUT, statistic and output all key parts time-consuming;</li>
+<li>Watch file changes, and reload application；</li>
+</ul>
+<h3 id="about-reload"><a class="markdown-anchor" href="#about-reload">#</a> About Reload</h3>
+<p>Under the following directory (including subdirectories) will watch file changes under development environment by default, trigger an Egg development environment server reload:</p>
+<ul>
+<li>${app_root}/app</li>
+<li>${app_root}/config</li>
+<li>${app_root}/mocks</li>
+<li>${app_root}/mocks_proxy</li>
+</ul>
+<blockquote>
+<p>set <code>config.development.overrideDefault</code> to <code>true</code> to skip defaults merge.</p>
+</blockquote>
+<p>Under the following directory (including subdirectories) will ignore file changes under development environment by default:</p>
+<ul>
+<li>${app_root}/app/view</li>
+<li>${app_root}/app/assets</li>
+</ul>
+<p>Developer can use <code>config.reloadPattern</code>(<a href="https://github.com/sindresorhus/multimatch" target="_blank" rel="noopener">multimatch</a>) to control whether to reload.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.development = &#123;</span><br><span class="line">  <span class="comment">// don't reload when ts fileChanged</span></span><br><span class="line">  <span class="comment">// https://github.com/sindresorhus/multimatch</span></span><br><span class="line">  reloadPattern: [<span class="string">'**'</span>, <span class="string">'!**/*.ts'</span>],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="loader-trace"><a class="markdown-anchor" href="#loader-trace">#</a> Loader Trace</h3>
+<p>You can view loader trace for performance issue from <code>http://127.0.0.1:7001/__loader_trace__</code></p>
+<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
+<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
+<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
+<p><a href="https://github.com/eggjs/egg-development/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#configuration"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Configuration</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#features"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Features</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#about-reload"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># About Reload</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#loader-trace"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Loader Trace</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#questions-suggestions"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Questions &amp; Suggestions</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#license"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># License</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -233,12 +225,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

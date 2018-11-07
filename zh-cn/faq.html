@@ -57,59 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>常见问题</h1>
-    <p>如果下面的内容无法解决你的问题，请查看 <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">Egg issues</a>。</p>
-<h2 id="如何高效的反馈问题"><a class="markdown-anchor" href="#如何高效的反馈问题">#</a> 如何高效的反馈问题？</h2>
-<p>感谢您向我们反馈问题。</p>
-<ol>
-<li>我们推荐如果是小问题（错别字修改，小的 bug fix）直接提交 PR。</li>
-<li>如果是一个新需求，请提供：详细需求描述，最好是有伪代码示意。</li>
-<li>如果是一个 BUG，请提供：复现步骤，错误日志以及相关配置，并尽量填写下面的模板中的条目。</li>
-<li><strong>如果可以，尽可能使用 <code>egg-init --type=simple bug</code> 提供一个最小可复现的代码仓库，方便我们排查问题。</strong></li>
-<li>不要挤牙膏似的交流，扩展阅读：<a href="https://zhuanlan.zhihu.com/p/25795393" target="_blank" rel="noopener">如何向开源项目提交无法解答的问题</a></li>
-</ol>
-<p>最重要的是，请明白一件事：开源项目的用户和维护者之间并不是甲方和乙方的关系，issue 也不是客服工单。在开 issue 的时候，请抱着一种『一起合作来解决这个问题』的心态，不要期待我们单方面地为你服务。</p>
-<h2 id="为什么我的配置不生效"><a class="markdown-anchor" href="#为什么我的配置不生效">#</a> 为什么我的配置不生效？</h2>
-<p>框架的配置功能比较强大，有不同环境变量，又有框架、插件、应用等很多地方配置。</p>
-<p>如果你分析问题时，想知道当前运行时使用的最终配置，可以查看下 <code>${root}/run/application_config.json</code>（worker 进程配置） 和 <code>${root}/run/agent_config.json</code>（agent 进程配置） 这两个文件。（<code>root</code> 为应用根目录，只有在 local 和 unittest 环境下为项目所在目录，其他环境下都为 HOME 目录）</p>
-<p>也可参见<a href="https://eggjs.org/zh-cn/basics/config.html#%E9%85%8D%E7%BD%AE%E7%BB%93%E6%9E%9C">配置文件</a>。</p>
-<p>PS：请确保没有写出以下代码：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.someKeys = <span class="string">'abc'</span>;</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;&#125;;</span><br><span class="line">  config.keys = <span class="string">'123456'</span>;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="线上的日志打印去哪里了"><a class="markdown-anchor" href="#线上的日志打印去哪里了">#</a> 线上的日志打印去哪里了？</h2>
-<p>默认配置下，本地开发环境的日志都会打印在应用根目录的 <code>logs</code> 文件夹下(<code>${baseDir}/logs</code>) ，但是在非开发期的环境（非 local 和 unittest 环境），所有的日志都会打印到 <code>$HOME/logs</code> 文件夹下（例如 <code>/home/admin/logs</code>）。这样可以让本地开发时应用日志互不影响，服务器运行时又有统一的日志输出目录。</p>
-<h2 id="进程管理为什么没有选型-pm2"><a class="markdown-anchor" href="#进程管理为什么没有选型-pm2">#</a> 进程管理为什么没有选型 PM2 ？</h2>
-<ol>
-<li>PM2 模块本身复杂度很高，出了问题很难排查。我们认为框架使用的工具复杂度不应该过高，而 PM2 自身的复杂度超越了大部分应用本身。</li>
-<li>没法做非常深的优化。</li>
-<li>切实的需求问题，一个进程里跑 leader，其他进程代理到 leader 这种模式（<a href="./core/cluster-and-ipc.html">多进程模型</a>），在企业级开发中对于减少远端连接，降低数据通信压力等都是切实的需求。特别当应用规模大到一定程度，这就会是刚需。egg 本身起源于蚂蚁金服和阿里，我们对标的起点就是大规模企业应用的构建，所以要非常全面。这些特性通过 PM2 很难做到。</li>
-</ol>
-<p>进程模型非常重要，会影响到开发模式，运行期间的深度优化等，我们认为可能由框架来控制比较合适。</p>
-<p><strong>如何使用 PM2 启动应用？</strong></p>
-<p>尽管我们不推荐使用 PM2 启动，但仍然是可以做到的。</p>
-<p>首先，在项目根目录定义启动文件：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// server.js</span></span><br><span class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> workers = <span class="built_in">Number</span>(process.argv[<span class="number">2</span>] || <span class="built_in">require</span>(<span class="string">'os'</span>).cpus().length);</span><br><span class="line">egg.startCluster(&#123;</span><br><span class="line">  workers,</span><br><span class="line">  baseDir: __dirname,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>这样，我们就可以通过 PM2 进行启动了：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pm2 start server.js</span><br></pre></td></tr></table></figure>
-<h2 id="为什么会有-csrf-报错"><a class="markdown-anchor" href="#为什么会有-csrf-报错">#</a> 为什么会有 csrf 报错？</h2>
-<p>通常有两种 csrf 报错：</p>
-<ul>
-<li><code>missing csrf token</code></li>
-<li><code>invalid csrf token</code></li>
-</ul>
-<p>Egg 内置的 <a href="https://github.com/eggjs/egg-security/" target="_blank" rel="noopener">egg-security</a> 插件默认对所有『非安全』的方法，例如 <code>POST</code>，<code>PUT</code>，<code>DELETE</code> 都进行 CSRF 校验。</p>
-<p>请求遇到 csrf 报错通常是因为没有加正确的 csrf token 导致，具体实现方式，请阅读<a href="./core/security.html#%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81csrf%E7%9A%84%E9%98%B2%E8%8C%83">安全威胁 CSRF 的防范</a>。</p>
-<h2 id="本地开发时修改代码后为什么-worker-进程没有自动重启"><a class="markdown-anchor" href="#本地开发时修改代码后为什么-worker-进程没有自动重启">#</a> 本地开发时，修改代码后为什么 worker 进程没有自动重启？</h2>
-<p>没有自动重启的情况一般是在使用 Jetbrains 旗下软件（IntelliJ IDEA, WebStorm..），并且开启了 Safe Write 选项。</p>
-<p>Jetbrains <a href="https://www.jetbrains.com/help/webstorm/2016.3/system-settings.html" target="_blank" rel="noopener">Safe Write 文档</a>中有提到：</p>
-<blockquote>
-<p>If this check box is selected, a changed file is first saved in a temporary file. If the save operation succeeds, the file being saved is replaced with the saved file. (Technically, the original file is deleted and the temporary file is renamed.)</p>
-</blockquote>
-<p>由于使用了重命名导致文件监听的失效。解决办法是关掉 Safe Write 选项。（Settings | Appearance &amp; Behavior | System Settings | Use &quot;safe write&quot; 路径可能根据版本有所不同）</p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
@@ -180,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -215,25 +163,69 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>常见问题</h1>
+          <p>如果下面的内容无法解决你的问题，请查看 <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">Egg issues</a>。</p>
+<h2 id="如何高效的反馈问题"><a class="markdown-anchor" href="#如何高效的反馈问题">#</a> 如何高效的反馈问题？</h2>
+<p>感谢您向我们反馈问题。</p>
+<ol>
+<li>我们推荐如果是小问题（错别字修改，小的 bug fix）直接提交 PR。</li>
+<li>如果是一个新需求，请提供：详细需求描述，最好是有伪代码示意。</li>
+<li>如果是一个 BUG，请提供：复现步骤，错误日志以及相关配置，并尽量填写下面的模板中的条目。</li>
+<li><strong>如果可以，尽可能使用 <code>egg-init --type=simple bug</code> 提供一个最小可复现的代码仓库，方便我们排查问题。</strong></li>
+<li>不要挤牙膏似的交流，扩展阅读：<a href="https://zhuanlan.zhihu.com/p/25795393" target="_blank" rel="noopener">如何向开源项目提交无法解答的问题</a></li>
+</ol>
+<p>最重要的是，请明白一件事：开源项目的用户和维护者之间并不是甲方和乙方的关系，issue 也不是客服工单。在开 issue 的时候，请抱着一种『一起合作来解决这个问题』的心态，不要期待我们单方面地为你服务。</p>
+<h2 id="为什么我的配置不生效"><a class="markdown-anchor" href="#为什么我的配置不生效">#</a> 为什么我的配置不生效？</h2>
+<p>框架的配置功能比较强大，有不同环境变量，又有框架、插件、应用等很多地方配置。</p>
+<p>如果你分析问题时，想知道当前运行时使用的最终配置，可以查看下 <code>${root}/run/application_config.json</code>（worker 进程配置） 和 <code>${root}/run/agent_config.json</code>（agent 进程配置） 这两个文件。（<code>root</code> 为应用根目录，只有在 local 和 unittest 环境下为项目所在目录，其他环境下都为 HOME 目录）</p>
+<p>也可参见<a href="https://eggjs.org/zh-cn/basics/config.html#%E9%85%8D%E7%BD%AE%E7%BB%93%E6%9E%9C">配置文件</a>。</p>
+<p>PS：请确保没有写出以下代码：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.someKeys = <span class="string">'abc'</span>;</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;&#125;;</span><br><span class="line">  config.keys = <span class="string">'123456'</span>;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="线上的日志打印去哪里了"><a class="markdown-anchor" href="#线上的日志打印去哪里了">#</a> 线上的日志打印去哪里了？</h2>
+<p>默认配置下，本地开发环境的日志都会打印在应用根目录的 <code>logs</code> 文件夹下(<code>${baseDir}/logs</code>) ，但是在非开发期的环境（非 local 和 unittest 环境），所有的日志都会打印到 <code>$HOME/logs</code> 文件夹下（例如 <code>/home/admin/logs</code>）。这样可以让本地开发时应用日志互不影响，服务器运行时又有统一的日志输出目录。</p>
+<h2 id="进程管理为什么没有选型-pm2"><a class="markdown-anchor" href="#进程管理为什么没有选型-pm2">#</a> 进程管理为什么没有选型 PM2 ？</h2>
+<ol>
+<li>PM2 模块本身复杂度很高，出了问题很难排查。我们认为框架使用的工具复杂度不应该过高，而 PM2 自身的复杂度超越了大部分应用本身。</li>
+<li>没法做非常深的优化。</li>
+<li>切实的需求问题，一个进程里跑 leader，其他进程代理到 leader 这种模式（<a href="./core/cluster-and-ipc.html">多进程模型</a>），在企业级开发中对于减少远端连接，降低数据通信压力等都是切实的需求。特别当应用规模大到一定程度，这就会是刚需。egg 本身起源于蚂蚁金服和阿里，我们对标的起点就是大规模企业应用的构建，所以要非常全面。这些特性通过 PM2 很难做到。</li>
+</ol>
+<p>进程模型非常重要，会影响到开发模式，运行期间的深度优化等，我们认为可能由框架来控制比较合适。</p>
+<p><strong>如何使用 PM2 启动应用？</strong></p>
+<p>尽管我们不推荐使用 PM2 启动，但仍然是可以做到的。</p>
+<p>首先，在项目根目录定义启动文件：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// server.js</span></span><br><span class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> workers = <span class="built_in">Number</span>(process.argv[<span class="number">2</span>] || <span class="built_in">require</span>(<span class="string">'os'</span>).cpus().length);</span><br><span class="line">egg.startCluster(&#123;</span><br><span class="line">  workers,</span><br><span class="line">  baseDir: __dirname,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>这样，我们就可以通过 PM2 进行启动了：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pm2 start server.js</span><br></pre></td></tr></table></figure>
+<h2 id="为什么会有-csrf-报错"><a class="markdown-anchor" href="#为什么会有-csrf-报错">#</a> 为什么会有 csrf 报错？</h2>
+<p>通常有两种 csrf 报错：</p>
+<ul>
+<li><code>missing csrf token</code></li>
+<li><code>invalid csrf token</code></li>
+</ul>
+<p>Egg 内置的 <a href="https://github.com/eggjs/egg-security/" target="_blank" rel="noopener">egg-security</a> 插件默认对所有『非安全』的方法，例如 <code>POST</code>，<code>PUT</code>，<code>DELETE</code> 都进行 CSRF 校验。</p>
+<p>请求遇到 csrf 报错通常是因为没有加正确的 csrf token 导致，具体实现方式，请阅读<a href="./core/security.html#%E5%AE%89%E5%85%A8%E5%A8%81%E8%83%81csrf%E7%9A%84%E9%98%B2%E8%8C%83">安全威胁 CSRF 的防范</a>。</p>
+<h2 id="本地开发时修改代码后为什么-worker-进程没有自动重启"><a class="markdown-anchor" href="#本地开发时修改代码后为什么-worker-进程没有自动重启">#</a> 本地开发时，修改代码后为什么 worker 进程没有自动重启？</h2>
+<p>没有自动重启的情况一般是在使用 Jetbrains 旗下软件（IntelliJ IDEA, WebStorm..），并且开启了 Safe Write 选项。</p>
+<p>Jetbrains <a href="https://www.jetbrains.com/help/webstorm/2016.3/system-settings.html" target="_blank" rel="noopener">Safe Write 文档</a>中有提到：</p>
+<blockquote>
+<p>If this check box is selected, a changed file is first saved in a temporary file. If the save operation succeeds, the file being saved is replaced with the saved file. (Technically, the original file is deleted and the temporary file is renamed.)</p>
+</blockquote>
+<p>由于使用了重命名导致文件监听的失效。解决办法是关掉 Safe Write 选项。（Settings | Appearance &amp; Behavior | System Settings | Use &quot;safe write&quot; 路径可能根据版本有所不同）</p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#如何高效的反馈问题"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 如何高效的反馈问题？</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#为什么我的配置不生效"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 为什么我的配置不生效？</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#线上的日志打印去哪里了"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 线上的日志打印去哪里了？</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#进程管理为什么没有选型-pm2"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 进程管理为什么没有选型 PM2 ？</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#为什么会有-csrf-报错"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 为什么会有 csrf 报错？</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#本地开发时修改代码后为什么-worker-进程没有自动重启"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 本地开发时，修改代码后为什么 worker 进程没有自动重启？</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -241,12 +233,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

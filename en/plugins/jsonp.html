@@ -57,50 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>egg-jsonp</h1>
-    <p><a href="https://npmjs.org/package/egg-jsonp" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-jsonp.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-jsonp" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-jsonp.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-jsonp?branch=master" target="_blank" rel="noopener"><img src="https://img.shields.io/codecov/c/github/eggjs/egg-jsonp.svg?style=flat-square" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-jsonp" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-jsonp.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-jsonp" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-jsonp/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-jsonp" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-jsonp.svg?style=flat-square" alt="npm download"></a></p>
-<p>An egg plugin for jsonp support.</p>
-<h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-jsonp --save</span><br></pre></td></tr></table></figure>
-<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/plugin.js</span></span><br><span class="line">exports.jsonp = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-jsonp'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h2>
-<ul>
-<li>{String|Array} callback - jsonp callback method key, default to <code>[ '_callback', 'callback' ]</code></li>
-<li>{Number} limit - callback method name's max length, default to <code>50</code></li>
-<li>{Boolean} csrf - enable csrf check or not. default to false</li>
-<li>{String|RegExp|Array} whiteList - referrer white list</li>
-</ul>
-<p>if whiteList's type is <code>RegExp</code>, referrer must match <code>whiteList</code>, pay attention to the first <code>^</code> and last <code>/</code>.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.jsonp = &#123;</span><br><span class="line">  whiteList: <span class="regexp">/^https?:\/\/test.com\//</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// matchs referrer:</span></span><br><span class="line"><span class="comment">// https://test.com/hello</span></span><br><span class="line"><span class="comment">// http://test.com/</span></span><br></pre></td></tr></table></figure>
-<p>if whiteList's type is <code>String</code> and starts with <code>.</code>:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.jsonp = &#123;</span><br><span class="line">  whiteList: <span class="string">'.test.com'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// matchs domain test.com:</span></span><br><span class="line"><span class="comment">// https://test.com/hello</span></span><br><span class="line"><span class="comment">// http://test.com/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// matchs subdomain</span></span><br><span class="line"><span class="comment">// https://sub.test.com/hello</span></span><br><span class="line"><span class="comment">// http://sub.sub.test.com/</span></span><br></pre></td></tr></table></figure>
-<p>if whiteList's type is <code>String</code> and not starts with <code>.</code>:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.jsonp = &#123;</span><br><span class="line">  whiteList: <span class="string">'sub.test.com'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// only matchs domain sub.test.com:</span></span><br><span class="line"><span class="comment">// https://sub.test.com/hello</span></span><br><span class="line"><span class="comment">// http://sub.test.com/</span></span><br></pre></td></tr></table></figure>
-<p>whiteList also can be an array:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.jsonp = &#123;</span><br><span class="line">  whiteList: [ <span class="string">'.foo.com'</span>, <span class="string">'.bar.com'</span> ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>see <a href="https://github.com/eggjs/egg-jsonp/blob/master/config/config.default.js" target="_blank" rel="noopener">config/config.default.js</a> for more detail.</p>
-<h2 id="api"><a class="markdown-anchor" href="#api">#</a> API</h2>
-<ul>
-<li>ctx.acceptJSONP - detect if response should be jsonp, readonly</li>
-</ul>
-<h2 id="example"><a class="markdown-anchor" href="#example">#</a> Example</h2>
-<p>In <code>app/router.js</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Create once and use in any router you want to support jsonp.</span></span><br><span class="line"><span class="keyword">const</span> jsonp = app.jsonp();</span><br><span class="line">app.get(<span class="string">'/default'</span>, jsonp, <span class="string">'jsonp.index'</span>);</span><br><span class="line">app.get(<span class="string">'/another'</span>, jsonp, <span class="string">'jsonp.another'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Customize by create another jsonp middleware with specific sonfigurations.</span></span><br><span class="line">app.get(<span class="string">'/customize'</span>, app.jsonp(&#123; <span class="attr">callback</span>: <span class="string">'fn'</span> &#125;), <span class="string">'jsonp.customize'</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
-<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
-<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="https://github.com/eggjs/egg-jsonp/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -171,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -206,25 +163,60 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>egg-jsonp</h1>
+          <p><a href="https://npmjs.org/package/egg-jsonp" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-jsonp.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-jsonp" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-jsonp.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-jsonp?branch=master" target="_blank" rel="noopener"><img src="https://img.shields.io/codecov/c/github/eggjs/egg-jsonp.svg?style=flat-square" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-jsonp" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-jsonp.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-jsonp" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-jsonp/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-jsonp" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-jsonp.svg?style=flat-square" alt="npm download"></a></p>
+<p>An egg plugin for jsonp support.</p>
+<h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-jsonp --save</span><br></pre></td></tr></table></figure>
+<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/plugin.js</span></span><br><span class="line">exports.jsonp = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-jsonp'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h2>
+<ul>
+<li>{String|Array} callback - jsonp callback method key, default to <code>[ '_callback', 'callback' ]</code></li>
+<li>{Number} limit - callback method name's max length, default to <code>50</code></li>
+<li>{Boolean} csrf - enable csrf check or not. default to false</li>
+<li>{String|RegExp|Array} whiteList - referrer white list</li>
+</ul>
+<p>if whiteList's type is <code>RegExp</code>, referrer must match <code>whiteList</code>, pay attention to the first <code>^</code> and last <code>/</code>.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.jsonp = &#123;</span><br><span class="line">  whiteList: <span class="regexp">/^https?:\/\/test.com\//</span>,</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// matchs referrer:</span></span><br><span class="line"><span class="comment">// https://test.com/hello</span></span><br><span class="line"><span class="comment">// http://test.com/</span></span><br></pre></td></tr></table></figure>
+<p>if whiteList's type is <code>String</code> and starts with <code>.</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.jsonp = &#123;</span><br><span class="line">  whiteList: <span class="string">'.test.com'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// matchs domain test.com:</span></span><br><span class="line"><span class="comment">// https://test.com/hello</span></span><br><span class="line"><span class="comment">// http://test.com/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// matchs subdomain</span></span><br><span class="line"><span class="comment">// https://sub.test.com/hello</span></span><br><span class="line"><span class="comment">// http://sub.sub.test.com/</span></span><br></pre></td></tr></table></figure>
+<p>if whiteList's type is <code>String</code> and not starts with <code>.</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.jsonp = &#123;</span><br><span class="line">  whiteList: <span class="string">'sub.test.com'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">// only matchs domain sub.test.com:</span></span><br><span class="line"><span class="comment">// https://sub.test.com/hello</span></span><br><span class="line"><span class="comment">// http://sub.test.com/</span></span><br></pre></td></tr></table></figure>
+<p>whiteList also can be an array:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.jsonp = &#123;</span><br><span class="line">  whiteList: [ <span class="string">'.foo.com'</span>, <span class="string">'.bar.com'</span> ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>see <a href="https://github.com/eggjs/egg-jsonp/blob/master/config/config.default.js" target="_blank" rel="noopener">config/config.default.js</a> for more detail.</p>
+<h2 id="api"><a class="markdown-anchor" href="#api">#</a> API</h2>
+<ul>
+<li>ctx.acceptJSONP - detect if response should be jsonp, readonly</li>
+</ul>
+<h2 id="example"><a class="markdown-anchor" href="#example">#</a> Example</h2>
+<p>In <code>app/router.js</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Create once and use in any router you want to support jsonp.</span></span><br><span class="line"><span class="keyword">const</span> jsonp = app.jsonp();</span><br><span class="line">app.get(<span class="string">'/default'</span>, jsonp, <span class="string">'jsonp.index'</span>);</span><br><span class="line">app.get(<span class="string">'/another'</span>, jsonp, <span class="string">'jsonp.another'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// Customize by create another jsonp middleware with specific sonfigurations.</span></span><br><span class="line">app.get(<span class="string">'/customize'</span>, app.jsonp(&#123; <span class="attr">callback</span>: <span class="string">'fn'</span> &#125;), <span class="string">'jsonp.customize'</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
+<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
+<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
+<p><a href="https://github.com/eggjs/egg-jsonp/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#install"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Install</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#usage"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Usage</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#configuration"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Configuration</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#api"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># API</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#example"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Example</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#questions-suggestions"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Questions &amp; Suggestions</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#license"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># License</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -232,12 +224,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

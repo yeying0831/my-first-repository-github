@@ -57,9 +57,118 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>HttpClient</h1>
-    <p>互联网时代，无数服务是基于 HTTP 协议进行通信的，Web 应用调用后端 HTTP 服务是一种非常常见的应用场景。</p>
+  <aside id="mobileAside" class="aside">
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">Languages</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/core/httpclient.html">English</a></li><li><a id="zh-cn" href="/zh-cn/core/httpclient.html" style="color: #22ab28">中文</a></li></ul>
+        </li>
+      
+    </ul>
+  </div>
+  <dl><dt id="title-Intro" style="cursor: pointer;" class="aside-title">新手指南<a id="collapse-icon-Intro" class="icon opend"></a></dt><dd id="panel-Intro"><ul><li><a href="/zh-cn/intro/index.html" class="menu-link">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html" class="menu-link">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html" class="menu-link">快速入门</a></li><li><a href="/zh-cn/tutorials/progressive.html" class="menu-link">渐进式开发</a></li><li><a href="/zh-cn/migration.html" class="menu-link">2.x 升级指南</a></li></ul></dd><dt id="title-Basics" style="cursor: pointer;" class="aside-title">基础功能<a id="collapse-icon-Basics" class="icon opend"></a></dt><dd id="panel-Basics"><ul><li><a href="/zh-cn/basics/structure.html" class="menu-link">目录结构</a></li><li><a href="/zh-cn/basics/objects.html" class="menu-link">内置对象</a></li><li><a href="/zh-cn/basics/env.html" class="menu-link">运行环境</a></li><li><a href="/zh-cn/basics/config.html" class="menu-link">配置</a></li><li><a href="/zh-cn/basics/middleware.html" class="menu-link">中间件</a></li><li><a href="/zh-cn/basics/router.html" class="menu-link">Router</a></li><li><a href="/zh-cn/basics/controller.html" class="menu-link">Controller</a></li><li><a href="/zh-cn/basics/service.html" class="menu-link">Service</a></li><li><a href="/zh-cn/basics/plugin.html" class="menu-link">插件</a></li><li><a href="/zh-cn/basics/schedule.html" class="menu-link">定时任务</a></li><li><a href="/zh-cn/basics/extend.html" class="menu-link">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html" class="menu-link">启动自定义</a></li></ul></dd><dt id="title-Core" style="cursor: pointer;" class="aside-title">核心功能<a id="collapse-icon-Core" class="icon opend"></a></dt><dd id="panel-Core"><ul><li><a href="/zh-cn/core/development.html" class="menu-link">本地开发</a></li><li><a href="/zh-cn/core/unittest.html" class="menu-link">单元测试</a></li><li><a href="/zh-cn/core/deployment.html" class="menu-link">应用部署</a></li><li><a href="/zh-cn/core/logger.html" class="menu-link">日志</a></li><li><a href="/zh-cn/core/httpclient.html" class="menu-link">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html" class="menu-link">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html" class="menu-link">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html" class="menu-link">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html" class="menu-link">异常处理</a></li><li><a href="/zh-cn/core/security.html" class="menu-link">安全</a></li><li><a href="/zh-cn/core/i18n.html" class="menu-link">国际化</a></li></ul></dd><dt id="title-Tutorials" style="cursor: pointer;" class="aside-title">教程<a id="collapse-icon-Tutorials" class="icon opend"></a></dt><dd id="panel-Tutorials"><ul><li><a href="/zh-cn/tutorials/mysql.html" class="menu-link">MySQL</a></li><li><a href="/zh-cn/tutorials/sequelize.html" class="menu-link">Sequelize</a></li><li><a href="/zh-cn/tutorials/restful.html" class="menu-link">RESTful API</a></li><li><a href="/zh-cn/tutorials/passport.html" class="menu-link">Passport 鉴权</a></li><li><a href="/zh-cn/tutorials/socketio.html" class="menu-link">Socket.IO</a></li><li><a href="/zh-cn/tutorials/assets.html" class="menu-link">静态资源</a></li><li><a href="/zh-cn/tutorials/typescript.html" class="menu-link">TypeScript</a></li></ul></dd><dt id="title-Advanced" style="cursor: pointer;" class="aside-title">进阶<a id="collapse-icon-Advanced" class="icon opend"></a></dt><dd id="panel-Advanced"><ul><li><a href="/zh-cn/advanced/loader.html" class="menu-link">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html" class="menu-link">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html" class="menu-link">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html" class="menu-link">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html" class="menu-link">模板插件开发规范</a></li><li><a href="/zh-cn/style-guide.html" class="menu-link">代码风格指南</a></li></ul></dd><dt id="title-Community" style="cursor: pointer;" class="aside-title">社区<a id="collapse-icon-Community" class="icon opend"></a></dt><dd id="panel-Community"><ul><li><a href="/zh-cn/plugins/" class="menu-link">内置插件列表</a></li><li><a href="/zh-cn/contributing.html" class="menu-link">如何贡献</a></li><li><a href="/zh-cn/resource.html" class="menu-link">资源</a></li><li><a href="/zh-cn/faq.html" class="menu-link">常见问题</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+
+var expandMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon opend';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = '';
+  }
+}
+
+var collapseMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon closed';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = 'aside-panel-hidden';
+  }
+}
+
+mobileAside.onclick = function(e) {
+  const targetId = e.target.id;
+  if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
+    const title = targetId.replace('title-', '').replace('collapse-icon-', '');
+    try { 
+      // the the browser may have no localStroage or JSON.parse may throw exception.
+      const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+        
+      // current menu status
+      const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
+
+      // change UI
+      curClosed ? expandMenu(title) : collapseMenu(title);
+
+      // save menuInfo to localStorage
+      menuInfo[title] = { closed: !curClosed } // opposite
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    } catch (e) {}
+  }
+};
+
+mobileTrigger.onclick = function(e) {
+  e.preventDefault();
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'aside';
+  }
+};
+
+(function() {
+  // save data to localStorage because the page will refresh when user change the url.
+  let menuInfo;
+  try { 
+    // the the browser may have no localStroage or JSON.parse may throw exception.
+    menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+    if (!menuInfo) {
+      menuInfo = {};
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    }
+  } catch (e) {
+    menuInfo = {}; // default {}
+  }
+
+  for (const title in menuInfo) {
+    if (menuInfo[title] && menuInfo[title].closed) { // menu in closed status.
+      collapseMenu(title);
+    } else {
+      expandMenu(title);
+    }
+  }
+
+  // highlight menu
+  const pathname = window.location.pathname;
+  const selector = `a[href="${pathname}"].menu-link,a[href="${pathname}index.html"].menu-link`;
+  const menuItem = mobileAside.querySelector(selector);
+  if (menuItem) { menuItem.className += ' highlight'; }
+})();
+</script>
+
+
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>HttpClient</h1>
+          <p>互联网时代，无数服务是基于 HTTP 协议进行通信的，Web 应用调用后端 HTTP 服务是一种非常常见的应用场景。</p>
 <p>为此框架基于 <a href="https://github.com/node-modules/urllib" target="_blank" rel="noopener">urllib</a> 内置实现了一个 <a href="https://github.com/eggjs/egg/blob/master/lib/core/httpclient.js" target="_blank" rel="noopener">HttpClient</a>，应用可以非常便捷地完成任何 HTTP 请求。</p>
 <h2 id="通过-app-使用-httpclient"><a class="markdown-anchor" href="#通过-app-使用-httpclient">#</a> 通过 app 使用 HttpClient</h2>
 <p>框架在应用初始化的时候，会自动将 <a href="https://github.com/eggjs/egg/blob/master/lib/core/httpclient.js" target="_blank" rel="noopener">HttpClient</a> 初始化到 <code>app.httpclient</code>。
@@ -295,134 +404,17 @@ Stream 实际会以 <code>Transfer-Encoding: chunked</code> 传输编码格式�
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.httpclient.on(<span class="string">'response'</span>, result =&gt; &#123;</span><br><span class="line">  result.res.status</span><br><span class="line">  result.ctx <span class="comment">//是发起这次请求的当前上下文</span></span><br><span class="line">  result.req <span class="comment">//对应的 req 对象，即 request 事件里面那个 req</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="示例代码"><a class="markdown-anchor" href="#示例代码">#</a> 示例代码</h2>
 <p>完整示例代码可以在 <a href="https://github.com/eggjs/examples/blob/master/httpclient" target="_blank" rel="noopener">eggjs/exmaples/httpclient</a> 找到。</p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
-  <div class="mobile-menu">
-    <ul>
-      <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
-      
-      
-        <li class="translations">
-          <a class="nav-link">Languages</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/core/httpclient.html">English</a></li><li><a id="zh-cn" href="/zh-cn/core/httpclient.html" style="color: #22ab28">中文</a></li></ul>
-        </li>
-      
-    </ul>
-  </div>
-  <dl><dt id="title-Intro" style="cursor: pointer;" class="aside-title">新手指南<a id="collapse-icon-Intro" class="icon opend"></a></dt><dd id="panel-Intro"><ul><li><a href="/zh-cn/intro/index.html" class="menu-link">Egg.js 是什么?</a></li><li><a href="/zh-cn/intro/egg-and-koa.html" class="menu-link">Egg.js 和 Koa</a></li><li><a href="/zh-cn/intro/quickstart.html" class="menu-link">快速入门</a></li><li><a href="/zh-cn/tutorials/progressive.html" class="menu-link">渐进式开发</a></li><li><a href="/zh-cn/migration.html" class="menu-link">2.x 升级指南</a></li></ul></dd><dt id="title-Basics" style="cursor: pointer;" class="aside-title">基础功能<a id="collapse-icon-Basics" class="icon opend"></a></dt><dd id="panel-Basics"><ul><li><a href="/zh-cn/basics/structure.html" class="menu-link">目录结构</a></li><li><a href="/zh-cn/basics/objects.html" class="menu-link">内置对象</a></li><li><a href="/zh-cn/basics/env.html" class="menu-link">运行环境</a></li><li><a href="/zh-cn/basics/config.html" class="menu-link">配置</a></li><li><a href="/zh-cn/basics/middleware.html" class="menu-link">中间件</a></li><li><a href="/zh-cn/basics/router.html" class="menu-link">Router</a></li><li><a href="/zh-cn/basics/controller.html" class="menu-link">Controller</a></li><li><a href="/zh-cn/basics/service.html" class="menu-link">Service</a></li><li><a href="/zh-cn/basics/plugin.html" class="menu-link">插件</a></li><li><a href="/zh-cn/basics/schedule.html" class="menu-link">定时任务</a></li><li><a href="/zh-cn/basics/extend.html" class="menu-link">框架扩展</a></li><li><a href="/zh-cn/basics/app-start.html" class="menu-link">启动自定义</a></li></ul></dd><dt id="title-Core" style="cursor: pointer;" class="aside-title">核心功能<a id="collapse-icon-Core" class="icon opend"></a></dt><dd id="panel-Core"><ul><li><a href="/zh-cn/core/development.html" class="menu-link">本地开发</a></li><li><a href="/zh-cn/core/unittest.html" class="menu-link">单元测试</a></li><li><a href="/zh-cn/core/deployment.html" class="menu-link">应用部署</a></li><li><a href="/zh-cn/core/logger.html" class="menu-link">日志</a></li><li><a href="/zh-cn/core/httpclient.html" class="menu-link">HttpClient</a></li><li><a href="/zh-cn/core/cookie-and-session.html" class="menu-link">Cookie and Session</a></li><li><a href="/zh-cn/core/cluster-and-ipc.html" class="menu-link">多进程模型和进程间通讯</a></li><li><a href="/zh-cn/core/view.html" class="menu-link">模板渲染</a></li><li><a href="/zh-cn/core/error-handling.html" class="menu-link">异常处理</a></li><li><a href="/zh-cn/core/security.html" class="menu-link">安全</a></li><li><a href="/zh-cn/core/i18n.html" class="menu-link">国际化</a></li></ul></dd><dt id="title-Tutorials" style="cursor: pointer;" class="aside-title">教程<a id="collapse-icon-Tutorials" class="icon opend"></a></dt><dd id="panel-Tutorials"><ul><li><a href="/zh-cn/tutorials/mysql.html" class="menu-link">MySQL</a></li><li><a href="/zh-cn/tutorials/sequelize.html" class="menu-link">Sequelize</a></li><li><a href="/zh-cn/tutorials/restful.html" class="menu-link">RESTful API</a></li><li><a href="/zh-cn/tutorials/passport.html" class="menu-link">Passport 鉴权</a></li><li><a href="/zh-cn/tutorials/socketio.html" class="menu-link">Socket.IO</a></li><li><a href="/zh-cn/tutorials/assets.html" class="menu-link">静态资源</a></li><li><a href="/zh-cn/tutorials/typescript.html" class="menu-link">TypeScript</a></li></ul></dd><dt id="title-Advanced" style="cursor: pointer;" class="aside-title">进阶<a id="collapse-icon-Advanced" class="icon opend"></a></dt><dd id="panel-Advanced"><ul><li><a href="/zh-cn/advanced/loader.html" class="menu-link">Loader</a></li><li><a href="/zh-cn/advanced/plugin.html" class="menu-link">插件开发</a></li><li><a href="/zh-cn/advanced/framework.html" class="menu-link">框架开发</a></li><li><a href="/zh-cn/advanced/cluster-client.html" class="menu-link">多进程研发模式增强</a></li><li><a href="/zh-cn/advanced/view-plugin.html" class="menu-link">模板插件开发规范</a></li><li><a href="/zh-cn/style-guide.html" class="menu-link">代码风格指南</a></li></ul></dd><dt id="title-Community" style="cursor: pointer;" class="aside-title">社区<a id="collapse-icon-Community" class="icon opend"></a></dt><dd id="panel-Community"><ul><li><a href="/zh-cn/plugins/" class="menu-link">内置插件列表</a></li><li><a href="/zh-cn/contributing.html" class="menu-link">如何贡献</a></li><li><a href="/zh-cn/resource.html" class="menu-link">资源</a></li><li><a href="/zh-cn/faq.html" class="menu-link">常见问题</a></li></ul></dd></dl>
-</aside>
-<script>
-var mobileTrigger = document.getElementById('mobileTrigger');
-var mobileAside = document.getElementById('mobileAside');
-
-var expandMenu = function(title) {
-  // handle icon
-  const collapseIcon = document.getElementById('collapse-icon-' + title);
-  if (collapseIcon) {
-    collapseIcon.className = 'icon opend';
-  }
-  // handle panelEle
-  const panelEle = document.getElementById('panel-' + title);
-  if (panelEle) {
-    panelEle.className = '';
-  }
-}
-
-var collapseMenu = function(title) {
-  // handle icon
-  const collapseIcon = document.getElementById('collapse-icon-' + title);
-  if (collapseIcon) {
-    collapseIcon.className = 'icon closed';
-  }
-  // handle panelEle
-  const panelEle = document.getElementById('panel-' + title);
-  if (panelEle) {
-    panelEle.className = 'aside-panel-hidden';
-  }
-}
-
-mobileAside.onclick = function(e) {
-  const targetId = e.target.id;
-  if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
-    const title = targetId.replace('title-', '').replace('collapse-icon-', '');
-    try { 
-      // the the browser may have no localStroage or JSON.parse may throw exception.
-      const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
-        
-      // current menu status
-      const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
-
-      // change UI
-      curClosed ? expandMenu(title) : collapseMenu(title);
-
-      // save menuInfo to localStorage
-      menuInfo[title] = { closed: !curClosed } // opposite
-      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
-    } catch (e) {}
-  }
-};
-
-mobileTrigger.onclick = function(e) {
-  e.preventDefault();
-  if (mobileAside.className.indexOf('mobile-show') === -1) {
-    mobileAside.className += ' mobile-show';
-  } else {
-    mobileAside.className = 'toc';
-  }
-};
-
-(function() {
-  // save data to localStorage because the page will refresh when user change the url.
-  let menuInfo;
-  try { 
-    // the the browser may have no localStroage or JSON.parse may throw exception.
-    menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
-    if (!menuInfo) {
-      menuInfo = {};
-      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
-    }
-  } catch (e) {
-    menuInfo = {}; // default {}
-  }
-
-  for (const title in menuInfo) {
-    if (menuInfo[title] && menuInfo[title].closed) { // menu in closed status.
-      collapseMenu(title);
-    } else {
-      expandMenu(title);
-    }
-  }
-
-  // highlight menu
-  const pathname = window.location.pathname;
-  const selector = `a[href="${pathname}"].menu-link,a[href="${pathname}index.html"].menu-link`;
-  const menuItem = mobileAside.querySelector(selector);
-  if (menuItem) { menuItem.className += ' highlight'; }
-})();
-</script>
-
-
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#通过-app-使用-httpclient"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 通过 app 使用 HttpClient</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#通过-context-使用-httpclient"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 通过 Context 使用 HttpClient</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#基本-http-请求"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 基本 HTTP 请求</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#get"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># GET</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#post"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># POST</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#put"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># PUT</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#delete"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># DELETE</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#高级-http-请求"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 高级 HTTP 请求</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#form-表单提交"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Form 表单提交</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#以-multipart-方式上传文件"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 以 Multipart 方式上传文件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#以-stream-方式上传文件"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># 以 Stream 方式上传文件</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#options-参数详解"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># options 参数详解</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#httpclient-默认全局配置"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># HttpClient 默认全局配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#data-object"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># data: Object</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#dataasquerystring-boolean"><span class="toc-detail-number">5.3.</span> <span class="toc-detail-text"># dataAsQueryString: Boolean</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#content-stringbuffer"><span class="toc-detail-number">5.4.</span> <span class="toc-detail-text"># content: String|Buffer</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#stream-readstream"><span class="toc-detail-number">5.5.</span> <span class="toc-detail-text"># stream: ReadStream</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#writestream-writestream"><span class="toc-detail-number">5.6.</span> <span class="toc-detail-text"># writeStream: WriteStream</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#consumewritestream-boolean"><span class="toc-detail-number">5.7.</span> <span class="toc-detail-text"># consumeWriteStream: Boolean</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#method-string"><span class="toc-detail-number">5.8.</span> <span class="toc-detail-text"># method: String</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#contenttype-string"><span class="toc-detail-number">5.9.</span> <span class="toc-detail-text"># contentType: String</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#datatype-string"><span class="toc-detail-number">5.10.</span> <span class="toc-detail-text"># dataType: String</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#fixjsonctlchars-boolean"><span class="toc-detail-number">5.11.</span> <span class="toc-detail-text"># fixJSONCtlChars: Boolean</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#headers-object"><span class="toc-detail-number">5.12.</span> <span class="toc-detail-text"># headers: Object</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#timeout-numberarray"><span class="toc-detail-number">5.13.</span> <span class="toc-detail-text"># timeout: Number|Array</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#agent-httpagent"><span class="toc-detail-number">5.14.</span> <span class="toc-detail-text"># agent: HttpAgent</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#httpsagent-httpsagent"><span class="toc-detail-number">5.15.</span> <span class="toc-detail-text"># httpsAgent: HttpsAgent</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#auth-string"><span class="toc-detail-number">5.16.</span> <span class="toc-detail-text"># auth: String</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#digestauth-string"><span class="toc-detail-number">5.17.</span> <span class="toc-detail-text"># digestAuth: String</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#followredirect-boolean"><span class="toc-detail-number">5.18.</span> <span class="toc-detail-text"># followRedirect: Boolean</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#maxredirects-number"><span class="toc-detail-number">5.19.</span> <span class="toc-detail-text"># maxRedirects: Number</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#formatredirecturl-functionfrom-to"><span class="toc-detail-number">5.20.</span> <span class="toc-detail-text"># formatRedirectUrl: Function(from, to)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#beforerequest-functionoptions"><span class="toc-detail-number">5.21.</span> <span class="toc-detail-text"># beforeRequest: Function(options)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#streaming-boolean"><span class="toc-detail-number">5.22.</span> <span class="toc-detail-text"># streaming: Boolean</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#gzip-boolean"><span class="toc-detail-number">5.23.</span> <span class="toc-detail-text"># gzip: Boolean</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#timing-boolean"><span class="toc-detail-number">5.24.</span> <span class="toc-detail-text"># timing: Boolean</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#carejectunauthorizedpfxkeycertpassphrasecipherssecureprotocol"><span class="toc-detail-number">5.25.</span> <span class="toc-detail-text"># ca，rejectUnauthorized，pfx，key，cert，passphrase，ciphers，secureProtocol</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#调试辅助"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 调试辅助</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#常见错误"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># 常见错误</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#创建连接超时"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># 创建连接超时</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#服务响应超时"><span class="toc-detail-number">7.2.</span> <span class="toc-detail-text"># 服务响应超时</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#服务主动断开连接"><span class="toc-detail-number">7.3.</span> <span class="toc-detail-text"># 服务主动断开连接</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#服务不可达"><span class="toc-detail-number">7.4.</span> <span class="toc-detail-text"># 服务不可达</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#域名不存在"><span class="toc-detail-number">7.5.</span> <span class="toc-detail-text"># 域名不存在</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#json-响应数据格式错误"><span class="toc-detail-number">7.6.</span> <span class="toc-detail-text"># JSON 响应数据格式错误</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#全局-request-和-response-事件"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># 全局 request 和 response 事件</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#request-事件发生在网络操作发生之前"><span class="toc-detail-number">8.1.</span> <span class="toc-detail-text"># request 事件：发生在网络操作发生之前</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#response-事件发生在网络操作结束之后"><span class="toc-detail-number">8.2.</span> <span class="toc-detail-text"># response 事件：发生在网络操作结束之后</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#示例代码"><span class="toc-detail-number">9.</span> <span class="toc-detail-text"># 示例代码</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -430,12 +422,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

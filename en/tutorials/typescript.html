@@ -57,9 +57,118 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>TypeScript</h1>
-    <blockquote>
+  <aside id="mobileAside" class="aside">
+  <div class="mobile-menu">
+    <ul>
+      <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
+      
+      
+        <li class="translations">
+          <a class="nav-link">切换语言</a>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/tutorials/typescript.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/tutorials/typescript.html">中文</a></li></ul>
+        </li>
+      
+    </ul>
+  </div>
+  <dl><dt id="title-Intro" style="cursor: pointer;" class="aside-title">Guide<a id="collapse-icon-Intro" class="icon opend"></a></dt><dd id="panel-Intro"><ul><li><a href="/en/intro/index.html" class="menu-link">What is Egg?</a></li><li><a href="/en/intro/egg-and-koa.html" class="menu-link">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html" class="menu-link">Quick Start</a></li><li><a href="/en/tutorials/progressive.html" class="menu-link">Progressive</a></li><li><a href="/en/migration.html" class="menu-link">Migration to 2.x</a></li></ul></dd><dt id="title-Basics" style="cursor: pointer;" class="aside-title">Basis Function<a id="collapse-icon-Basics" class="icon opend"></a></dt><dd id="panel-Basics"><ul><li><a href="/en/basics/structure.html" class="menu-link">Directory Structure</a></li><li><a href="/en/basics/objects.html" class="menu-link">Built-in Objects</a></li><li><a href="/en/basics/env.html" class="menu-link">Environment</a></li><li><a href="/en/basics/config.html" class="menu-link">Configuration</a></li><li><a href="/en/basics/middleware.html" class="menu-link">Middleware</a></li><li><a href="/en/basics/router.html" class="menu-link">Router</a></li><li><a href="/en/basics/controller.html" class="menu-link">Controller</a></li><li><a href="/en/basics/service.html" class="menu-link">Service</a></li><li><a href="/en/basics/plugin.html" class="menu-link">Plugin</a></li><li><a href="/en/basics/schedule.html" class="menu-link">Schedule</a></li><li><a href="/en/basics/extend.html" class="menu-link">Extend</a></li><li><a href="/en/basics/app-start.html" class="menu-link">Custom Init</a></li></ul></dd><dt id="title-Core" style="cursor: pointer;" class="aside-title">Core<a id="collapse-icon-Core" class="icon opend"></a></dt><dd id="panel-Core"><ul><li><a href="/en/core/development.html" class="menu-link">Development</a></li><li><a href="/en/core/unittest.html" class="menu-link">Unit Testing</a></li><li><a href="/en/core/deployment.html" class="menu-link">Deployment</a></li><li><a href="/en/core/logger.html" class="menu-link">Logger</a></li><li><a href="/en/core/httpclient.html" class="menu-link">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html" class="menu-link">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html" class="menu-link">Cluster and IPC</a></li><li><a href="/en/core/view.html" class="menu-link">View</a></li><li><a href="/en/core/error-handling.html" class="menu-link">Error Handling</a></li><li><a href="/en/core/security.html" class="menu-link">Security</a></li><li><a href="/en/core/i18n.html" class="menu-link">i18n</a></li></ul></dd><dt id="title-Tutorials" style="cursor: pointer;" class="aside-title">Tutorials<a id="collapse-icon-Tutorials" class="icon opend"></a></dt><dd id="panel-Tutorials"><ul><li><a href="/en/tutorials/mysql.html" class="menu-link">MySQL</a></li><li><a href="/en/tutorials/sequelize.html" class="menu-link">Sequelize</a></li><li><a href="/en/tutorials/restful.html" class="menu-link">RESTful API</a></li><li><a href="/en/tutorials/passport.html" class="menu-link">Passport</a></li><li><a href="/en/tutorials/socketio.html" class="menu-link">Socket.IO</a></li><li><a href="/en/tutorials/assets.html" class="menu-link">Assets</a></li><li><a href="/en/tutorials/typescript.html" class="menu-link">TypeScript</a></li></ul></dd><dt id="title-Advanced" style="cursor: pointer;" class="aside-title">Advanced<a id="collapse-icon-Advanced" class="icon opend"></a></dt><dd id="panel-Advanced"><ul><li><a href="/en/advanced/loader.html" class="menu-link">Loader</a></li><li><a href="/en/advanced/plugin.html" class="menu-link">Plugin Development</a></li><li><a href="/en/advanced/framework.html" class="menu-link">Framework</a></li><li><a href="/en/advanced/cluster-client.html" class="menu-link">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html" class="menu-link">View Plugin</a></li><li><a href="/en/style-guide.html" class="menu-link">Style Guide</a></li></ul></dd><dt id="title-Community" style="cursor: pointer;" class="aside-title">Community<a id="collapse-icon-Community" class="icon opend"></a></dt><dd id="panel-Community"><ul><li><a href="/en/plugins/" class="menu-link">Plugin List</a></li><li><a href="/en/contributing.html" class="menu-link">Contributing</a></li><li><a href="/en/resource.html" class="menu-link">Resource</a></li><li><a href="/en/faq.html" class="menu-link">FAQ</a></li></ul></dd></dl>
+</aside>
+<script>
+var mobileTrigger = document.getElementById('mobileTrigger');
+var mobileAside = document.getElementById('mobileAside');
+
+var expandMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon opend';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = '';
+  }
+}
+
+var collapseMenu = function(title) {
+  // handle icon
+  const collapseIcon = document.getElementById('collapse-icon-' + title);
+  if (collapseIcon) {
+    collapseIcon.className = 'icon closed';
+  }
+  // handle panelEle
+  const panelEle = document.getElementById('panel-' + title);
+  if (panelEle) {
+    panelEle.className = 'aside-panel-hidden';
+  }
+}
+
+mobileAside.onclick = function(e) {
+  const targetId = e.target.id;
+  if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
+    const title = targetId.replace('title-', '').replace('collapse-icon-', '');
+    try { 
+      // the the browser may have no localStroage or JSON.parse may throw exception.
+      const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+        
+      // current menu status
+      const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
+
+      // change UI
+      curClosed ? expandMenu(title) : collapseMenu(title);
+
+      // save menuInfo to localStorage
+      menuInfo[title] = { closed: !curClosed } // opposite
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    } catch (e) {}
+  }
+};
+
+mobileTrigger.onclick = function(e) {
+  e.preventDefault();
+  if (mobileAside.className.indexOf('mobile-show') === -1) {
+    mobileAside.className += ' mobile-show';
+  } else {
+    mobileAside.className = 'aside';
+  }
+};
+
+(function() {
+  // save data to localStorage because the page will refresh when user change the url.
+  let menuInfo;
+  try { 
+    // the the browser may have no localStroage or JSON.parse may throw exception.
+    menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
+    if (!menuInfo) {
+      menuInfo = {};
+      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
+    }
+  } catch (e) {
+    menuInfo = {}; // default {}
+  }
+
+  for (const title in menuInfo) {
+    if (menuInfo[title] && menuInfo[title].closed) { // menu in closed status.
+      collapseMenu(title);
+    } else {
+      expandMenu(title);
+    }
+  }
+
+  // highlight menu
+  const pathname = window.location.pathname;
+  const selector = `a[href="${pathname}"].menu-link,a[href="${pathname}index.html"].menu-link`;
+  const menuItem = mobileAside.querySelector(selector);
+  if (menuItem) { menuItem.className += ' highlight'; }
+})();
+</script>
+
+
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>TypeScript</h1>
+          <blockquote>
 <p><a href="https://www.typescriptlang.org/" target="_blank" rel="noopener">TypeScript</a> is a typed superset of JavaScript that compiles to plain JavaScript.</p>
 </blockquote>
 <p>For a large number of enterprises' applications, TypeScript's static type checking, intellisense, friendly IDE are valuable. For more please see <a href="https://juejin.im/post/59c46bc86fb9a00a4636f939" target="_blank" rel="noopener">System Research Report For TypeScript</a>.</p>
@@ -209,134 +318,17 @@
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;framework_root&#125;/index.d.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Egg <span class="keyword">from</span> <span class="string">'egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// With 'import' to include the outer framework's plug-in.</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">'my-plugin'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">declare</span> <span class="keyword">module</span> 'egg' &#123;</span><br><span class="line">  <span class="comment">// Extend egg like plug-in...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Export the whole Egg</span></span><br><span class="line"><span class="keyword">export</span> = Egg;</span><br></pre></td></tr></table></figure>
 <p>For developers, they can directly import your framework:</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/news.ts</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Developers can get all intellisense after they import your framework</span></span><br><span class="line"><span class="keyword">import</span> &#123; Service &#125; <span class="keyword">from</span> <span class="string">'duck-egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> NewsService <span class="keyword">extends</span> Service &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">async</span> list(page?: <span class="built_in">number</span>): <span class="built_in">Promise</span>&lt;NewsItem[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
-  <div class="mobile-menu">
-    <ul>
-      <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
-      
-      
-        <li class="translations">
-          <a class="nav-link">切换语言</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/tutorials/typescript.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/tutorials/typescript.html">中文</a></li></ul>
-        </li>
-      
-    </ul>
-  </div>
-  <dl><dt id="title-Intro" style="cursor: pointer;" class="aside-title">Guide<a id="collapse-icon-Intro" class="icon opend"></a></dt><dd id="panel-Intro"><ul><li><a href="/en/intro/index.html" class="menu-link">What is Egg?</a></li><li><a href="/en/intro/egg-and-koa.html" class="menu-link">Egg and Koa</a></li><li><a href="/en/intro/quickstart.html" class="menu-link">Quick Start</a></li><li><a href="/en/tutorials/progressive.html" class="menu-link">Progressive</a></li><li><a href="/en/migration.html" class="menu-link">Migration to 2.x</a></li></ul></dd><dt id="title-Basics" style="cursor: pointer;" class="aside-title">Basis Function<a id="collapse-icon-Basics" class="icon opend"></a></dt><dd id="panel-Basics"><ul><li><a href="/en/basics/structure.html" class="menu-link">Directory Structure</a></li><li><a href="/en/basics/objects.html" class="menu-link">Built-in Objects</a></li><li><a href="/en/basics/env.html" class="menu-link">Environment</a></li><li><a href="/en/basics/config.html" class="menu-link">Configuration</a></li><li><a href="/en/basics/middleware.html" class="menu-link">Middleware</a></li><li><a href="/en/basics/router.html" class="menu-link">Router</a></li><li><a href="/en/basics/controller.html" class="menu-link">Controller</a></li><li><a href="/en/basics/service.html" class="menu-link">Service</a></li><li><a href="/en/basics/plugin.html" class="menu-link">Plugin</a></li><li><a href="/en/basics/schedule.html" class="menu-link">Schedule</a></li><li><a href="/en/basics/extend.html" class="menu-link">Extend</a></li><li><a href="/en/basics/app-start.html" class="menu-link">Custom Init</a></li></ul></dd><dt id="title-Core" style="cursor: pointer;" class="aside-title">Core<a id="collapse-icon-Core" class="icon opend"></a></dt><dd id="panel-Core"><ul><li><a href="/en/core/development.html" class="menu-link">Development</a></li><li><a href="/en/core/unittest.html" class="menu-link">Unit Testing</a></li><li><a href="/en/core/deployment.html" class="menu-link">Deployment</a></li><li><a href="/en/core/logger.html" class="menu-link">Logger</a></li><li><a href="/en/core/httpclient.html" class="menu-link">HttpClient</a></li><li><a href="/en/core/cookie-and-session.html" class="menu-link">Cookie and Session</a></li><li><a href="/en/core/cluster-and-ipc.html" class="menu-link">Cluster and IPC</a></li><li><a href="/en/core/view.html" class="menu-link">View</a></li><li><a href="/en/core/error-handling.html" class="menu-link">Error Handling</a></li><li><a href="/en/core/security.html" class="menu-link">Security</a></li><li><a href="/en/core/i18n.html" class="menu-link">i18n</a></li></ul></dd><dt id="title-Tutorials" style="cursor: pointer;" class="aside-title">Tutorials<a id="collapse-icon-Tutorials" class="icon opend"></a></dt><dd id="panel-Tutorials"><ul><li><a href="/en/tutorials/mysql.html" class="menu-link">MySQL</a></li><li><a href="/en/tutorials/sequelize.html" class="menu-link">Sequelize</a></li><li><a href="/en/tutorials/restful.html" class="menu-link">RESTful API</a></li><li><a href="/en/tutorials/passport.html" class="menu-link">Passport</a></li><li><a href="/en/tutorials/socketio.html" class="menu-link">Socket.IO</a></li><li><a href="/en/tutorials/assets.html" class="menu-link">Assets</a></li><li><a href="/en/tutorials/typescript.html" class="menu-link">TypeScript</a></li></ul></dd><dt id="title-Advanced" style="cursor: pointer;" class="aside-title">Advanced<a id="collapse-icon-Advanced" class="icon opend"></a></dt><dd id="panel-Advanced"><ul><li><a href="/en/advanced/loader.html" class="menu-link">Loader</a></li><li><a href="/en/advanced/plugin.html" class="menu-link">Plugin Development</a></li><li><a href="/en/advanced/framework.html" class="menu-link">Framework</a></li><li><a href="/en/advanced/cluster-client.html" class="menu-link">Cluster Enhancement</a></li><li><a href="/en/advanced/view-plugin.html" class="menu-link">View Plugin</a></li><li><a href="/en/style-guide.html" class="menu-link">Style Guide</a></li></ul></dd><dt id="title-Community" style="cursor: pointer;" class="aside-title">Community<a id="collapse-icon-Community" class="icon opend"></a></dt><dd id="panel-Community"><ul><li><a href="/en/plugins/" class="menu-link">Plugin List</a></li><li><a href="/en/contributing.html" class="menu-link">Contributing</a></li><li><a href="/en/resource.html" class="menu-link">Resource</a></li><li><a href="/en/faq.html" class="menu-link">FAQ</a></li></ul></dd></dl>
-</aside>
-<script>
-var mobileTrigger = document.getElementById('mobileTrigger');
-var mobileAside = document.getElementById('mobileAside');
-
-var expandMenu = function(title) {
-  // handle icon
-  const collapseIcon = document.getElementById('collapse-icon-' + title);
-  if (collapseIcon) {
-    collapseIcon.className = 'icon opend';
-  }
-  // handle panelEle
-  const panelEle = document.getElementById('panel-' + title);
-  if (panelEle) {
-    panelEle.className = '';
-  }
-}
-
-var collapseMenu = function(title) {
-  // handle icon
-  const collapseIcon = document.getElementById('collapse-icon-' + title);
-  if (collapseIcon) {
-    collapseIcon.className = 'icon closed';
-  }
-  // handle panelEle
-  const panelEle = document.getElementById('panel-' + title);
-  if (panelEle) {
-    panelEle.className = 'aside-panel-hidden';
-  }
-}
-
-mobileAside.onclick = function(e) {
-  const targetId = e.target.id;
-  if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
-    const title = targetId.replace('title-', '').replace('collapse-icon-', '');
-    try { 
-      // the the browser may have no localStroage or JSON.parse may throw exception.
-      const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
-        
-      // current menu status
-      const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
-
-      // change UI
-      curClosed ? expandMenu(title) : collapseMenu(title);
-
-      // save menuInfo to localStorage
-      menuInfo[title] = { closed: !curClosed } // opposite
-      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
-    } catch (e) {}
-  }
-};
-
-mobileTrigger.onclick = function(e) {
-  e.preventDefault();
-  if (mobileAside.className.indexOf('mobile-show') === -1) {
-    mobileAside.className += ' mobile-show';
-  } else {
-    mobileAside.className = 'toc';
-  }
-};
-
-(function() {
-  // save data to localStorage because the page will refresh when user change the url.
-  let menuInfo;
-  try { 
-    // the the browser may have no localStroage or JSON.parse may throw exception.
-    menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
-    if (!menuInfo) {
-      menuInfo = {};
-      window.localStorage.setItem('menuInfo', JSON.stringify(menuInfo));
-    }
-  } catch (e) {
-    menuInfo = {}; // default {}
-  }
-
-  for (const title in menuInfo) {
-    if (menuInfo[title] && menuInfo[title].closed) { // menu in closed status.
-      collapseMenu(title);
-    } else {
-      expandMenu(title);
-    }
-  }
-
-  // highlight menu
-  const pathname = window.location.pathname;
-  const selector = `a[href="${pathname}"].menu-link,a[href="${pathname}index.html"].menu-link`;
-  const menuItem = mobileAside.querySelector(selector);
-  if (menuItem) { menuItem.className += ' highlight'; }
-})();
-</script>
-
-
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#quick-start"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Quick Start</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#principles-of-catalogs"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Principles of catalogs</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Controller</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#router"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Router</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#service"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Service</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#middleware"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># Middleware</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#extend"><span class="toc-detail-number">2.5.</span> <span class="toc-detail-text"># Extend</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#config"><span class="toc-detail-number">2.6.</span> <span class="toc-detail-text"># Config</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#plug-in"><span class="toc-detail-number">2.7.</span> <span class="toc-detail-text"># Plug-in</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#lifecycle"><span class="toc-detail-number">2.8.</span> <span class="toc-detail-text"># Lifecycle</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#typings"><span class="toc-detail-number">2.9.</span> <span class="toc-detail-text"># Typings</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#developing-period"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Developing period</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ts-node"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># ts-node</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#egg-ts-helper"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># egg-ts-helper</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#unit-test-and-cov"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Unit Test and Cov</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#debug"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># Debug</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#deployment"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Deployment</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#building"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Building</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#error-stacks"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Error Stacks</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#guides-to-the-developments-of-plug-inframework"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Guides to the developments of Plug-in/Framework</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#plug-in-2"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># Plug-in</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#the-outer-framework"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># The outer framework</span></a></li></ol></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -344,12 +336,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

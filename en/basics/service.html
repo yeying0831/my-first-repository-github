@@ -57,55 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>Service</h1>
-    <p>Simply speaking, Service is an abstract layer which is used to encapsulate business logics in complex business circumstances, and this abstraction offers advantages as below:</p>
-<ul>
-<li>keep logics in Controller cleaner.</li>
-<li>keep business logics independent, since the abstracted Service can be called by many Controllers repeatedly.</li>
-<li>separate logics and representations, and make it easier to write test cases. Write test cases in detail referring to <a href="../core/unittest.html">here</a>.</li>
-</ul>
-<h2 id="usage-scenario"><a class="markdown-anchor" href="#usage-scenario">#</a> Usage Scenario</h2>
-<ul>
-<li>Processing complex data, e.g. information to be shown need to be got from databases, and should be processed in specific rules before it can be sent and seen by the user. Or when the process is done, the database should be updated.</li>
-<li>Calling third party services, e.g. getting Github information etc.</li>
-</ul>
-<h2 id="defining-service"><a class="markdown-anchor" href="#defining-service">#</a> Defining Service</h2>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/user.js</span></span><br><span class="line"><span class="keyword">const</span> Service = <span class="built_in">require</span>(<span class="string">'egg'</span>).Service;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> find(uid) &#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> <span class="keyword">this</span>.ctx.db.query(<span class="string">'select * from user where uid = ?'</span>, uid);</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = UserService;</span><br></pre></td></tr></table></figure>
-<h3 id="properties"><a class="markdown-anchor" href="#properties">#</a> Properties</h3>
-<p>Framework will initialize a new Service instance for every request accessing the server, and, for the example above, several attributes are attached to <code>this</code> since the Service class inherits <code>egg.Service</code>.</p>
-<ul>
-<li><code>this.ctx</code>: the instance of <a href="./extend.html#context">Context</a> for current request, through which we can access many attributes and methods, encapsulated by the framework, of current request conveniently.</li>
-<li><code>this.app</code>: the instance of <a href="./extend.html#application">Application</a> for current request, through which we can access global objects and methods provided by the framework.</li>
-<li><code>this.service</code>: <a href="./service.html">Service</a> defined by the application, through which we can access the abstract business layer, equivalent to <code>this.ctx.service</code>.</li>
-<li><code>this.config</code>: the application's run-time <a href="./config.html">config</a>.</li>
-<li><code>this.logger</code>：logger with <code>debug</code>，<code>info</code>，<code>warn</code>，<code>error</code>, use to print different level logs, almost the same as <a href="../core/logger.html#context-logger">context logger</a>, but it will append Service file path for quickly track.</li>
-</ul>
-<h3 id="service-ctx-in-detail"><a class="markdown-anchor" href="#service-ctx-in-detail">#</a> Service ctx in Detail</h3>
-<p>To get the path chain of user request, the request context is injected by us during the Service initialization, so you are able to get the related information of context directly by <code>this.ctx</code> in methods. For detailed information about context, please refer to <a href="./extend.html#context">Context</a>.
-With <code>ctx</code>, we can get various convenient attributes and methods encapsulated by the framework. For example we can use:</p>
-<ul>
-<li><code>this.ctx.curl</code> to make network calls.</li>
-<li><code>this.ctx.service.otherService</code> to call other Services.</li>
-<li><code>this.ctx.db</code> to make database calls etc, where db may be a module mounted by other plugins in advance.</li>
-</ul>
-<h3 id="notes"><a class="markdown-anchor" href="#notes">#</a> Notes</h3>
-<ul>
-<li>Service files must be put under the <code>app/service</code> directory, and multi-level directory is supported, which can be accessed by cascading directory names.</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app/service/biz/user.js =&gt; ctx.service.biz.user</span><br><span class="line">app/service/sync_user.js =&gt; ctx.service.syncUser</span><br><span class="line">app/service/HackerNews.js =&gt; ctx.service.hackerNews</span><br></pre></td></tr></table></figure>
-<ul>
-<li>one Service file can only define one Class, which should be returned by <code>module.exports</code>.</li>
-<li>Service should be defined in the Class way, and the parent class must be <code>egg.Service</code>.</li>
-<li>Service is not a singleton but a <strong>request level</strong> object, the framework lazy-initializes it when the request <code>ctx.service.xx</code> for the first time, so the context of current request can be got from this.ctx in Service.</li>
-</ul>
-<h2 id="using-service"><a class="markdown-anchor" href="#using-service">#</a> Using Service</h2>
-<p>We begin to see how to use Service from a complete example below.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.router.get(<span class="string">'/user/:id'</span>, app.controller.user.info);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/controller/user.js</span></span><br><span class="line"><span class="keyword">const</span> Controller = <span class="built_in">require</span>(<span class="string">'egg'</span>).Controller;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> info() &#123;</span><br><span class="line">    <span class="keyword">const</span> userId = ctx.params.id;</span><br><span class="line">    <span class="keyword">const</span> userInfo = <span class="keyword">await</span> ctx.service.user.find(userId);</span><br><span class="line">    ctx.body = userInfo;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserController;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/service/user.js</span></span><br><span class="line"><span class="keyword">const</span> Service = <span class="built_in">require</span>(<span class="string">'egg'</span>).Service;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  <span class="comment">// the constructor is not a must by default</span></span><br><span class="line">  <span class="comment">// constructor(ctx) &#123;</span></span><br><span class="line">  <span class="comment">//   super(ctx); if some processes should be made in the constructor, this statement is a must in order to use `this.ctx` later</span></span><br><span class="line">  <span class="comment">//   // get ctx through this.ctx directly</span></span><br><span class="line">  <span class="comment">//   // get app through this.app directly too</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">  <span class="keyword">async</span> find(uid) &#123;</span><br><span class="line">    <span class="comment">// suppose we've got user's id and are going to get detailed user information from databases</span></span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> <span class="keyword">this</span>.ctx.db.query(<span class="string">'select * from user where uid = ?'</span>, uid);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// suppose some complex processes should be made here, and demanded informations are returned then.</span></span><br><span class="line">    <span class="keyword">const</span> picture = <span class="keyword">await</span> <span class="keyword">this</span>.getPicture(uid);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      name: user.user_name,</span><br><span class="line">      age: user.age,</span><br><span class="line">      picture,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> getPicture(uid) &#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="keyword">this</span>.ctx.curl(<span class="string">`http://photoserver/uid=<span class="subst">$&#123;uid&#125;</span>`</span>, &#123; <span class="attr">dataType</span>: <span class="string">'json'</span> &#125;);</span><br><span class="line">    <span class="keyword">return</span> result.data;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserService;</span><br><span class="line"></span><br><span class="line"><span class="comment">// curl http://127.0.0.1:7001/user/1234</span></span><br></pre></td></tr></table></figure>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -176,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -211,25 +163,65 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>Service</h1>
+          <p>Simply speaking, Service is an abstract layer which is used to encapsulate business logics in complex business circumstances, and this abstraction offers advantages as below:</p>
+<ul>
+<li>keep logics in Controller cleaner.</li>
+<li>keep business logics independent, since the abstracted Service can be called by many Controllers repeatedly.</li>
+<li>separate logics and representations, and make it easier to write test cases. Write test cases in detail referring to <a href="../core/unittest.html">here</a>.</li>
+</ul>
+<h2 id="usage-scenario"><a class="markdown-anchor" href="#usage-scenario">#</a> Usage Scenario</h2>
+<ul>
+<li>Processing complex data, e.g. information to be shown need to be got from databases, and should be processed in specific rules before it can be sent and seen by the user. Or when the process is done, the database should be updated.</li>
+<li>Calling third party services, e.g. getting Github information etc.</li>
+</ul>
+<h2 id="defining-service"><a class="markdown-anchor" href="#defining-service">#</a> Defining Service</h2>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/user.js</span></span><br><span class="line"><span class="keyword">const</span> Service = <span class="built_in">require</span>(<span class="string">'egg'</span>).Service;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> find(uid) &#123;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> <span class="keyword">this</span>.ctx.db.query(<span class="string">'select * from user where uid = ?'</span>, uid);</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = UserService;</span><br></pre></td></tr></table></figure>
+<h3 id="properties"><a class="markdown-anchor" href="#properties">#</a> Properties</h3>
+<p>Framework will initialize a new Service instance for every request accessing the server, and, for the example above, several attributes are attached to <code>this</code> since the Service class inherits <code>egg.Service</code>.</p>
+<ul>
+<li><code>this.ctx</code>: the instance of <a href="./extend.html#context">Context</a> for current request, through which we can access many attributes and methods, encapsulated by the framework, of current request conveniently.</li>
+<li><code>this.app</code>: the instance of <a href="./extend.html#application">Application</a> for current request, through which we can access global objects and methods provided by the framework.</li>
+<li><code>this.service</code>: <a href="./service.html">Service</a> defined by the application, through which we can access the abstract business layer, equivalent to <code>this.ctx.service</code>.</li>
+<li><code>this.config</code>: the application's run-time <a href="./config.html">config</a>.</li>
+<li><code>this.logger</code>：logger with <code>debug</code>，<code>info</code>，<code>warn</code>，<code>error</code>, use to print different level logs, almost the same as <a href="../core/logger.html#context-logger">context logger</a>, but it will append Service file path for quickly track.</li>
+</ul>
+<h3 id="service-ctx-in-detail"><a class="markdown-anchor" href="#service-ctx-in-detail">#</a> Service ctx in Detail</h3>
+<p>To get the path chain of user request, the request context is injected by us during the Service initialization, so you are able to get the related information of context directly by <code>this.ctx</code> in methods. For detailed information about context, please refer to <a href="./extend.html#context">Context</a>.
+With <code>ctx</code>, we can get various convenient attributes and methods encapsulated by the framework. For example we can use:</p>
+<ul>
+<li><code>this.ctx.curl</code> to make network calls.</li>
+<li><code>this.ctx.service.otherService</code> to call other Services.</li>
+<li><code>this.ctx.db</code> to make database calls etc, where db may be a module mounted by other plugins in advance.</li>
+</ul>
+<h3 id="notes"><a class="markdown-anchor" href="#notes">#</a> Notes</h3>
+<ul>
+<li>Service files must be put under the <code>app/service</code> directory, and multi-level directory is supported, which can be accessed by cascading directory names.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app/service/biz/user.js =&gt; ctx.service.biz.user</span><br><span class="line">app/service/sync_user.js =&gt; ctx.service.syncUser</span><br><span class="line">app/service/HackerNews.js =&gt; ctx.service.hackerNews</span><br></pre></td></tr></table></figure>
+<ul>
+<li>one Service file can only define one Class, which should be returned by <code>module.exports</code>.</li>
+<li>Service should be defined in the Class way, and the parent class must be <code>egg.Service</code>.</li>
+<li>Service is not a singleton but a <strong>request level</strong> object, the framework lazy-initializes it when the request <code>ctx.service.xx</code> for the first time, so the context of current request can be got from this.ctx in Service.</li>
+</ul>
+<h2 id="using-service"><a class="markdown-anchor" href="#using-service">#</a> Using Service</h2>
+<p>We begin to see how to use Service from a complete example below.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.router.get(<span class="string">'/user/:id'</span>, app.controller.user.info);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/controller/user.js</span></span><br><span class="line"><span class="keyword">const</span> Controller = <span class="built_in">require</span>(<span class="string">'egg'</span>).Controller;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> info() &#123;</span><br><span class="line">    <span class="keyword">const</span> userId = ctx.params.id;</span><br><span class="line">    <span class="keyword">const</span> userInfo = <span class="keyword">await</span> ctx.service.user.find(userId);</span><br><span class="line">    ctx.body = userInfo;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserController;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/service/user.js</span></span><br><span class="line"><span class="keyword">const</span> Service = <span class="built_in">require</span>(<span class="string">'egg'</span>).Service;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  <span class="comment">// the constructor is not a must by default</span></span><br><span class="line">  <span class="comment">// constructor(ctx) &#123;</span></span><br><span class="line">  <span class="comment">//   super(ctx); if some processes should be made in the constructor, this statement is a must in order to use `this.ctx` later</span></span><br><span class="line">  <span class="comment">//   // get ctx through this.ctx directly</span></span><br><span class="line">  <span class="comment">//   // get app through this.app directly too</span></span><br><span class="line">  <span class="comment">// &#125;</span></span><br><span class="line">  <span class="keyword">async</span> find(uid) &#123;</span><br><span class="line">    <span class="comment">// suppose we've got user's id and are going to get detailed user information from databases</span></span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> <span class="keyword">this</span>.ctx.db.query(<span class="string">'select * from user where uid = ?'</span>, uid);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// suppose some complex processes should be made here, and demanded informations are returned then.</span></span><br><span class="line">    <span class="keyword">const</span> picture = <span class="keyword">await</span> <span class="keyword">this</span>.getPicture(uid);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      name: user.user_name,</span><br><span class="line">      age: user.age,</span><br><span class="line">      picture,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> getPicture(uid) &#123;</span><br><span class="line">    <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="keyword">this</span>.ctx.curl(<span class="string">`http://photoserver/uid=<span class="subst">$&#123;uid&#125;</span>`</span>, &#123; <span class="attr">dataType</span>: <span class="string">'json'</span> &#125;);</span><br><span class="line">    <span class="keyword">return</span> result.data;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserService;</span><br><span class="line"></span><br><span class="line"><span class="comment">// curl http://127.0.0.1:7001/user/1234</span></span><br></pre></td></tr></table></figure>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#usage-scenario"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Usage Scenario</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#defining-service"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Defining Service</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#properties"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Properties</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#service-ctx-in-detail"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Service ctx in Detail</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#notes"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Notes</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-service"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Using Service</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -237,12 +229,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

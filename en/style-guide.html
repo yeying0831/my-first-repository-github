@@ -57,27 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1></h1>
-    <h2 id="title-code-style-guide"><a class="markdown-anchor" href="#title-code-style-guide">#</a> Title: Code Style Guide</h2>
-<p>Developers are advised to use <code>egg-init --type=simple showcase</code> to generate and observe the recommended project structure and configuration.</p>
-<h2 id="classify"><a class="markdown-anchor" href="#classify">#</a> Classify</h2>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// old style</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="keyword">async</span> list() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">await</span> <span class="keyword">this</span>.ctx.curl(<span class="string">'https://eggjs.org'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> UserService;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>change to:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> Service = <span class="built_in">require</span>(<span class="string">'egg'</span>).Service;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> list() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> <span class="keyword">this</span>.ctx.curl(<span class="string">'https://eggjs.org'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserService;</span><br></pre></td></tr></table></figure>
-<p>Additionally, the <code>framework developer</code> needs to change the syntax as follows, otherwise the <code>application developer</code> will have problems customizing base classes such as Service:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="built_in">Object</span>.assign(egg, &#123;</span><br><span class="line">  Application: <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">egg</span>.<span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="private-properties-lazy-initialization"><a class="markdown-anchor" href="#private-properties-lazy-initialization">#</a> Private properties &amp; Lazy Initialization</h2>
-<ul>
-<li>Private properties are mounted with <code>Symbol</code>.</li>
-<li>The description of Symbol follows the rules of jsdoc, describing the mapped class name + attribute name.</li>
-<li>Delayed initialization.</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/extend/application.js</span></span><br><span class="line"><span class="keyword">const</span> CACHE = <span class="built_in">Symbol</span>(<span class="string">'Application#cache'</span>);</span><br><span class="line"><span class="keyword">const</span> CacheManager = <span class="built_in">require</span>(<span class="string">'../../lib/cache_manager'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  get cache() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>[CACHE]) &#123;</span><br><span class="line">      <span class="keyword">this</span>[CACHE] = <span class="keyword">new</span> CacheManager(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>[CACHE];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -148,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -183,25 +163,37 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1></h1>
+          <h2 id="title-code-style-guide"><a class="markdown-anchor" href="#title-code-style-guide">#</a> Title: Code Style Guide</h2>
+<p>Developers are advised to use <code>egg-init --type=simple showcase</code> to generate and observe the recommended project structure and configuration.</p>
+<h2 id="classify"><a class="markdown-anchor" href="#classify">#</a> Classify</h2>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// old style</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="keyword">async</span> list() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">await</span> <span class="keyword">this</span>.ctx.curl(<span class="string">'https://eggjs.org'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> UserService;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>change to:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> Service = <span class="built_in">require</span>(<span class="string">'egg'</span>).Service;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> list() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">await</span> <span class="keyword">this</span>.ctx.curl(<span class="string">'https://eggjs.org'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">module</span>.exports = UserService;</span><br></pre></td></tr></table></figure>
+<p>Additionally, the <code>framework developer</code> needs to change the syntax as follows, otherwise the <code>application developer</code> will have problems customizing base classes such as Service:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="built_in">Object</span>.assign(egg, &#123;</span><br><span class="line">  Application: <span class="class"><span class="keyword">class</span> <span class="title">MyApplication</span> <span class="keyword">extends</span> <span class="title">egg</span>.<span class="title">Application</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="private-properties-lazy-initialization"><a class="markdown-anchor" href="#private-properties-lazy-initialization">#</a> Private properties &amp; Lazy Initialization</h2>
+<ul>
+<li>Private properties are mounted with <code>Symbol</code>.</li>
+<li>The description of Symbol follows the rules of jsdoc, describing the mapped class name + attribute name.</li>
+<li>Delayed initialization.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/extend/application.js</span></span><br><span class="line"><span class="keyword">const</span> CACHE = <span class="built_in">Symbol</span>(<span class="string">'Application#cache'</span>);</span><br><span class="line"><span class="keyword">const</span> CacheManager = <span class="built_in">require</span>(<span class="string">'../../lib/cache_manager'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  get cache() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>[CACHE]) &#123;</span><br><span class="line">      <span class="keyword">this</span>[CACHE] = <span class="keyword">new</span> CacheManager(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>[CACHE];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#title-code-style-guide"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Title: Code Style Guide</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#classify"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Classify</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#private-properties-lazy-initialization"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Private properties &amp; Lazy Initialization</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -209,12 +201,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

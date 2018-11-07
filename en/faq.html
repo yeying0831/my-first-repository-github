@@ -57,58 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>FAQ</h1>
-    <p>If you have questions that is not contained below, please check <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">Egg issues</a>.</p>
-<h2 id="how-to-feedback-efficiently"><a class="markdown-anchor" href="#how-to-feedback-efficiently">#</a> How to feedback efficiently?</h2>
-<p>Thank you for reporting an issue.</p>
-<ol>
-<li>It's RECOMMENDED to submit PR for typo or tiny bug fix.</li>
-<li>If this's a FEATURE request, please provide: details, pseudo codes if necessary.</li>
-<li>If this's a BUG, please provide: course repetition, error log and configuration. Fill in as much of the template below as you're able.</li>
-<li><strong>It will be nice to use <code>egg-init --type=simple bug</code> to provide a mini GitHub repository which can reproduce the issue.</strong></li>
-</ol>
-<p>Most importantly, please understand one thing: the relationship between the <code>user</code> and <code>the maintainer of open source project</code> is not <code>Buyer</code> and <code>Seller</code>, the issue is not a customer order either.
-When you're opening an issue, please hold a mentality of &quot;working together to solve this problem.&quot; Do not expect us to serve you unilaterally.</p>
-<h2 id="why-my-config-dont-work"><a class="markdown-anchor" href="#why-my-config-dont-work">#</a> Why my config don't work?</h2>
-<p>Framework <a href="./basics/config.html">Config</a> settings is powerfull, support different environments and different places(framework, plugins, app).</p>
-<p>When you got some trouble, and want to find out what is the final config using at runtime, you can checkout <code>${root}/run/application_config.json</code>(workers' configurations) and <code>${root}/run/agent_config.json</code>(agent's configurations).(<code>root</code> is application's root directory, in <code>local</code> and <code>unittest</code> environments, it will be project base directory, in other environments will be HOME directory)</p>
-<p>Please make sure you don't make mistake like the code below:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.someKeys = <span class="string">'abc'</span>;</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;&#125;;</span><br><span class="line">  config.keys = <span class="string">'123456'</span>;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="where-are-my-log-files-in-prod-environment"><a class="markdown-anchor" href="#where-are-my-log-files-in-prod-environment">#</a> Where are my log files in prod environment?</h2>
-<p>By default, logs will print at <code>${baseDir}/logs</code>(baseDir is project's base directory) in local environment.But in non-development environments(neither local nor unittest), the logs will print at <code>$HOME/logs</code>(such as <code>/home/admin/logs</code>). So the logs won't mix in during development and locate in the same place when run in production environment.</p>
-<h2 id="why-not-choose-pm2-as-process-management-tool"><a class="markdown-anchor" href="#why-not-choose-pm2-as-process-management-tool">#</a> Why not choose PM2 as process management tool?</h2>
-<ol>
-<li>PM2 itself is too complex to issue problems if any.</li>
-<li>Deep optimization could be difficlut to achieve if choosing PM2.</li>
-<li>Pattern like one leader process communicating with remote services, along with serveral follower processes delegating request to it (<a href="./core/cluster-and-ipc.html">Cluster</a>), is a rigid demand for reducing connections and data exchange load, espeically when facing applications in very large scale. egg originates from Ant Financial Group and Alibaba Group, we start with applications in that scale at first, so we take these goals into consideration. All of these goals above could be hard to achieve with PM2.</li>
-</ol>
-<p>Process management is very important. It defines the way we write code, meanwhile relates to deep runtime optimizations. So we think it's better included in framework itself.</p>
-<p><strong>How to start application with PM2?</strong></p>
-<p>Although PM2 is not recommanded, you can use it anyway.</p>
-<p>Firstly, put a start file in the root directory of your project:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// server.js</span></span><br><span class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> workers = <span class="built_in">Number</span>(process.argv[<span class="number">2</span>] || <span class="built_in">require</span>(<span class="string">'os'</span>).cpus().length);</span><br><span class="line">egg.startCluster(&#123;</span><br><span class="line">  workers,</span><br><span class="line">  baseDir: __dirname,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>We can start application with PM2 like this:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pm2 start server.js</span><br></pre></td></tr></table></figure>
-<h2 id="how-to-resolve-csrf-error"><a class="markdown-anchor" href="#how-to-resolve-csrf-error">#</a> How to resolve csrf error?</h2>
-<p>There are two kinds of common csrf errors:</p>
-<ul>
-<li><code>missing csrf token</code></li>
-<li><code>invalid csrf token</code></li>
-</ul>
-<p>By default <a href="https://github.com/eggjs/egg-security/" target="_blank" rel="noopener">egg-security</a> plugin built in Egg requires CSRF validation against all 'unsafe' request such as <code>POST</code>, <code>PUT</code>, <code>DELETE</code> requests.</p>
-<p>The error will disappear in the presence of correct csrf token in request. For more implentation details, see [./core/security.md#csrf].</p>
-<h2 id="in-local-development-environment-why-is-worker-process-not-restarted-automatically-when-files-are-modified"><a class="markdown-anchor" href="#in-local-development-environment-why-is-worker-process-not-restarted-automatically-when-files-are-modified">#</a> In local development environment, why is worker process not restarted automatically when files are modified?</h2>
-<p>Usually this happens when you are using Jetbrains softwares(IntelliJ IDEA, WebStorm, etc.) with <code>Safe Write</code> turned on.</p>
-<p>According to Jetbrains <a href="https://www.jetbrains.com/help/webstorm/2016.3/system-settings.html" target="_blank" rel="noopener">Safe Write document</a>:</p>
-<blockquote>
-<p>If this check box is selected, a changed file is first saved in a temporary file. If the save operation succeeds, the file being saved is replaced with the saved file. (Technically, the original file is deleted and the temporary file is renamed.)</p>
-</blockquote>
-<p>Renaming files leads to file watching failure. The solution is simple: just turn of <code>Safe Write</code> option. (Settings | Appearance &amp; Behavior | System Settings | Use &quot;safe write&quot;, the path may vary in different versions)</p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -179,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -214,25 +163,68 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>FAQ</h1>
+          <p>If you have questions that is not contained below, please check <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">Egg issues</a>.</p>
+<h2 id="how-to-feedback-efficiently"><a class="markdown-anchor" href="#how-to-feedback-efficiently">#</a> How to feedback efficiently?</h2>
+<p>Thank you for reporting an issue.</p>
+<ol>
+<li>It's RECOMMENDED to submit PR for typo or tiny bug fix.</li>
+<li>If this's a FEATURE request, please provide: details, pseudo codes if necessary.</li>
+<li>If this's a BUG, please provide: course repetition, error log and configuration. Fill in as much of the template below as you're able.</li>
+<li><strong>It will be nice to use <code>egg-init --type=simple bug</code> to provide a mini GitHub repository which can reproduce the issue.</strong></li>
+</ol>
+<p>Most importantly, please understand one thing: the relationship between the <code>user</code> and <code>the maintainer of open source project</code> is not <code>Buyer</code> and <code>Seller</code>, the issue is not a customer order either.
+When you're opening an issue, please hold a mentality of &quot;working together to solve this problem.&quot; Do not expect us to serve you unilaterally.</p>
+<h2 id="why-my-config-dont-work"><a class="markdown-anchor" href="#why-my-config-dont-work">#</a> Why my config don't work?</h2>
+<p>Framework <a href="./basics/config.html">Config</a> settings is powerfull, support different environments and different places(framework, plugins, app).</p>
+<p>When you got some trouble, and want to find out what is the final config using at runtime, you can checkout <code>${root}/run/application_config.json</code>(workers' configurations) and <code>${root}/run/agent_config.json</code>(agent's configurations).(<code>root</code> is application's root directory, in <code>local</code> and <code>unittest</code> environments, it will be project base directory, in other environments will be HOME directory)</p>
+<p>Please make sure you don't make mistake like the code below:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.someKeys = <span class="string">'abc'</span>;</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">appInfo</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = &#123;&#125;;</span><br><span class="line">  config.keys = <span class="string">'123456'</span>;</span><br><span class="line">  <span class="keyword">return</span> config;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="where-are-my-log-files-in-prod-environment"><a class="markdown-anchor" href="#where-are-my-log-files-in-prod-environment">#</a> Where are my log files in prod environment?</h2>
+<p>By default, logs will print at <code>${baseDir}/logs</code>(baseDir is project's base directory) in local environment.But in non-development environments(neither local nor unittest), the logs will print at <code>$HOME/logs</code>(such as <code>/home/admin/logs</code>). So the logs won't mix in during development and locate in the same place when run in production environment.</p>
+<h2 id="why-not-choose-pm2-as-process-management-tool"><a class="markdown-anchor" href="#why-not-choose-pm2-as-process-management-tool">#</a> Why not choose PM2 as process management tool?</h2>
+<ol>
+<li>PM2 itself is too complex to issue problems if any.</li>
+<li>Deep optimization could be difficlut to achieve if choosing PM2.</li>
+<li>Pattern like one leader process communicating with remote services, along with serveral follower processes delegating request to it (<a href="./core/cluster-and-ipc.html">Cluster</a>), is a rigid demand for reducing connections and data exchange load, espeically when facing applications in very large scale. egg originates from Ant Financial Group and Alibaba Group, we start with applications in that scale at first, so we take these goals into consideration. All of these goals above could be hard to achieve with PM2.</li>
+</ol>
+<p>Process management is very important. It defines the way we write code, meanwhile relates to deep runtime optimizations. So we think it's better included in framework itself.</p>
+<p><strong>How to start application with PM2?</strong></p>
+<p>Although PM2 is not recommanded, you can use it anyway.</p>
+<p>Firstly, put a start file in the root directory of your project:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// server.js</span></span><br><span class="line"><span class="keyword">const</span> egg = <span class="built_in">require</span>(<span class="string">'egg'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> workers = <span class="built_in">Number</span>(process.argv[<span class="number">2</span>] || <span class="built_in">require</span>(<span class="string">'os'</span>).cpus().length);</span><br><span class="line">egg.startCluster(&#123;</span><br><span class="line">  workers,</span><br><span class="line">  baseDir: __dirname,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>We can start application with PM2 like this:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pm2 start server.js</span><br></pre></td></tr></table></figure>
+<h2 id="how-to-resolve-csrf-error"><a class="markdown-anchor" href="#how-to-resolve-csrf-error">#</a> How to resolve csrf error?</h2>
+<p>There are two kinds of common csrf errors:</p>
+<ul>
+<li><code>missing csrf token</code></li>
+<li><code>invalid csrf token</code></li>
+</ul>
+<p>By default <a href="https://github.com/eggjs/egg-security/" target="_blank" rel="noopener">egg-security</a> plugin built in Egg requires CSRF validation against all 'unsafe' request such as <code>POST</code>, <code>PUT</code>, <code>DELETE</code> requests.</p>
+<p>The error will disappear in the presence of correct csrf token in request. For more implentation details, see [./core/security.md#csrf].</p>
+<h2 id="in-local-development-environment-why-is-worker-process-not-restarted-automatically-when-files-are-modified"><a class="markdown-anchor" href="#in-local-development-environment-why-is-worker-process-not-restarted-automatically-when-files-are-modified">#</a> In local development environment, why is worker process not restarted automatically when files are modified?</h2>
+<p>Usually this happens when you are using Jetbrains softwares(IntelliJ IDEA, WebStorm, etc.) with <code>Safe Write</code> turned on.</p>
+<p>According to Jetbrains <a href="https://www.jetbrains.com/help/webstorm/2016.3/system-settings.html" target="_blank" rel="noopener">Safe Write document</a>:</p>
+<blockquote>
+<p>If this check box is selected, a changed file is first saved in a temporary file. If the save operation succeeds, the file being saved is replaced with the saved file. (Technically, the original file is deleted and the temporary file is renamed.)</p>
+</blockquote>
+<p>Renaming files leads to file watching failure. The solution is simple: just turn of <code>Safe Write</code> option. (Settings | Appearance &amp; Behavior | System Settings | Use &quot;safe write&quot;, the path may vary in different versions)</p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#how-to-feedback-efficiently"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># How to feedback efficiently?</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#why-my-config-dont-work"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Why my config don&#39;t work?</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#where-are-my-log-files-in-prod-environment"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Where are my log files in prod environment?</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#why-not-choose-pm2-as-process-management-tool"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Why not choose PM2 as process management tool?</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#how-to-resolve-csrf-error"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># How to resolve csrf error?</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#in-local-development-environment-why-is-worker-process-not-restarted-automatically-when-files-are-modified"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># In local development environment, why is worker process not restarted automatically when files are modified?</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -240,12 +232,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

@@ -1,15 +1,5 @@
-aside {
-  padding-left: 20px;
-  width: 200px;
-  height: 100%;
-  position: fixed;
-  top: 56px;
-  background: #fff;
-  border-right: 1px solid #E6E6E6;
-  overflow-y: scroll;
-}
 aside dl {
-  padding: 60px 0;
+  padding: 48px 0;
 }
 aside dt {
   padding-bottom: 10px;
@@ -32,9 +22,6 @@ aside ul li a:hover {
 }
 aside li {
   list-style-type: none;
-}
-.index-aside aside {
-  display: none;
 }
 .aside-panel-hidden {
   display: none;

@@ -57,37 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>Structure</h1>
-    <p>In the <a href="../intro/quickstart.html">Quick Start</a>, we should have a preliminary impression on the framework, next let us simply understand the directory convention specification.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">egg-project</span><br><span class="line">├── package.json</span><br><span class="line">├── app.js (optional)</span><br><span class="line">├── agent.js (optional)</span><br><span class="line">├── app</span><br><span class="line">|   ├── router.js</span><br><span class="line">│   ├── controller</span><br><span class="line">│   |   └── home.js</span><br><span class="line">│   ├── service (optional)</span><br><span class="line">│   |   └── user.js</span><br><span class="line">│   ├── middleware (optional)</span><br><span class="line">│   |   └── response_time.js</span><br><span class="line">│   ├── schedule (optional)</span><br><span class="line">│   |   └── my_task.js</span><br><span class="line">│   ├── public (optional)</span><br><span class="line">│   |   └── reset.css</span><br><span class="line">│   ├── view (optional)</span><br><span class="line">│   |   └── home.tpl</span><br><span class="line">│   └── extend (optional)</span><br><span class="line">│       ├── helper.js (optional)</span><br><span class="line">│       ├── request.js (optional)</span><br><span class="line">│       ├── response.js (optional)</span><br><span class="line">│       ├── context.js (optional)</span><br><span class="line">│       ├── application.js (optional)</span><br><span class="line">│       └── agent.js (optional)</span><br><span class="line">├── config</span><br><span class="line">|   ├── plugin.js</span><br><span class="line">|   ├── config.default.js</span><br><span class="line">│   ├── config.prod.js</span><br><span class="line">|   ├── config.test.js (optional)</span><br><span class="line">|   ├── config.local.js (optional)</span><br><span class="line">|   └── config.unittest.js (optional)</span><br><span class="line">└── <span class="built_in">test</span></span><br><span class="line">    ├── middleware</span><br><span class="line">    |   └── response_time.test.js</span><br><span class="line">    └── controller</span><br><span class="line">        └── home.test.js</span><br></pre></td></tr></table></figure>
-<p>As above, directories by conventions of framework:</p>
-<ul>
-<li><code>app/router.js</code> used to configure URL routing rules, see <a href="./router.html">Router</a> for details.</li>
-<li><code>app/controller/**</code> used to parse the input from user, return the corresponding results after processing, see <a href="./controller.html">Controller</a> for details.</li>
-<li><code>app/service/**</code> used for business logic layer, optional, recommend to use，see <a href="./service.html">Service</a> for details.</li>
-<li><code>app/middleware/**</code> uesd for middleware, optional, see <a href="./middleware.html">Middleware</a> for details.</li>
-<li><code>app/public/**</code> used to place static resources, optional, see built-in plugin <a href="https://github.com/eggjs/egg-static" target="_blank" rel="noopener">egg-static</a> for details.</li>
-<li><code>app/extend/**</code> used for extensions of the framework, optional, see <a href="./extend.html">Extend EGG</a> for details.</li>
-<li><code>config/config.{env}.js</code> used to write configuration files, see <a href="./config.html">Configuration</a> for details.</li>
-<li><code>config/plugin.js</code> used to configure the plugins that need to be loaded, see <a href="./plugin.html">Plugin</a> for details.</li>
-<li><code>test/**</code> used for unit test, see <a href="../core/unittest.html">Unit Test</a> for details.</li>
-<li><code>app.js</code> and <code>agent.js</code> are used to customize the initialization works at startup, see <a href="./app-start.html">Application Startup Configuration</a> for details. For the role of <code>agent.js</code> see <a href="../core/cluster-and-ipc.html#agent-mechanism">Agent Mechanism</a>.</li>
-</ul>
-<p>Directories by conventions of built-in plugins:</p>
-<ul>
-<li><code>app/public/**</code> used to place static resources, optional, see built-in plugin <a href="https://github.com/eggjs/egg-static" target="_blank" rel="noopener">egg-static</a> for details.</li>
-<li><code>app/schedule/**</code> used for scheduled tasks, optional, see <a href="./schedule.html">Scheduled Task</a> for details.</li>
-</ul>
-<p><strong>To customize your own directory specification, see <a href="../advanced/loader.html">Loader API</a></strong></p>
-<ul>
-<li><code>app/view/**</code> used to place view files, optional, by view plugins conventions, see <a href="../core/view.html">View Rendering</a> for details.</li>
-<li><code>app/model/**</code> used to place the domain model, optional, by the domain related plugins conventions, such as <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>.</li>
-</ul>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -158,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -193,25 +163,47 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>Structure</h1>
+          <p>In the <a href="../intro/quickstart.html">Quick Start</a>, we should have a preliminary impression on the framework, next let us simply understand the directory convention specification.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">egg-project</span><br><span class="line">├── package.json</span><br><span class="line">├── app.js (optional)</span><br><span class="line">├── agent.js (optional)</span><br><span class="line">├── app</span><br><span class="line">|   ├── router.js</span><br><span class="line">│   ├── controller</span><br><span class="line">│   |   └── home.js</span><br><span class="line">│   ├── service (optional)</span><br><span class="line">│   |   └── user.js</span><br><span class="line">│   ├── middleware (optional)</span><br><span class="line">│   |   └── response_time.js</span><br><span class="line">│   ├── schedule (optional)</span><br><span class="line">│   |   └── my_task.js</span><br><span class="line">│   ├── public (optional)</span><br><span class="line">│   |   └── reset.css</span><br><span class="line">│   ├── view (optional)</span><br><span class="line">│   |   └── home.tpl</span><br><span class="line">│   └── extend (optional)</span><br><span class="line">│       ├── helper.js (optional)</span><br><span class="line">│       ├── request.js (optional)</span><br><span class="line">│       ├── response.js (optional)</span><br><span class="line">│       ├── context.js (optional)</span><br><span class="line">│       ├── application.js (optional)</span><br><span class="line">│       └── agent.js (optional)</span><br><span class="line">├── config</span><br><span class="line">|   ├── plugin.js</span><br><span class="line">|   ├── config.default.js</span><br><span class="line">│   ├── config.prod.js</span><br><span class="line">|   ├── config.test.js (optional)</span><br><span class="line">|   ├── config.local.js (optional)</span><br><span class="line">|   └── config.unittest.js (optional)</span><br><span class="line">└── <span class="built_in">test</span></span><br><span class="line">    ├── middleware</span><br><span class="line">    |   └── response_time.test.js</span><br><span class="line">    └── controller</span><br><span class="line">        └── home.test.js</span><br></pre></td></tr></table></figure>
+<p>As above, directories by conventions of framework:</p>
+<ul>
+<li><code>app/router.js</code> used to configure URL routing rules, see <a href="./router.html">Router</a> for details.</li>
+<li><code>app/controller/**</code> used to parse the input from user, return the corresponding results after processing, see <a href="./controller.html">Controller</a> for details.</li>
+<li><code>app/service/**</code> used for business logic layer, optional, recommend to use，see <a href="./service.html">Service</a> for details.</li>
+<li><code>app/middleware/**</code> uesd for middleware, optional, see <a href="./middleware.html">Middleware</a> for details.</li>
+<li><code>app/public/**</code> used to place static resources, optional, see built-in plugin <a href="https://github.com/eggjs/egg-static" target="_blank" rel="noopener">egg-static</a> for details.</li>
+<li><code>app/extend/**</code> used for extensions of the framework, optional, see <a href="./extend.html">Extend EGG</a> for details.</li>
+<li><code>config/config.{env}.js</code> used to write configuration files, see <a href="./config.html">Configuration</a> for details.</li>
+<li><code>config/plugin.js</code> used to configure the plugins that need to be loaded, see <a href="./plugin.html">Plugin</a> for details.</li>
+<li><code>test/**</code> used for unit test, see <a href="../core/unittest.html">Unit Test</a> for details.</li>
+<li><code>app.js</code> and <code>agent.js</code> are used to customize the initialization works at startup, see <a href="./app-start.html">Application Startup Configuration</a> for details. For the role of <code>agent.js</code> see <a href="../core/cluster-and-ipc.html#agent-mechanism">Agent Mechanism</a>.</li>
+</ul>
+<p>Directories by conventions of built-in plugins:</p>
+<ul>
+<li><code>app/public/**</code> used to place static resources, optional, see built-in plugin <a href="https://github.com/eggjs/egg-static" target="_blank" rel="noopener">egg-static</a> for details.</li>
+<li><code>app/schedule/**</code> used for scheduled tasks, optional, see <a href="./schedule.html">Scheduled Task</a> for details.</li>
+</ul>
+<p><strong>To customize your own directory specification, see <a href="../advanced/loader.html">Loader API</a></strong></p>
+<ul>
+<li><code>app/view/**</code> used to place view files, optional, by view plugins conventions, see <a href="../core/view.html">View Rendering</a> for details.</li>
+<li><code>app/model/**</code> used to place the domain model, optional, by the domain related plugins conventions, such as <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>.</li>
+</ul>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -219,12 +211,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

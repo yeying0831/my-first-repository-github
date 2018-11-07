@@ -57,64 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>Tutorials</h1>
-    <ul>
-<li><a href="../intro/quickstart.html">Quick Start</a></li>
-<li><a href="./progressive.html">Progressive Development</a></li>
-<li><a href="./restful.html">RESTful API</a></li>
-</ul>
-<h2 id="boilerplate-type-description"><a class="markdown-anchor" href="#boilerplate-type-description">#</a> Boilerplate Type Description</h2>
-<p>You can use boilerplate type like this:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-init --<span class="built_in">type</span>=simple</span><br></pre></td></tr></table></figure>
-<h3 id="options"><a class="markdown-anchor" href="#options">#</a> Options</h3>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">boilerplate type</th>
-<th style="text-align:right">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">simple</td>
-<td style="text-align:right">Simple egg app boilerplate</td>
-</tr>
-<tr>
-<td style="text-align:center">empty</td>
-<td style="text-align:right">Empty egg app boilerplate</td>
-</tr>
-<tr>
-<td style="text-align:center">plugin</td>
-<td style="text-align:right">egg plugin boilerplate</td>
-</tr>
-<tr>
-<td style="text-align:center">framework</td>
-<td style="text-align:right">egg framework boilerplate</td>
-</tr>
-</tbody>
-</table>
-<h2 id="template-engines"><a class="markdown-anchor" href="#template-engines">#</a> Template Engines</h2>
-<p>Build in <a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> as template engine solution and support multiple render, which is called by plugin but keeping the consistent render API. Refer to <a href="../core/view.html">how to use templates</a>，More details on <a href="../advanced/view-plugin.html">template plugin development</a>.</p>
-<p>Template engines available as shown below. For more template engines <a href="https://github.com/search?utf8=%E2%9C%93&amp;q=topic%3Aegg-view&amp;type=Repositories&amp;ref=searchresults" target="_blank" rel="noopener">searching</a></p>
-<ul>
-<li><a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a></li>
-<li><a href="https://github.com/eggjs/egg-view-ejs" target="_blank" rel="noopener">egg-view-ejs</a></li>
-<li><a href="https://github.com/eggjs/egg-view-handlebars" target="_blank" rel="noopener">egg-view-handlebars</a></li>
-<li><a href="https://github.com/chrisyip/egg-view-pug" target="_blank" rel="noopener">egg-view-pug</a></li>
-<li><a href="https://github.com/eggjs/egg-view-xtpl" target="_blank" rel="noopener">egg-view-xtpl</a></li>
-</ul>
-<h2 id="databases"><a class="markdown-anchor" href="#databases">#</a> Databases</h2>
-<p>Official <a href="https://github.com/eggjs/egg/issues/388" target="_blank" rel="noopener">ORM model WIP</a>，plugins now available:</p>
-<ul>
-<li><a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a></li>
-<li><a href="https://github.com/eggjs/egg-mongoose" target="_blank" rel="noopener">egg-mongoose</a></li>
-<li><a href="https://github.com/eggjs/egg-mysql" target="_blank" rel="noopener">egg-mysql</a>，refer to <a href="./mysql.html">MySQL tutorials</a></li>
-</ul>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -185,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -220,25 +163,74 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>Tutorials</h1>
+          <ul>
+<li><a href="../intro/quickstart.html">Quick Start</a></li>
+<li><a href="./progressive.html">Progressive Development</a></li>
+<li><a href="./restful.html">RESTful API</a></li>
+</ul>
+<h2 id="boilerplate-type-description"><a class="markdown-anchor" href="#boilerplate-type-description">#</a> Boilerplate Type Description</h2>
+<p>You can use boilerplate type like this:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-init --<span class="built_in">type</span>=simple</span><br></pre></td></tr></table></figure>
+<h3 id="options"><a class="markdown-anchor" href="#options">#</a> Options</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">boilerplate type</th>
+<th style="text-align:right">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">simple</td>
+<td style="text-align:right">Simple egg app boilerplate</td>
+</tr>
+<tr>
+<td style="text-align:center">empty</td>
+<td style="text-align:right">Empty egg app boilerplate</td>
+</tr>
+<tr>
+<td style="text-align:center">plugin</td>
+<td style="text-align:right">egg plugin boilerplate</td>
+</tr>
+<tr>
+<td style="text-align:center">framework</td>
+<td style="text-align:right">egg framework boilerplate</td>
+</tr>
+</tbody>
+</table>
+<h2 id="template-engines"><a class="markdown-anchor" href="#template-engines">#</a> Template Engines</h2>
+<p>Build in <a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> as template engine solution and support multiple render, which is called by plugin but keeping the consistent render API. Refer to <a href="../core/view.html">how to use templates</a>，More details on <a href="../advanced/view-plugin.html">template plugin development</a>.</p>
+<p>Template engines available as shown below. For more template engines <a href="https://github.com/search?utf8=%E2%9C%93&amp;q=topic%3Aegg-view&amp;type=Repositories&amp;ref=searchresults" target="_blank" rel="noopener">searching</a></p>
+<ul>
+<li><a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a></li>
+<li><a href="https://github.com/eggjs/egg-view-ejs" target="_blank" rel="noopener">egg-view-ejs</a></li>
+<li><a href="https://github.com/eggjs/egg-view-handlebars" target="_blank" rel="noopener">egg-view-handlebars</a></li>
+<li><a href="https://github.com/chrisyip/egg-view-pug" target="_blank" rel="noopener">egg-view-pug</a></li>
+<li><a href="https://github.com/eggjs/egg-view-xtpl" target="_blank" rel="noopener">egg-view-xtpl</a></li>
+</ul>
+<h2 id="databases"><a class="markdown-anchor" href="#databases">#</a> Databases</h2>
+<p>Official <a href="https://github.com/eggjs/egg/issues/388" target="_blank" rel="noopener">ORM model WIP</a>，plugins now available:</p>
+<ul>
+<li><a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a></li>
+<li><a href="https://github.com/eggjs/egg-mongoose" target="_blank" rel="noopener">egg-mongoose</a></li>
+<li><a href="https://github.com/eggjs/egg-mysql" target="_blank" rel="noopener">egg-mysql</a>，refer to <a href="./mysql.html">MySQL tutorials</a></li>
+</ul>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#boilerplate-type-description"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Boilerplate Type Description</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#options"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Options</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#template-engines"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Template Engines</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#databases"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Databases</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -246,12 +238,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

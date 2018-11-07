@@ -57,37 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>egg-onerror</h1>
-    <p><a href="https://npmjs.org/package/egg-onerror" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-onerror.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-onerror" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-onerror.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-onerror?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-onerror/coverage.svg?branch=master" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-onerror" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-onerror.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-onerror" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-onerror/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-onerror" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-onerror.svg?style=flat-square" alt="npm download"></a></p>
-<p>Default error handling plugin for egg.</p>
-<h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-onerror</span><br></pre></td></tr></table></figure>
-<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
-<p><code>egg-onerror</code> is on by default in egg. But you still can configure its properties to fits your scenarios.</p>
-<ul>
-<li><code>errorPageUrl: String or Function</code> - If user request html pages in production environment and unexpected error happened, it will redirect user to <code>errorPageUrl</code>.</li>
-<li><code>accepts: Function</code> - detect user's request accpet <code>json</code> or <code>html</code>.</li>
-<li><code>all: Function</code> - customize error handler, if <code>all</code> present, negotiation will be ignored.</li>
-<li><code>html: Function</code> - customize html error handler.</li>
-<li><code>text: Function</code> - customize text error handler.</li>
-<li><code>json: Function</code> - customize json error handler.</li>
-<li><code>jsonp: Function</code> - customize jsonp error handler.</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config.default.js</span></span><br><span class="line"><span class="comment">// errorPageUrl support funtion</span></span><br><span class="line">exports.onerror = &#123;</span><br><span class="line">  errorPageUrl: <span class="function">(<span class="params">err, ctx</span>) =&gt;</span> ctx.errorPageUrl || <span class="string">'/500'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// an accept detect function that mark all request with `x-requested-with=XMLHttpRequest` header accepts json.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">accepts</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (ctx.get(<span class="string">'x-requested-with'</span>) === <span class="string">'XMLHttpRequest'</span>) <span class="keyword">return</span> <span class="string">'json'</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'html'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
-<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
-<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="https://github.com/eggjs/egg-onerror/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
@@ -158,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -193,25 +163,47 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>egg-onerror</h1>
+          <p><a href="https://npmjs.org/package/egg-onerror" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-onerror.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-onerror" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-onerror.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-onerror?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-onerror/coverage.svg?branch=master" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-onerror" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-onerror.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-onerror" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-onerror/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-onerror" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-onerror.svg?style=flat-square" alt="npm download"></a></p>
+<p>Default error handling plugin for egg.</p>
+<h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-onerror</span><br></pre></td></tr></table></figure>
+<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
+<p><code>egg-onerror</code> is on by default in egg. But you still can configure its properties to fits your scenarios.</p>
+<ul>
+<li><code>errorPageUrl: String or Function</code> - If user request html pages in production environment and unexpected error happened, it will redirect user to <code>errorPageUrl</code>.</li>
+<li><code>accepts: Function</code> - detect user's request accpet <code>json</code> or <code>html</code>.</li>
+<li><code>all: Function</code> - customize error handler, if <code>all</code> present, negotiation will be ignored.</li>
+<li><code>html: Function</code> - customize html error handler.</li>
+<li><code>text: Function</code> - customize text error handler.</li>
+<li><code>json: Function</code> - customize json error handler.</li>
+<li><code>jsonp: Function</code> - customize jsonp error handler.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config.default.js</span></span><br><span class="line"><span class="comment">// errorPageUrl support funtion</span></span><br><span class="line">exports.onerror = &#123;</span><br><span class="line">  errorPageUrl: <span class="function">(<span class="params">err, ctx</span>) =&gt;</span> ctx.errorPageUrl || <span class="string">'/500'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// an accept detect function that mark all request with `x-requested-with=XMLHttpRequest` header accepts json.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">accepts</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (ctx.get(<span class="string">'x-requested-with'</span>) === <span class="string">'XMLHttpRequest'</span>) <span class="keyword">return</span> <span class="string">'json'</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'html'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
+<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
+<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
+<p><a href="https://github.com/eggjs/egg-onerror/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#install"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Install</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#usage"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Usage</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#questions-suggestions"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Questions &amp; Suggestions</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#license"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># License</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -219,12 +211,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

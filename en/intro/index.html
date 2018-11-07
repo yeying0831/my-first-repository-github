@@ -57,29 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>What is Egg?</h1>
-    <p><strong>Egg is born for building enterprise application and framework</strong>，we hope Egg will give birth to more application framework to help developers and developing team reduce development and maintenance costs.</p>
-<h2 id="design-principles"><a class="markdown-anchor" href="#design-principles">#</a> Design principles</h2>
-<p>Since we know well that enterprise applications need to consider how to balance the differences between different teams, seeking common ground while reserving differences in the pursuit of clarifying specification and cooperation, we focus on providing core features for Web development and a flexible and extensible plug-in mechanism instead of giant bazaar mode which is popular in common Web frameworks(with integrated such as database, template engine, front-end framework and other functions). We will not make technical selection because default technical selection makes the scalability of the framework too poor to meet a variety of custom requirements. With the help of Egg , it is very easy for architects and technical leaders to build their own framework which is suitable for their business scenarios based on existing technology stack .</p>
-<p>The plug-in mechanism of Egg is very extensible, <strong>one purpose for one plugin</strong>(Eg: <a href="https://mozilla.github.io/nunjucks" target="_blank" rel="noopener">Nunjucks</a> is encapsulated into <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a>, and MySQL is encapsulated into <a href="https://github.com/eggjs/egg-mysql" target="_blank" rel="noopener">egg-mysql</a>). Aggregating the plugins and customizing the configurations according to their own business scenarios greatly reduces the development cost.</p>
-<p>Egg is a convention-over-configuration framework, follows the <a href="../advanced/loader.html">Loader</a> to do the development, it helps to reduce the cost of learning. Developers no longer work as 'nails'. The cost of communication is very high for a team without convention. it is easy to get fault without convention. However convention is not equal to diffcult extension, instead, Egg does well in extension part, you can build your own framework according to team convention.  <a href="../advanced/loader.html">Loader</a> can help load different default configuration in different environment, Egg default convention can also be covered by your own.</p>
-<h2 id="differences-between-community-framework"><a class="markdown-anchor" href="#differences-between-community-framework">#</a> Differences between community framework</h2>
-<p><a href="http://expressjs.com" target="_blank" rel="noopener">Express</a> is well used in Node.js community, it is easy and extensible, fit personal project a lot. However, without default convention, standard mvc model has lots of strange impl which would lead to misunderstandings. Egg's teamwork cost is really low by following convention convention-over-configuration.</p>
-<p><a href="http://sailsjs.com" target="_blank" rel="noopener">Sails</a> is a framework that also follows convention-over-configuration,it does well in extensible work. Compared with Egg, <a href="http://sailsjs.com" target="_blank" rel="noopener">Sails</a> supports blueprint REST API, <a href="https://github.com/balderdashy/waterline" target="_blank" rel="noopener">WaterLine</a> , Frontend integration, WebSocket and so on, all of these are provided by Sails. Egg does not provide these functions, it only has integration of different functional extensions, such as egg-blueprint, egg-waterline, if you use sails-egg to integrate these extensions, <a href="http://sailsjs.com" target="_blank" rel="noopener">Sails</a> can be replaced.</p>
-<h2 id="features"><a class="markdown-anchor" href="#features">#</a> features</h2>
-<ul>
-<li>Provide capability to <a href="../advanced/framework.html">customizd framework</a> base on Egg</li>
-<li>Highly extensible <a href="../basics/plugin.html">plug-in mechanism</a></li>
-<li>Built-in <a href="../advanced/cluster-client.html">cluster</a></li>
-<li>Based on <a href="http://koajs.com" target="_blank" rel="noopener">Koa</a> with high performance</li>
-<li>Stable core framework with high test coverage</li>
-<li><a href="../tutorials/progressive.html">Progressive development</a></li>
-</ul>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -150,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -185,25 +163,39 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>What is Egg?</h1>
+          <p><strong>Egg is born for building enterprise application and framework</strong>，we hope Egg will give birth to more application framework to help developers and developing team reduce development and maintenance costs.</p>
+<h2 id="design-principles"><a class="markdown-anchor" href="#design-principles">#</a> Design principles</h2>
+<p>Since we know well that enterprise applications need to consider how to balance the differences between different teams, seeking common ground while reserving differences in the pursuit of clarifying specification and cooperation, we focus on providing core features for Web development and a flexible and extensible plug-in mechanism instead of giant bazaar mode which is popular in common Web frameworks(with integrated such as database, template engine, front-end framework and other functions). We will not make technical selection because default technical selection makes the scalability of the framework too poor to meet a variety of custom requirements. With the help of Egg , it is very easy for architects and technical leaders to build their own framework which is suitable for their business scenarios based on existing technology stack .</p>
+<p>The plug-in mechanism of Egg is very extensible, <strong>one purpose for one plugin</strong>(Eg: <a href="https://mozilla.github.io/nunjucks" target="_blank" rel="noopener">Nunjucks</a> is encapsulated into <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a>, and MySQL is encapsulated into <a href="https://github.com/eggjs/egg-mysql" target="_blank" rel="noopener">egg-mysql</a>). Aggregating the plugins and customizing the configurations according to their own business scenarios greatly reduces the development cost.</p>
+<p>Egg is a convention-over-configuration framework, follows the <a href="../advanced/loader.html">Loader</a> to do the development, it helps to reduce the cost of learning. Developers no longer work as 'nails'. The cost of communication is very high for a team without convention. it is easy to get fault without convention. However convention is not equal to diffcult extension, instead, Egg does well in extension part, you can build your own framework according to team convention.  <a href="../advanced/loader.html">Loader</a> can help load different default configuration in different environment, Egg default convention can also be covered by your own.</p>
+<h2 id="differences-between-community-framework"><a class="markdown-anchor" href="#differences-between-community-framework">#</a> Differences between community framework</h2>
+<p><a href="http://expressjs.com" target="_blank" rel="noopener">Express</a> is well used in Node.js community, it is easy and extensible, fit personal project a lot. However, without default convention, standard mvc model has lots of strange impl which would lead to misunderstandings. Egg's teamwork cost is really low by following convention convention-over-configuration.</p>
+<p><a href="http://sailsjs.com" target="_blank" rel="noopener">Sails</a> is a framework that also follows convention-over-configuration,it does well in extensible work. Compared with Egg, <a href="http://sailsjs.com" target="_blank" rel="noopener">Sails</a> supports blueprint REST API, <a href="https://github.com/balderdashy/waterline" target="_blank" rel="noopener">WaterLine</a> , Frontend integration, WebSocket and so on, all of these are provided by Sails. Egg does not provide these functions, it only has integration of different functional extensions, such as egg-blueprint, egg-waterline, if you use sails-egg to integrate these extensions, <a href="http://sailsjs.com" target="_blank" rel="noopener">Sails</a> can be replaced.</p>
+<h2 id="features"><a class="markdown-anchor" href="#features">#</a> features</h2>
+<ul>
+<li>Provide capability to <a href="../advanced/framework.html">customizd framework</a> base on Egg</li>
+<li>Highly extensible <a href="../basics/plugin.html">plug-in mechanism</a></li>
+<li>Built-in <a href="../advanced/cluster-client.html">cluster</a></li>
+<li>Based on <a href="http://koajs.com" target="_blank" rel="noopener">Koa</a> with high performance</li>
+<li>Stable core framework with high test coverage</li>
+<li><a href="../tutorials/progressive.html">Progressive development</a></li>
+</ul>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#design-principles"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Design principles</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#differences-between-community-framework"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Differences between community framework</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#features"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># features</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -211,12 +203,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

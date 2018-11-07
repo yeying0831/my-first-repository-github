@@ -57,80 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>egg-schedule</h1>
-    <p><a href="https://npmjs.org/package/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-schedule.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-schedule.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-schedule?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-schedule/coverage.svg?branch=master" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-schedule.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-schedule" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-schedule/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-schedule.svg?style=flat-square" alt="npm download"></a></p>
-<p>A schedule plugin for egg. It supports two scheduler types, <code>worker</code> and <code>all</code>, and can be extended by other plugins.</p>
-<p><code>egg-schedule</code> has been built-in for egg. It is enabled by default.</p>
-<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
-<p>Just add you job file to <code>{app_root}/app/schedule</code>.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/schedule/cleandb.js</span></span><br><span class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CleanDB</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @property &#123;Object&#125; schedule</span></span><br><span class="line"><span class="comment">   *  - &#123;String&#125; type - schedule type, `worker` or `all` or your custom types.</span></span><br><span class="line"><span class="comment">   *  - &#123;String&#125; [cron] - cron expression, see [below](#cron-style-scheduling)</span></span><br><span class="line"><span class="comment">   *  - &#123;Object&#125; [cronOptions] - cron options, see [cron-parser#options](https://github.com/harrisiirak/cron-parser#options)</span></span><br><span class="line"><span class="comment">   *  - &#123;String | Number&#125; [interval] - interval expression in millisecond or express explicitly like '1h'. see [below](#interval-style-scheduling)</span></span><br><span class="line"><span class="comment">   *  - &#123;Boolean&#125; [immediate] - To run a scheduler at startup</span></span><br><span class="line"><span class="comment">   *  - &#123;Boolean&#125; [disable] - whether to disable a scheduler, usually use in dynamic schedule</span></span><br><span class="line"><span class="comment">   *  - &#123;Array&#125; [env] - only enable scheduler when match env list</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">static</span> get schedule() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      type: <span class="string">'worker'</span>,</span><br><span class="line">      cron: <span class="string">'0 0 3 * * *'</span>,</span><br><span class="line">      <span class="comment">// interval: '1h',</span></span><br><span class="line">      <span class="comment">// immediate: true,</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> subscribe() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.service.db.cleandb();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = CleanDB;</span><br></pre></td></tr></table></figure>
-<p>You can also use function simply.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.schedule = &#123;</span><br><span class="line">  type: <span class="string">'worker'</span>,</span><br><span class="line">  cron: <span class="string">'0 0 3 * * *'</span>,</span><br><span class="line">  <span class="comment">// interval: '1h',</span></span><br><span class="line">  <span class="comment">// immediate: true,</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">exports.task = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">await</span> ctx.service.db.cleandb();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="overview"><a class="markdown-anchor" href="#overview">#</a> Overview</h2>
-<p><code>egg-schedule</code> supports both time-based scheduling and interval-based scheduling.</p>
-<p>Schedule decision is being made by <code>agent</code> process. <code>agent</code> triggers a task and sends message to <code>worker</code> process. Then, one or all <code>worker</code> process(es) execute the task based on schedule type.</p>
-<p>To setup a schedule task, simply create a job file in <code>{app_root}/app/schedule</code>. A file contains one job and export <code>schedule</code> and <code>task</code> properties.</p>
-<p>The rule of thumbs is one job per file.</p>
-<h2 id="task"><a class="markdown-anchor" href="#task">#</a> Task</h2>
-<p>Task is a class which will be instantiated every schedule, and <code>subscribe</code> method will be invoked.</p>
-<p>You can get anonymous context with <code>this.ctx</code>.</p>
-<ul>
-<li>ctx.method: <code>SCHEDULE</code></li>
-<li>ctx.path: <code>/__schedule?path=${schedulePath}&amp;${schedule}</code>.</li>
-</ul>
-<p>To create a task, <code>subscribe</code> can be generator function or async function. For example:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A simple logger example</span></span><br><span class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoggerExample</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> subscribe() &#123;</span><br><span class="line">    <span class="keyword">this</span>.ctx.logger.info(<span class="string">'Info about your task'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A real world example: wipe out your database.</span></span><br><span class="line"><span class="comment">// Use it with caution. :)</span></span><br><span class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CleanDB</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> subscribe() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.service.db.cleandb();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="scheduling"><a class="markdown-anchor" href="#scheduling">#</a> Scheduling</h2>
-<p><code>schedule</code> is an object that contains one required property, <code>type</code>, and optional properties, <code>{ cron, cronOptions, interval, immediate, disable, env }</code>.</p>
-<h3 id="cron-style-scheduling"><a class="markdown-anchor" href="#cron-style-scheduling">#</a> Cron-style Scheduling</h3>
-<p>Use <a href="https://github.com/harrisiirak/cron-parser" target="_blank" rel="noopener">cron-parser</a>.</p>
-<blockquote>
-<p>Note: <code>cron-parser</code> support <code>second</code> as optional that is not supported by linux crontab.</p>
-<p><code>@hourly / @daily / @weekly / @monthly / @yearly</code> is also supported.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*    *    *    *    *    *</span><br><span class="line">┬    ┬    ┬    ┬    ┬    ┬</span><br><span class="line">│    │    │    │    │    |</span><br><span class="line">│    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)</span><br><span class="line">│    │    │    │    └───── month (1 - 12)</span><br><span class="line">│    │    │    └────────── day of month (1 - 31)</span><br><span class="line">│    │    └─────────────── hour (0 - 23)</span><br><span class="line">│    └──────────────────── minute (0 - 59)</span><br><span class="line">└───────────────────────── second (0 - 59, optional)</span><br></pre></td></tr></table></figure>
-<p>Example:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// To execute task every 3 hours</span></span><br><span class="line">exports.schedule = &#123;</span><br><span class="line">  type: <span class="string">'worker'</span>,</span><br><span class="line">  cron: <span class="string">'0 0 */3 * * *'</span>,</span><br><span class="line">  cronOptions: &#123;</span><br><span class="line">    <span class="comment">// tz: 'Europe/Athens',</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="interval-style-scheduling"><a class="markdown-anchor" href="#interval-style-scheduling">#</a> Interval-style Scheduling</h3>
-<p>To use <code>setInterval</code>, and support <a href="https://www.npmjs.com/package/ms" target="_blank" rel="noopener">ms</a> conversion style</p>
-<p>Example:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// To execute task every 3 hours</span></span><br><span class="line">exports.schedule = &#123;</span><br><span class="line">  type: <span class="string">'worker'</span>,</span><br><span class="line">  interval: <span class="string">'3h'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="schedule-type"><a class="markdown-anchor" href="#schedule-type">#</a> Schedule Type</h3>
-<p><strong>Build-in support is:</strong></p>
-<ul>
-<li><strong>worker</strong>: will be executed in one random worker when schedule run.</li>
-<li><strong>all</strong>: will be executed in all workers when schedule run.</li>
-</ul>
-<p><strong>Custom schedule</strong></p>
-<p>To create a custom schedule, simply extend <code>agent.ScheduleStrategy</code> and register it by <code>agent.schedule.use(type, clz)</code>.
-You can schedule the task to be executed by one random worker or all workers with the built-in method <code>this.sendOne(...args)</code> or <code>this.sendAll(...args)</code> which support params, it will pass to <code>subscribe(...args)</code> or <code>task(ctx, ...args)</code>.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/agent.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">agent</span>) </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">CustomStrategy</span> <span class="keyword">extends</span> <span class="title">agent</span>.<span class="title">ScheduleStrategy</span> </span>&#123;</span><br><span class="line">    start() &#123;</span><br><span class="line">      <span class="comment">// such as mq / redis subscribe</span></span><br><span class="line">      agent.notify.subscribe(<span class="string">'remote_task'</span>, data =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.sendOne(data);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  agent.schedule.use(<span class="string">'custsom'</span>, CustomStrategy);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>Then you could use it to defined your job:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/schedule/other.js</span></span><br><span class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClusterTask</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> get schedule() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      type: <span class="string">'custom'</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">async</span> subscribe(data) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'got custom data:'</span>, data);</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.service.someTask.run();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="dynamic-schedule"><a class="markdown-anchor" href="#dynamic-schedule">#</a> Dynamic schedule</h2>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/schedule/sync.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SyncTask</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Subscription</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> get schedule() &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        interval: <span class="number">10000</span>,</span><br><span class="line">        type: <span class="string">'worker'</span>,</span><br><span class="line">        <span class="comment">// only start task when hostname match</span></span><br><span class="line">        disable: <span class="built_in">require</span>(<span class="string">'os'</span>).hostname() !== app.config.sync.hostname,</span><br><span class="line">        <span class="comment">// only start task at prod mode</span></span><br><span class="line">        env: [ <span class="string">'prod'</span> ],</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">async</span> subscribe(ctx) &#123;</span><br><span class="line">      <span class="keyword">await</span> ctx.sync();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> SyncTask;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="logging"><a class="markdown-anchor" href="#logging">#</a> Logging</h2>
-<p>See <code>${appInfo.root}/logs/{app_name}/egg-schedule.log</code> which provided by <a href="https://github.com/eggjs/egg-schedule/blob/master/config/config.default.js" target="_blank" rel="noopener">config.customLogger.scheduleLogger</a>.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">config.customLogger = &#123;</span><br><span class="line">  scheduleLogger: &#123;</span><br><span class="line">    <span class="comment">// consoleLevel: 'NONE',</span></span><br><span class="line">    <span class="comment">// file: path.join(appInfo.root, 'logs', appInfo.name, 'egg-schedule.log'),</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="testing"><a class="markdown-anchor" href="#testing">#</a> Testing</h2>
-<p><code>app.runSchedule(scheduleName)</code> is provided by <code>egg-schedule</code> plugin only for test purpose.</p>
-<p>Example:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">it(<span class="string">'test a schedule task'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// get app instance</span></span><br><span class="line">  <span class="keyword">await</span> app.runSchedule(<span class="string">'clean_cache'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
-<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
-<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="https://github.com/eggjs/egg-schedule/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
@@ -201,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -236,25 +163,90 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>egg-schedule</h1>
+          <p><a href="https://npmjs.org/package/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-schedule.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-schedule.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-schedule?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-schedule/coverage.svg?branch=master" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-schedule.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-schedule" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-schedule/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-schedule" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-schedule.svg?style=flat-square" alt="npm download"></a></p>
+<p>A schedule plugin for egg. It supports two scheduler types, <code>worker</code> and <code>all</code>, and can be extended by other plugins.</p>
+<p><code>egg-schedule</code> has been built-in for egg. It is enabled by default.</p>
+<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
+<p>Just add you job file to <code>{app_root}/app/schedule</code>.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/schedule/cleandb.js</span></span><br><span class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CleanDB</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * @property &#123;Object&#125; schedule</span></span><br><span class="line"><span class="comment">   *  - &#123;String&#125; type - schedule type, `worker` or `all` or your custom types.</span></span><br><span class="line"><span class="comment">   *  - &#123;String&#125; [cron] - cron expression, see [below](#cron-style-scheduling)</span></span><br><span class="line"><span class="comment">   *  - &#123;Object&#125; [cronOptions] - cron options, see [cron-parser#options](https://github.com/harrisiirak/cron-parser#options)</span></span><br><span class="line"><span class="comment">   *  - &#123;String | Number&#125; [interval] - interval expression in millisecond or express explicitly like '1h'. see [below](#interval-style-scheduling)</span></span><br><span class="line"><span class="comment">   *  - &#123;Boolean&#125; [immediate] - To run a scheduler at startup</span></span><br><span class="line"><span class="comment">   *  - &#123;Boolean&#125; [disable] - whether to disable a scheduler, usually use in dynamic schedule</span></span><br><span class="line"><span class="comment">   *  - &#123;Array&#125; [env] - only enable scheduler when match env list</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">static</span> get schedule() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      type: <span class="string">'worker'</span>,</span><br><span class="line">      cron: <span class="string">'0 0 3 * * *'</span>,</span><br><span class="line">      <span class="comment">// interval: '1h',</span></span><br><span class="line">      <span class="comment">// immediate: true,</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> subscribe() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.service.db.cleandb();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = CleanDB;</span><br></pre></td></tr></table></figure>
+<p>You can also use function simply.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.schedule = &#123;</span><br><span class="line">  type: <span class="string">'worker'</span>,</span><br><span class="line">  cron: <span class="string">'0 0 3 * * *'</span>,</span><br><span class="line">  <span class="comment">// interval: '1h',</span></span><br><span class="line">  <span class="comment">// immediate: true,</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">exports.task = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">await</span> ctx.service.db.cleandb();</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="overview"><a class="markdown-anchor" href="#overview">#</a> Overview</h2>
+<p><code>egg-schedule</code> supports both time-based scheduling and interval-based scheduling.</p>
+<p>Schedule decision is being made by <code>agent</code> process. <code>agent</code> triggers a task and sends message to <code>worker</code> process. Then, one or all <code>worker</code> process(es) execute the task based on schedule type.</p>
+<p>To setup a schedule task, simply create a job file in <code>{app_root}/app/schedule</code>. A file contains one job and export <code>schedule</code> and <code>task</code> properties.</p>
+<p>The rule of thumbs is one job per file.</p>
+<h2 id="task"><a class="markdown-anchor" href="#task">#</a> Task</h2>
+<p>Task is a class which will be instantiated every schedule, and <code>subscribe</code> method will be invoked.</p>
+<p>You can get anonymous context with <code>this.ctx</code>.</p>
+<ul>
+<li>ctx.method: <code>SCHEDULE</code></li>
+<li>ctx.path: <code>/__schedule?path=${schedulePath}&amp;${schedule}</code>.</li>
+</ul>
+<p>To create a task, <code>subscribe</code> can be generator function or async function. For example:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A simple logger example</span></span><br><span class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LoggerExample</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> subscribe() &#123;</span><br><span class="line">    <span class="keyword">this</span>.ctx.logger.info(<span class="string">'Info about your task'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// A real world example: wipe out your database.</span></span><br><span class="line"><span class="comment">// Use it with caution. :)</span></span><br><span class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CleanDB</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> subscribe() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.service.db.cleandb();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="scheduling"><a class="markdown-anchor" href="#scheduling">#</a> Scheduling</h2>
+<p><code>schedule</code> is an object that contains one required property, <code>type</code>, and optional properties, <code>{ cron, cronOptions, interval, immediate, disable, env }</code>.</p>
+<h3 id="cron-style-scheduling"><a class="markdown-anchor" href="#cron-style-scheduling">#</a> Cron-style Scheduling</h3>
+<p>Use <a href="https://github.com/harrisiirak/cron-parser" target="_blank" rel="noopener">cron-parser</a>.</p>
+<blockquote>
+<p>Note: <code>cron-parser</code> support <code>second</code> as optional that is not supported by linux crontab.</p>
+<p><code>@hourly / @daily / @weekly / @monthly / @yearly</code> is also supported.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">*    *    *    *    *    *</span><br><span class="line">┬    ┬    ┬    ┬    ┬    ┬</span><br><span class="line">│    │    │    │    │    |</span><br><span class="line">│    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)</span><br><span class="line">│    │    │    │    └───── month (1 - 12)</span><br><span class="line">│    │    │    └────────── day of month (1 - 31)</span><br><span class="line">│    │    └─────────────── hour (0 - 23)</span><br><span class="line">│    └──────────────────── minute (0 - 59)</span><br><span class="line">└───────────────────────── second (0 - 59, optional)</span><br></pre></td></tr></table></figure>
+<p>Example:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// To execute task every 3 hours</span></span><br><span class="line">exports.schedule = &#123;</span><br><span class="line">  type: <span class="string">'worker'</span>,</span><br><span class="line">  cron: <span class="string">'0 0 */3 * * *'</span>,</span><br><span class="line">  cronOptions: &#123;</span><br><span class="line">    <span class="comment">// tz: 'Europe/Athens',</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="interval-style-scheduling"><a class="markdown-anchor" href="#interval-style-scheduling">#</a> Interval-style Scheduling</h3>
+<p>To use <code>setInterval</code>, and support <a href="https://www.npmjs.com/package/ms" target="_blank" rel="noopener">ms</a> conversion style</p>
+<p>Example:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// To execute task every 3 hours</span></span><br><span class="line">exports.schedule = &#123;</span><br><span class="line">  type: <span class="string">'worker'</span>,</span><br><span class="line">  interval: <span class="string">'3h'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h3 id="schedule-type"><a class="markdown-anchor" href="#schedule-type">#</a> Schedule Type</h3>
+<p><strong>Build-in support is:</strong></p>
+<ul>
+<li><strong>worker</strong>: will be executed in one random worker when schedule run.</li>
+<li><strong>all</strong>: will be executed in all workers when schedule run.</li>
+</ul>
+<p><strong>Custom schedule</strong></p>
+<p>To create a custom schedule, simply extend <code>agent.ScheduleStrategy</code> and register it by <code>agent.schedule.use(type, clz)</code>.
+You can schedule the task to be executed by one random worker or all workers with the built-in method <code>this.sendOne(...args)</code> or <code>this.sendAll(...args)</code> which support params, it will pass to <code>subscribe(...args)</code> or <code>task(ctx, ...args)</code>.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/agent.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">agent</span>) </span>&#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">CustomStrategy</span> <span class="keyword">extends</span> <span class="title">agent</span>.<span class="title">ScheduleStrategy</span> </span>&#123;</span><br><span class="line">    start() &#123;</span><br><span class="line">      <span class="comment">// such as mq / redis subscribe</span></span><br><span class="line">      agent.notify.subscribe(<span class="string">'remote_task'</span>, data =&gt; &#123;</span><br><span class="line">        <span class="keyword">this</span>.sendOne(data);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  agent.schedule.use(<span class="string">'custsom'</span>, CustomStrategy);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Then you could use it to defined your job:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/schedule/other.js</span></span><br><span class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ClusterTask</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</span><br><span class="line">  <span class="keyword">static</span> get schedule() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      type: <span class="string">'custom'</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">async</span> subscribe(data) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'got custom data:'</span>, data);</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">this</span>.ctx.service.someTask.run();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="dynamic-schedule"><a class="markdown-anchor" href="#dynamic-schedule">#</a> Dynamic schedule</h2>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/schedule/sync.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">SyncTask</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Subscription</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> get schedule() &#123;</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">        interval: <span class="number">10000</span>,</span><br><span class="line">        type: <span class="string">'worker'</span>,</span><br><span class="line">        <span class="comment">// only start task when hostname match</span></span><br><span class="line">        disable: <span class="built_in">require</span>(<span class="string">'os'</span>).hostname() !== app.config.sync.hostname,</span><br><span class="line">        <span class="comment">// only start task at prod mode</span></span><br><span class="line">        env: [ <span class="string">'prod'</span> ],</span><br><span class="line">      &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">async</span> subscribe(ctx) &#123;</span><br><span class="line">      <span class="keyword">await</span> ctx.sync();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> SyncTask;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="logging"><a class="markdown-anchor" href="#logging">#</a> Logging</h2>
+<p>See <code>${appInfo.root}/logs/{app_name}/egg-schedule.log</code> which provided by <a href="https://github.com/eggjs/egg-schedule/blob/master/config/config.default.js" target="_blank" rel="noopener">config.customLogger.scheduleLogger</a>.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">config.customLogger = &#123;</span><br><span class="line">  scheduleLogger: &#123;</span><br><span class="line">    <span class="comment">// consoleLevel: 'NONE',</span></span><br><span class="line">    <span class="comment">// file: path.join(appInfo.root, 'logs', appInfo.name, 'egg-schedule.log'),</span></span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="testing"><a class="markdown-anchor" href="#testing">#</a> Testing</h2>
+<p><code>app.runSchedule(scheduleName)</code> is provided by <code>egg-schedule</code> plugin only for test purpose.</p>
+<p>Example:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">it(<span class="string">'test a schedule task'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">// get app instance</span></span><br><span class="line">  <span class="keyword">await</span> app.runSchedule(<span class="string">'clean_cache'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
+<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
+<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
+<p><a href="https://github.com/eggjs/egg-schedule/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#usage"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Usage</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#overview"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Overview</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#task"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Task</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#scheduling"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Scheduling</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cron-style-scheduling"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Cron-style Scheduling</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#interval-style-scheduling"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Interval-style Scheduling</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#schedule-type"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># Schedule Type</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#dynamic-schedule"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Dynamic schedule</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#logging"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Logging</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#testing"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Testing</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#questions-suggestions"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># Questions &amp; Suggestions</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#license"><span class="toc-detail-number">9.</span> <span class="toc-detail-text"># License</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -262,12 +254,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

@@ -57,48 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>egg-static</h1>
-    <p><a href="https://npmjs.org/package/egg-static" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-static.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-static" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-static.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-static?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-static/coverage.svg?branch=master" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-static" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-static.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-static" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-static/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-static" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-static.svg?style=flat-square" alt="npm download"></a></p>
-<p>Static server plugin for egg, base on <a href="https://github.com/koajs/static-cache" target="_blank" rel="noopener">koa-static-cache</a>.</p>
-<h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-static --save</span><br></pre></td></tr></table></figure>
-<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
-<p><code>egg-static</code> is a plugin that has been built-in for egg. It is enabled by default.</p>
-<h2 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h2>
-<p>egg-static support all configurations in <a href="https://github.com/koajs/static-cache" target="_blank" rel="noopener">koa-static-cache</a>. and with default configurations below:</p>
-<ul>
-<li>prefix: <code>'/public/'</code></li>
-<li>dir: <code>path.join(appInfo.baseDir, 'app/public')</code></li>
-<li>dynamic: <code>true</code></li>
-<li>preload: <code>false</code></li>
-<li>maxAge: <code>31536000</code> in prod env, <code>0</code> in other envs</li>
-<li>buffer: <code>true</code> in prod env, <code>false</code> in other envs</li>
-</ul>
-<p><code>egg-static</code> provides one more option:</p>
-<ul>
-<li>maxFiles: the maximum value of cache items, only effective when dynamic is true, default is <code>1000</code>.</li>
-</ul>
-<p><strong>All static files in <code>$baseDir/app/public</code> can be visited with prefix <code>/public</code>, and all the files are lazy loaded.</strong></p>
-<ul>
-<li>In non-production environment, assets won't be cached, your modification can take effect immediately.</li>
-<li>In production environment, <code>egg-static</code> will cache the assets after visited, you need to restart the process to update the assets.</li>
-<li>Dir default is <code>$baseDir/app/public</code> but you can also define <strong>multiple directory</strong> by use <code>dir: [dir1, dir2, ...]</code> and static server will use all these directories.</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/config.default.js</span></span><br><span class="line">exports.static = &#123;</span><br><span class="line">  <span class="comment">// maxAge: 31536000,</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
-<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
-<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="https://github.com/eggjs/egg-static/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -169,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -204,25 +163,58 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>egg-static</h1>
+          <p><a href="https://npmjs.org/package/egg-static" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-static.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-static" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-static.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-static?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-static/coverage.svg?branch=master" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-static" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-static.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-static" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-static/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-static" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-static.svg?style=flat-square" alt="npm download"></a></p>
+<p>Static server plugin for egg, base on <a href="https://github.com/koajs/static-cache" target="_blank" rel="noopener">koa-static-cache</a>.</p>
+<h2 id="install"><a class="markdown-anchor" href="#install">#</a> Install</h2>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-static --save</span><br></pre></td></tr></table></figure>
+<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
+<p><code>egg-static</code> is a plugin that has been built-in for egg. It is enabled by default.</p>
+<h2 id="configuration"><a class="markdown-anchor" href="#configuration">#</a> Configuration</h2>
+<p>egg-static support all configurations in <a href="https://github.com/koajs/static-cache" target="_blank" rel="noopener">koa-static-cache</a>. and with default configurations below:</p>
+<ul>
+<li>prefix: <code>'/public/'</code></li>
+<li>dir: <code>path.join(appInfo.baseDir, 'app/public')</code></li>
+<li>dynamic: <code>true</code></li>
+<li>preload: <code>false</code></li>
+<li>maxAge: <code>31536000</code> in prod env, <code>0</code> in other envs</li>
+<li>buffer: <code>true</code> in prod env, <code>false</code> in other envs</li>
+</ul>
+<p><code>egg-static</code> provides one more option:</p>
+<ul>
+<li>maxFiles: the maximum value of cache items, only effective when dynamic is true, default is <code>1000</code>.</li>
+</ul>
+<p><strong>All static files in <code>$baseDir/app/public</code> can be visited with prefix <code>/public</code>, and all the files are lazy loaded.</strong></p>
+<ul>
+<li>In non-production environment, assets won't be cached, your modification can take effect immediately.</li>
+<li>In production environment, <code>egg-static</code> will cache the assets after visited, you need to restart the process to update the assets.</li>
+<li>Dir default is <code>$baseDir/app/public</code> but you can also define <strong>multiple directory</strong> by use <code>dir: [dir1, dir2, ...]</code> and static server will use all these directories.</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/config/config.default.js</span></span><br><span class="line">exports.static = &#123;</span><br><span class="line">  <span class="comment">// maxAge: 31536000,</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
+<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
+<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
+<p><a href="https://github.com/eggjs/egg-static/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#install"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Install</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#usage"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Usage</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#configuration"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Configuration</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#questions-suggestions"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Questions &amp; Suggestions</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#license"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># License</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -230,12 +222,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

@@ -57,63 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>egg-watcher</h1>
-    <p>File watcher plugin for egg</p>
-<p><a href="https://npmjs.org/package/egg-watcher" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-watcher.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-watcher" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-watcher.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-watcher?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-watcher/coverage.svg?branch=master" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-watcher" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-watcher.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-watcher" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-watcher/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-watcher" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-watcher.svg?style=flat-square" alt="npm download"></a></p>
-<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
-<p>In worker process:</p>
-<h3 id="appwatcherwatchpath-listener"><a class="markdown-anchor" href="#appwatcherwatchpath-listener">#</a> app.watcher.watch(path, listener)</h3>
-<p>Start watching file(s).</p>
-<ul>
-<li>path(String|Array): file path(s)</li>
-<li>listener(Function): file change callback</li>
-</ul>
-<h3 id="appwatcherunwatchpath-listener"><a class="markdown-anchor" href="#appwatcherunwatchpath-listener">#</a> app.watcher.unwatch(path[, listener])</h3>
-<p>Stop watching file(s).</p>
-<ul>
-<li>path(String|Array): file path(s)</li>
-<li>listener(Function): file change callback</li>
-</ul>
-<p>In agent process:</p>
-<h3 id="agentwatcherwatchpath-listener"><a class="markdown-anchor" href="#agentwatcherwatchpath-listener">#</a> agent.watcher.watch(path, listener)</h3>
-<p>Start watching file(s).</p>
-<ul>
-<li>path(String|Array): file path(s)</li>
-<li>listener(Function): file change callback</li>
-</ul>
-<h3 id="agentwatcherunwatchpath-listener"><a class="markdown-anchor" href="#agentwatcherunwatchpath-listener">#</a> agent.watcher.unwatch(path[, listener])</h3>
-<p>Stop watching file(s).</p>
-<ul>
-<li>path(String|Array): file path(s)</li>
-<li>listener(Function): file change callback</li>
-</ul>
-<h2 id="watching-mode"><a class="markdown-anchor" href="#watching-mode">#</a> Watching mode</h2>
-<h3 id="development-mode"><a class="markdown-anchor" href="#development-mode">#</a> <code>development</code> Mode</h3>
-<p>There's a built-in <a href="https://github.com/eggjs/egg-watcher/blob/master/lib/event-sources/development.js" target="_blank" rel="noopener">development mode</a> which works in local(env is <code>local</code>). Once files on disk is modified it will emit a <code>change</code> event immediately.</p>
-<h3 id="customize-watching-mode"><a class="markdown-anchor" href="#customize-watching-mode">#</a> Customize Watching Mode</h3>
-<p>Say we want to build a custom event source plugin (package name: <code>egg-watcher-custom</code>, eggPlugin.name: <code>watcherCustom</code>).</p>
-<p>Firstly define our custom event source like this:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;plugin_root&#125;/lib/custom_event_source.js</span></span><br><span class="line"><span class="keyword">const</span> Base = <span class="built_in">require</span>(<span class="string">'sdk-base'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomEventSource</span> <span class="keyword">extends</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">  <span class="comment">// `opts` comes from app.config[$&#123;eventSourceName&#125;]</span></span><br><span class="line">  <span class="comment">// `eventSourceName` will be registered later in</span></span><br><span class="line">  <span class="comment">// `config.watcher.eventSources` as the key shown below</span></span><br><span class="line">  <span class="keyword">constructor</span>(opts) &#123;</span><br><span class="line">    <span class="keyword">super</span>(opts);</span><br><span class="line">    <span class="keyword">this</span>.ready(<span class="literal">true</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  watch(path) &#123;</span><br><span class="line">    <span class="comment">// replace this with your desired way of watching,</span></span><br><span class="line">    <span class="comment">// when aware of any change, emit a `change` event</span></span><br><span class="line">    <span class="comment">// with an info object containing `path` property</span></span><br><span class="line">    <span class="comment">// specifying the changed directory or file.</span></span><br><span class="line">    <span class="keyword">this</span>._h = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.emit(<span class="string">'change'</span>, &#123; path &#125;);</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  unwatch() &#123;</span><br><span class="line">    <span class="comment">// replace this with your implementation</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>._h) &#123;</span><br><span class="line">      clearInterval(<span class="keyword">this</span>._h);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = CustomEventSource;</span><br></pre></td></tr></table></figure>
-<p>Event source implementations varies according to your running environment. When working with vagrant, docker, samba or such other non-standard way of development, you should use a different watch API specific to what you are working with.</p>
-<p>Then add your custom event source to config:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config.default.js</span></span><br><span class="line">exports.watcher = &#123;</span><br><span class="line">  eventSources: &#123;</span><br><span class="line">    custom: <span class="built_in">require</span>(<span class="string">'../lib/custom_event_source'</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>Choose to use your custom watching mode in your desired env.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config.$&#123;env&#125;.js</span></span><br><span class="line">exports.watcher = &#123;</span><br><span class="line">  type: <span class="string">'custom'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// this will pass to your CustomEventSource constructor as opts</span></span><br><span class="line">exports.watcherCustom = &#123;</span><br><span class="line">  <span class="comment">// foo: 'bar',</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>If possible, plugins named like <code>egg-watcher-${customName}</code>(<code>egg-watcher-vagrant</code> eg.) are recommended.</p>
-<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
-<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
-<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
-<p><a href="https://github.com/eggjs/egg-watcher/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -184,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -219,25 +163,73 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>egg-watcher</h1>
+          <p>File watcher plugin for egg</p>
+<p><a href="https://npmjs.org/package/egg-watcher" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-watcher.svg?style=flat-square" alt="NPM version"></a>
+<a href="https://travis-ci.org/eggjs/egg-watcher" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-watcher.svg?style=flat-square" alt="build status"></a>
+<a href="https://codecov.io/github/eggjs/egg-watcher?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-watcher/coverage.svg?branch=master" alt="Test coverage"></a>
+<a href="https://david-dm.org/eggjs/egg-watcher" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-watcher.svg?style=flat-square" alt="David deps"></a>
+<a href="https://snyk.io/test/npm/egg-watcher" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-watcher/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
+<a href="https://npmjs.org/package/egg-watcher" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-watcher.svg?style=flat-square" alt="npm download"></a></p>
+<h2 id="usage"><a class="markdown-anchor" href="#usage">#</a> Usage</h2>
+<p>In worker process:</p>
+<h3 id="appwatcherwatchpath-listener"><a class="markdown-anchor" href="#appwatcherwatchpath-listener">#</a> app.watcher.watch(path, listener)</h3>
+<p>Start watching file(s).</p>
+<ul>
+<li>path(String|Array): file path(s)</li>
+<li>listener(Function): file change callback</li>
+</ul>
+<h3 id="appwatcherunwatchpath-listener"><a class="markdown-anchor" href="#appwatcherunwatchpath-listener">#</a> app.watcher.unwatch(path[, listener])</h3>
+<p>Stop watching file(s).</p>
+<ul>
+<li>path(String|Array): file path(s)</li>
+<li>listener(Function): file change callback</li>
+</ul>
+<p>In agent process:</p>
+<h3 id="agentwatcherwatchpath-listener"><a class="markdown-anchor" href="#agentwatcherwatchpath-listener">#</a> agent.watcher.watch(path, listener)</h3>
+<p>Start watching file(s).</p>
+<ul>
+<li>path(String|Array): file path(s)</li>
+<li>listener(Function): file change callback</li>
+</ul>
+<h3 id="agentwatcherunwatchpath-listener"><a class="markdown-anchor" href="#agentwatcherunwatchpath-listener">#</a> agent.watcher.unwatch(path[, listener])</h3>
+<p>Stop watching file(s).</p>
+<ul>
+<li>path(String|Array): file path(s)</li>
+<li>listener(Function): file change callback</li>
+</ul>
+<h2 id="watching-mode"><a class="markdown-anchor" href="#watching-mode">#</a> Watching mode</h2>
+<h3 id="development-mode"><a class="markdown-anchor" href="#development-mode">#</a> <code>development</code> Mode</h3>
+<p>There's a built-in <a href="https://github.com/eggjs/egg-watcher/blob/master/lib/event-sources/development.js" target="_blank" rel="noopener">development mode</a> which works in local(env is <code>local</code>). Once files on disk is modified it will emit a <code>change</code> event immediately.</p>
+<h3 id="customize-watching-mode"><a class="markdown-anchor" href="#customize-watching-mode">#</a> Customize Watching Mode</h3>
+<p>Say we want to build a custom event source plugin (package name: <code>egg-watcher-custom</code>, eggPlugin.name: <code>watcherCustom</code>).</p>
+<p>Firstly define our custom event source like this:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;plugin_root&#125;/lib/custom_event_source.js</span></span><br><span class="line"><span class="keyword">const</span> Base = <span class="built_in">require</span>(<span class="string">'sdk-base'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomEventSource</span> <span class="keyword">extends</span> <span class="title">Base</span> </span>&#123;</span><br><span class="line">  <span class="comment">// `opts` comes from app.config[$&#123;eventSourceName&#125;]</span></span><br><span class="line">  <span class="comment">// `eventSourceName` will be registered later in</span></span><br><span class="line">  <span class="comment">// `config.watcher.eventSources` as the key shown below</span></span><br><span class="line">  <span class="keyword">constructor</span>(opts) &#123;</span><br><span class="line">    <span class="keyword">super</span>(opts);</span><br><span class="line">    <span class="keyword">this</span>.ready(<span class="literal">true</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  watch(path) &#123;</span><br><span class="line">    <span class="comment">// replace this with your desired way of watching,</span></span><br><span class="line">    <span class="comment">// when aware of any change, emit a `change` event</span></span><br><span class="line">    <span class="comment">// with an info object containing `path` property</span></span><br><span class="line">    <span class="comment">// specifying the changed directory or file.</span></span><br><span class="line">    <span class="keyword">this</span>._h = setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.emit(<span class="string">'change'</span>, &#123; path &#125;);</span><br><span class="line">    &#125;, <span class="number">1000</span>);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  unwatch() &#123;</span><br><span class="line">    <span class="comment">// replace this with your implementation</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>._h) &#123;</span><br><span class="line">      clearInterval(<span class="keyword">this</span>._h);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = CustomEventSource;</span><br></pre></td></tr></table></figure>
+<p>Event source implementations varies according to your running environment. When working with vagrant, docker, samba or such other non-standard way of development, you should use a different watch API specific to what you are working with.</p>
+<p>Then add your custom event source to config:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config.default.js</span></span><br><span class="line">exports.watcher = &#123;</span><br><span class="line">  eventSources: &#123;</span><br><span class="line">    custom: <span class="built_in">require</span>(<span class="string">'../lib/custom_event_source'</span>),</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Choose to use your custom watching mode in your desired env.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config.$&#123;env&#125;.js</span></span><br><span class="line">exports.watcher = &#123;</span><br><span class="line">  type: <span class="string">'custom'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// this will pass to your CustomEventSource constructor as opts</span></span><br><span class="line">exports.watcherCustom = &#123;</span><br><span class="line">  <span class="comment">// foo: 'bar',</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>If possible, plugins named like <code>egg-watcher-${customName}</code>(<code>egg-watcher-vagrant</code> eg.) are recommended.</p>
+<h2 id="questions-suggestions"><a class="markdown-anchor" href="#questions-suggestions">#</a> Questions &amp; Suggestions</h2>
+<p>Please open an issue <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">here</a>.</p>
+<h2 id="license"><a class="markdown-anchor" href="#license">#</a> License</h2>
+<p><a href="https://github.com/eggjs/egg-watcher/blob/master/LICENSE" target="_blank" rel="noopener">MIT</a></p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#usage"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Usage</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#appwatcherwatchpath-listener"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># app.watcher.watch(path, listener)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#appwatcherunwatchpath-listener"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># app.watcher.unwatch(path[, listener])</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#agentwatcherwatchpath-listener"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># agent.watcher.watch(path, listener)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#agentwatcherunwatchpath-listener"><span class="toc-detail-number">1.4.</span> <span class="toc-detail-text"># agent.watcher.unwatch(path[, listener])</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#watching-mode"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Watching mode</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#development-mode"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># development Mode</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#customize-watching-mode"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Customize Watching Mode</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#questions-suggestions"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Questions &amp; Suggestions</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#license"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># License</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -245,12 +237,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

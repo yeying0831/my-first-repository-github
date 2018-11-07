@@ -57,58 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>Deployment</h1>
-    <p>Launching application via <code>egg-bin dev</code> will bring something magical to help people to develop in high efficiency. However, actually, those features are not required in production or any other environment. Let's walk through and learn how to deploy your application in Egg's way.</p>
-<p>There are two steps to achieve building once and deploying multiply from source code to runtime.</p>
-<h2 id="build"><a class="markdown-anchor" href="#build">#</a> Build</h2>
-<p>In the stage, you don't need to compile JavaScript files unless TypeScript or Babel(ES6 features) are involved in stack.</p>
-<p>Generally, before deploying the application, dependencies will be installed with <code>NODE_ENV=production</code> or <code>--production</code>, which will exclude <code>devDependencies</code> because those used in development may increase the size of package released or even create pitfalls that you never expect.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> baseDir</span><br><span class="line">$ npm install --production</span><br><span class="line">$ tar -zcvf ../release.tgz .</span><br></pre></td></tr></table></figure>
-<p>Both the application and dependencies will be packed into a tgz file, what you are going to do is unzipping and launching it.</p>
-<p>Reusable package brings a few pros in:</p>
-<ul>
-<li>Environments in building and runtime are different, try to keep the later environment pure and stable.</li>
-<li>Abbreviating publish progress and making rollback without hassle.</li>
-</ul>
-<h2 id="deploy"><a class="markdown-anchor" href="#deploy">#</a> Deploy</h2>
-<p>Node.js(<code>&gt;= 8.0.0</code>) is required so that you should make sure it is pre-installed in runtime environment.</p>
-<p>Egg takes <code>egg-cluster</code> to create <a href="https://github.com/eggjs/egg/blob/master/docs/source/en/core/cluster-and-ipc.md#master" target="_blank" rel="noopener">Master</a> process, which you can rely on to secure the application instead of daemon manager like <a href="https://github.com/Unitech/pm2" target="_blank" rel="noopener">pm2</a>. The API is also really convenient for developers to achieve that, just <code>egg.startCluster</code>.</p>
-<p>And framework also provide <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="noopener">egg-scripts</a> for developers to start/stop application at prod mode.</p>
-<p>Firstly, we need to import <code>egg-scripts</code> as <code>dependencies</code>:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-scripts --save</span><br></pre></td></tr></table></figure>
-<p>Then add <code>npm scripts</code> to <code>package.json</code>:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"egg-scripts start --daemon"</span>,</span><br><span class="line">    <span class="attr">"stop"</span>: <span class="string">"egg-scripts stop"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>Then we are able to use <code>npm start</code> and <code>npm stop</code> to manage application.</p>
-<blockquote>
-<p>Note: <code>egg-scripts</code> has limited support for Windows, see <a href="https://github.com/eggjs/egg-scripts/pull/22" target="_blank" rel="noopener">#22</a>.</p>
-</blockquote>
-<h3 id="start"><a class="markdown-anchor" href="#start">#</a> Start</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-scripts start --port=7001 --daemon --title=egg-server-showcase</span><br></pre></td></tr></table></figure>
-<p>Options:</p>
-<ul>
-<li><code>--port=7001</code> http server port, will use <code>process.env.PORT</code>, default to <code>7001</code>.</li>
-<li><code>--daemon</code> whether run at background, so you don't need <code>nohup</code>. Ignore this when the application run in docker instance.</li>
-<li><code>--env=prod</code> then framework env, will use <code>process.env.EGG_SERVER_ENV</code>, default to <code>prod</code>。</li>
-<li><code>--workers=2</code> worker count, default to cpu cores, which can leverage the capability of the cpu.</li>
-<li><code>--title=egg-server-showcase</code> convenient for <code>ps + grep</code>, default to <code>egg-server-${appname}</code>.</li>
-<li><code>--framework=yadan</code> config <code>egg.framework</code> at <code>package.json</code> or pass this args, when you are using <a href="../advanced/framework.html">Custom Framework</a>.</li>
-<li><code>--ignore-stderr</code> ignore the std err at start up。</li>
-<li>support all options from <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="noopener">egg-cluster</a>, such as <code>--https</code>.</li>
-</ul>
-<p>More about <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="noopener">egg-scripts</a> and <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="noopener">egg-cluster</a> documents.</p>
-<h4 id="dispatch-with-arguments"><a class="markdown-anchor" href="#dispatch-with-arguments">#</a> Dispatch with arguments</h4>
-<p>Arguments of dispatch can be configured in <code>config.{env}.js</code>.</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.cluster = &#123;</span><br><span class="line">  listen: &#123;</span><br><span class="line">    port: <span class="number">7001</span>,</span><br><span class="line">    hostname: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">    <span class="comment">// path: '/var/run/egg.sock',</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><a href="https://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback" target="_blank" rel="noopener">server.listen</a> supports arguments including <code>path</code>, <code>port</code> and <code>hostname</code> to change dispatching behavior. One thing you should know is that the <code>port</code> in <code>egg.startCluster</code> will override the one in application config.</p>
-<h3 id="stop"><a class="markdown-anchor" href="#stop">#</a> Stop</h3>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-scripts stop</span><br></pre></td></tr></table></figure>
-<p>This command will kill master process which will handler and notice worker and agent to gracefull exit.</p>
-<p>Also you can manually call <code>ps -eo &quot;pid,command&quot; | grep -- &quot;--title=egg-server&quot;</code> to find master process then <code>kill</code> without <code>-9</code>.</p>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -179,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -214,25 +163,68 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>Deployment</h1>
+          <p>Launching application via <code>egg-bin dev</code> will bring something magical to help people to develop in high efficiency. However, actually, those features are not required in production or any other environment. Let's walk through and learn how to deploy your application in Egg's way.</p>
+<p>There are two steps to achieve building once and deploying multiply from source code to runtime.</p>
+<h2 id="build"><a class="markdown-anchor" href="#build">#</a> Build</h2>
+<p>In the stage, you don't need to compile JavaScript files unless TypeScript or Babel(ES6 features) are involved in stack.</p>
+<p>Generally, before deploying the application, dependencies will be installed with <code>NODE_ENV=production</code> or <code>--production</code>, which will exclude <code>devDependencies</code> because those used in development may increase the size of package released or even create pitfalls that you never expect.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> baseDir</span><br><span class="line">$ npm install --production</span><br><span class="line">$ tar -zcvf ../release.tgz .</span><br></pre></td></tr></table></figure>
+<p>Both the application and dependencies will be packed into a tgz file, what you are going to do is unzipping and launching it.</p>
+<p>Reusable package brings a few pros in:</p>
+<ul>
+<li>Environments in building and runtime are different, try to keep the later environment pure and stable.</li>
+<li>Abbreviating publish progress and making rollback without hassle.</li>
+</ul>
+<h2 id="deploy"><a class="markdown-anchor" href="#deploy">#</a> Deploy</h2>
+<p>Node.js(<code>&gt;= 8.0.0</code>) is required so that you should make sure it is pre-installed in runtime environment.</p>
+<p>Egg takes <code>egg-cluster</code> to create <a href="https://github.com/eggjs/egg/blob/master/docs/source/en/core/cluster-and-ipc.md#master" target="_blank" rel="noopener">Master</a> process, which you can rely on to secure the application instead of daemon manager like <a href="https://github.com/Unitech/pm2" target="_blank" rel="noopener">pm2</a>. The API is also really convenient for developers to achieve that, just <code>egg.startCluster</code>.</p>
+<p>And framework also provide <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="noopener">egg-scripts</a> for developers to start/stop application at prod mode.</p>
+<p>Firstly, we need to import <code>egg-scripts</code> as <code>dependencies</code>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-scripts --save</span><br></pre></td></tr></table></figure>
+<p>Then add <code>npm scripts</code> to <code>package.json</code>:</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"egg-scripts start --daemon"</span>,</span><br><span class="line">    <span class="attr">"stop"</span>: <span class="string">"egg-scripts stop"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Then we are able to use <code>npm start</code> and <code>npm stop</code> to manage application.</p>
+<blockquote>
+<p>Note: <code>egg-scripts</code> has limited support for Windows, see <a href="https://github.com/eggjs/egg-scripts/pull/22" target="_blank" rel="noopener">#22</a>.</p>
+</blockquote>
+<h3 id="start"><a class="markdown-anchor" href="#start">#</a> Start</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-scripts start --port=7001 --daemon --title=egg-server-showcase</span><br></pre></td></tr></table></figure>
+<p>Options:</p>
+<ul>
+<li><code>--port=7001</code> http server port, will use <code>process.env.PORT</code>, default to <code>7001</code>.</li>
+<li><code>--daemon</code> whether run at background, so you don't need <code>nohup</code>. Ignore this when the application run in docker instance.</li>
+<li><code>--env=prod</code> then framework env, will use <code>process.env.EGG_SERVER_ENV</code>, default to <code>prod</code>。</li>
+<li><code>--workers=2</code> worker count, default to cpu cores, which can leverage the capability of the cpu.</li>
+<li><code>--title=egg-server-showcase</code> convenient for <code>ps + grep</code>, default to <code>egg-server-${appname}</code>.</li>
+<li><code>--framework=yadan</code> config <code>egg.framework</code> at <code>package.json</code> or pass this args, when you are using <a href="../advanced/framework.html">Custom Framework</a>.</li>
+<li><code>--ignore-stderr</code> ignore the std err at start up。</li>
+<li>support all options from <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="noopener">egg-cluster</a>, such as <code>--https</code>.</li>
+</ul>
+<p>More about <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="noopener">egg-scripts</a> and <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="noopener">egg-cluster</a> documents.</p>
+<h4 id="dispatch-with-arguments"><a class="markdown-anchor" href="#dispatch-with-arguments">#</a> Dispatch with arguments</h4>
+<p>Arguments of dispatch can be configured in <code>config.{env}.js</code>.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.cluster = &#123;</span><br><span class="line">  listen: &#123;</span><br><span class="line">    port: <span class="number">7001</span>,</span><br><span class="line">    hostname: <span class="string">'127.0.0.1'</span>,</span><br><span class="line">    <span class="comment">// path: '/var/run/egg.sock',</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://nodejs.org/api/http.html#http_server_listen_port_hostname_backlog_callback" target="_blank" rel="noopener">server.listen</a> supports arguments including <code>path</code>, <code>port</code> and <code>hostname</code> to change dispatching behavior. One thing you should know is that the <code>port</code> in <code>egg.startCluster</code> will override the one in application config.</p>
+<h3 id="stop"><a class="markdown-anchor" href="#stop">#</a> Stop</h3>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-scripts stop</span><br></pre></td></tr></table></figure>
+<p>This command will kill master process which will handler and notice worker and agent to gracefull exit.</p>
+<p>Also you can manually call <code>ps -eo &quot;pid,command&quot; | grep -- &quot;--title=egg-server&quot;</code> to find master process then <code>kill</code> without <code>-9</code>.</p>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#build"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Build</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#deploy"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Deploy</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#start"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Start</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#stop"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Stop</span></a></li></ol></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -240,12 +232,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

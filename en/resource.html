@@ -57,35 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1></h1>
-    <h2 id="title-resources"><a class="markdown-anchor" href="#title-resources">#</a> Title: Resources</h2>
-<ul>
-<li><a href="https://github.com/eggjs/awesome-egg" target="_blank" rel="noopener">awesome-egg</a></li>
-</ul>
-<h2 id="frameworks"><a class="markdown-anchor" href="#frameworks">#</a> Frameworks</h2>
-<ul>
-<li><a href="https://github.com/eggjs/aliyun-egg" target="_blank" rel="noopener">aliyun-egg</a></li>
-</ul>
-<h2 id="community-articles"><a class="markdown-anchor" href="#community-articles">#</a> Community Articles</h2>
-<ul>
-<li>
-<p><a href="https://www.zhihu.com/question/50526101/answer/144952130" target="_blank" rel="noopener">How to evaluate Ali's open source enterprise-level Node.js framework Egg?</a>
-By <a href="https://github.com/atian25" target="_blank" rel="noopener">@day pig</a></p>
-</li>
-<li>
-<p>You can also read our article at <a href="https://zhuanlan.zhihu.com/eggjs" target="_blank" rel="noopener">Kuroshiami column</a></p>
-</li>
-</ul>
-<h2 id="tools"><a class="markdown-anchor" href="#tools">#</a> Tools</h2>
-<ul>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=atian25.eggjs" target="_blank" rel="noopener">vscode plugin - eggjs</a></li>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=yuzukwok.eggjs-dev-tools" target="_blank" rel="noopener">vscode plugin - eggjs-dev-tools</a></li>
-</ul>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/en/intro/" alt="Guide">Guide</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/en/tutorials/index.html" alt="Tutorials">Tutorials</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="Plugins">Plugins</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="Release">Release</a></li>
@@ -156,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -191,25 +163,45 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1></h1>
+          <h2 id="title-resources"><a class="markdown-anchor" href="#title-resources">#</a> Title: Resources</h2>
+<ul>
+<li><a href="https://github.com/eggjs/awesome-egg" target="_blank" rel="noopener">awesome-egg</a></li>
+</ul>
+<h2 id="frameworks"><a class="markdown-anchor" href="#frameworks">#</a> Frameworks</h2>
+<ul>
+<li><a href="https://github.com/eggjs/aliyun-egg" target="_blank" rel="noopener">aliyun-egg</a></li>
+</ul>
+<h2 id="community-articles"><a class="markdown-anchor" href="#community-articles">#</a> Community Articles</h2>
+<ul>
+<li>
+<p><a href="https://www.zhihu.com/question/50526101/answer/144952130" target="_blank" rel="noopener">How to evaluate Ali's open source enterprise-level Node.js framework Egg?</a>
+By <a href="https://github.com/atian25" target="_blank" rel="noopener">@day pig</a></p>
+</li>
+<li>
+<p>You can also read our article at <a href="https://zhuanlan.zhihu.com/eggjs" target="_blank" rel="noopener">Kuroshiami column</a></p>
+</li>
+</ul>
+<h2 id="tools"><a class="markdown-anchor" href="#tools">#</a> Tools</h2>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=atian25.eggjs" target="_blank" rel="noopener">vscode plugin - eggjs</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=yuzukwok.eggjs-dev-tools" target="_blank" rel="noopener">vscode plugin - eggjs-dev-tools</a></li>
+</ul>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#title-resources"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Title: Resources</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#frameworks"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Frameworks</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#community-articles"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Community Articles</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#tools"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Tools</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -217,12 +209,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

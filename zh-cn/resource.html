@@ -57,34 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>资源</h1>
-    <ul>
-<li><a href="https://github.com/eggjs/awesome-egg" target="_blank" rel="noopener">awesome-egg</a></li>
-</ul>
-<h2 id="框架列表"><a class="markdown-anchor" href="#框架列表">#</a> 框架列表</h2>
-<ul>
-<li><a href="https://github.com/eggjs/aliyun-egg" target="_blank" rel="noopener">aliyun-egg</a></li>
-</ul>
-<h2 id="社区文章"><a class="markdown-anchor" href="#社区文章">#</a> 社区文章</h2>
-<ul>
-<li>
-<p><a href="https://www.zhihu.com/question/50526101/answer/144952130" target="_blank" rel="noopener">如何评价阿里开源的企业级 Node.js 框架 Egg？</a>
-by <a href="https://github.com/atian25" target="_blank" rel="noopener">@天猪</a></p>
-</li>
-<li>
-<p>你也可以到<a href="https://zhuanlan.zhihu.com/eggjs" target="_blank" rel="noopener">知乎专栏</a>看我们的文章</p>
-</li>
-</ul>
-<h2 id="工具"><a class="markdown-anchor" href="#工具">#</a> 工具</h2>
-<ul>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=atian25.eggjs" target="_blank" rel="noopener">vscode plugin - eggjs</a></li>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=yuzukwok.eggjs-dev-tools" target="_blank" rel="noopener">vscode plugin - eggjs-dev-tools</a></li>
-</ul>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
@@ -155,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -190,25 +163,44 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>资源</h1>
+          <ul>
+<li><a href="https://github.com/eggjs/awesome-egg" target="_blank" rel="noopener">awesome-egg</a></li>
+</ul>
+<h2 id="框架列表"><a class="markdown-anchor" href="#框架列表">#</a> 框架列表</h2>
+<ul>
+<li><a href="https://github.com/eggjs/aliyun-egg" target="_blank" rel="noopener">aliyun-egg</a></li>
+</ul>
+<h2 id="社区文章"><a class="markdown-anchor" href="#社区文章">#</a> 社区文章</h2>
+<ul>
+<li>
+<p><a href="https://www.zhihu.com/question/50526101/answer/144952130" target="_blank" rel="noopener">如何评价阿里开源的企业级 Node.js 框架 Egg？</a>
+by <a href="https://github.com/atian25" target="_blank" rel="noopener">@天猪</a></p>
+</li>
+<li>
+<p>你也可以到<a href="https://zhuanlan.zhihu.com/eggjs" target="_blank" rel="noopener">知乎专栏</a>看我们的文章</p>
+</li>
+</ul>
+<h2 id="工具"><a class="markdown-anchor" href="#工具">#</a> 工具</h2>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=atian25.eggjs" target="_blank" rel="noopener">vscode plugin - eggjs</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=yuzukwok.eggjs-dev-tools" target="_blank" rel="noopener">vscode plugin - eggjs-dev-tools</a></li>
+</ul>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#框架列表"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 框架列表</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#社区文章"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 社区文章</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#工具"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 工具</span></a></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -216,12 +208,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>

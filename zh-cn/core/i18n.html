@@ -57,49 +57,7 @@
 
   <div id="container" class="container">
     <div class="page-main">
-  <article class="markdown-body">
-    <h1>I18n 国际化</h1>
-    <p>为了方便开发多语言应用，框架内置了国际化（I18n）支持，由 <a href="https://github.com/eggjs/egg-i18n" target="_blank" rel="noopener">egg-i18n</a> 插件提供。</p>
-<h2 id="默认语言"><a class="markdown-anchor" href="#默认语言">#</a> 默认语言</h2>
-<p>默认语言是 <code>en-US</code>。假设我们想修改默认语言为简体中文：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.i18n = &#123;</span><br><span class="line">  defaultLocale: <span class="string">'zh-CN'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="切换语言"><a class="markdown-anchor" href="#切换语言">#</a> 切换语言</h2>
-<p>我们可以通过下面几种方式修改应用的当前语言（修改后会记录到 <code>locale</code> 这个 Cookie），下次请求直接用设定好的语言。</p>
-<p>优先级从高到低：</p>
-<ol>
-<li>query: <code>/?locale=en-US</code></li>
-<li>cookie: <code>locale=zh-TW</code></li>
-<li>header: <code>Accept-Language: zh-CN,zh;q=0.5</code></li>
-</ol>
-<p>如果想修改 query 或者 Cookie 参数名称：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.i18n = &#123;</span><br><span class="line">  queryField: <span class="string">'locale'</span>,</span><br><span class="line">  cookieField: <span class="string">'locale'</span>,</span><br><span class="line">  <span class="comment">// Cookie 默认一年后过期， 如果设置为 Number，则单位为 ms</span></span><br><span class="line">  cookieMaxAge: <span class="string">'1y'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="编写-i18n-多语言文件"><a class="markdown-anchor" href="#编写-i18n-多语言文件">#</a> 编写 I18n 多语言文件</h2>
-<p>多种语言的配置是独立的，统一存放在 <code>config/locale/*.js</code> 下。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- config/locale/</span><br><span class="line">  - en-US.js</span><br><span class="line">  - zh-CN.js</span><br><span class="line">  - zh-TW.js</span><br></pre></td></tr></table></figure>
-<p>不仅对于应用目录生效，在框架，插件的 <code>config/locale</code> 目录下同样生效。</p>
-<p><strong>注意单词拼写，是 locale 不是 locals。</strong></p>
-<p>例如：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/zh-CN.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  Email: <span class="string">'邮箱'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>或者也可以用 JSON 格式的文件：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">// config/locale/zh-CN.json</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"Email"</span>: <span class="string">"邮箱"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="获取多语言文本"><a class="markdown-anchor" href="#获取多语言文本">#</a> 获取多语言文本</h2>
-<p>我们可以使用 <code>__</code> (Alias: <code>gettext</code>) 函数获取 locale 文件夹下面的多语言文本。</p>
-<p><strong>注意: <code>__</code> 是两个下划线</strong></p>
-<p>以上面配置过的多语言为例：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ctx.__(<span class="string">'Email'</span>)</span><br><span class="line"><span class="comment">// zh-CN =&gt; 邮箱</span></span><br><span class="line"><span class="comment">// en-US =&gt; Email</span></span><br></pre></td></tr></table></figure>
-<p>如果文本中含有 <code>%s</code>，<code>%j</code> 等 format 函数，可以按照 <a href="https://nodejs.org/api/util.html#util_util_format_format_args" target="_blank" rel="noopener"><code>util.format()</code></a> 类似的方式调用：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/zh-CN.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">'Welcome back, %s!'</span>: <span class="string">'欢迎回来，%s!'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ctx.__(<span class="string">'Welcome back, %s!'</span>, <span class="string">'Shawn'</span>);</span><br><span class="line"><span class="comment">// zh-CN =&gt; 欢迎回来，Shawn!</span></span><br><span class="line"><span class="comment">// en-US =&gt; Welcome back, Shawn!</span></span><br></pre></td></tr></table></figure>
-<p>同时支持数组下标占位符方式，例如：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/zh-CN.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">'Hello &#123;0&#125;! My name is &#123;1&#125;.'</span>: <span class="string">'你好 &#123;0&#125;! 我的名字叫 &#123;1&#125;。'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ctx.__(<span class="string">'Hello &#123;0&#125;! My name is &#123;1&#125;.'</span>, [<span class="string">'foo'</span>, <span class="string">'bar'</span>])</span><br><span class="line"><span class="comment">// zh-CN =&gt; 你好 foo！我的名字叫 bar。</span></span><br><span class="line"><span class="comment">// en-US =&gt; Hello foo! My name is bar.</span></span><br></pre></td></tr></table></figure>
-<h3 id="controller-中使用"><a class="markdown-anchor" href="#controller-中使用">#</a> Controller 中使用</h3>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    ctx.body = &#123;</span><br><span class="line">      message: ctx.__(<span class="string">'Welcome back, %s!'</span>, ctx.user.name)</span><br><span class="line">      <span class="comment">// 或者使用 gettext，gettext 是 __ 函数的 alias</span></span><br><span class="line">      <span class="comment">// message: ctx.gettext('Welcome back', ctx.user.name)</span></span><br><span class="line">      user: ctx.user,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="view-中使用"><a class="markdown-anchor" href="#view-中使用">#</a> View 中使用</h3>
-<p>假设我们使用的模板引擎是 <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">Nunjucks</a></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; __('Email') &#125;&#125;: &#123;&#123; user.email &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  &#123;&#123; __('Welcome back, %s!', user.name) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  &#123;&#123; __('Hello &#123;0&#125;! My name is &#123;1&#125;.', ['foo', 'bar']) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-  </article>
-
-  <aside id="mobileAside" class="toc">
+  <aside id="mobileAside" class="aside">
   <div class="mobile-menu">
     <ul>
       <li><a href="/zh-cn/intro/" alt="指南">指南</a></li><li><a href="/api/" alt="API">API</a></li><li><a href="/zh-cn/tutorials/index.html" alt="教程">教程</a></li><li><a href="https://github.com/search?q=topic%3Aegg-plugin&type=Repositories" alt="插件">插件</a></li><li><a href="https://github.com/eggjs/egg/releases" alt="发布日志">发布日志</a></li>
@@ -170,7 +128,7 @@ mobileTrigger.onclick = function(e) {
   if (mobileAside.className.indexOf('mobile-show') === -1) {
     mobileAside.className += ' mobile-show';
   } else {
-    mobileAside.className = 'toc';
+    mobileAside.className = 'aside';
   }
 };
 
@@ -205,25 +163,59 @@ mobileTrigger.onclick = function(e) {
 </script>
 
 
-  <div class="post-toc" id="post-toc">
-  <a id="toc-toggle" class="toc-toggle"></a>
+  <div class="content">
+    <div class="docs">
+      <div class="doc">
+        <article class="markdown-body">
+        <h1>I18n 国际化</h1>
+          <p>为了方便开发多语言应用，框架内置了国际化（I18n）支持，由 <a href="https://github.com/eggjs/egg-i18n" target="_blank" rel="noopener">egg-i18n</a> 插件提供。</p>
+<h2 id="默认语言"><a class="markdown-anchor" href="#默认语言">#</a> 默认语言</h2>
+<p>默认语言是 <code>en-US</code>。假设我们想修改默认语言为简体中文：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.i18n = &#123;</span><br><span class="line">  defaultLocale: <span class="string">'zh-CN'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="切换语言"><a class="markdown-anchor" href="#切换语言">#</a> 切换语言</h2>
+<p>我们可以通过下面几种方式修改应用的当前语言（修改后会记录到 <code>locale</code> 这个 Cookie），下次请求直接用设定好的语言。</p>
+<p>优先级从高到低：</p>
+<ol>
+<li>query: <code>/?locale=en-US</code></li>
+<li>cookie: <code>locale=zh-TW</code></li>
+<li>header: <code>Accept-Language: zh-CN,zh;q=0.5</code></li>
+</ol>
+<p>如果想修改 query 或者 Cookie 参数名称：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.i18n = &#123;</span><br><span class="line">  queryField: <span class="string">'locale'</span>,</span><br><span class="line">  cookieField: <span class="string">'locale'</span>,</span><br><span class="line">  <span class="comment">// Cookie 默认一年后过期， 如果设置为 Number，则单位为 ms</span></span><br><span class="line">  cookieMaxAge: <span class="string">'1y'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="编写-i18n-多语言文件"><a class="markdown-anchor" href="#编写-i18n-多语言文件">#</a> 编写 I18n 多语言文件</h2>
+<p>多种语言的配置是独立的，统一存放在 <code>config/locale/*.js</code> 下。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- config/locale/</span><br><span class="line">  - en-US.js</span><br><span class="line">  - zh-CN.js</span><br><span class="line">  - zh-TW.js</span><br></pre></td></tr></table></figure>
+<p>不仅对于应用目录生效，在框架，插件的 <code>config/locale</code> 目录下同样生效。</p>
+<p><strong>注意单词拼写，是 locale 不是 locals。</strong></p>
+<p>例如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/zh-CN.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  Email: <span class="string">'邮箱'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>或者也可以用 JSON 格式的文件：</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">// config/locale/zh-CN.json</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"Email"</span>: <span class="string">"邮箱"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="获取多语言文本"><a class="markdown-anchor" href="#获取多语言文本">#</a> 获取多语言文本</h2>
+<p>我们可以使用 <code>__</code> (Alias: <code>gettext</code>) 函数获取 locale 文件夹下面的多语言文本。</p>
+<p><strong>注意: <code>__</code> 是两个下划线</strong></p>
+<p>以上面配置过的多语言为例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ctx.__(<span class="string">'Email'</span>)</span><br><span class="line"><span class="comment">// zh-CN =&gt; 邮箱</span></span><br><span class="line"><span class="comment">// en-US =&gt; Email</span></span><br></pre></td></tr></table></figure>
+<p>如果文本中含有 <code>%s</code>，<code>%j</code> 等 format 函数，可以按照 <a href="https://nodejs.org/api/util.html#util_util_format_format_args" target="_blank" rel="noopener"><code>util.format()</code></a> 类似的方式调用：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/zh-CN.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">'Welcome back, %s!'</span>: <span class="string">'欢迎回来，%s!'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ctx.__(<span class="string">'Welcome back, %s!'</span>, <span class="string">'Shawn'</span>);</span><br><span class="line"><span class="comment">// zh-CN =&gt; 欢迎回来，Shawn!</span></span><br><span class="line"><span class="comment">// en-US =&gt; Welcome back, Shawn!</span></span><br></pre></td></tr></table></figure>
+<p>同时支持数组下标占位符方式，例如：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/zh-CN.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">'Hello &#123;0&#125;! My name is &#123;1&#125;.'</span>: <span class="string">'你好 &#123;0&#125;! 我的名字叫 &#123;1&#125;。'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ctx.__(<span class="string">'Hello &#123;0&#125;! My name is &#123;1&#125;.'</span>, [<span class="string">'foo'</span>, <span class="string">'bar'</span>])</span><br><span class="line"><span class="comment">// zh-CN =&gt; 你好 foo！我的名字叫 bar。</span></span><br><span class="line"><span class="comment">// en-US =&gt; Hello foo! My name is bar.</span></span><br></pre></td></tr></table></figure>
+<h3 id="controller-中使用"><a class="markdown-anchor" href="#controller-中使用">#</a> Controller 中使用</h3>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    ctx.body = &#123;</span><br><span class="line">      message: ctx.__(<span class="string">'Welcome back, %s!'</span>, ctx.user.name)</span><br><span class="line">      <span class="comment">// 或者使用 gettext，gettext 是 __ 函数的 alias</span></span><br><span class="line">      <span class="comment">// message: ctx.gettext('Welcome back', ctx.user.name)</span></span><br><span class="line">      user: ctx.user,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="view-中使用"><a class="markdown-anchor" href="#view-中使用">#</a> View 中使用</h3>
+<p>假设我们使用的模板引擎是 <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">Nunjucks</a></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; __('Email') &#125;&#125;: &#123;&#123; user.email &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  &#123;&#123; __('Welcome back, %s!', user.name) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  &#123;&#123; __('Hello &#123;0&#125;! My name is &#123;1&#125;.', ['foo', 'bar']) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+    
+        </article>
+      </div>      
+      <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#默认语言"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 默认语言</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#切换语言"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 切换语言</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#编写-i18n-多语言文件"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 编写 I18n 多语言文件</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#获取多语言文本"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 获取多语言文本</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-中使用"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Controller 中使用</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#view-中使用"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># View 中使用</span></a></li></ol></li></ol>
 </div>
 
 <script>
 
-var tocContainer = document.getElementById('post-toc');
-var tocToggle = document.getElementById('toc-toggle');
+var tocContainer = document.getElementById('toc');
 var tocDetail = document.getElementsByClassName('toc-detail')[0];
-
-tocToggle.onclick = function(e) {  
-  var className = tocContainer.className;
-  if(className.indexOf('collapsed') !== -1){
-    tocContainer.className = 'post-toc';
-  } else {
-    tocContainer.className = 'post-toc collapsed';
-  }  
-};
 
 (function(){
   if(!tocDetail){
@@ -231,12 +223,15 @@ tocToggle.onclick = function(e) {
   }
 
   if(tocDetail){
-    tocContainer.style.maxHeight = window.innerHeight - (tocContainer.offsetTop || 116) * 2 + 'px';
+    document.querySelectorAll('.toc-detail-text').forEach(function(element){
+      element.innerText = element.innerText.replace('# ', '');
+    });
   }
 })();
 </script>
-
-  
+      
+    </div>    
+  </div>
 </div>
 
   </div>
