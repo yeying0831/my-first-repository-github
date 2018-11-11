@@ -1,6 +1,11 @@
 .mobile-menu {
   display: none;
 }
+@media screen and (min-width: 1136px) and (max-width: 1366px) {
+  .aside {
+    display: none;
+  }
+}
 @media screen and (max-width: 1136px) {
   .nav ul.nav-item {
     display: none;
@@ -49,7 +54,7 @@
     overflow-y: scroll;
     background: #fff;
     transition: all 1s;
-    z-index: 1;
+    z-index: 2;
   }
   aside .mobile-menu {
     padding-top: 30px;
