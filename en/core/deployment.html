@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Deployment</h1>
           <p>Launching application via <code>egg-bin dev</code> will bring something magical to help people to develop in high efficiency. However, actually, those features are not required in production or any other environment. Let's walk through and learn how to deploy your application in Egg's way.</p>
 <p>There are two steps to achieve building once and deploying multiply from source code to runtime.</p>
@@ -215,9 +214,11 @@ mobileTrigger.onclick = function(e) {
 <p>This command will kill master process which will handler and notice worker and agent to gracefull exit.</p>
 <p>Also you can manually call <code>ps -eo &quot;pid,command&quot; | grep -- &quot;--title=egg-server&quot;</code> to find master process then <code>kill</code> without <code>-9</code>.</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#build"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Build</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#deploy"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Deploy</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#start"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Start</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#stop"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Stop</span></a></li></ol></li></ol>
 </div>
 
@@ -238,9 +239,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

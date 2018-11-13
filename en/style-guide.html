@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1></h1>
           <h2 id="title-code-style-guide"><a class="markdown-anchor" href="#title-code-style-guide">#</a> Title: Code Style Guide</h2>
 <p>Developers are advised to use <code>egg-init --type=simple showcase</code> to generate and observe the recommended project structure and configuration.</p>
@@ -184,9 +183,11 @@ mobileTrigger.onclick = function(e) {
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/extend/application.js</span></span><br><span class="line"><span class="keyword">const</span> CACHE = <span class="built_in">Symbol</span>(<span class="string">'Application#cache'</span>);</span><br><span class="line"><span class="keyword">const</span> CacheManager = <span class="built_in">require</span>(<span class="string">'../../lib/cache_manager'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  get cache() &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>[CACHE]) &#123;</span><br><span class="line">      <span class="keyword">this</span>[CACHE] = <span class="keyword">new</span> CacheManager(<span class="keyword">this</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>[CACHE];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#title-code-style-guide"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Title: Code Style Guide</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#classify"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Classify</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#private-properties-lazy-initialization"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Private properties &amp; Lazy Initialization</span></a></li></ol>
 </div>
 
@@ -207,9 +208,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

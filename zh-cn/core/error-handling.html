@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>异常处理</h1>
           <h2 id="异常捕获"><a class="markdown-anchor" href="#异常捕获">#</a> 异常捕获</h2>
 <p>得益于框架支持的异步编程模型，错误完全可以用 <code>try catch</code> 来捕获。在编写应用代码时，所有地方都可以直接用 <code>try catch</code> 来捕获异常。</p>
@@ -248,9 +247,11 @@ mobileTrigger.onclick = function(e) {
 <p>在配置中引入中间件：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  middleware: [ <span class="string">'notfoundHandler'</span> ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#异常捕获"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 异常捕获</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#框架层统一异常处理"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 框架层统一异常处理</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#errorpageurl"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># errorPageUrl</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#自定义统一异常处理"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 自定义统一异常处理</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#404"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 404</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#自定义-404-响应"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 自定义 404 响应</span></a></li></ol></li></ol>
 </div>
 
@@ -271,9 +272,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

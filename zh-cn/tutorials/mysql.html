@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>MySQL</h1>
           <p>在 Web 应用方面 MySQL 是最常见，最好的关系型数据库之一。非常多网站都选择 MySQL 作为网站数据库。</p>
 <h2 id="egg-mysql"><a class="markdown-anchor" href="#egg-mysql">#</a> egg-mysql</h2>
@@ -269,9 +268,11 @@ mobileTrigger.onclick = function(e) {
 <p>下例展示了如何调用 MySQL 内置的 <code>CONCAT(s1, ...sn)</code> 函数，做字符串拼接。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> Literal = <span class="keyword">this</span>.app.mysql.literals.Literal;</span><br><span class="line"><span class="keyword">const</span> first = <span class="string">'James'</span>;</span><br><span class="line"><span class="keyword">const</span> last = <span class="string">'Bond'</span>;</span><br><span class="line"><span class="keyword">await</span> <span class="keyword">this</span>.app.mysql.insert(table, &#123;</span><br><span class="line">  id: <span class="number">123</span>,</span><br><span class="line">  fullname: <span class="keyword">new</span> Literal(<span class="string">`CONCAT("<span class="subst">$&#123;first&#125;</span>", "<span class="subst">$&#123;last&#125;</span>"`</span>),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">=&gt; INSERT INTO <span class="string">`$table`</span>(<span class="string">`id`</span>, <span class="string">`fullname`</span>) VALUES(<span class="number">123</span>, CONCAT(<span class="string">"James"</span>, <span class="string">"Bond"</span>))</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#egg-mysql"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># egg-mysql</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#安装与配置"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 安装与配置</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#service-层"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Service 层</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#如何编写-crud-语句"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 如何编写 CRUD 语句</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#create"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Create</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#read"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># Read</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#update"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Update</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#delete"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># Delete</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#直接执行-sql-语句"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 直接执行 sql 语句</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#使用事务"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 使用事务</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#手动控制"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># 手动控制</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#自动控制transaction-with-scope"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># 自动控制：Transaction with scope</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#表达式literal"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 表达式(Literal)</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#内置表达式"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># 内置表达式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#自定义表达式"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># 自定义表达式</span></a></li></ol></li></ol>
 </div>
 
@@ -292,9 +293,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>渐进式开发</h1>
           <p>在 Egg 里面，有<a href="../basics/plugin.html">插件</a>，也有<a href="../advanced/framework.html">框架</a>，前者还包括了 <code>path</code> 和 <code>package</code> 两种加载模式，那我们应该如何选择呢？</p>
 <p>本文将以实例的方式，一步步给大家演示下，如何渐进式地进行代码演进。</p>
@@ -249,9 +248,11 @@ mobileTrigger.onclick = function(e) {
 <li><strong>注意：不管是应用/插件/框架，都必须编写单元测试，并尽量实现 100% 覆盖率。</strong></li>
 </ul>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#最初始的状态"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 最初始的状态</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件的雏形"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 插件的雏形</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#抽成独立插件"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 抽成独立插件</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#沉淀到框架"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 沉淀到框架</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#写在最后"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 写在最后</span></a></li></ol>
 </div>
 
@@ -272,9 +273,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

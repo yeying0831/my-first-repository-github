@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Loader</h1>
           <p>Egg 在 Koa 的基础上进行增强最重要的就是基于一定的约定，根据功能差异将代码放到不同的目录下管理，对整体团队的开发成本提升有着明显的效果。Loader 实现了这套约定，并抽象了很多底层 API 可以进一步扩展。</p>
 <h2 id="应用-框架和插件"><a class="markdown-anchor" href="#应用-框架和插件">#</a> 应用、框架和插件</h2>
@@ -481,9 +480,11 @@ mobileTrigger.onclick = function(e) {
 </tbody>
 </table>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#应用-框架和插件"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 应用、框架和插件</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#loadunit"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># loadUnit</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#文件顺序"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 文件顺序</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#生命周期"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 生命周期</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#beforestart"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># beforeStart</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#ready"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># ready</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#beforeclose"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># beforeClose</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#文件加载规则"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># 文件加载规则</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#扩展-loader"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 扩展 Loader</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#loader-api"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Loader API</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#loadfile"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># loadFile</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#loadtoapp"><span class="toc-detail-number">7.2.</span> <span class="toc-detail-text"># loadToApp</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#loadtocontext"><span class="toc-detail-number">7.3.</span> <span class="toc-detail-text"># loadToContext</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#loaderoptions"><span class="toc-detail-number">7.4.</span> <span class="toc-detail-text"># LoaderOptions</span></a></li></ol></li></ol>
 </div>
 
@@ -504,9 +505,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

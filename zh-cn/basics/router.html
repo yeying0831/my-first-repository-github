@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Router 路由</h1>
           <p>Router 主要用来描述请求 URL 和具体承担执行动作的 Controller 的对应关系，
 框架约定了 <code>app/router.js</code> 文件用于统一所有路由规则。</p>
@@ -328,9 +327,11 @@ mobileTrigger.onclick = function(e) {
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./router/news'</span>)(app);</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./router/admin'</span>)(app);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/router/news.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.router.get(<span class="string">'/news/list'</span>, app.controller.news.list);</span><br><span class="line">  app.router.get(<span class="string">'/news/detail'</span>, app.controller.news.detail);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/router/admin.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.router.get(<span class="string">'/admin/user'</span>, app.controller.admin.user);</span><br><span class="line">  app.router.get(<span class="string">'/admin/log'</span>, app.controller.admin.log);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>也可直接使用 <a href="https://github.com/eggjs/egg-router-plus" target="_blank" rel="noopener">egg-router-plus</a>。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#如何定义-router"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 如何定义 Router</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#router-详细定义说明"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Router 详细定义说明</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#注意事项"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 注意事项</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#restful-风格的-url-定义"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># RESTful 风格的 URL 定义</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#router-实战"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># router 实战</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#参数获取"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 参数获取</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#表单内容的获取"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># 表单内容的获取</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#表单校验"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># 表单校验</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#重定向"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># 重定向</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#中间件的使用"><span class="toc-detail-number">3.5.</span> <span class="toc-detail-text"># 中间件的使用</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#太多路由映射"><span class="toc-detail-number">3.6.</span> <span class="toc-detail-text"># 太多路由映射？</span></a></li></ol></li></ol>
 </div>
 
@@ -351,9 +352,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>TypeScript</h1>
           <blockquote>
 <p><a href="https://www.typescriptlang.org/" target="_blank" rel="noopener">TypeScript</a> is a typed superset of JavaScript that compiles to plain JavaScript.</p>
@@ -320,9 +319,11 @@ mobileTrigger.onclick = function(e) {
 <p>开发者使用的时候，可以直接 import 你的框架：</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/news.ts</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 开发者引入你的框架，也可以使用到提示到所有 Egg 的提示</span></span><br><span class="line"><span class="keyword">import</span> &#123; Service &#125; <span class="keyword">from</span> <span class="string">'duck-egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> NewsService <span class="keyword">extends</span> Service &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">async</span> list(page?: <span class="built_in">number</span>): <span class="built_in">Promise</span>&lt;NewsItem[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#快速入门"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 快速入门</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#目录规范"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 目录规范</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#控制器controller"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 控制器（Controller）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#路由router"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 路由（Router）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#服务service"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># 服务（Service）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#中间件middleware"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># 中间件（Middleware）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#扩展extend"><span class="toc-detail-number">2.5.</span> <span class="toc-detail-text"># 扩展（Extend）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置config"><span class="toc-detail-number">2.6.</span> <span class="toc-detail-text"># 配置（Config）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#插件plug-in"><span class="toc-detail-number">2.7.</span> <span class="toc-detail-text"># 插件（Plug-in）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#生命周期lifecycle"><span class="toc-detail-number">2.8.</span> <span class="toc-detail-text"># 生命周期（Lifecycle）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ts-类型定义typings"><span class="toc-detail-number">2.9.</span> <span class="toc-detail-text"># TS 类型定义（Typings）</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#开发期"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 开发期</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ts-node"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># ts-node</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#egg-ts-helper"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># egg-ts-helper</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#单元测试和覆盖率unit-test-and-cov"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># 单元测试和覆盖率（Unit Test and Cov）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#调试debug"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># 调试（Debug）</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#部署deploy"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 部署（Deploy）</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#构建build"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 构建（Build）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#错误堆栈error-stack"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 错误堆栈（Error Stack）</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件-框架开发指南"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 插件 / 框架开发指南</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#插件"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># 插件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#上层框架"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># 上层框架</span></a></li></ol></li></ol>
 </div>
 
@@ -343,9 +344,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

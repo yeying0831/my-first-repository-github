@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Cookie and Session</h1>
           <h2 id="cookie"><a class="markdown-anchor" href="#cookie">#</a> Cookie</h2>
 <p>HTTP is a stateless protocol.
@@ -292,9 +291,11 @@ egg.js doesn't extend expiration time of the session.
 But in some scenarios, we hope that if users visit our site for a long time, then extend their session validity and not let the user exit the login state. The framework provides a <code>renew</code> configuration item to implement this feature. It will reset the session's validity period when it finds that the user's session is half the maximum validity period.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  session: &#123;</span><br><span class="line">    renew: <span class="literal">true</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#cookie"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Cookie</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cookie-secret-key"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Cookie Secret Key</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#session"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Session</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#store-session-in-other-storage"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Store session in other storage</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#session-practice"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Session Practice</span></a></li></ol></li></ol>
 </div>
 
@@ -315,9 +316,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

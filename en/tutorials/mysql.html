@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>MySQL</h1>
           <p>MySQL is one of the most common and best RDBMS in terms of web applications. It is used in many large-scale websites such as Google and Facebook.</p>
 <h2 id="egg-mysql"><a class="markdown-anchor" href="#egg-mysql">#</a> egg-mysql</h2>
@@ -269,9 +268,11 @@ In gerenal, transaction must be atomic, consistent, isolated and durable.</p>
 <p>The following demo showe how to call <code>CONCAT(s1, ...sn)</code> funtion in mysql to do string splicing.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> Literal = <span class="keyword">this</span>.app.mysql.literals.Literal;</span><br><span class="line"><span class="keyword">const</span> first = <span class="string">'James'</span>;</span><br><span class="line"><span class="keyword">const</span> last = <span class="string">'Bond'</span>;</span><br><span class="line"><span class="keyword">await</span> <span class="keyword">this</span>.app.mysql.insert(table, &#123;</span><br><span class="line">  id: <span class="number">123</span>,</span><br><span class="line">  fullname: <span class="keyword">new</span> Literal(<span class="string">`CONCAT("<span class="subst">$&#123;first&#125;</span>", "<span class="subst">$&#123;last&#125;</span>"`</span>),</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">=&gt; INSERT INTO <span class="string">`$table`</span>(<span class="string">`id`</span>, <span class="string">`fullname`</span>) VALUES(<span class="number">123</span>, CONCAT(<span class="string">"James"</span>, <span class="string">"Bond"</span>))</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#egg-mysql"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># egg-mysql</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#installation-and-configuration"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Installation and Configuration</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#service-layer"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Service layer</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#writing-crud"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Writing CRUD</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#create"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Create</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#read"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># Read</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#update"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Update</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#delete"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># Delete</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#implementation-of-sql-statement"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Implementation of SQL statement</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#transaction"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Transaction</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#manual-control"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># Manual Control</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#automatic-control-transaction-with-scope"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># Automatic control: Transaction with scope</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#literal"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Literal</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#inner-literal"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># Inner Literal</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#custom-literal"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># Custom literal</span></a></li></ol></li></ol>
 </div>
 
@@ -292,9 +293,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

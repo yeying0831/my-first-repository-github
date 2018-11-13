@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Sequelize</h1>
           <p><a href="./mysql.html">前面的章节中</a>，我们介绍了如何在框架中通过 [egg-mysql] 插件来访问数据库。而在一些较为复杂的应用中，我们可能会需要一个 ORM 框架来帮助我们管理数据层的代码。而在 Node.js 社区中，<a href="http://docs.sequelizejs.com/" target="_blank" rel="noopener">sequelize</a> 是一个广泛使用的 ORM 框架，它支持 MySQL、PostgreSQL、SQLite 和 MSSQL 等多个数据源。</p>
 <p>本章节我们会通过开发一个对 MySQL 中 <code>users</code> 表的数据做 CURD 的例子来一步步介绍如何在 egg 项目中使用 sequelize。</p>
@@ -253,9 +252,11 @@ mobileTrigger.onclick = function(e) {
 <h2 id="脚手架"><a class="markdown-anchor" href="#脚手架">#</a> 脚手架</h2>
 <p>我们也提供了 sequelize 的脚手架，集成了文档中提供的 <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>, <a href="https://github.com/sequelize/cli" target="_blank" rel="noopener">sequelize-cli</a> 与 <a href="https://github.com/aexmachina/factory-girl" target="_blank" rel="noopener">factory-girl</a> 等模块。可以通过 <code>egg-init --type=sequelize</code> 来基于它快速初始化一个新的应用。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#准备工作"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 准备工作</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#初始化项目"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 初始化项目</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#初始化数据库和-migrations"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 初始化数据库和 Migrations</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#编写代码"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 编写代码</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#单元测试"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 单元测试</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#完整示例"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 完整示例</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#脚手架"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># 脚手架</span></a></li></ol>
 </div>
 
@@ -276,9 +277,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

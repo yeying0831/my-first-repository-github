@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>框架开发</h1>
           <p>如果你的团队遇到过：</p>
 <ul>
@@ -268,9 +267,11 @@ mobileTrigger.onclick = function(e) {
 <p>多进程测试还可以测试 stdout/stderr，因为 <code>mm.cluster</code> 是基于 <a href="https://github.com/popomore/coffee" target="_blank" rel="noopener">coffee</a> 扩展的，可进行进程测试。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> mock = <span class="built_in">require</span>(<span class="string">'egg-mock'</span>);</span><br><span class="line">describe(<span class="string">'/test/index.test.js'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="keyword">let</span> app;</span><br><span class="line">  before(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    app = mock.cluster(&#123;</span><br><span class="line">      baseDir: <span class="string">'apps/example'</span>,</span><br><span class="line">      framework: <span class="literal">true</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="keyword">return</span> app.ready();</span><br><span class="line">  &#125;);</span><br><span class="line">  after(<span class="function"><span class="params">()</span> =&gt;</span> app.close());</span><br><span class="line">  it(<span class="string">'should get `started`'</span>, () =&gt; &#123;</span><br><span class="line">    <span class="comment">// 判断终端输出</span></span><br><span class="line">    app.expect(<span class="string">'stdout'</span>, /started/);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#框架与多进程"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 框架与多进程</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#如何定制一个框架"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 如何定制一个框架</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#框架-api"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 框架 API</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#框架继承"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 框架继承</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#框架继承原理"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># 框架继承原理</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#自定义-agent"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># 自定义 Agent</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#自定义-loader"><span class="toc-detail-number">2.5.</span> <span class="toc-detail-text"># 自定义 Loader</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#框架启动原理"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 框架启动原理</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#框架测试"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 框架测试</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#初始化"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 初始化</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#缓存"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 缓存</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#多进程测试"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># 多进程测试</span></a></li></ol></li></ol>
 </div>
 
@@ -291,9 +292,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

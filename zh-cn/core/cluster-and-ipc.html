@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>多进程模型和进程间通讯</h1>
           <p>我们知道 JavaScript 代码是运行在单线程上的，换句话说一个 Node.js 进程只能运行在一个 CPU 上。那么如果用 Node.js 来做 Web Server，就无法享受到多核运算的好处。作为企业级的解决方案，我们要解决的一个问题就是:</p>
 <blockquote>
@@ -354,9 +353,11 @@ mobileTrigger.onclick = function(e) {
 <h2 id="更复杂的场景"><a class="markdown-anchor" href="#更复杂的场景">#</a> 更复杂的场景</h2>
 <p>上面的例子中，我们在 Agent 进程上运行了一个 subscriber，来监听消息中间件的消息，如果 Worker 进程也需要监听一些消息怎么办？如何通过 Agent 进程建立连接再转发给 Worker 进程呢？这些问题可以在<a href="../advanced/cluster-client.html">多进程研发模式增强</a>中找到答案。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#cluster-是什么呢"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Cluster 是什么呢？</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#框架的多进程模型"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 框架的多进程模型</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#进程守护"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 进程守护</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#agent-机制"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Agent 机制</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#agent-的用法"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Agent 的用法</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#master-vs-agent-vs-worker"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># Master VS Agent VS Worker</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#进程间通讯ipc"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 进程间通讯（IPC）</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#发送"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 发送</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#接收"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># 接收</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#ipc-实战"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># IPC 实战</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#需求"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 需求</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#实现"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 实现</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#更复杂的场景"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 更复杂的场景</span></a></li></ol>
 </div>
 
@@ -377,9 +378,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

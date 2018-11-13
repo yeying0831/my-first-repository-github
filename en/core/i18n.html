@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>I18n Internationalization</h1>
           <p>For developing the multi-language application, build-in I18n support by <a href="https://github.com/eggjs/egg-i18n" target="_blank" rel="noopener">egg-i18n</a> plugin</p>
 <h2 id="default-language"><a class="markdown-anchor" href="#default-language">#</a> Default Language</h2>
@@ -206,9 +205,11 @@ mobileTrigger.onclick = function(e) {
 <p>Assume we are using template engine <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">Nunjucks</a></p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; __('Email') &#125;&#125;: &#123;&#123; user.email &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  &#123;&#123; __('Welcome back, %s!', user.name) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  &#123;&#123; __('Hello &#123;0&#125;! My name is &#123;1&#125;.', ['foo', 'bar']) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#default-language"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Default Language</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#switch-language"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Switch Language</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#writing-i18n-multi-language-documents"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Writing I18n Multi-language Documents</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#getting-multi-language-texts"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Getting Multi-language Texts</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#use-in-controller"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Use in Controller</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#use-in-view"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Use in View</span></a></li></ol></li></ol>
 </div>
 
@@ -229,9 +230,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Sequelize</h1>
           <p><a href="./mysql.html">In the previous section</a>, we showed how to access the database through the [egg-mysql] plugin in the framework. In some more complex applications, we may need an ORM framework to help us manage the data layer code. In the Node.js community, <a href="http://docs.sequelizejs.com/" target="_blank" rel="noopener">sequelize</a> is a widely used ORM framework that supports multiple data sources such as MySQL, PostgreSQL, SQLite, and MSSQL.</p>
 <p>In this chapter, we will walk through the steps of how to use sequelize in an egg project by developing an example of doing CURD on the data in the <code>users</code> table in MySQL.</p>
@@ -251,9 +250,11 @@ mobileTrigger.onclick = function(e) {
 <h2 id="boilerplate"><a class="markdown-anchor" href="#boilerplate">#</a> Boilerplate</h2>
 <p>We also provide sequelize boilerplate that integrates the modules <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>, <a href="https://github.com/sequelize/cli" target="_blank" rel="noopener">sequelize-cli</a> and <a href="https://github.com/aexmachina/factory-girl" target="_blank" rel="noopener">factory-girl</a> provided in this documentation. You can quickly initialize a new application based on it by <code>egg-init --type=sequelize</code>.</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#preparing"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Preparing</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#init"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Init</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#init-database-and-migrations"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Init Database and Migrations</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#coding"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Coding</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#unit-test"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Unit Test</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#full-example"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Full Example</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#boilerplate"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Boilerplate</span></a></li></ol>
 </div>
 
@@ -274,9 +275,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

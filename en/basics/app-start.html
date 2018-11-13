@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1></h1>
           <h1 id="application-startup-configuration"><a class="markdown-anchor" href="#application-startup-configuration">#</a> Application Startup Configuration</h1>
 <p>When the application starts up, we often need to set up some initialization logic. The application bootstraps with those specific configurations. It is in a healthy state and be able to take external service requests after those configurations successfully applied. Otherwise, it failed.</p>
@@ -177,9 +176,11 @@ mobileTrigger.onclick = function(e) {
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="comment">// 'app.cities' is loaded, and you can access it by 'this.ctx.app.cities'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>Note: When the framework executes the lifecycle method <code>beforeStart</code>, do not run time-consuming operation. The framework enables a <em>Timeout</em> setting by default when it starts up.</strong></p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-1"><a class="toc-detail-link" href="#application-startup-configuration"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Application Startup Configuration</span></a></li></ol>
 </div>
 
@@ -200,9 +201,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

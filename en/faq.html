@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>FAQ</h1>
           <p>If you have questions that is not contained below, please check <a href="https://github.com/eggjs/egg/issues" target="_blank" rel="noopener">Egg issues</a>.</p>
 <h2 id="how-to-feedback-efficiently"><a class="markdown-anchor" href="#how-to-feedback-efficiently">#</a> How to feedback efficiently?</h2>
@@ -215,9 +214,11 @@ When you're opening an issue, please hold a mentality of &quot;working together 
 </blockquote>
 <p>Renaming files leads to file watching failure. The solution is simple: just turn of <code>Safe Write</code> option. (Settings | Appearance &amp; Behavior | System Settings | Use &quot;safe write&quot;, the path may vary in different versions)</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#how-to-feedback-efficiently"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># How to feedback efficiently?</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#why-my-config-dont-work"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Why my config don&#39;t work?</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#where-are-my-log-files-in-prod-environment"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Where are my log files in prod environment?</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#why-not-choose-pm2-as-process-management-tool"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Why not choose PM2 as process management tool?</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#how-to-resolve-csrf-error"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># How to resolve csrf error?</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#in-local-development-environment-why-is-worker-process-not-restarted-automatically-when-files-are-modified"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># In local development environment, why is worker process not restarted automatically when files are modified?</span></a></li></ol>
 </div>
 
@@ -238,9 +239,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

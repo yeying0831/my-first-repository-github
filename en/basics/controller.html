@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>controller</h1>
           <h2 id="what-is-controller"><a class="markdown-anchor" href="#what-is-controller">#</a> What is Controller</h2>
 <p><a href="./router.html">The previous chapter</a> says router is mainly used to describe the relationship between the request URL and the Controller that processes the request eventually, so what is a Controller used for?</p>
@@ -474,9 +473,11 @@ Egg itself does not integrate any template engine, but it establishes the <a hre
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.security = &#123;</span><br><span class="line">  domainWhiteList:[<span class="string">'.domain.com'</span>],  <span class="comment">// Security whitelist, starts with `.`</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>If the user does not configure the <code>domainWhiteList</code> or the <code>domainWhiteList</code> array to be empty, then all redirect requests will be released by default, which is equivalent to <code>ctx.unsafeRedirect(url)</code>.</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#what-is-controller"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># What is Controller</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#how-to-write-controller"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># How To Write Controller</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-classrecommended"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Controller Class(Recommended)</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#methods-style-controller-its-not-recommended-only-for-compatibility"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Methods Style Controller (It&#39;s not recommended, only for compatibility)</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#http-basics"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># HTTP Basics</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#acquire-http-request-parameters"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Acquire HTTP Request Parameters</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#query"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># query</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#router-params"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Router params</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#body"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># body</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#acquire-the-submitted-files"><span class="toc-detail-number">4.4.</span> <span class="toc-detail-text"># Acquire the submitted files</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#header"><span class="toc-detail-number">4.5.</span> <span class="toc-detail-text"># header</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cookie"><span class="toc-detail-number">4.6.</span> <span class="toc-detail-text"># Cookie</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#session"><span class="toc-detail-number">4.7.</span> <span class="toc-detail-text"># Session</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#parameter-validation"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Parameter Validation</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#validation-rules"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># Validation Rules</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-service"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Using Service</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#sending-http-response"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Sending HTTP Response</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#setting-status"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># Setting Status</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#setting-body"><span class="toc-detail-number">7.2.</span> <span class="toc-detail-text"># Setting Body</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#setting-header"><span class="toc-detail-number">7.3.</span> <span class="toc-detail-text"># Setting Header</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#redirect"><span class="toc-detail-number">7.4.</span> <span class="toc-detail-text"># Redirect</span></a></li></ol></li></ol>
 </div>
 
@@ -497,9 +498,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

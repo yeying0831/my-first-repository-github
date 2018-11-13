@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Router</h1>
           <p>Router is mainly used to describe the corresponding relationship between the request URL and the Controller that processes the request eventually. All routing rules are unified in the <code>app/router.js</code> file by the framework.</p>
 <p>By unifying routing rules, we can avoid the routing logics scattered in many places which may cause many unknown conflicts, and we can more easily check global routing rules.</p>
@@ -325,9 +324,11 @@ Here we just briefly explain how to use the middleware, and refer to <a href="./
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./router/news'</span>)(app);</span><br><span class="line">  <span class="built_in">require</span>(<span class="string">'./router/admin'</span>)(app);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/router/news.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.router.get(<span class="string">'/news/list'</span>, app.controller.news.list);</span><br><span class="line">  app.router.get(<span class="string">'/news/detail'</span>, app.controller.news.detail);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// app/router/admin.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  app.router.get(<span class="string">'/admin/user'</span>, app.controller.admin.user);</span><br><span class="line">  app.router.get(<span class="string">'/admin/log'</span>, app.controller.admin.log);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>or using <a href="https://github.com/eggjs/egg-router-plus" target="_blank" rel="noopener">egg-router-plus</a>.</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#how-to-define-router"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># How to Define Router</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#router-config-in-detail"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Router config in detail</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#notices"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Notices</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#restful-style-url-definition"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># RESTful style URL definition</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#router-in-action"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Router in Action</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#acquiring-form-contents"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Acquiring Form Contents</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#form-verification"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># Form Verification</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#redirection"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Redirection</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#using-middleware"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># Using Middleware</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#too-many-routing-maps"><span class="toc-detail-number">3.5.</span> <span class="toc-detail-text"># Too Many Routing Maps?</span></a></li></ol></li></ol>
 </div>
 
@@ -348,9 +349,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>启动自定义</h1>
           <p>我们常常需要在应用启动期间进行一些初始化工作，等初始化完成后应用才可以启动成功，并开始对外提供服务。</p>
 <p>框架提供了统一的入口文件（<code>app.js</code>）进行启动过程自定义，这个文件只返回一个函数。例如，我们需要在应用启动期间从远程接口加载一份全国城市列表，以便于后续在 Controller 中使用：</p>
@@ -175,9 +174,11 @@ mobileTrigger.onclick = function(e) {
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/controller/home.js</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="comment">// 'app.cities' 在上面启动期间已经加载，可以直接通过 'this.ctx.app.cities' 使用。</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>注意：在 <code>beforeStart</code> 中不建议做太耗时的操作，框架会有启动的超时检测。</strong></p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   
 </div>
 
@@ -198,9 +199,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

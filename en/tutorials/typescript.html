@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>TypeScript</h1>
           <blockquote>
 <p><a href="https://www.typescriptlang.org/" target="_blank" rel="noopener">TypeScript</a> is a typed superset of JavaScript that compiles to plain JavaScript.</p>
@@ -319,9 +318,11 @@ mobileTrigger.onclick = function(e) {
 <p>For developers, they can directly import your framework:</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/service/news.ts</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Developers can get all intellisense after they import your framework</span></span><br><span class="line"><span class="keyword">import</span> &#123; Service &#125; <span class="keyword">from</span> <span class="string">'duck-egg'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> NewsService <span class="keyword">extends</span> Service &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">async</span> list(page?: <span class="built_in">number</span>): <span class="built_in">Promise</span>&lt;NewsItem[]&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> [];</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#quick-start"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Quick Start</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#principles-of-catalogs"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Principles of catalogs</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Controller</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#router"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Router</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#service"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Service</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#middleware"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># Middleware</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#extend"><span class="toc-detail-number">2.5.</span> <span class="toc-detail-text"># Extend</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#config"><span class="toc-detail-number">2.6.</span> <span class="toc-detail-text"># Config</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#plug-in"><span class="toc-detail-number">2.7.</span> <span class="toc-detail-text"># Plug-in</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#lifecycle"><span class="toc-detail-number">2.8.</span> <span class="toc-detail-text"># Lifecycle</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#typings"><span class="toc-detail-number">2.9.</span> <span class="toc-detail-text"># Typings</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#developing-period"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Developing period</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ts-node"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># ts-node</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#egg-ts-helper"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># egg-ts-helper</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#unit-test-and-cov"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Unit Test and Cov</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#debug"><span class="toc-detail-number">3.4.</span> <span class="toc-detail-text"># Debug</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#deployment"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Deployment</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#building"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Building</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#error-stacks"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># Error Stacks</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#guides-to-the-developments-of-plug-inframework"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Guides to the developments of Plug-in/Framework</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#plug-in-2"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># Plug-in</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#the-outer-framework"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># The outer framework</span></a></li></ol></li></ol>
 </div>
 
@@ -342,9 +343,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

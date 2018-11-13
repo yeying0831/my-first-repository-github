@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Structure</h1>
           <p>In the <a href="../intro/quickstart.html">Quick Start</a>, we should have a preliminary impression on the framework, next let us simply understand the directory convention specification.</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">egg-project</span><br><span class="line">├── package.json</span><br><span class="line">├── app.js (optional)</span><br><span class="line">├── agent.js (optional)</span><br><span class="line">├── app</span><br><span class="line">|   ├── router.js</span><br><span class="line">│   ├── controller</span><br><span class="line">│   |   └── home.js</span><br><span class="line">│   ├── service (optional)</span><br><span class="line">│   |   └── user.js</span><br><span class="line">│   ├── middleware (optional)</span><br><span class="line">│   |   └── response_time.js</span><br><span class="line">│   ├── schedule (optional)</span><br><span class="line">│   |   └── my_task.js</span><br><span class="line">│   ├── public (optional)</span><br><span class="line">│   |   └── reset.css</span><br><span class="line">│   ├── view (optional)</span><br><span class="line">│   |   └── home.tpl</span><br><span class="line">│   └── extend (optional)</span><br><span class="line">│       ├── helper.js (optional)</span><br><span class="line">│       ├── request.js (optional)</span><br><span class="line">│       ├── response.js (optional)</span><br><span class="line">│       ├── context.js (optional)</span><br><span class="line">│       ├── application.js (optional)</span><br><span class="line">│       └── agent.js (optional)</span><br><span class="line">├── config</span><br><span class="line">|   ├── plugin.js</span><br><span class="line">|   ├── config.default.js</span><br><span class="line">│   ├── config.prod.js</span><br><span class="line">|   ├── config.test.js (optional)</span><br><span class="line">|   ├── config.local.js (optional)</span><br><span class="line">|   └── config.unittest.js (optional)</span><br><span class="line">└── <span class="built_in">test</span></span><br><span class="line">    ├── middleware</span><br><span class="line">    |   └── response_time.test.js</span><br><span class="line">    └── controller</span><br><span class="line">        └── home.test.js</span><br></pre></td></tr></table></figure>
@@ -194,9 +193,11 @@ mobileTrigger.onclick = function(e) {
 <li><code>app/model/**</code> used to place the domain model, optional, by the domain related plugins conventions, such as <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>.</li>
 </ul>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   
 </div>
 
@@ -217,9 +218,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

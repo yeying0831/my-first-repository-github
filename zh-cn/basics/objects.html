@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>框架内置基础对象</h1>
           <p>在本章，我们会初步介绍一下框架中内置的一些基础对象，包括从 <a href="http://koajs.com" target="_blank" rel="noopener">Koa</a> 继承而来的 4 个对象（Application, Context, Request, Response) 以及框架扩展的一些对象（Controller, Service, Helper, Config, Logger），在后续的文档阅读中我们会经常遇到它们。</p>
 <h2 id="application"><a class="markdown-anchor" href="#application">#</a> Application</h2>
@@ -272,9 +271,11 @@ mobileTrigger.onclick = function(e) {
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Schedule</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</span><br><span class="line">  <span class="comment">// 需要实现此方法</span></span><br><span class="line">  <span class="comment">// subscribe 可以为 async function 或 generator function</span></span><br><span class="line">  <span class="keyword">async</span> subscribe() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>插件开发者可以根据自己的需求基于它定制订阅规范，如<a href="./schedule.html">定时任务</a>就是使用这种规范实现的。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#application"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Application</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#事件"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 事件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取方式"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 获取方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#context"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Context</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取方式-2"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 获取方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#request-response"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Request &amp; Response</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取方式-3"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 获取方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#controller"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Controller</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#service"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Service</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Helper</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取方式-4"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># 获取方式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#自定义-helper-方法"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># 自定义 helper 方法</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#config"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Config</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取方式-5"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># 获取方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#logger"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># Logger</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#app-logger"><span class="toc-detail-number">8.1.</span> <span class="toc-detail-text"># App Logger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#app-corelogger"><span class="toc-detail-number">8.2.</span> <span class="toc-detail-text"># App CoreLogger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context-logger"><span class="toc-detail-number">8.3.</span> <span class="toc-detail-text"># Context Logger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context-corelogger"><span class="toc-detail-number">8.4.</span> <span class="toc-detail-text"># Context CoreLogger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-logger-service-logger"><span class="toc-detail-number">8.5.</span> <span class="toc-detail-text"># Controller Logger &amp; Service Logger</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#subscription"><span class="toc-detail-number">9.</span> <span class="toc-detail-text"># Subscription</span></a></li></ol>
 </div>
 
@@ -295,9 +296,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

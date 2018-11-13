@@ -1,11 +1,6 @@
 .mobile-menu {
   display: none;
 }
-@media screen and (min-width: 1136px) and (max-width: 1366px) {
-  .aside {
-    display: none;
-  }
-}
 @media screen and (max-width: 1136px) {
   .nav ul.nav-item {
     display: none;
@@ -45,16 +40,19 @@
   .index-aside aside {
     display: block;
   }
+  .content {
+    padding: 0;
+  }
+  .content .doc {
+    padding: 32px 24px;
+  }
+  .toc {
+    display: none;
+  }
   aside {
-    position: fixed;
-    top: 56px;
-    right: -200px;
-    height: auto;
-    border: 1px solid #eee;
-    overflow-y: scroll;
-    background: #fff;
-    transition: all 1s;
-    z-index: 2;
+    border-left: 1px solid #e8e8e8;
+    right: -200px !important;
+    left: auto !important;
   }
   aside .mobile-menu {
     padding-top: 30px;
@@ -70,13 +68,8 @@
     padding-top: 0;
   }
   aside.mobile-show {
-    position: fixed;
-    top: 56px;
-    right: 0;
-    height: 100%;
-    overflow-y: scroll;
-    transition: all 1s;
-    z-index: 1;
+    right: 0 !important;
+    left: auto !important;
   }
   .footer {
     position: inherit;

@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>应用部署</h1>
           <p>在<a href="./development.html">本地开发</a>时，我们使用 <code>egg-bin dev</code> 来启动服务，但是在部署应用的时候不可以这样使用。因为 <code>egg-bin dev</code> 会针对本地开发做很多处理，而生产运行需要一个更加简单稳定的方式。所以本章主要讲解如何部署你的应用。</p>
 <p>一般从源码代码到真正运行，我们会拆分成构建和部署两步，可以做到<strong>一次构建多次部署</strong>。</p>
@@ -252,9 +251,11 @@ mobileTrigger.onclick = function(e) {
 <h4 id="访问控制台"><a class="markdown-anchor" href="#访问控制台">#</a> 访问控制台</h4>
 <p>控制台地址：<a href="https://node.console.aliyun.com" target="_blank" rel="noopener">https://node.console.aliyun.com</a></p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#构建"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 构建</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#部署"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 部署</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#启动命令"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 启动命令</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#停止命令"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 停止命令</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#监控"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 监控</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#nodejs-性能平台alinode"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Node.js 性能平台（alinode）</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#启动应用"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># 启动应用</span></a></li></ol></li></ol>
 </div>
 
@@ -275,9 +276,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

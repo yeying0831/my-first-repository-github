@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Middleware 中间件</h1>
           <p>在<a href="../intro/egg-and-koa.html">前面的章节</a>中，我们介绍了 Egg 是基于 Koa 实现的，所以 Egg 的中间件形式和 Koa 的中间件形式是一样的，都是基于<a href="../intro/egg-and-koa.html#midlleware">洋葱圈模型</a>。每次我们编写一个中间件，就相当于在洋葱外面包了一层。</p>
 <h2 id="编写中间件"><a class="markdown-anchor" href="#编写中间件">#</a> 编写中间件</h2>
@@ -235,9 +234,11 @@ mobileTrigger.onclick = function(e) {
 <p>有关更多的 match 和 ignore 配置情况，详见
 <a href="https://github.com/eggjs/egg-path-matching" target="_blank" rel="noopener">egg-path-matching</a>.</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#编写中间件"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 编写中间件</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#写法"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 写法</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 配置</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#使用中间件"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 使用中间件</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#在应用中使用中间件"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 在应用中使用中间件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#在框架和插件中使用中间件"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 在框架和插件中使用中间件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#router-中使用中间件"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># router 中使用中间件</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#框架默认中间件"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 框架默认中间件</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#使用-koa-的中间件"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 使用 Koa 的中间件</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#通用配置"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 通用配置</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#enable"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># enable</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#match-和-ignore"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># match 和 ignore</span></a></li></ol></li></ol>
 </div>
 
@@ -258,9 +259,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

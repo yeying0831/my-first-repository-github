@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>View 模板渲染</h1>
           <p>绝大多数情况，我们都需要读取数据后渲染模板，然后呈现给用户。故我们需要引入对应的模板引擎。</p>
 <p>框架内置 <a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">egg-view</a> 作为模板解决方案，并支持多模板渲染，每个模板引擎都以插件的方式引入，但保持渲染的 API 一致。如果想更深入的了解，可以查看<a href="../advanced/view-plugin.html">模板插件开发</a>。</p>
@@ -228,9 +227,11 @@ mobileTrigger.onclick = function(e) {
 <h2 id="security"><a class="markdown-anchor" href="#security">#</a> Security</h2>
 <p>框架内置的 <a href="https://github.com/eggjs/egg-security" target="_blank" rel="noopener">egg-security</a> 插件，为我们提供了常见的安全辅助函数，包括 <code>helper.shtml / surl / sjs</code> 等等等，强烈建议阅读下<a href="./security.html">安全</a>。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#引入-view-插件"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 引入 view 插件</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#启用插件"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 启用插件</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#配置插件"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 配置插件</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#root-string"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># root {String}</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cache-boolean"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># cache {Boolean}</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mapping-和-defaultviewengine"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># mapping 和 defaultViewEngine</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#defaultextension"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># defaultExtension</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#渲染页面"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 渲染页面</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#locals"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Locals</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Helper</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#security"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Security</span></a></li></ol>
 </div>
 
@@ -251,9 +252,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

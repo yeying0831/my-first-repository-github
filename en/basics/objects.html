@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Framework Built-in Objects</h1>
           <p>At this chapter, we will introduce some built-in basic objects in the framework, including four objects (Application, Context, Request, Response) inherited from <a href="http://koajs.com" target="_blank" rel="noopener">Koa</a> and some objects that extended by the framework (Controller, Service , Helper, Config, Logger), we will often see them in the follow-up documents.</p>
 <h2 id="application"><a class="markdown-anchor" href="#application">#</a> Application</h2>
@@ -272,9 +271,11 @@ mobileTrigger.onclick = function(e) {
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> Subscription = <span class="built_in">require</span>(<span class="string">'egg'</span>).Subscription;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Schedule</span> <span class="keyword">extends</span> <span class="title">Subscription</span> </span>&#123;</span><br><span class="line">  <span class="comment">// This method should be implemented</span></span><br><span class="line">  <span class="comment">// subscribe can be async function or generator function</span></span><br><span class="line">  <span class="keyword">async</span> subscribe() &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>We recommend plugin developers to implement based on this model, For example, <a href="./schedule.html">Schedule</a>.</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#application"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Application</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#events"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Events</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-get"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># How to Get</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#context"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Context</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-get-2"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># How to Get</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#request-response"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Request &amp; Response</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-get-3"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># How to Get</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#controller"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Controller</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#service"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Service</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Helper</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-get-4"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># How to Get</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#custom-helper-method"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># Custom helper method</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#config"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Config</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-get-5"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># How to Get</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#logger"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># Logger</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#app-logger"><span class="toc-detail-number">8.1.</span> <span class="toc-detail-text"># App Logger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#app-corelogger"><span class="toc-detail-number">8.2.</span> <span class="toc-detail-text"># App CoreLogger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context-logger"><span class="toc-detail-number">8.3.</span> <span class="toc-detail-text"># Context Logger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context-corelogger"><span class="toc-detail-number">8.4.</span> <span class="toc-detail-text"># Context CoreLogger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-logger-service-logger"><span class="toc-detail-number">8.5.</span> <span class="toc-detail-text"># Controller Logger &amp; Service Logger</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#subscription"><span class="toc-detail-number">9.</span> <span class="toc-detail-text"># Subscription</span></a></li></ol>
 </div>
 
@@ -295,9 +296,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

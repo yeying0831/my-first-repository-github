@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Config 配置</h1>
           <p>框架提供了强大且可扩展的配置功能，可以自动合并应用、插件、框架的配置，按顺序覆盖，且可以根据环境维护不同的配置。合并后的配置可直接从 <code>app.config</code> 获取。</p>
 <p>配置的管理有多种方案，以下列一些常见的方案</p>
@@ -241,9 +240,11 @@ mobileTrigger.onclick = function(e) {
 <p>还会生成 <code>run/application_config_meta.json</code>（worker 进程）和 <code>run/agent_config_meta.json</code>（agent 进程）文件，用来排查属性的来源，如</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"logger"</span>: &#123;</span><br><span class="line">    <span class="attr">"dir"</span>: <span class="string">"/path/to/config/config.default.js"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#多环境配置"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 多环境配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置写法"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 配置写法</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置加载顺序"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 配置加载顺序</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#合并规则"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 合并规则</span></a></li></ol><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#配置结果"><span class="toc-detail-number"></span> <span class="toc-detail-text"># 配置结果</span></a>
 </li></div>
 
@@ -264,9 +265,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

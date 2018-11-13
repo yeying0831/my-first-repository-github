@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Logger</h1>
           <p>There is no doubt that logs are important part for monitoring application and debugging in Web development.</p>
 <p>Built-in enterprise scaled logger, <a href="https://github.com/eggjs/egg-logger" target="_blank" rel="noopener">egg-logger</a>, makes developer implement logging more easily than ever before.</p>
@@ -264,9 +263,11 @@ mobileTrigger.onclick = function(e) {
 </blockquote>
 <p>More about <a href="https://github.com/eggjs/egg-logger" target="_blank" rel="noopener">egg-logger</a> and <a href="https://github.com/eggjs/egg-logrotator" target="_blank" rel="noopener">egg-logrotator</a>。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#location"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Location</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#type-of-logs"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Type of Logs</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#printing"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Printing</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context-logger"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Context Logger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#app-logger"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># App Logger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#agent-logger"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Agent Logger</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#encoding"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Encoding</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#log-level"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Log Level</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#levels"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># Levels</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#in-terminal"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># In terminal</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#create-your-logger"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Create your logger</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#customized"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># Customized</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#advanced"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># Advanced</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#log-sharding"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># Log Sharding</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#daily-sharding"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># Daily Sharding</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#size-sharding"><span class="toc-detail-number">7.2.</span> <span class="toc-detail-text"># Size Sharding</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#hourly-sharding"><span class="toc-detail-number">7.3.</span> <span class="toc-detail-text"># Hourly Sharding</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#performance"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># Performance</span></a></li></ol>
 </div>
 
@@ -287,9 +288,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

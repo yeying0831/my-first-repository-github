@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>插件开发</h1>
           <p>插件机制是我们框架的一大特色。它不但可以保证框架核心的足够精简、稳定、高效，还可以促进业务逻辑的复用，生态圈的形成。有人可能会问了：</p>
 <ul>
@@ -364,9 +363,11 @@ mobileTrigger.onclick = function(e) {
 <p>更重要的是 Egg 可以使用这种特性来做适配器。比如<a href="./view-plugin.html#%E6%8F%92%E4%BB%B6%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83">模板开发规范</a>定义的插件名为 view，而存在 <code>egg-view-nunjucks</code>，<code>egg-view-react</code> 等插件，使用者只需要更换插件和修改模板，不需要动 Controller， 因为所有的模板插件都实现了相同的 API。</p>
 <p><strong>将相同功能的插件赋予相同的插件名，具备相同的 API，可以快速切换</strong>。这在模板、数据库等领域非常适用。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件开发"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 插件开发</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#使用脚手架快速开发"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 使用脚手架快速开发</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件的目录结构"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 插件的目录结构</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件的依赖管理"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 插件的依赖管理</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#插件能做什么"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 插件能做什么？</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#扩展内置对象的接口"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 扩展内置对象的接口</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#插入自定义中间件"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 插入自定义中间件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#在应用启动时做一些初始化工作"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># 在应用启动时做一些初始化工作</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#设置定时任务"><span class="toc-detail-number">4.4.</span> <span class="toc-detail-text"># 设置定时任务</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#全局实例插件的最佳实践"><span class="toc-detail-number">4.5.</span> <span class="toc-detail-text"># 全局实例插件的最佳实践</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#插件的寻址规则"><span class="toc-detail-number">4.6.</span> <span class="toc-detail-text"># 插件的寻址规则</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#插件规范"><span class="toc-detail-number">4.7.</span> <span class="toc-detail-text"># 插件规范</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#为何不使用-npm-包名来做插件名"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 为何不使用 npm 包名来做插件名？</span></a></li></ol>
 </div>
 
@@ -387,9 +388,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

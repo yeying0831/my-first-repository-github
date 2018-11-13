@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>日志</h1>
           <p>日志对于 Web 开发的重要性毋庸置疑，它对于监控应用的运行状态、问题排查等都有非常重要的意义。</p>
 <p>框架内置了强大的企业级日志支持，由 <a href="https://github.com/eggjs/egg-logger" target="_blank" rel="noopener">egg-logger</a> 模块提供。</p>
@@ -278,9 +277,11 @@ mobileTrigger.onclick = function(e) {
 </blockquote>
 <p>更多详细请参考 <a href="https://github.com/eggjs/egg-logger" target="_blank" rel="noopener">egg-logger</a> 和 <a href="https://github.com/eggjs/egg-logrotator" target="_blank" rel="noopener">egg-logrotator</a>。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#日志路径"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 日志路径</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#日志分类"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 日志分类</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#如何打印日志"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 如何打印日志</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context-logger"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Context Logger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#app-logger"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># App Logger</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#agent-logger"><span class="toc-detail-number">3.3.</span> <span class="toc-detail-text"># Agent Logger</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#日志文件编码"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 日志文件编码</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#日志级别"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 日志级别</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#文件日志级别"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># 文件日志级别</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#终端日志级别"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># 终端日志级别</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#自定义日志"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 自定义日志</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#增加自定义日志"><span class="toc-detail-number">6.1.</span> <span class="toc-detail-text"># 增加自定义日志</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#高级自定义日志"><span class="toc-detail-number">6.2.</span> <span class="toc-detail-text"># 高级自定义日志</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#日志切割"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># 日志切割</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#按天切割"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># 按天切割</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#按照文件大小切割"><span class="toc-detail-number">7.2.</span> <span class="toc-detail-text"># 按照文件大小切割</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#按照小时切割"><span class="toc-detail-number">7.3.</span> <span class="toc-detail-text"># 按照小时切割</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#性能"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># 性能</span></a></li></ol>
 </div>
 
@@ -301,9 +302,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

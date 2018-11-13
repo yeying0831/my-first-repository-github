@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Configuration</h1>
           <p>This framework provides powerful and extensible configuration function, including automatically merging applications, plugins, and framework's configuration. In addition, it allows users to overwrite configuration in sequence and maintain different configs depending on different environments. The result (i.e. merged config) can be accessed from <code>app.config</code>.</p>
 <p>Here are some common control tactics:</p>
@@ -247,9 +246,11 @@ mobileTrigger.onclick = function(e) {
 <p><code>run/application_config_meta.json</code> (for worker process）and <code>run/agent_config_meta.json</code> (for agent process) will also be dumped in order to check which file defines the property, see below</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"logger"</span>: &#123;</span><br><span class="line">    <span class="attr">"dir"</span>: <span class="string">"/path/to/config/config.default.js"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#multiple-environment-configuration"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Multiple environment configuration</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-write-configuration"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># How to write configuration</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#sequence-of-loading-configurations"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Sequence of loading configurations</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#merging-rule"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Merging rule</span></a></li></ol><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#configuration-result"><span class="toc-detail-number"></span> <span class="toc-detail-text"># Configuration result</span></a>
 </li></div>
 
@@ -270,9 +271,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

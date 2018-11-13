@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Exception Handling</h1>
           <h2 id="exception-capture"><a class="markdown-anchor" href="#exception-capture">#</a> Exception Capture</h2>
 <p>Taking benefits from framework asynchronous support, all exceptions can be caught by <code>try catch</code>.</p>
@@ -243,9 +242,11 @@ mobileTrigger.onclick = function(e) {
 <p>Adding yours to <code>middleware</code> in config:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  middleware: [ <span class="string">'notfoundHandler'</span> ],</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#exception-capture"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Exception Capture</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#egg-takes-charge-of-exceptions"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Egg takes charge of exceptions</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#errorpageurl"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># errorPageUrl</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#create-your-universal-exception-handler"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Create your universal exception handler</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#404"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 404</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#customize-404-response"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Customize 404 Response</span></a></li></ol></li></ol>
 </div>
 
@@ -266,9 +267,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

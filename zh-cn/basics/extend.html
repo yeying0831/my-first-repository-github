@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>框架扩展</h1>
           <p>框架提供了多种扩展点扩展自身的功能：</p>
 <ul>
@@ -258,9 +257,11 @@ mobileTrigger.onclick = function(e) {
 <p>这个文件只会在 unittest 环境加载。</p>
 <p>同理，对于 Application，Context，Request，Response，Helper 都可以使用这种方式针对某个环境进行扩展，更多参见<a href="./env.html">运行环境</a>。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#application"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Application</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#访问方式"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 访问方式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#扩展方式"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 扩展方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#context"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Context</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#访问方式-2"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 访问方式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#扩展方式-2"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 扩展方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#request"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Request</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#访问方式-3"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># 访问方式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#扩展方式-3"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># 扩展方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#response"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Response</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#访问方式-4"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 访问方式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#扩展方式-4"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 扩展方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Helper</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#访问方式-5"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># 访问方式</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#扩展方式-5"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># 扩展方式</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#按照环境进行扩展"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 按照环境进行扩展</span></a></li></ol>
 </div>
 
@@ -281,9 +282,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

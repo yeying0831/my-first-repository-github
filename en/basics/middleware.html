@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Middleware</h1>
           <p>In <a href="../intro/egg-and-koa.html">the previous chapter</a>, we say that Egg is based on Koa, so the form of middleware in Egg is the same as in Koa, i.e. they are both based on <a href="../intro/egg-and-koa.html#midlleware">the onion model</a>.</p>
 <h2 id="writing-middleware"><a class="markdown-anchor" href="#writing-middleware">#</a> Writing Middleware</h2>
@@ -234,9 +233,11 @@ we can edit <code>config.default.js</code> like this:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  gzip: &#123;</span><br><span class="line">    match(ctx) &#123;</span><br><span class="line">      <span class="comment">// enabled on ios devices</span></span><br><span class="line">      <span class="keyword">const</span> reg = <span class="regexp">/iphone|ipad|ipod/i</span>;</span><br><span class="line">      <span class="keyword">return</span> reg.test(ctx.get(<span class="string">'user-agent'</span>));</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>For more configs about <code>match</code> and <code>ignore</code>, please refer to <a href="https://github.com/eggjs/egg-path-matching" target="_blank" rel="noopener">egg-path-matching</a>.</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#writing-middleware"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Writing Middleware</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#how-to-write"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># How to write</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configuration"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># Configuration</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-middleware"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Using Middleware</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#using-middleware-in-application"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Using Middleware in Application</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-middleware-in-framework-and-plugin"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Using Middleware in Framework and Plugin</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-middleware-in-router"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Using Middleware in Router</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#default-framework-middleware"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Default Framework Middleware</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#use-koas-middleware"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># Use Koa&#39;s Middleware</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#general-configuration"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># General Configuration</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#enable"><span class="toc-detail-number">7.1.</span> <span class="toc-detail-text"># enable</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#match-and-ignore"><span class="toc-detail-number">7.2.</span> <span class="toc-detail-text"># match and ignore</span></a></li></ol></li></ol>
 </div>
 
@@ -257,9 +258,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

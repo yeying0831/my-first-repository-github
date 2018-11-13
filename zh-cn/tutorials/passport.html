@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Passport</h1>
           <p><strong>『登录鉴权』</strong> 是一个常见的业务场景，包括『账号密码登录方式』和『第三方统一登录』。</p>
 <p>其中，后者我们经常使用到，如 Google， GitHub，QQ 统一登录，它们都是基于 <a href="https://oauth.net/2/" target="_blank" rel="noopener">OAuth</a> 规范。</p>
@@ -264,9 +263,11 @@ mobileTrigger.onclick = function(e) {
 <p><strong>注册 passport 中间件：</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;plugin_root&#125;/app.js</span></span><br><span class="line"><span class="keyword">const</span> LocalStrategy = <span class="built_in">require</span>(<span class="string">'passport-local'</span>).Strategy;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> config = app.config.passportLocal;</span><br><span class="line">  config.passReqToCallback = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">  app.passport.use(<span class="keyword">new</span> LocalStrategy(config, (req, username, password, done) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 把 Passport 插件返回的数据进行清洗处理，返回 User 对象</span></span><br><span class="line">    <span class="keyword">const</span> user = &#123;</span><br><span class="line">      provider: <span class="string">'local'</span>,</span><br><span class="line">      username,</span><br><span class="line">      password,</span><br><span class="line">    &#125;;</span><br><span class="line">    <span class="comment">// 这里不处理应用层逻辑，传给 app.passport.verify 统一处理</span></span><br><span class="line">    app.passport.doVerify(req, user, done);</span><br><span class="line">  &#125;));</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#使用-egg-passport"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 使用 egg-passport</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#安装"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 安装</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#挂载路由"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># 挂载路由</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#用户信息处理"><span class="toc-detail-number">1.4.</span> <span class="toc-detail-text"># 用户信息处理</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#api"><span class="toc-detail-number">1.5.</span> <span class="toc-detail-text"># API</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#使用-passport-生态"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 使用 Passport 生态</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#安装-2"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 安装</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置-2"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#挂载路由-2"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># 挂载路由</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#如何开发一个-egg-passport-插件"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 如何开发一个 egg-passport 插件</span></a></li></ol>
 </div>
 
@@ -287,9 +288,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

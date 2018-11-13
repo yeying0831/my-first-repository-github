@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>单元测试</h1>
           <h2 id="为什么要单元测试"><a class="markdown-anchor" href="#为什么要单元测试">#</a> 为什么要单元测试</h2>
 <p>先问我们自己以下几个问题：</p>
@@ -399,9 +398,11 @@ API 升级，测试用例可以很好地检查代码是否向下兼容。
 <h2 id="示例代码"><a class="markdown-anchor" href="#示例代码">#</a> 示例代码</h2>
 <p>完整示例代码可以在 <a href="https://github.com/eggjs/examples/blob/master/unittest" target="_blank" rel="noopener">eggjs/exmaples/unittest</a> 找到。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#为什么要单元测试"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 为什么要单元测试</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#测试框架"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 测试框架</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mocha"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Mocha</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ava"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># AVA</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#断言库"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 断言库</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#测试约定"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 测试约定</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#测试目录结构"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># 测试目录结构</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#测试运行工具"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># 测试运行工具</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#准备测试"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 准备测试</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mock"><span class="toc-detail-number">5.1.</span> <span class="toc-detail-text"># mock</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#app"><span class="toc-detail-number">5.2.</span> <span class="toc-detail-text"># app</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#ctx"><span class="toc-detail-number">5.3.</span> <span class="toc-detail-text"># ctx</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#测试执行顺序"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 测试执行顺序</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#异步测试"><span class="toc-detail-number">7.</span> <span class="toc-detail-text"># 异步测试</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#controller-测试"><span class="toc-detail-number">8.</span> <span class="toc-detail-text"># Controller 测试</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mock-csrf"><span class="toc-detail-number">8.1.</span> <span class="toc-detail-text"># mock CSRF</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#service-测试"><span class="toc-detail-number">9.</span> <span class="toc-detail-text"># Service 测试</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#extend-测试"><span class="toc-detail-number">10.</span> <span class="toc-detail-text"># Extend 测试</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#application"><span class="toc-detail-number">10.1.</span> <span class="toc-detail-text"># Application</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#context"><span class="toc-detail-number">10.2.</span> <span class="toc-detail-text"># Context</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#request"><span class="toc-detail-number">10.3.</span> <span class="toc-detail-text"># Request</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#response"><span class="toc-detail-number">10.4.</span> <span class="toc-detail-text"># Response</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#helper"><span class="toc-detail-number">10.5.</span> <span class="toc-detail-text"># Helper</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#mock-方法"><span class="toc-detail-number">11.</span> <span class="toc-detail-text"># Mock 方法</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mock-属性和方法"><span class="toc-detail-number">11.1.</span> <span class="toc-detail-text"># Mock 属性和方法</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mock-service"><span class="toc-detail-number">11.2.</span> <span class="toc-detail-text"># Mock Service</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#mock-httpclient"><span class="toc-detail-number">11.3.</span> <span class="toc-detail-text"># Mock HttpClient</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#示例代码"><span class="toc-detail-number">12.</span> <span class="toc-detail-text"># 示例代码</span></a></li></ol>
 </div>
 
@@ -422,9 +423,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

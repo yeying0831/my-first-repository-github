@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>多进程研发模式增强</h1>
           <p>在前面的<a href="../core/cluster-and-ipc.html">多进程模型章节</a>中，我们详细讲述了框架的多进程模型，其中适合使用 Agent 进程的有一类常见的场景：一些中间件客户端需要和服务器建立长连接，理论上一台服务器最好只建立一个长连接，但多进程模型会导致 n 倍（n = Worker 进程数）连接被创建。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">+--------+   +--------+</span><br><span class="line">| Client |   | Client |   ... n</span><br><span class="line">+--------+   +--------+</span><br><span class="line">    |  \     /   |</span><br><span class="line">    |    \ /     |        n * m 个链接</span><br><span class="line">    |    / \     |</span><br><span class="line">    |  /     \   |</span><br><span class="line">+--------+   +--------+</span><br><span class="line">| Server |   | Server |   ... m</span><br><span class="line">+--------+   +--------+</span><br></pre></td></tr></table></figure>
@@ -303,9 +302,11 @@ mobileTrigger.onclick = function(e) {
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> APIClientBase = <span class="built_in">require</span>(<span class="string">'cluster-client'</span>).APIClientBase;</span><br><span class="line"><span class="keyword">const</span> RegistryClient = <span class="built_in">require</span>(<span class="string">'./registry_client'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">APIClient</span> <span class="keyword">extends</span> <span class="title">APIClientBase</span> </span>&#123;</span><br><span class="line">  get DataClient() &#123;</span><br><span class="line">    <span class="keyword">return</span> RegistryClient;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  get clusterOptions() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      responseTimeout: <span class="number">120</span> * <span class="number">1000</span>,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = APIClient;</span><br></pre></td></tr></table></figure>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#核心思想"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 核心思想</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#客户端接口类型抽象"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 客户端接口类型抽象</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#异常处理"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 异常处理</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#协议和调用时序"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 协议和调用时序</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#具体的使用方法"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 具体的使用方法</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#在框架里面-cluster-client-相关的配置项"><span class="toc-detail-number">6.</span> <span class="toc-detail-text"># 在框架里面 cluster-client 相关的配置项</span></a></li></ol>
 </div>
 
@@ -326,9 +327,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

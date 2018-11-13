@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>实现 RESTful API</h1>
           <p>通过 Web 技术开发服务给客户端提供接口，可能是各个 Web 框架最广泛的应用之一。这篇文章我们拿 <a href="https://cnodejs.org/" target="_blank" rel="noopener">CNode 社区</a> 的接口来看一看通过 Egg 如何实现 <a href="https://zh.wikipedia.org/wiki/REST" target="_blank" rel="noopener">RESTful</a> API 给客户端调用。</p>
 <p>CNode 社区现在 v1 版本的接口不是完全符合 RESTful 语义，在这篇文章中，我们将基于 CNode V1 的接口，封装一个更符合 RESTful 语义的 V2 版本 API。</p>
@@ -253,9 +252,11 @@ mobileTrigger.onclick = function(e) {
 <hr>
 <p>完整的代码实现和测试都在 <a href="https://github.com/eggjs/examples/tree/master/cnode-api" target="_blank" rel="noopener">eggjs/examples/cnode-api</a> 中可以找到。</p>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#设计响应格式"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 设计响应格式</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取主题列表"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 获取主题列表</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#获取单个主题"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 获取单个主题</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#创建主题"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># 创建主题</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#更新主题"><span class="toc-detail-number">1.4.</span> <span class="toc-detail-text"># 更新主题</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#错误处理"><span class="toc-detail-number">1.5.</span> <span class="toc-detail-text"># 错误处理</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#实现"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 实现</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#初始化项目"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># 初始化项目</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#开启-validate-插件"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># 开启 validate 插件</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#注册路由"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># 注册路由</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-开发"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># controller 开发</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#service-开发"><span class="toc-detail-number">2.5.</span> <span class="toc-detail-text"># service 开发</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#统一错误处理"><span class="toc-detail-number">2.6.</span> <span class="toc-detail-text"># 统一错误处理</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#测试"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 测试</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-测试"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># Controller 测试</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#service-测试"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># Service 测试</span></a></li></ol></li></ol>
 </div>
 
@@ -276,9 +277,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>

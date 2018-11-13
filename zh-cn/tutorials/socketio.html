@@ -164,9 +164,8 @@ mobileTrigger.onclick = function(e) {
 
 
   <div class="content">
-    <div class="docs">
-      <div class="doc">
-        <article class="markdown-body">
+    <div class="doc">
+      <article class="markdown-body">
         <h1>Socket.IO</h1>
           <p><strong>Socket.IO</strong> 是一个基于 Node.js 的实时应用程序框架，在即时通讯、通知与消息推送，实时分析等场景中有较为广泛的应用。</p>
 <p>WebSocket 的产生源于 Web 开发中日益增长的实时通信需求，对比基于 http 的轮询方式，它大大节省了网络带宽，同时也降低了服务器的性能消耗； <a href="https://socket.io" target="_blank" rel="noopener">socket.io</a> 支持 websocket、polling 两种数据传输方式以兼容浏览器不支持 WebSocket 场景下的通信需求。</p>
@@ -312,9 +311,11 @@ mobileTrigger.onclick = function(e) {
 <li><a href="http://nginx.org/en/docs/http/ngx_http_proxy_module.html#proxy_bind" target="_blank" rel="noopener">nginx proxy_bind</a></li>
 </ul>
     
-        </article>
+        </article>  
       </div>      
-      <div class="toc" id="toc">
+  </div>
+
+  <div class="toc" id="toc">
   <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#安装-egg-socketio"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 安装 egg-socket.io</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#安装"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># 安装</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># 配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#部署"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># 部署</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#使用-egg-socketio"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 使用 egg-socket.io</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#middleware"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Middleware</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Controller</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#router"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Router</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#namespaceroom"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># Namespace/Room</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#实例"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 实例</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#client"><span class="toc-detail-number">3.1.</span> <span class="toc-detail-text"># client</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#server"><span class="toc-detail-number">3.2.</span> <span class="toc-detail-text"># server</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#参考链接"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 参考链接</span></a></li></ol>
 </div>
 
@@ -335,9 +336,7 @@ var tocDetail = document.getElementsByClassName('toc-detail')[0];
   }
 })();
 </script>
-      
-    </div>    
-  </div>
+
 </div>
 
   </div>
