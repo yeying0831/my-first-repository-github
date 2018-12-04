@@ -210,7 +210,7 @@ mobileTrigger.onclick = function(e) {
 <p>When <code>redis</code> is turned on, the program tries to connect to the redis server at startup
 Here <code>redis</code> is only used to store connection instance information, see <a href="https://socket.io/docs/server-api/#server-adapter-value" target="_blank" rel="noopener"># server.adapter</a></p>
 </blockquote>
-<p><strong>note:</strong>
+<p><strong>Note:</strong>
 If the project also uses the <code>egg-redis</code>, please configure it separately. Do not share it.</p>
 <h3 id="deployment"><a class="markdown-anchor" href="#deployment">#</a> Deployment</h3>
 <p>If the framework is started in cluster mode, the socket.io protocol implementation needs sticky feature support, otherwise it will not work in multi-process mode.</p>
@@ -232,7 +232,7 @@ If the project also uses the <code>egg-redis</code>, please configure it separat
 <li>Packet</li>
 </ul>
 <p>It is configured in each namespace, respectively, according to the scenarios given above.</p>
-<p><strong>note:</strong></p>
+<p><strong>Note:</strong></p>
 <p>If we enable the framework middleware, you will find the following directory in the project:</p>
 <ul>
 <li><code>app / middleware</code>: framework middleware</li>
@@ -270,7 +270,7 @@ If the project also uses the <code>egg-redis</code>, please configure it separat
 <h3 id="router"><a class="markdown-anchor" href="#router">#</a> Router</h3>
 <p>Routing is responsible for passing various events received by the socket to the corresponding controllers.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125; /app/router.js</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; router, controller, io &#125; = app; <span class="comment">// default</span></span><br><span class="line">  router.get(<span class="string">'/'</span>, controller.home.index); <span class="comment">// socket.io</span></span><br><span class="line">  io.of(<span class="string">'/'</span>).route(<span class="string">'server'</span>, io.controller.home.server);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><strong>note:</strong></p>
+<p><strong>Note:</strong></p>
 <p>Nsp has the following system events:</p>
 <ul>
 <li><code>disconnecting</code> doing the disconnect</li>

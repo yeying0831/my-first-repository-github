@@ -383,7 +383,7 @@ Use SHTML to output HTML tags, while executing XSS filtering, then it can filter
 <h3 id="prevention-6"><a class="markdown-anchor" href="#prevention-6">#</a> Prevention</h3>
 <p>Framework provides <code>.surl()</code> macro to do url filtering.It is Used to parse the url in the HTML tags in place (such as <code>&lt;a href =&quot;&quot; /&gt;&lt;img src=&quot;&quot;/&gt;</code>), other places are not allowed to use.</p>
 <p>You can add <code>helper.surl($value)</code> in the template to output variable.</p>
-<p><strong>note: in places where you need to parse the url, you must add double quotes outside of surl, or you will result in XSS vulnerabilities.</strong></p>
+<p><strong>Note: in places where you need to parse the url, you must add double quotes outside of surl, or you will result in XSS vulnerabilities.</strong></p>
 <p>Do not use <code>surl</code></p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"$value"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>output:</p>

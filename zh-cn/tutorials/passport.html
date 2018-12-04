@@ -253,6 +253,10 @@ mobileTrigger.onclick = function(e) {
 </li>
 <li><code>app.passport.mount(strategy, options)</code> - 语法糖，方便开发者配置路由</li>
 </ul>
+<p><strong>注意：</strong></p>
+<ul>
+<li><code>app.passport.authenticate</code> 中，未设置 <code>options.successRedirect</code> 或者 <code>options.successReturnToOrRedirect</code> 将默认跳转 <code>/</code></li>
+</ul>
 <h2 id="使用-passport-生态"><a class="markdown-anchor" href="#使用-passport-生态">#</a> 使用 Passport 生态</h2>
 <p><a href="http://www.passportjs.org/" target="_blank" rel="noopener">Passport</a> 的中间件很多，不可能都进行二次封装。
 接下来，我们来看看如何在框架中直接使用 Passport 中间件。

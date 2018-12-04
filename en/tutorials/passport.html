@@ -205,7 +205,7 @@ mobileTrigger.onclick = function(e) {
 <p><strong>Configuration:</strong></p>
 <p>Note: The <a href="https://github.com/eggjs/egg-passport" target="_blank" rel="noopener">egg-passport</a> standardizes the configuration fields, which are unified as <code>key</code> and <code>secret</code>.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/default.js</span></span><br><span class="line">config.passportGithub = &#123;</span><br><span class="line">  key: <span class="string">'your_clientID'</span>,</span><br><span class="line">  secret: <span class="string">'your_clientSecret'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p><strong>note:</strong></p>
+<p><strong>Note:</strong></p>
 <ul>
 <li>Create a <a href="https://github.com/settings/applications/new" target="_blank" rel="noopener">GitHub OAuth Apps</a> to get the <code>clientID</code> and <code>clientSecret</code> information.</li>
 <li>Specify a <code>callbackURL</code>, such as <code>http://127.0.0.1:7001/passport/github/callback</code>
@@ -241,6 +241,10 @@ mobileTrigger.onclick = function(e) {
   - <code>options.loginURL</code> - jump login address, defaults to <code>/passport/${strategy}</code>
   - <code>options.callbackURL</code> - callback address after authorization, defaults to <code>/passport/${strategy}/callback</code></li>
 <li><code>app.passport.mount(strategy, options)</code> - Syntactic sugar for developers to configure routing</li>
+</ul>
+<p><strong>Note:</strong></p>
+<ul>
+<li><code>app.passport.authenticate</code>, if <code>options.successRedirect</code> or <code>options.successReturnToOrRedirect</code> is null, it will redirect to <code>/</code> by default</li>
 </ul>
 <h2 id="using-passport-ecosystem"><a class="markdown-anchor" href="#using-passport-ecosystem">#</a> Using Passport Ecosystem</h2>
 <p><a href="http://www.passportjs.org/" target="_blank" rel="noopener">Passport</a> has many middleware and it is impossible to have the second encapsulation.
