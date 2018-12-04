@@ -401,7 +401,7 @@ To facilitate monitoring HttpClient requests and responses on the app level, we 
 <p>After the end of request, a <code>response</code> event is triggered, so that the external event can be subscribed to the log printing.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.httpclient.on(<span class="string">'response'</span>, result =&gt; &#123;</span><br><span class="line">  result.res.status</span><br><span class="line">  result.ctx <span class="comment">//context of the request</span></span><br><span class="line">  result.req <span class="comment">//the corresponding req object, which the req in the request event</span></span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="example"><a class="markdown-anchor" href="#example">#</a> Example</h2>
-<p>Full examples can be found on <a href="https://github.com/eggjs/examples/blob/master/httpclient" target="_blank" rel="noopener">eggjs/exmaples/httpclient</a> .</p>
+<p>Full examples can be found on <a href="https://github.com/eggjs/examples/blob/master/httpclient" target="_blank" rel="noopener">eggjs/examples/httpclient</a> .</p>
     
         </article>  
       </div>      

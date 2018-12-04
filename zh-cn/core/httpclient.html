@@ -414,7 +414,7 @@ Stream 实际会以 <code>Transfer-Encoding: chunked</code> 传输编码格式�
 <p>请求结束之后会触发一个 <code>response</code> 事件，这样外部就可以订阅这个事件打印日志。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.httpclient.on(<span class="string">'response'</span>, result =&gt; &#123;</span><br><span class="line">  result.res.status</span><br><span class="line">  result.ctx <span class="comment">//是发起这次请求的当前上下文</span></span><br><span class="line">  result.req <span class="comment">//对应的 req 对象，即 request 事件里面那个 req</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h2 id="示例代码"><a class="markdown-anchor" href="#示例代码">#</a> 示例代码</h2>
-<p>完整示例代码可以在 <a href="https://github.com/eggjs/examples/blob/master/httpclient" target="_blank" rel="noopener">eggjs/exmaples/httpclient</a> 找到。</p>
+<p>完整示例代码可以在 <a href="https://github.com/eggjs/examples/blob/master/httpclient" target="_blank" rel="noopener">eggjs/examples/httpclient</a> 找到。</p>
     
         </article>  
       </div>      
