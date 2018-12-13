@@ -1511,6 +1511,7 @@ aside li {
   border-left: 1px solid #e8e8e8;
   background: #fff;
   z-index: 1;
+  overflow-y: scroll;
 }
 .toc .toc-detail {
   list-style: none;
