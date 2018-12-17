@@ -262,10 +262,10 @@ To delete a session, set its value to null:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">exports.deleteSession = <span class="function"><span class="keyword">function</span>* (<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  ctx.session = <span class="literal">null</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>What you need to pay special attention to is that you need to avoid the following situations when setting session properties (which can cause field loss, See for details <a href="https://github.com/koajs/session/blob/master/lib/session.js#L37-L47" target="_blank" rel="noopener">koa-session source code</a>):</p>
 <ul>
-<li>do not startsWith <code>_</code></li>
-<li>can not be <code>isNew</code></li>
+<li>Don't start with <code>_</code></li>
+<li>Don't use <code>isNew</code></li>
 </ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ctx.session._visited = <span class="number">1</span>;   <span class="comment">// ×   --&gt; property will lost</span></span><br><span class="line">ctx.session.isNew = <span class="string">'HeHe'</span>; <span class="comment">// ×   --&gt; session keyword, should not write it</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// right way</span></span><br><span class="line">ctx.session.visited = <span class="number">1</span>;    <span class="comment">// ✅  --&gt;  Everything is all right!</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ❌ Wrong way</span></span><br><span class="line">ctx.session._visited = <span class="number">1</span>;   <span class="comment">//   --&gt; property will lost</span></span><br><span class="line">ctx.session.isNew = <span class="string">'HeHe'</span>; <span class="comment">//   --&gt; session keyword, should not write it</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// ✅ Right way</span></span><br><span class="line">ctx.session.visited = <span class="number">1</span>;    <span class="comment">//   --&gt;  Everything is all right</span></span><br></pre></td></tr></table></figure>
 <p>Session is built on top of Cookie.
 By default, the content of Session is stored in a Cookie field as encrypted string.
 Every time a client sends requests to server, the cookie is attached in requests.
