@@ -242,7 +242,7 @@ mobileTrigger.onclick = function(e) {
 <p>配置的合并使用 <a href="https://github.com/eggjs/extend2" target="_blank" rel="noopener">extend2</a> 模块进行深度拷贝，<a href="https://github.com/eggjs/extend2" target="_blank" rel="noopener">extend2</a> fork 自 <a href="https://github.com/justmoon/node-extend" target="_blank" rel="noopener">extend</a>，处理数组时会存在差异。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> a = &#123;</span><br><span class="line">  arr: [ <span class="number">1</span>, <span class="number">2</span> ],</span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">const</span> b = &#123;</span><br><span class="line">  arr: [ <span class="number">3</span> ],</span><br><span class="line">&#125;;</span><br><span class="line">extend(<span class="literal">true</span>, a, b);</span><br><span class="line"><span class="comment">// =&gt; &#123; arr: [ 3 ] &#125;</span></span><br></pre></td></tr></table></figure>
 <p>根据上面的例子，框架直接覆盖数组而不是进行合并。</p>
-<h2 id="配置结果"><a class="markdown-anchor" href="#配置结果">#</a> 配置结果</h2>
+<h3 id="配置结果"><a class="markdown-anchor" href="#配置结果">#</a> 配置结果</h3>
 <p>框架在启动时会把合并后的最终配置 dump 到 <code>run/application_config.json</code>（worker 进程）和 <code>run/agent_config.json</code>（agent 进程）中，可以用来分析问题。</p>
 <p>配置文件中会隐藏一些字段，主要包括两类:</p>
 <ul>
@@ -257,8 +257,8 @@ mobileTrigger.onclick = function(e) {
   </div>
 
   <div class="toc" id="toc">
-  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#多环境配置"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 多环境配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置写法"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 配置写法</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置加载顺序"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 配置加载顺序</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#合并规则"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 合并规则</span></a></li></ol><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#配置结果"><span class="toc-detail-number"></span> <span class="toc-detail-text"># 配置结果</span></a>
-</li></div>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#多环境配置"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 多环境配置</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置写法"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 配置写法</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置加载顺序"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 配置加载顺序</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#合并规则"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 合并规则</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#配置结果"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># 配置结果</span></a></li></ol>
+</div>
 
 <script>
 
