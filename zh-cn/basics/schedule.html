@@ -250,7 +250,7 @@ mobileTrigger.onclick = function(e) {
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">agent</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">ClusterStrategy</span> <span class="keyword">extends</span> <span class="title">agent</span>.<span class="title">ScheduleStrategy</span> </span>&#123;</span><br><span class="line">    start() &#123;</span><br><span class="line">      <span class="comment">// 订阅其他的分布式调度服务发送的消息，收到消息后让一个进程执行定时任务</span></span><br><span class="line">      <span class="comment">// 用户在定时任务的 schedule 配置中来配置分布式调度的场景（scene）</span></span><br><span class="line">      agent.mq.subscribe(schedule.scene, () =&gt; <span class="keyword">this</span>.sendOne());</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  agent.schedule.use(<span class="string">'cluster'</span>, ClusterStrategy);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><code>ScheduleStrategy</code> 基类提供了：</p>
 <ul>
-<li><code>schedule</code> - 定时任务的属性，<code>disable</code>  是默认统一支持的，其他配置可以自行解析。</li>
+<li><code>schedule</code> - 定时任务的属性，<code>disable</code> 是默认统一支持的，其他配置可以自行解析。</li>
 <li><code>this.sendOne(...args)</code> - 随机通知一个 worker 执行 task，<code>args</code> 会传递给 <code>subscribe(...args)</code> 或 <code>task(ctx, ...args)</code>。</li>
 <li><code>this.sendAll(...args)</code> - 通知所有的 worker 执行 task。</li>
 </ul>
