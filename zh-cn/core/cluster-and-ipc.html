@@ -183,12 +183,10 @@ mobileTrigger.onclick = function(e) {
 <blockquote>
 <p>如何榨干服务器资源，利用上多核 CPU 的并发优势？</p>
 </blockquote>
-<p>而 Node.js 官方提供的解决方案是 <a href="https://nodejs.org/api/cluster.html" target="_blank" rel="noopener">Cluster 模块</a></p>
+<p>而 Node.js 官方提供的解决方案是 <a href="https://nodejs.org/api/cluster.html" target="_blank" rel="noopener">Cluster 模块</a>，其中包含一段简介：</p>
 <blockquote>
-<p>A single instance of Node.js runs in a single thread. To take advantage of multi-core systems the user will sometimes want to launch a cluster of Node.js processes to handle the load.</p>
-</blockquote>
-<blockquote>
-<p>The cluster module allows you to easily create child processes that all share server ports.</p>
+<p>单个 Node.js 实例在单线程环境下运行。为了更好地利用多核环境，用户有时希望启动一批 Node.js 进程用于加载。</p>
+<p>集群化模块使得你很方便地创建子进程，以便于在服务端口之间共享。</p>
 </blockquote>
 <h2 id="cluster-是什么呢"><a class="markdown-anchor" href="#cluster-是什么呢">#</a> Cluster 是什么呢？</h2>
 <p>简单的说，</p>
