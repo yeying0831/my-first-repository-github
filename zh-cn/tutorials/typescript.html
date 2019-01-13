@@ -349,7 +349,7 @@ mobileTrigger.onclick = function(e) {
 <p>如果 egg 插件中正确无误定义了 d.ts ，也需要在应用或者框架层显式 import 之后 ts 才能加载到对应类型。</p>
 <p>如果使用了 egg-ts-helper ，egg-ts-helper 会自动根据应用中开启了什么插件从而生成显式 import 插件的声明。如果未使用，就需要开发者自行在 <code>d.ts</code> 中显式 import 对应插件。</p>
 <figure class="highlight typescript"><table><tr><td class="code"><pre><span class="line"><span class="comment">// typings/index.d.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">'egg-dashboard'</span>;</span><br></pre></td></tr></table></figure>
-<p><strong>注意：必须在 d.ts 中 import ，因为 egg 插件大部分没有入口文件，如果在 ts 中 import 的话运行会出问题。</strong></p>
+<p><strong>注意：必须在 d.ts 中 import，因为 egg 插件大部分没有入口文件，如果在 ts 中 import 的话运行会出问题。</strong></p>
 <h3 id="在-tsconfigjson-中配置了-paths-无效"><a class="markdown-anchor" href="#在-tsconfigjson-中配置了-paths-无效">#</a> 在 tsconfig.json 中配置了 paths 无效</h3>
 <p>这个严格来说不属于 egg 的问题，但是问的人不少，因此也在此解答一下。原因是 tsc 将 ts 编译成 js 的时候，并不会去转换 import 的模块路径，因此当你在 tsconfig.json 中配置了 paths 之后，如果你在 ts 中使用 paths 并 import 了对应模块，编译成 js 的时候就有大概率出现模块找不到的情况了。</p>
 <p>解决办法是，要么不用 paths ，要么使用 paths 的时候只用来 import 一些声明而非具体值，再要么就可以使用 <a href="https://github.com/dividab/tsconfig-paths" target="_blank" rel="noopener">tsconfig-paths</a> 来 hook 掉 node 中的模块路径解析逻辑，从而支持 tsconfig.json 中的 paths。</p>
