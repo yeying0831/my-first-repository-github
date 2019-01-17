@@ -238,11 +238,18 @@ mobileTrigger.onclick = function(e) {
 <p>To avoid some plugin's DEBUG logs printing in the production environment causing performance problems, the production environment prohibits printing DEBUG-level logs by default. If there is a need to print DEBUG logs for debugging in the production environment, you need to set <code>allowDebugAtProd</code> configuration to <code>ture</code>.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.prod.js</span></span><br><span class="line">exports.logger = &#123;</span><br><span class="line">  level: <span class="string">'DEBUG'</span>,</span><br><span class="line">  allowDebugAtProd: <span class="literal">true</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="in-terminal"><a class="markdown-anchor" href="#in-terminal">#</a> In terminal</h3>
-<p>By default, Egg will only print out <code>INFO</code>, <code>WARN</code> and <code>ERROR</code> in terminal. <code>logger.consoleLevel</code>(default: <code>INFO</code>) is defined as the logger level in terminal. Similarly, it can be changed as following:</p>
+<p>By default, Egg will only print out <code>INFO</code>, <code>WARN</code> and <code>ERROR</code> in terminal. (Notice: It only works on <code>local</code> and <code>unittest</code> env)</p>
+<ul>
+<li><code>logger.consoleLevel</code>: (default: <code>INFO</code>) Being defined as the logger level in terminal. Similarly, it can be changed as following:</li>
+</ul>
 <p>Print logs in all levels:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.logger = &#123;</span><br><span class="line">  consoleLevel: <span class="string">'DEBUG'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>Stop printing logs in all levels:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.logger = &#123;</span><br><span class="line">  consoleLevel: <span class="string">'NONE'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Base on performance considerations, console logger will be disabled after app ready at prod mode. however, you can enable it by config. (<strong>Not Recommended</strong>)</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.logger = &#123;</span><br><span class="line">  disableConsoleAfterReady: <span class="literal">false</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h2 id="create-your-logger"><a class="markdown-anchor" href="#create-your-logger">#</a> Create your logger</h2>
 <h3 id="customized"><a class="markdown-anchor" href="#customized">#</a> Customized</h3>
 <p>For common scenarios, <strong>it's unnecessary to create new logger</strong>, because too many loggers will make them hard to be managed for later debugging.</p>
