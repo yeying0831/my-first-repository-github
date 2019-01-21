@@ -238,7 +238,7 @@ When the order is not correct, it can lead to unexpected results.</li>
 <p>Then declare in <code>plugin.local.js</code>:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config / plugin.local.js</span></span><br><span class="line">exports.dev = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-dev'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>In this way, <code>npm i --production</code> in the production environment does not need to download the<code>egg-dev</code> package.</p>
-<p>** Note: **</p>
+<p><strong>Note:</strong></p>
 <ul>
 <li>
 <p><code>plugin.default.js</code> does not exists. Use <code>local</code> for dev environments.</p>

@@ -405,7 +405,7 @@ Stream 实际会以 <code>Transfer-Encoding: chunked</code> 传输编码格式�
 </ul>
 <h2 id="全局-request-和-response-事件"><a class="markdown-anchor" href="#全局-request-和-response-事件">#</a> 全局 <code>request</code> 和 <code>response</code> 事件</h2>
 <p>在企业应用场景，常常会有统一 tracer 日志的需求。
-为了方便在 app 层面统一监听 HttpClient 的请求和响应，我们约定了全局 <code>request</code> 和 <code>response</code> 事件来暴露这两个时机。</p>
+为了方便在 app 层面统一监听 HttpClient 的请求和响应，我们约定了全局 <code>request</code> 和 <code>response</code> 来暴露这两个事件。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">init options</span><br><span class="line">    |</span><br><span class="line">    V</span><br><span class="line">emit `request` event</span><br><span class="line">    |</span><br><span class="line">    V</span><br><span class="line">send request and receive response</span><br><span class="line">    |</span><br><span class="line">    V</span><br><span class="line">emit `response` event</span><br><span class="line">    |</span><br><span class="line">    V</span><br><span class="line">   end</span><br></pre></td></tr></table></figure>
 <h3 id="request-事件发生在网络操作发生之前"><a class="markdown-anchor" href="#request-事件发生在网络操作发生之前">#</a> <code>request</code> 事件：发生在网络操作发生之前</h3>
 <p>请求发送之前，会触发一个 <code>request</code> 事件，允许对请求做拦截。</p>

@@ -237,7 +237,7 @@ mobileTrigger.onclick = function(e) {
 <p>然后在 <code>plugin.local.js</code> 中声明：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.local.js</span></span><br><span class="line">exports.dev = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-dev'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>这样在生产环境可以 <code>npm i --production</code> 不需要下载 <code>egg-dev</code> 的包了。</p>
-<p>**注意: **</p>
+<p><strong>注意:</strong></p>
 <ul>
 <li>不存在 <code>plugin.default.js</code></li>
 <li><strong>只能在应用层使用，在框架层请勿使用。</strong></li>
