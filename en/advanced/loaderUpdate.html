@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <title>Resources - Born to build better enterprise frameworks and apps</title>
+  <title>Upgrade your event functions in your lifecycle - Born to build better enterprise frameworks and apps</title>
   <meta charset="utf-8">
   <meta name="description" content="index.description">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -52,7 +52,7 @@
       
         <li class="translations">
           <a class="nav-link">Languages</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/resource.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/resource.html">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/advanced/loaderUpdate.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/advanced/loaderUpdate.html">中文</a></li></ul>
         </li>
       
       <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
@@ -77,7 +77,7 @@
       
         <li class="translations">
           <a class="nav-link">Languages</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/resource.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/resource.html">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/advanced/loaderUpdate.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/advanced/loaderUpdate.html">中文</a></li></ul>
         </li>
       
     </ul>
@@ -178,36 +178,37 @@ mobileTrigger.onclick = function(e) {
   <div class="content">
     <div class="doc">
       <article class="markdown-body">
-        <h1>Resources</h1>
-          <ul>
-<li><a href="https://github.com/eggjs/awesome-egg" target="_blank" rel="noopener">awesome-egg</a></li>
-</ul>
-<h2 id="frameworks"><a class="markdown-anchor" href="#frameworks">#</a> Frameworks</h2>
-<ul>
-<li><a href="https://github.com/eggjs/aliyun-egg" target="_blank" rel="noopener">aliyun-egg</a></li>
-</ul>
-<h2 id="community-articles"><a class="markdown-anchor" href="#community-articles">#</a> Community Articles</h2>
-<ul>
-<li>
-<p><a href="https://www.zhihu.com/question/50526101/answer/144952130" target="_blank" rel="noopener">How to evaluate Ali's open source enterprise-level Node.js framework Egg?</a>
-By <a href="https://github.com/atian25" target="_blank" rel="noopener">@day pig</a></p>
-</li>
-<li>
-<p>You can also read our article at <a href="https://zhuanlan.zhihu.com/eggjs" target="_blank" rel="noopener">Kuroshiami column</a></p>
-</li>
-</ul>
-<h2 id="tools"><a class="markdown-anchor" href="#tools">#</a> Tools</h2>
-<ul>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=atian25.eggjs" target="_blank" rel="noopener">vscode plugin - eggjs</a></li>
-<li><a href="https://marketplace.visualstudio.com/items?itemName=yuzukwok.eggjs-dev-tools" target="_blank" rel="noopener">vscode plugin - eggjs-dev-tools</a></li>
-</ul>
+        <h1>Upgrade your event functions in your lifecycle</h1>
+          <p>We've simplified the functions of our lifecycle for your convenience to control when to load application or plugins. Generally speaking, the lifecycle events can be divided into two forms:</p>
+<ol>
+<li>Function (already deprecated, just for compatibility).</li>
+<li>Class Method (recommanded).</li>
+</ol>
+<h2 id="replacer-for-beforestart"><a class="markdown-anchor" href="#replacer-for-beforestart">#</a> Replacer for <code>beforeStart</code></h2>
+<p>We usually handle <code>beforeStart</code> through <code>module.export</code> with the input parameter <code>app</code> in the app.js.
+Take this as an example below:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">    app.beforeStart(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="comment">// Here's where your codes were before</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Now we've got some changes after upgration: We can use methods in a class in <code>app.js</code>. For application, we should write in the <code>WillReady</code>, for plugins, <code>didLoad</code> is our choice. They look like below:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js or agent.js:</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppBootHook</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(app) &#123;</span><br><span class="line">    <span class="keyword">this</span>.app = app;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> didLoad() &#123;</span><br><span class="line">    <span class="comment">// Please put your codes of `app.beforeStart` here for your plugin</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> willReady() &#123;</span><br><span class="line">    <span class="comment">// Please put your codes of `app.beforeStart` here for your application</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = AppBootHook;</span><br></pre></td></tr></table></figure>
+<h2 id="replacer-for-ready"><a class="markdown-anchor" href="#replacer-for-ready">#</a> Replacer for <code>ready</code></h2>
+<p>We used to process our logic in <code>app.ready</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">    app.ready(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="comment">// Here's where your codes were before</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Now <code>didReady</code> takes the place of it:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js or agent.js:</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppBootHook</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(app) &#123;</span><br><span class="line">    <span class="keyword">this</span>.app = app;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> didReady() &#123;</span><br><span class="line">    <span class="comment">// Please put your codes of `app.ready` here</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = AppBootHook;</span><br></pre></td></tr></table></figure>
+<h2 id="replacer-for-beforeclose"><a class="markdown-anchor" href="#replacer-for-beforeclose">#</a> Replacer for <code>beforeClose</code></h2>
+<p>We used to handle <code>app.beforeClose</code> like this following:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">    app.beforeClose(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">       <span class="comment">// Here's where your codes were before</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>Now we can use <code>beforeClose</code> instead of it:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js or agent.js:</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppBootHook</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(app) &#123;</span><br><span class="line">    <span class="keyword">this</span>.app = app;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">async</span> beforeClose() &#123;</span><br><span class="line">    <span class="comment">// Please put your codes of `app.beforeClose` here</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="others"><a class="markdown-anchor" href="#others">#</a> Others</h2>
+<p>In order to let you pick up quickly to replace your old functions, this torturial only tells you how to replace item by item. So if you want to know more about the whole principle of <code>Loader</code>, as well as all the functions of Egg's lifecycle, Please refer to <a href="./loader.html">Loader</a> and <a href="../basics/app-start.html">Application Startup Configuration</a>.</p>
     
         </article>  
       </div>      
   </div>
 
   <div class="toc" id="toc">
-  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#frameworks"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Frameworks</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#community-articles"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Community Articles</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#tools"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Tools</span></a></li></ol>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#replacer-for-beforestart"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Replacer for beforeStart</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#replacer-for-ready"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Replacer for ready</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#replacer-for-beforeclose"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Replacer for beforeClose</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#others"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Others</span></a></li></ol>
 </div>
 
 <script>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <title>国际化（I18n） - 为企业级框架和应用而生</title>
+  <title>升级你的生命周期事件函数 - 为企业级框架和应用而生</title>
   <meta charset="utf-8">
   <meta name="description" content="index.description">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -52,7 +52,7 @@
       
         <li class="translations">
           <a class="nav-link">切换语言</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/core/i18n.html">English</a></li><li><a id="zh-cn" href="/zh-cn/core/i18n.html" style="color: #22ab28">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/advanced/loaderUpdate.html">English</a></li><li><a id="zh-cn" href="/zh-cn/advanced/loaderUpdate.html" style="color: #22ab28">中文</a></li></ul>
         </li>
       
       <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
@@ -77,7 +77,7 @@
       
         <li class="translations">
           <a class="nav-link">切换语言</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/core/i18n.html">English</a></li><li><a id="zh-cn" href="/zh-cn/core/i18n.html" style="color: #22ab28">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/advanced/loaderUpdate.html">English</a></li><li><a id="zh-cn" href="/zh-cn/advanced/loaderUpdate.html" style="color: #22ab28">中文</a></li></ul>
         </li>
       
     </ul>
@@ -178,51 +178,36 @@ mobileTrigger.onclick = function(e) {
   <div class="content">
     <div class="doc">
       <article class="markdown-body">
-        <h1>国际化（I18n）</h1>
-          <p>为了方便开发多语言应用，框架内置了国际化（I18n）支持，由 <a href="https://github.com/eggjs/egg-i18n" target="_blank" rel="noopener">egg-i18n</a> 插件提供。</p>
-<h2 id="默认语言"><a class="markdown-anchor" href="#默认语言">#</a> 默认语言</h2>
-<p>默认语言是 <code>en-US</code>。假设我们想修改默认语言为简体中文：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.i18n = &#123;</span><br><span class="line">  defaultLocale: <span class="string">'zh-CN'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="切换语言"><a class="markdown-anchor" href="#切换语言">#</a> 切换语言</h2>
-<p>我们可以通过下面几种方式修改应用的当前语言（修改后会记录到 <code>locale</code> 这个 Cookie），下次请求直接用设定好的语言。</p>
-<p>优先级从高到低：</p>
+        <h1>升级你的生命周期事件函数</h1>
+          <p>为了使得大家更方便地控制加载应用和插件的时机，我们对 Loader 的生命周期函数进行了精简处理。概括地说，生命周期事件目前总共可以分成两种形式：</p>
 <ol>
-<li>query: <code>/?locale=en-US</code></li>
-<li>cookie: <code>locale=zh-TW</code></li>
-<li>header: <code>Accept-Language: zh-CN,zh;q=0.5</code></li>
+<li>函数形式（已经作废，仅为兼容保留）。</li>
+<li>类形式（推荐使用）。</li>
 </ol>
-<p>如果想修改 query 或者 Cookie 参数名称：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.i18n = &#123;</span><br><span class="line">  queryField: <span class="string">'locale'</span>,</span><br><span class="line">  cookieField: <span class="string">'locale'</span>,</span><br><span class="line">  <span class="comment">// Cookie 默认一年后过期， 如果设置为 Number，则单位为 ms</span></span><br><span class="line">  cookieMaxAge: <span class="string">'1y'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="编写-i18n-多语言文件"><a class="markdown-anchor" href="#编写-i18n-多语言文件">#</a> 编写 I18n 多语言文件</h2>
-<p>多种语言的配置是独立的，统一存放在 <code>config/locale/*.js</code> 下。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">- config/locale/</span><br><span class="line">  - en-US.js</span><br><span class="line">  - zh-CN.js</span><br><span class="line">  - zh-TW.js</span><br></pre></td></tr></table></figure>
-<p>不仅对于应用目录生效，在框架，插件的 <code>config/locale</code> 目录下同样生效。</p>
-<p><strong>注意单词拼写，是 locale 不是 locals。</strong></p>
-<p>例如：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/zh-CN.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  Email: <span class="string">'邮箱'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>或者也可以用 JSON 格式的文件：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">// config/locale/zh-CN.json</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"Email"</span>: <span class="string">"邮箱"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="获取多语言文本"><a class="markdown-anchor" href="#获取多语言文本">#</a> 获取多语言文本</h2>
-<p>我们可以使用 <code>__</code> (Alias: <code>gettext</code>) 函数获取 locale 文件夹下面的多语言文本。</p>
-<p><strong>注意: <code>__</code> 是两个下划线</strong></p>
-<p>以上面配置过的多语言为例：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ctx.__(<span class="string">'Email'</span>)</span><br><span class="line"><span class="comment">// zh-CN =&gt; 邮箱</span></span><br><span class="line"><span class="comment">// en-US =&gt; Email</span></span><br></pre></td></tr></table></figure>
-<p>如果文本中含有 <code>%s</code>，<code>%j</code> 等 format 函数，可以按照 <a href="https://nodejs.org/api/util.html#util_util_format_format_args" target="_blank" rel="noopener"><code>util.format()</code></a> 类似的方式调用：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/zh-CN.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">'Welcome back, %s!'</span>: <span class="string">'欢迎回来，%s!'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ctx.__(<span class="string">'Welcome back, %s!'</span>, <span class="string">'Shawn'</span>);</span><br><span class="line"><span class="comment">// zh-CN =&gt; 欢迎回来，Shawn!</span></span><br><span class="line"><span class="comment">// en-US =&gt; Welcome back, Shawn!</span></span><br></pre></td></tr></table></figure>
-<p>同时支持数组下标占位符方式，例如：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/zh-CN.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">'Hello &#123;0&#125;! My name is &#123;1&#125;.'</span>: <span class="string">'你好 &#123;0&#125;! 我的名字叫 &#123;1&#125;。'</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">ctx.__(<span class="string">'Hello &#123;0&#125;! My name is &#123;1&#125;.'</span>, [<span class="string">'foo'</span>, <span class="string">'bar'</span>])</span><br><span class="line"><span class="comment">// zh-CN =&gt; 你好 foo！我的名字叫 bar。</span></span><br><span class="line"><span class="comment">// en-US =&gt; Hello foo! My name is bar.</span></span><br></pre></td></tr></table></figure>
-<h3 id="controller-中使用"><a class="markdown-anchor" href="#controller-中使用">#</a> Controller 中使用</h3>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomeController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> index() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    ctx.body = &#123;</span><br><span class="line">      message: ctx.__(<span class="string">'Welcome back, %s!'</span>, ctx.user.name)</span><br><span class="line">      <span class="comment">// 或者使用 gettext，gettext 是 __ 函数的 alias</span></span><br><span class="line">      <span class="comment">// message: ctx.gettext('Welcome back', ctx.user.name)</span></span><br><span class="line">      user: ctx.user,</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="view-中使用"><a class="markdown-anchor" href="#view-中使用">#</a> View 中使用</h3>
-<p>假设我们使用的模板引擎是 <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">Nunjucks</a></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; __('Email') &#125;&#125;: &#123;&#123; user.email &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  &#123;&#123; __('Welcome back, %s!', user.name) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  &#123;&#123; __('Hello &#123;0&#125;! My name is &#123;1&#125;.', ['foo', 'bar']) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="beforestart-函数替代"><a class="markdown-anchor" href="#beforestart-函数替代">#</a> beforeStart 函数替代</h2>
+<p>我们通常在 app.js 中通过 <code>module.export</code> 中传入的 <code>app</code> 参数进行此函数的操作，一个典型的例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">    app.beforeStart(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 此处是你原来的逻辑代码</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>现在升级之后的写法略有改变 —— 我们可以直接在 <code>app.js</code> 中用类方法的形式体现出来：对于应用开发而言，我们应该写在 <code>willReady</code> 方法中；对于插件则写在 <code>didLoad</code> 中。形式如下：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js 或 agent.js 文件：</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppBootHook</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(app) &#123;</span><br><span class="line">    <span class="keyword">this</span>.app = app;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> didLoad() &#123;</span><br><span class="line">    <span class="comment">// 请将你的插件项目中 app.beforeStart 中的代码置于此处。</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> willReady() &#123;</span><br><span class="line">    <span class="comment">// 请将你的应用项目中 app.beforeStart 中的代码置于此处。</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = AppBootHook;</span><br></pre></td></tr></table></figure>
+<h2 id="ready-函数替代"><a class="markdown-anchor" href="#ready-函数替代">#</a> ready 函数替代</h2>
+<p>同样地，我们之前在 <code>app.ready</code> 中处理我们的逻辑：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">   app.ready(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">   <span class="comment">// 此处是你原来的逻辑代码</span></span><br><span class="line">&#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>现在直接用 <code>didReady</code> 进行替换：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js 或 agent.js 文件：</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppBootHook</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(app) &#123;</span><br><span class="line">    <span class="keyword">this</span>.app = app;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> didReady() &#123;</span><br><span class="line">    <span class="comment">// 请将您的 app.beforeStart 中的代码置于此处。</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = AppBootHook;</span><br></pre></td></tr></table></figure>
+<h2 id="beforeclose-函数替代"><a class="markdown-anchor" href="#beforeclose-函数替代">#</a> beforeClose 函数替代</h2>
+<p>原先的 <code>app.beforeClose</code> 如以下形式：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">    app.beforeClose(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">        <span class="comment">// 此处是你原来的逻辑代码</span></span><br><span class="line">    &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>现在我们只需使用类方法 <code>beforeClose</code> 替代即可：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js 或 agent.js 文件：</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppBootHook</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">constructor</span>(app) &#123;</span><br><span class="line">    <span class="keyword">this</span>.app = app;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">async</span> beforeClose() &#123;</span><br><span class="line">    <span class="comment">// 请将您的 app.beforeClose 中的代码置于此处。</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="其它说明"><a class="markdown-anchor" href="#其它说明">#</a> 其它说明</h2>
+<p>本教程只是一对一地讲了替换方法，便于开发者们快速上手进行替换；若想要具体了解整个 Loader 原理以及生命周期的完整函数版本，请参考<a href="./loader.html">加载器</a>和<a href="../basics/app-start.html">启动自定义</a>两篇文章。</p>
     
         </article>  
       </div>      
   </div>
 
   <div class="toc" id="toc">
-  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#默认语言"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 默认语言</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#切换语言"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 切换语言</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#编写-i18n-多语言文件"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 编写 I18n 多语言文件</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#获取多语言文本"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 获取多语言文本</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controller-中使用"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Controller 中使用</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#view-中使用"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># View 中使用</span></a></li></ol></li></ol>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#beforestart-函数替代"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># beforeStart 函数替代</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#ready-函数替代"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># ready 函数替代</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#beforeclose-函数替代"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># beforeClose 函数替代</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#其它说明"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 其它说明</span></a></li></ol>
 </div>
 
 <script>
