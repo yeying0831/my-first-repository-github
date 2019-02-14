@@ -276,7 +276,7 @@ The default configuration of Session is:</p>
 <code>key</code> is the key of the cookie that stores session content.
 With default config, the session cookie is encrypted, not accessible to JS,
 which ensures user cannot access or modify it.</p>
-<h3 id="store-session-in-other-storage"><a class="markdown-anchor" href="#store-session-in-other-storage">#</a> Store session in other storage</h3>
+<h3 id="store-session-in-other-storage"><a class="markdown-anchor" href="#store-session-in-other-storage">#</a> Store Session in Other Storage</h3>
 <p>Session is stored in Cookie by default.
 If a session is too big, there are some troubles.</p>
 <ul>
@@ -297,13 +297,13 @@ So it's recommended to put only necessary information in Session,
 keep Session minimum and use the default Cookie storage if possible.
 Do not put per-user's data cache in Session.</strong></p>
 <h3 id="session-practice"><a class="markdown-anchor" href="#session-practice">#</a> Session Practice</h3>
-<h4 id="set-sessions-expiration-time"><a class="markdown-anchor" href="#set-sessions-expiration-time">#</a> Set session's expiration time</h4>
+<h4 id="set-sessions-expiration-time"><a class="markdown-anchor" href="#set-sessions-expiration-time">#</a> Set Session's Expiration Time</h4>
 <p>Session config has a attribute <code>maxAge</code>, which controls global expiration time of all sessions of the application.</p>
 <p>We often can see a <strong>Remember Me</strong> option on a lot of websites' login page.
 If it's selected, Session of this logged in user can live longer.
 This kind of per-user session expiration time can be set through <code>ctx.session.maxAge</code>:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> ms = <span class="built_in">require</span>(<span class="string">'ms'</span>);</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">Controller</span> </span>&#123;</span><br><span class="line">  <span class="keyword">async</span> login() &#123;</span><br><span class="line">    <span class="keyword">const</span> ctx = <span class="keyword">this</span>.ctx;</span><br><span class="line">    <span class="keyword">const</span> &#123; username, password, rememberMe &#125; = ctx.request.body;</span><br><span class="line">    <span class="keyword">const</span> user = <span class="keyword">await</span> ctx.loginAndGetUser(username, password);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// set Session</span></span><br><span class="line">    ctx.session.user = user;</span><br><span class="line">    <span class="comment">// if user selected `Remember Me`, set expiration time to 30 days</span></span><br><span class="line">    <span class="keyword">if</span> (rememberMe) ctx.session.maxAge = ms(<span class="string">'30d'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="extend-sessions-expiration-time"><a class="markdown-anchor" href="#extend-sessions-expiration-time">#</a> Extend session's expiration time</h4>
+<h4 id="extend-sessions-expiration-time"><a class="markdown-anchor" href="#extend-sessions-expiration-time">#</a> Extend Session's Expiration Time</h4>
 <p>By default, if user requests don't result in modification of Session,
 egg.js doesn't extend expiration time of the session.
 But in some scenarios, we hope that if users visit our site for a long time, then extend their session validity and not let the user exit the login state. The framework provides a <code>renew</code> configuration item to implement this feature. It will reset the session's validity period when it finds that the user's session is half the maximum validity period.</p>
@@ -314,7 +314,7 @@ But in some scenarios, we hope that if users visit our site for a long time, the
   </div>
 
   <div class="toc" id="toc">
-  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#cookie"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Cookie</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cookie-secret-key"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Cookie Secret Key</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#session"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Session</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#store-session-in-other-storage"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Store session in other storage</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#session-practice"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Session Practice</span></a></li></ol></li></ol>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#cookie"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Cookie</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#cookie-secret-key"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># Cookie Secret Key</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#session"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Session</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#store-session-in-other-storage"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Store Session in Other Storage</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#session-practice"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Session Practice</span></a></li></ol></li></ol>
 </div>
 
 <script>

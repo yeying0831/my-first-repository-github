@@ -190,13 +190,12 @@ mobileTrigger.onclick = function(e) {
 <h2 id="why-plugins"><a class="markdown-anchor" href="#why-plugins">#</a> Why plugins?</h2>
 <p>Here are some of the issues we think that can arise when using Koa middleware:</p>
 <ol>
-<li>Middleware loading is sequential and it is the user's responsibility to setup the execution sequence since middleware mechanism can not manage the actual order. This, in fact, is not very friendly.
-When the order is not correct, it can lead to unexpected results.</li>
+<li>Middleware loading is sequential and it is the user's responsibility to setup the execution sequence since middleware mechanism can not manage the actual order. This, in fact, is not very friendly. When the order is not correct, it can lead to unexpected results.</li>
 <li>Middleware positioning is geared towards intercepting user requests to add additional logic before or after such as: authentication, security checks, logging and so on. However, in some cases, such functionality can be unrelated to the request, for example, timing tasks, message subscriptions, back-end logic and so on.</li>
 <li>Some features include very complex initialization logic that needs to be done at application startup. This is obviously not suitable for middleware to achieve.</li>
 </ol>
 <p>To sum up, we need a more powerful mechanism to manage, orchestrate those relatively independent business logic.</p>
-<h3 id="the-relationship-between-middleware-plugins-and-application"><a class="markdown-anchor" href="#the-relationship-between-middleware-plugins-and-application">#</a> The relationship between middleware, plugins and application</h3>
+<h3 id="the-relationship-between-middleware-plugins-and-application"><a class="markdown-anchor" href="#the-relationship-between-middleware-plugins-and-application">#</a> The Relationship Between Middleware, Plugins and Application</h3>
 <p>A plugin is actually a &quot;mini-application&quot;, almost the same as an app:</p>
 <ul>
 <li>It contains <a href="./service.html">Services</a>, [middleware] (./ middleware.md), <a href="./config.html">config</a>, [framework extensions] (./ extend.md), etc.</li>
@@ -210,7 +209,7 @@ When the order is not correct, it can lead to unexpected results.</li>
 <li>The plugin itself can contain middleware.</li>
 <li>Multiple plugins can be wrapped as an [upper frame] (../ advanced / framework.md).</li>
 </ul>
-<h2 id="using-plugins"><a class="markdown-anchor" href="#using-plugins">#</a> Using plugins</h2>
+<h2 id="using-plugins"><a class="markdown-anchor" href="#using-plugins">#</a> Using Plugins</h2>
 <p>Plugins are usually added via the npm module:</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-mysql --save</span><br></pre></td></tr></table></figure>
 <p>** Note: We recommend introducing dependencies in the <code>^</code> way, and locking versions are strongly discouraged. **</p>
@@ -219,7 +218,7 @@ When the order is not correct, it can lead to unexpected results.</li>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config / plugin.js</span></span><br><span class="line"><span class="comment">// Use mysql plugin</span></span><br><span class="line">exports.mysql = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-mysql'</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>You can directly use the functionality provided by the plugin:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">app.mysql.query(sql, values);</span><br></pre></td></tr></table></figure>
-<h3 id="configuring-plugins"><a class="markdown-anchor" href="#configuring-plugins">#</a> Configuring plugins</h3>
+<h3 id="configuring-plugins"><a class="markdown-anchor" href="#configuring-plugins">#</a> Configuring Plugins</h3>
 <p>Each configuration item in <code>plugin.js</code> supports:</p>
 <ul>
 <li><code>{Boolean} enable</code> - Whether to enable this plugin, the default is true</li>
@@ -230,7 +229,7 @@ When the order is not correct, it can lead to unexpected results.</li>
 <h3 id="enablingdisabling-plugins"><a class="markdown-anchor" href="#enablingdisabling-plugins">#</a> Enabling/Disabling plugins</h3>
 <p>The application does not need the package or path configuration when using the plugins built in the upper framework. You only need to specify whether they are enabled or not:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// For the built-in plugin, you can use the following simple way to turn on or off</span></span><br><span class="line">exports.onerror = <span class="literal">false</span>;</span><br></pre></td></tr></table></figure>
-<h3 id="environment-configuration"><a class="markdown-anchor" href="#environment-configuration">#</a> Environment configuration</h3>
+<h3 id="environment-configuration"><a class="markdown-anchor" href="#environment-configuration">#</a> Environment Configuration</h3>
 <p>We also support <code>plugin.{Env}.js</code>, which will load plugin configurations based on <a href="../basics/env.html">Runtime</a>.</p>
 <p>For example, if you want to load the plugin <code>egg-dev</code> only in the local environment, you can install it to <code>devDependencies</code> and adjust the plugin configuration accordingly.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// npm i egg-dev --save-dev</span></span><br><span class="line"><span class="comment">// package.json</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"devDependencies"</span>: &#123;</span><br><span class="line">    <span class="string">"egg-dev"</span>: <span class="string">"*"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -246,18 +245,18 @@ When the order is not correct, it can lead to unexpected results.</li>
 <p>Use this feature only in the application layer. Do not use it in the framework layer.</p>
 </li>
 </ul>
-<h3 id="package-name-and-path"><a class="markdown-anchor" href="#package-name-and-path">#</a> Package name and path</h3>
+<h3 id="package-name-and-path"><a class="markdown-anchor" href="#package-name-and-path">#</a> Package Name and Path</h3>
 <ul>
 <li>The <code>package</code> is introduced in the <code>npm</code> style which is the most common way to import</li>
 <li><code>path</code> is an absolute path introduced when you want to load the plugin from different location such as when a plugin is still at the development stage or not available on <code>npm</code></li>
 <li>To see the application of these two scenarios, please see [progressive development] (../ tutorials / progressive.md).</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config / plugin.js</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span> (<span class="string">'path'</span>);</span><br><span class="line">exports.mysql = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  path: path.join(__dirname, <span class="string">'../lib/plugin/egg-mysql'</span>),</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="plugin-configuration"><a class="markdown-anchor" href="#plugin-configuration">#</a> Plugin configuration</h2>
+<h2 id="plugin-configuration"><a class="markdown-anchor" href="#plugin-configuration">#</a> Plugin Configuration</h2>
 <p>The plugin will usually contain its own default configuration, you can overwrite this in <code>config.default.js</code>:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config / config.default.js</span></span><br><span class="line">exports.mysql = &#123;</span><br><span class="line">  client: &#123;</span><br><span class="line">    host: <span class="string">'mysql.com'</span>,</span><br><span class="line">    port: <span class="string">'3306'</span>,</span><br><span class="line">    user: <span class="string">'test_user'</span>,</span><br><span class="line">    password: <span class="string">'test_password'</span>,</span><br><span class="line">    database: <span class="string">'test'</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>Specific consolidation rules can be found in [Configuration] (. / Config.md).</p>
-<h2 id="plugin-list"><a class="markdown-anchor" href="#plugin-list">#</a> Plugin list</h2>
+<h2 id="plugin-list"><a class="markdown-anchor" href="#plugin-list">#</a> Plugin List</h2>
 <ul>
 <li>Framework has default built-in plugins for enterprise applications <a href="https://eggjs.org/zh-cn/plugins/">Common plugins</a>:
   - <a href="https://github.com/eggjs/egg-onerror" target="_blank" rel="noopener">onerror</a> Uniform Exception Handling
@@ -274,7 +273,7 @@ When the order is not correct, it can lead to unexpected results.</li>
   - <a href="https://github.com/eggjs/egg-view" target="_blank" rel="noopener">view</a> Template Engine</li>
 <li>More community plugins can be found on GitHub <a href="https://github.com/topics/egg-plugin" target="_blank" rel="noopener">egg-plugin</a>.</li>
 </ul>
-<h2 id="developing-a-plugin"><a class="markdown-anchor" href="#developing-a-plugin">#</a> Developing a plugin</h2>
+<h2 id="developing-a-plugin"><a class="markdown-anchor" href="#developing-a-plugin">#</a> Developing a Plugin</h2>
 <p>See the documentation <a href="../advanced/plugin.html">plugin development</a>.</p>
     
         </article>  
@@ -282,7 +281,7 @@ When the order is not correct, it can lead to unexpected results.</li>
   </div>
 
   <div class="toc" id="toc">
-  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#why-plugins"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Why plugins?</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#the-relationship-between-middleware-plugins-and-application"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># The relationship between middleware, plugins and application</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-plugins"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Using plugins</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configuring-plugins"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Configuring plugins</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#enablingdisabling-plugins"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Enabling/Disabling plugins</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#environment-configuration"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Environment configuration</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#package-name-and-path"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># Package name and path</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#plugin-configuration"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Plugin configuration</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#plugin-list"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Plugin list</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#developing-a-plugin"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Developing a plugin</span></a></li></ol>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#why-plugins"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Why plugins?</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#the-relationship-between-middleware-plugins-and-application"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># The Relationship Between Middleware, Plugins and Application</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#using-plugins"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Using Plugins</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configuring-plugins"><span class="toc-detail-number">2.1.</span> <span class="toc-detail-text"># Configuring Plugins</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#enablingdisabling-plugins"><span class="toc-detail-number">2.2.</span> <span class="toc-detail-text"># Enabling/Disabling plugins</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#environment-configuration"><span class="toc-detail-number">2.3.</span> <span class="toc-detail-text"># Environment Configuration</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#package-name-and-path"><span class="toc-detail-number">2.4.</span> <span class="toc-detail-text"># Package Name and Path</span></a></li></ol></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#plugin-configuration"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Plugin Configuration</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#plugin-list"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># Plugin List</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#developing-a-plugin"><span class="toc-detail-number">5.</span> <span class="toc-detail-text"># Developing a Plugin</span></a></li></ol>
 </div>
 
 <script>

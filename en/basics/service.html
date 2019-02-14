@@ -201,7 +201,7 @@ mobileTrigger.onclick = function(e) {
 <li><code>this.config</code>: the application's run-time <a href="./config.html">config</a>.</li>
 <li><code>this.logger</code>：logger with <code>debug</code>，<code>info</code>，<code>warn</code>，<code>error</code>, use to print different level logs, almost the same as <a href="../core/logger.html#context-logger">context logger</a>, but it will append Service file path for quickly track.</li>
 </ul>
-<h3 id="service-ctx-in-detail"><a class="markdown-anchor" href="#service-ctx-in-detail">#</a> Service ctx in Detail</h3>
+<h3 id="service-ctx-in-detail"><a class="markdown-anchor" href="#service-ctx-in-detail">#</a> Service <code>ctx</code> in Detail</h3>
 <p>To get the path chain of user request, the request context is injected by us during the Service initialization, so you are able to get the related information of context directly by <code>this.ctx</code> in methods. For detailed information about context, please refer to <a href="./extend.html#context">Context</a>.
 With <code>ctx</code>, we can get various convenient attributes and methods encapsulated by the framework. For example we can use:</p>
 <ul>

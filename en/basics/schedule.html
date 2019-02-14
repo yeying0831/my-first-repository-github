@@ -200,14 +200,14 @@ mobileTrigger.onclick = function(e) {
 </ul>
 <h3 id="schedule-mode"><a class="markdown-anchor" href="#schedule-mode">#</a> Schedule Mode</h3>
 <p>Schedule tasks can specify <code>interval</code> or <code>cron</code> two different schedule modes.</p>
-<h4 id="interval"><a class="markdown-anchor" href="#interval">#</a> interval</h4>
+<h4 id="interval"><a class="markdown-anchor" href="#interval">#</a> <code>interval</code></h4>
 <p>Configure the scheduled tasks by <code>schedule.interval</code>, scheduled tasks will be executed every specified time interval. <code>interval</code> can be configured as</p>
 <ul>
 <li>Integer type, the unit is milliseconds, e.g <code>5000</code>.</li>
 <li>String type, will be transformed to milliseconds by <a href="https://github.com/zeit/ms" target="_blank" rel="noopener">ms</a>, e.g <code>5s</code>.</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  schedule: &#123;</span><br><span class="line">    <span class="comment">// executed every 10 seconds</span></span><br><span class="line">    interval: <span class="string">'10s'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h4 id="cron"><a class="markdown-anchor" href="#cron">#</a> cron</h4>
+<h4 id="cron"><a class="markdown-anchor" href="#cron">#</a> <code>cron</code></h4>
 <p>Configure the scheduled tasks by <code>schedule.cron</code>, scheduled tasks will be executed at specified timing according to the cron expressions. cron expressions are parsed by <a href="https://github.com/harrisiirak/cron-parser" target="_blank" rel="noopener">cron-parser</a>.</p>
 <p><strong>Note: cron-parser supports second (which don't support by linux crontab).</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">*    *    *    *    *    *</span><br><span class="line">┬    ┬    ┬    ┬    ┬    ┬</span><br><span class="line">│    │    │    │    │    |</span><br><span class="line">│    │    │    │    │    └ day of week (0 - 7) (0 or 7 is Sun)</span><br><span class="line">│    │    │    │    └───── month (1 - 12)</span><br><span class="line">│    │    │    └────────── day of month (1 - 31)</span><br><span class="line">│    │    └─────────────── hour (0 - 23)</span><br><span class="line">│    └──────────────────── minute (0 - 59)</span><br><span class="line">└───────────────────────── second (0 - 59, optional)</span><br></pre></td></tr></table></figure>
