@@ -313,7 +313,7 @@ mobileTrigger.onclick = function(e) {
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// &#123;app_root&#125;/app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; router, controller, io &#125; = app;</span><br><span class="line">  router.get(<span class="string">'/'</span>, controller.home.index);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// socket.io</span></span><br><span class="line">  io.of(<span class="string">'/'</span>).route(<span class="string">'exchange'</span>, io.controller.nsp.exchange);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>开两个 tab 页面，并调出控制台：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">socket.emit(<span class="string">'exchange'</span>, &#123;</span><br><span class="line">  target: <span class="string">'Dkn3UXSu8_jHvKBmAAHW'</span>,</span><br><span class="line">  payload: &#123;</span><br><span class="line">    msg : <span class="string">'test'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><img src="https://raw.githubusercontent.com/eggjs/egg/master/docs/assets/socketio-console.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/eggjs/egg/master/docs/assets/socketio-console.png" alt></p>
 <h2 id="参考链接"><a class="markdown-anchor" href="#参考链接">#</a> 参考链接</h2>
 <ul>
 <li><a href="https://socket.io" target="_blank" rel="noopener">socket.io</a></li>
