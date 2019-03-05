@@ -191,7 +191,7 @@ mobileTrigger.onclick = function(e) {
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> fn = <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> user = <span class="keyword">await</span> getUser();</span><br><span class="line">  <span class="keyword">const</span> posts = <span class="keyword">await</span> fetchPosts(user.id);</span><br><span class="line">  <span class="keyword">return</span> &#123; user, posts &#125;;</span><br><span class="line">&#125;;</span><br><span class="line">fn().then(<span class="function"><span class="params">res</span> =&gt;</span> <span class="built_in">console</span>.log(res)).catch(<span class="function"><span class="params">err</span> =&gt;</span> <span class="built_in">console</span>.error(err.stack));</span><br></pre></td></tr></table></figure>
 <h2 id="koa"><a class="markdown-anchor" href="#koa">#</a> Koa</h2>
 <blockquote>
-<p>Koa is a new Web framework designed by the team behind Express, which aims to be a smaller, more expressive, and more robust foundation for Web applications and APIs.</p>
+<p><a href="https://koajs.com/" target="_blank" rel="noopener">Koa</a> 是一个新的 web 框架，由 Express 幕后的原班人马打造， 致力于成为 web 应用和 API 开发领域中的一个更小、更富有表现力、更健壮的基石。</p>
 </blockquote>
 <p>Koa 和 Express 的设计风格非常类似，底层也都是共用的<a href="https://github.com/jshttp" target="_blank" rel="noopener">同一套 HTTP 基础库</a>，但是有几个显著的区别，除了上面提到的默认异步解决方案之外，主要的特点还有下面几个。</p>
 <h3 id="middleware"><a class="markdown-anchor" href="#middleware">#</a> Middleware</h3>

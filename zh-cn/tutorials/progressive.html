@@ -188,7 +188,7 @@ mobileTrigger.onclick = function(e) {
 <li><code>ctx.isAndroid</code></li>
 <li><code>ctx.isIOS</code></li>
 </ul>
-<p>通过之前的教程，大家一定可以很快的写出来，我们快速回顾下：</p>
+<p>通过之前的教程，大家一定可以很快地写出来，我们快速回顾下：</p>
 <p>对应的代码参见 <a href="https://github.com/eggjs/examples/tree/master/progressive/step1" target="_blank" rel="noopener">step1</a>。</p>
 <p>目录结构：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">example-app</span><br><span class="line">├── app</span><br><span class="line">│   ├── extend</span><br><span class="line">│   │   └── context.js</span><br><span class="line">│   └── router.js</span><br><span class="line">├── <span class="built_in">test</span></span><br><span class="line">│   └── index.test.js</span><br><span class="line">└── package.json</span><br></pre></td></tr></table></figure>
@@ -250,7 +250,7 @@ mobileTrigger.onclick = function(e) {
 <p><strong>注意：在框架还没发布前，可以通过 <code>npm link</code> 的方式进行本地测试，具体参见 <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="noopener">npm-link</a>。</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">cd</span> example-app</span><br><span class="line">$ npm link ../egg-framework</span><br><span class="line">$ npm i</span><br><span class="line">$ npm <span class="built_in">test</span></span><br></pre></td></tr></table></figure>
 <h2 id="写在最后"><a class="markdown-anchor" href="#写在最后">#</a> 写在最后</h2>
-<p>综上所述，大家可以看到，我们是如何一步步渐进的去进行框架演进，得益于 Egg 强大的插件机制，代码的共建，复用和下沉，竟然可以这么的无痛。</p>
+<p>综上所述，大家可以看到我们是如何一步步渐进地去进行框架演进，这得益于 Egg 强大的插件机制、代码的共建，以及复用和下沉，这些步骤竟然可以这么地无痛来得以完成！</p>
 <ul>
 <li>一般来说，当应用中有可能会复用到的代码时，直接放到 <code>lib/plugin</code> 目录去，如例子中的 <code>egg-ua</code>。</li>
 <li>当该插件功能稳定后，即可独立出来作为一个 <code>node module</code> 。</li>

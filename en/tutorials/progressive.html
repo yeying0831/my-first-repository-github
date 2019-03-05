@@ -224,8 +224,8 @@ mobileTrigger.onclick = function(e) {
 <p>Then modify the application, details refer to <a href="https://github.com/eggjs/examples/tree/master/progressive/step3/example-app" target="_blank" rel="noopener">step3/example-app</a>.</p>
 <ul>
 <li>Remove directory <code>lib/plugin/egg-ua</code>.</li>
-<li>declare dependencies <code>egg-ua</code>  in <code>package.json</code>.</li>
-<li>change type to <code>package</code> in <code>config/plugin.js</code>.</li>
+<li>Declare dependencies <code>egg-ua</code>  in <code>package.json</code>.</li>
+<li>Change type to <code>package</code> in <code>config/plugin.js</code>.</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.ua = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-ua'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p><strong>Note：We can use <code>npm link</code> for local test before releasing the plugin. Details refer to  <a href="https://docs.npmjs.com/cli/link" target="_blank" rel="noopener">npm-link</a>.</strong></p>
@@ -253,19 +253,19 @@ mobileTrigger.onclick = function(e) {
 <p>In conclusion, we can see how to make the framework evolution step by step which benefits from Egg's powerful plugin mechanism, code co-build, reusability and modularity.</p>
 <ul>
 <li>
-<p>in general, put codes into <code>lib/plugin</code> if they can be reused in the application.</p>
+<p>In general, put codes into <code>lib/plugin</code> if they can be reused in the application.</p>
 </li>
 <li>
-<p>separate it into a <code>node module</code> when plugin becomes stable.</p>
+<p>Separate it into a <code>node module</code> when plugin becomes stable.</p>
 </li>
 <li>
-<p>application with relatively reusable codes will work as a separate plugin.</p>
+<p>Application with relatively reusable codes will work as a separate plugin.</p>
 </li>
 <li>
-<p>abstract it as framework to release after application become certain solutions of specified business scenario.</p>
+<p>Abstract it as framework to release after application become certain solutions of specified business scenario.</p>
 </li>
 <li>
-<p>it would be a great improvement in the efficiency of teamwork after plugins were extracted, modularized and finally became a framework, because other projects could reuse codes by just using <code>npm install</code>.</p>
+<p>It would be a great improvement in the efficiency of teamwork after plugins were extracted, modularized and finally became a framework, because other projects could reuse codes by just using <code>npm install</code>.</p>
 </li>
 <li>
 <p><strong>Note：Whether it's the application/plugin/framework, unittest is necessary and try to reach 100% coverage</strong></p>
