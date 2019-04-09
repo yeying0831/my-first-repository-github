@@ -217,8 +217,8 @@ mobileTrigger.onclick = function(e) {
 <h2 id="实现"><a class="markdown-anchor" href="#实现">#</a> 实现</h2>
 <p>在约定好接口之后，我们可以开始动手实现了。</p>
 <h3 id="初始化项目"><a class="markdown-anchor" href="#初始化项目">#</a> 初始化项目</h3>
-<p>还是通过<a href="../intro/quickstart.html">快速入门</a>章节介绍的 <a href="https://github.com/eggjs/egg-init" target="_blank" rel="noopener">egg-init</a> 工具来初始化我们的应用</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-init cnode-api --<span class="built_in">type</span>=simple</span><br><span class="line">$ <span class="built_in">cd</span> cnode-api</span><br><span class="line">$ npm i</span><br></pre></td></tr></table></figure>
+<p>还是通过<a href="../intro/quickstart.html">快速入门</a>章节介绍的 <code>npm</code> 来初始化我们的应用</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mkdir cnode-api &amp;&amp; <span class="built_in">cd</span> cnode-api</span><br><span class="line">$ npm init egg --<span class="built_in">type</span>=simple</span><br><span class="line">$ npm i</span><br></pre></td></tr></table></figure>
 <h3 id="开启-validate-插件"><a class="markdown-anchor" href="#开启-validate-插件">#</a> 开启 validate 插件</h3>
 <p>我们选择 <a href="https://github.com/eggjs/egg-validate" target="_blank" rel="noopener">egg-validate</a> 作为 validate 插件的示例。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.validate = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-validate'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>

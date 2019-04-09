@@ -179,7 +179,7 @@ mobileTrigger.onclick = function(e) {
     <div class="doc">
       <article class="markdown-body">
         <h1>代码风格指南</h1>
-          <p>建议开发者使用 <code>egg-init --type=simple showcase</code> 来生成并观察推荐的项目结构和配置。</p>
+          <p>建议开发者使用 <code>npm init egg --type=simple showcase</code> 来生成并观察推荐的项目结构和配置。</p>
 <h2 id="用类的形式呈现classify"><a class="markdown-anchor" href="#用类的形式呈现classify">#</a> 用类的形式呈现（Classify）</h2>
 <p>旧写法：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="class"><span class="keyword">class</span> <span class="title">UserService</span> <span class="keyword">extends</span> <span class="title">app</span>.<span class="title">Service</span> </span>&#123;</span><br><span class="line">    <span class="keyword">async</span> list() &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">await</span> <span class="keyword">this</span>.ctx.curl(<span class="string">'https://eggjs.org'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> UserService;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>

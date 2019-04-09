@@ -189,11 +189,11 @@ By following along with this guide step by step, you can quickly get started wit
 <h2 id="the-quick-way"><a class="markdown-anchor" href="#the-quick-way">#</a> The Quick Way</h2>
 <p>To begin with, let's quickly initialize the project by using a scaffold,
 which will quickly generate some of the major pieces of the application.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm i egg-init -g</span><br><span class="line">$ egg-init egg-example --<span class="built_in">type</span>=simple</span><br><span class="line">$ <span class="built_in">cd</span> egg-example</span><br><span class="line">$ npm i</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mkdir egg-example &amp;&amp; <span class="built_in">cd</span> egg-example</span><br><span class="line">$ npm init egg --<span class="built_in">type</span>=simple</span><br><span class="line">$ npm i</span><br></pre></td></tr></table></figure>
 <p>Then get up and run by using the following commands.</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ npm run dev</span><br><span class="line">$ open localhost:7001</span><br></pre></td></tr></table></figure>
 <h2 id="step-by-step"><a class="markdown-anchor" href="#step-by-step">#</a> Step by Step</h2>
-<p>Usually you can just use <a href="https://github.com/eggjs/egg-init" target="_blank" rel="noopener">egg-init</a> of the previous section,
+<p>Usually you can just use <code>npm init egg</code> of the previous section,
 choose a scaffold that best fits your business model and quickly generate a project,
 then get started with the development.</p>
 <p>However, in this section, instead of using scaffolds we will build a project called <a href="https://github.com/eggjs/examples/tree/master/hackernews" target="_blank" rel="noopener">Egg HackerNews</a> step by step, for a better understanding of how it works.</p>

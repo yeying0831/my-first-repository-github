@@ -183,10 +183,10 @@ mobileTrigger.onclick = function(e) {
 <p>本章节我们会通过开发一个对 MySQL 中 <code>users</code> 表的数据做 CURD 的例子来一步步介绍如何在 egg 项目中使用 sequelize。</p>
 <h2 id="准备工作"><a class="markdown-anchor" href="#准备工作">#</a> 准备工作</h2>
 <p>在这个例子中，我们会使用 sequelize 连接到 MySQL 数据源，因此在开始编写代码之前，我们需要先在本机上安装好 MySQL，如果是 MacOS，可以通过 homebrew 快速安装：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install mysql</span><br><span class="line">brew service start mysql</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install mysql</span><br><span class="line">brew services start mysql</span><br></pre></td></tr></table></figure>
 <h2 id="初始化项目"><a class="markdown-anchor" href="#初始化项目">#</a> 初始化项目</h2>
-<p>通过 egg-init 初始化一个项目:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">egg-init --<span class="built_in">type</span>=simple --dir=sequelize-project</span><br><span class="line"><span class="built_in">cd</span> sequelize-project</span><br><span class="line">npm i</span><br></pre></td></tr></table></figure>
+<p>通过 <code>npm</code> 初始化一个项目:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mkdir sequelize-project &amp;&amp; <span class="built_in">cd</span> sequelize-project</span><br><span class="line">$ npm init egg --<span class="built_in">type</span>=simple</span><br><span class="line">$ npm i</span><br></pre></td></tr></table></figure>
 <p>安装并配置 <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a> 插件（它会辅助我们将定义好的 Model 对象加载到 app 和 ctx 上）和 <a href="https://github.com/sidorares/node-mysql2" target="_blank" rel="noopener">mysql2</a> 模块：</p>
 <ul>
 <li>安装</li>
@@ -262,7 +262,7 @@ mobileTrigger.onclick = function(e) {
 <h2 id="完整示例"><a class="markdown-anchor" href="#完整示例">#</a> 完整示例</h2>
 <p>更完整的示例可以查看 <a href="https://github.com/eggjs/examples/tree/master/sequelize" target="_blank" rel="noopener">eggjs/examples/sequelize</a>。</p>
 <h2 id="脚手架"><a class="markdown-anchor" href="#脚手架">#</a> 脚手架</h2>
-<p>我们也提供了 sequelize 的脚手架，集成了文档中提供的 <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>, <a href="https://github.com/sequelize/cli" target="_blank" rel="noopener">sequelize-cli</a> 与 <a href="https://github.com/aexmachina/factory-girl" target="_blank" rel="noopener">factory-girl</a> 等模块。可以通过 <code>egg-init --type=sequelize</code> 来基于它快速初始化一个新的应用。</p>
+<p>我们也提供了 sequelize 的脚手架，集成了文档中提供的 <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>, <a href="https://github.com/sequelize/cli" target="_blank" rel="noopener">sequelize-cli</a> 与 <a href="https://github.com/aexmachina/factory-girl" target="_blank" rel="noopener">factory-girl</a> 等模块。可以通过 <code>npm init egg --type=sequelize</code> 来基于它快速初始化一个新的应用。</p>
     
         </article>  
       </div>      

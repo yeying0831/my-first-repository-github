@@ -256,7 +256,7 @@ All demos should be compiled at <a href="https://github.com/eggjs/examples" targ
 <ul>
 <li><strong>If the commit is a Breaking Change, please note it clearly in this part.</strong></li>
 <li>related issues, like <code>Closes #1, Closes #2, #3</code></li>
-<li>If there is a change about an old feaure or a new feature, please associate <code>doc</code> and <code>egg-init</code>, like <code>eggjs/egg-bin#123</code></li>
+<li>If there is a change about an old feaure or a new feature, please associate <code>doc</code> and <code>egg-core</code>, like <code>eggjs/egg-core#123</code></li>
 </ul>
 <p>e.g.</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fix($compile): [BREAKING_CHANGE] couple of unit tests for IE9</span><br><span class="line"></span><br><span class="line">Older IEs serialize html uppercased, but IE9 does not...</span><br><span class="line">Would be better to expect case insensitive, unfortunately jasmine does</span><br><span class="line">not allow to user regexps for throw expectations.</span><br><span class="line"></span><br><span class="line">Document change on eggjs/egg#123</span><br><span class="line"></span><br><span class="line">Closes #392</span><br><span class="line"></span><br><span class="line">BREAKING CHANGE:</span><br><span class="line"></span><br><span class="line">  Breaks foo.bar api, foo.baz should be used instead</span><br></pre></td></tr></table></figure>

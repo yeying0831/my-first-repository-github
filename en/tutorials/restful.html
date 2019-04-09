@@ -218,8 +218,8 @@ A example of <code>topics</code> is shown below:</p>
 <h2 id="getting-started"><a class="markdown-anchor" href="#getting-started">#</a> Getting Started</h2>
 <p>After interface convention, we begin to create a RESTful API.</p>
 <h3 id="application-initialization"><a class="markdown-anchor" href="#application-initialization">#</a> Application Initialization</h3>
-<p>Initializes the application using <a href="https://github.com/eggjs/egg-init" target="_blank" rel="noopener">egg-init</a> in the <a href="../intro/quickstart.html">quickstart</a></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ egg-init cnode-api --<span class="built_in">type</span>=simple</span><br><span class="line">$ <span class="built_in">cd</span> cnode-api</span><br><span class="line">$ npm i</span><br></pre></td></tr></table></figure>
+<p>Initializes the application using <code>npm</code> in the <a href="../intro/quickstart.html">quickstart</a></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mkdir cnode-api &amp;&amp; <span class="built_in">cd</span> cnode-api</span><br><span class="line">$ npm init egg --<span class="built_in">type</span>=simple</span><br><span class="line">$ npm i</span><br></pre></td></tr></table></figure>
 <h3 id="enable-validate-plugin"><a class="markdown-anchor" href="#enable-validate-plugin">#</a> Enable validate plugin</h3>
 <p><a href="https://github.com/eggjs/egg-validate" target="_blank" rel="noopener">egg-validate</a> is used to present the validate plugin.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.validate = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-validate'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>

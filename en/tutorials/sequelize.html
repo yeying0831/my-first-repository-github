@@ -183,10 +183,10 @@ mobileTrigger.onclick = function(e) {
 <p>In this chapter, we will walk through the steps of how to use sequelize in an egg project by developing an example of doing CURD on the data in the <code>users</code> table in MySQL.</p>
 <h2 id="preparing"><a class="markdown-anchor" href="#preparing">#</a> Preparing</h2>
 <p>In this example, we will use sequelize to connect to the MySQL data source, so we need to install MySQL on the machine before we start writing code. If it is MacOS, we can quickly install it via homebrew:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install mysql</span><br><span class="line">brew service start mysql</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew install mysql</span><br><span class="line">brew services start mysql</span><br></pre></td></tr></table></figure>
 <h2 id="initialization"><a class="markdown-anchor" href="#initialization">#</a> Initialization</h2>
-<p>Init project by <code>egg-init</code>:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">egg-init --<span class="built_in">type</span>=simple --dir=sequelize-project</span><br><span class="line"><span class="built_in">cd</span> sequelize-project</span><br><span class="line">npm i</span><br></pre></td></tr></table></figure>
+<p>Init project by <code>npm</code>:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ mkdir sequelize-project &amp;&amp; <span class="built_in">cd</span> sequelize-project</span><br><span class="line">$ npm init egg --<span class="built_in">type</span>=simple</span><br><span class="line">$ npm i</span><br></pre></td></tr></table></figure>
 <p>Install and configure the <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a> plugin (which will help us load the defined Model object onto <code>app</code> and <code>ctx</code> ) and the <a href="https://github.com/sidorares/node-mysql2" target="_blank" rel="noopener">mysql2</a> module:</p>
 <ul>
 <li>Install</li>
@@ -262,7 +262,7 @@ mobileTrigger.onclick = function(e) {
 <h2 id="full-example"><a class="markdown-anchor" href="#full-example">#</a> Full Example</h2>
 <p>A more complete example can be found in <a href="https://github.com/eggjs/examples/tree/master/sequelize" target="_blank" rel="noopener">eggjs/examples/sequelize</a>.</p>
 <h2 id="boilerplate"><a class="markdown-anchor" href="#boilerplate">#</a> Boilerplate</h2>
-<p>We also provide sequelize boilerplate that integrates the modules <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>, <a href="https://github.com/sequelize/cli" target="_blank" rel="noopener">sequelize-cli</a> and <a href="https://github.com/aexmachina/factory-girl" target="_blank" rel="noopener">factory-girl</a> provided in this documentation. You can quickly initialize a new application based on it by <code>egg-init --type=sequelize</code>.</p>
+<p>We also provide sequelize boilerplate that integrates the modules <a href="https://github.com/eggjs/egg-sequelize" target="_blank" rel="noopener">egg-sequelize</a>, <a href="https://github.com/sequelize/cli" target="_blank" rel="noopener">sequelize-cli</a> and <a href="https://github.com/aexmachina/factory-girl" target="_blank" rel="noopener">factory-girl</a> provided in this documentation. You can quickly initialize a new application based on it by <code>npm init egg --type=sequelize</code>.</p>
     
         </article>  
       </div>      

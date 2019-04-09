@@ -259,7 +259,7 @@ mobileTrigger.onclick = function(e) {
 <ul>
 <li><strong>当有非兼容修改(Breaking Change)时必须在这里描述清楚</strong></li>
 <li>关联相关 issue，如 <code>Closes #1, Closes #2, #3</code></li>
-<li>如果功能点有新增或修改的，还需要关联文档 <code>doc</code> 和 <code>egg-init</code> 的 PR，如 <code>eggjs/egg-bin#123</code></li>
+<li>如果功能点有新增或修改的，还需要关联文档 <code>doc</code> 和 <code>egg-core</code> 的 PR，如 <code>eggjs/egg-core#123</code></li>
 </ul>
 <p>示例</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">fix($compile): [BREAKING_CHANGE] couple of unit tests for IE9</span><br><span class="line"></span><br><span class="line">Older IEs serialize html uppercased, but IE9 does not...</span><br><span class="line">Would be better to expect case insensitive, unfortunately jasmine does</span><br><span class="line">not allow to user regexps for throw expectations.</span><br><span class="line"></span><br><span class="line">Document change on eggjs/egg#123</span><br><span class="line"></span><br><span class="line">Closes #392</span><br><span class="line"></span><br><span class="line">BREAKING CHANGE:</span><br><span class="line"></span><br><span class="line">  Breaks foo.bar api, foo.baz should be used instead</span><br></pre></td></tr></table></figure>
