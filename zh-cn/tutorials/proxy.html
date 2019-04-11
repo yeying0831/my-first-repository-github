@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <title>egg-i18n - 为企业级框架和应用而生</title>
+  <title>前置代理模式 - 为企业级框架和应用而生</title>
   <meta charset="utf-8">
   <meta name="description" content="index.description">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -52,7 +52,7 @@
       
         <li class="translations">
           <a class="nav-link">切换语言</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/plugins/i18n.html">English</a></li><li><a id="zh-cn" href="/zh-cn/plugins/i18n.html" style="color: #22ab28">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/tutorials/proxy.html">English</a></li><li><a id="zh-cn" href="/zh-cn/tutorials/proxy.html" style="color: #22ab28">中文</a></li></ul>
         </li>
       
       <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
@@ -77,7 +77,7 @@
       
         <li class="translations">
           <a class="nav-link">切换语言</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/plugins/i18n.html">English</a></li><li><a id="zh-cn" href="/zh-cn/plugins/i18n.html" style="color: #22ab28">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/tutorials/proxy.html">English</a></li><li><a id="zh-cn" href="/zh-cn/tutorials/proxy.html" style="color: #22ab28">中文</a></li></ul>
         </li>
       
     </ul>
@@ -178,60 +178,36 @@ mobileTrigger.onclick = function(e) {
   <div class="content">
     <div class="doc">
       <article class="markdown-body">
-        <h1>egg-i18n</h1>
-          <p><a href="https://npmjs.org/package/egg-i18n" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/v/egg-i18n.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://travis-ci.org/eggjs/egg-i18n" target="_blank" rel="noopener"><img src="https://img.shields.io/travis/eggjs/egg-i18n.svg?style=flat-square" alt="build status"></a>
-<a href="https://codecov.io/github/eggjs/egg-i18n?branch=master" target="_blank" rel="noopener"><img src="https://codecov.io/github/eggjs/egg-i18n/coverage.svg?branch=master" alt="Test coverage"></a>
-<a href="https://david-dm.org/eggjs/egg-i18n" target="_blank" rel="noopener"><img src="https://img.shields.io/david/eggjs/egg-i18n.svg?style=flat-square" alt="David deps"></a>
-<a href="https://snyk.io/test/npm/egg-i18n" target="_blank" rel="noopener"><img src="https://snyk.io/test/npm/egg-i18n/badge.svg?style=flat-square" alt="Known Vulnerabilities"></a>
-<a href="https://npmjs.org/package/egg-i18n" target="_blank" rel="noopener"><img src="https://img.shields.io/npm/dm/egg-i18n.svg?style=flat-square" alt="npm download"></a></p>
-<p>可以为你的应用提供多语言的特性</p>
-<h2 id="功能"><a class="markdown-anchor" href="#功能">#</a> 功能</h2>
-<ul>
-<li>支持多种语言独立配置，统一存放在 config/locale/*.js 下（ 兼容<code>config/locales/*.js</code> ）；</li>
-<li>提供 Middleware 为 View 提供 <code>__</code>, <code>gettext</code> 函数获取多语言文案；</li>
-<li>基于 URL 参数 <code>locale</code> 修改语言显示，同时会记录到 Cookie，下次请求会用 Cookie 里面的语言方案。</li>
-</ul>
-<h2 id="配置"><a class="markdown-anchor" href="#配置">#</a> 配置</h2>
-<p>默认处于关闭状态，你需要在 <code>config/plugin.js</code> 开启它：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/plugin.js</span></span><br><span class="line">exports.i18n = &#123;</span><br><span class="line">  enable: <span class="literal">true</span>,</span><br><span class="line">  package: <span class="string">'egg-i18n'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>你可以修改 <code>config/config.default.js</code> 来设定 i18n 的配置项：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line">exports.i18n = &#123;</span><br><span class="line">  <span class="comment">// 默认语言，默认 "en_US"</span></span><br><span class="line">  defaultLocale: <span class="string">'zh-CN'</span>,</span><br><span class="line">  <span class="comment">// URL 参数，默认 "locale"</span></span><br><span class="line">  queryField: <span class="string">'locale'</span>,</span><br><span class="line">  <span class="comment">// Cookie 记录的 key, 默认："locale"</span></span><br><span class="line">  cookieField: <span class="string">'locale'</span>,</span><br><span class="line">  <span class="comment">// Cookie 默认 `1y` 一年后过期， 如果设置为 Number，则单位为 ms</span></span><br><span class="line">  cookieMaxAge: <span class="string">'1y'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>其实大部分时候，你只需要修改一下 <code>defaultLocale</code> 设定默认的语言。</p>
-<h2 id="编写你的-i18n-多语言文件"><a class="markdown-anchor" href="#编写你的-i18n-多语言文件">#</a> 编写你的 I18n 多语言文件</h2>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/zh-CN.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">"Email"</span>: <span class="string">"邮箱"</span>,</span><br><span class="line">  <span class="string">"Welcome back, %s!"</span>: <span class="string">"欢迎回来，%s!"</span>,</span><br><span class="line">  <span class="string">"Hello %s, how are you today?"</span>: <span class="string">"你好 %s, 今天过得咋样？"</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/locale/en-US.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="string">"Email"</span>: <span class="string">"Email"</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>或者也可以用 JSON 格式的文件：</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">// config/locale/zh-CN.json</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"email"</span>: <span class="string">"邮箱"</span>,</span><br><span class="line">  <span class="attr">"login"</span>: <span class="string">"帐号"</span>,</span><br><span class="line">  <span class="attr">"createdAt"</span>: <span class="string">"注册时间"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="使用-i18n-函数获取语言文本"><a class="markdown-anchor" href="#使用-i18n-函数获取语言文本">#</a> 使用 I18n 函数获取语言文本</h2>
-<p>I18n 为你提供 <code>__</code> (Alias: <code>gettext</code>) 函数，让你可以轻松获得 locale 文件夹下面的多语言文本。</p>
-<blockquote>
-<p>NOTE: __ 是两个下划线哦！</p>
-</blockquote>
-<ul>
-<li>ctx.__ = function (key, value[, value2, ...]): 类似 util.format 接口</li>
-<li>ctx.__ = function (key, values): 支持数组下标占位符方式，如</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ctx.__(<span class="string">'&#123;0&#125; &#123;0&#125; &#123;1&#125; &#123;1&#125;'</span>), [<span class="string">'foo'</span>, <span class="string">'bar'</span>])</span><br><span class="line">ctx.gettext(<span class="string">'&#123;0&#125; &#123;0&#125; &#123;1&#125; &#123;1&#125;'</span>), [<span class="string">'foo'</span>, <span class="string">'bar'</span>])</span><br><span class="line">=&gt;</span><br><span class="line">foo foo bar bar</span><br></pre></td></tr></table></figure>
-<h3 id="controllers-下的使用示例"><a class="markdown-anchor" href="#controllers-下的使用示例">#</a> Controllers 下的使用示例</h3>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>* (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.body = &#123;</span><br><span class="line">    message: <span class="keyword">this</span>.__(<span class="string">'Welcome back, %s!'</span>, <span class="keyword">this</span>.user.name)</span><br><span class="line">    <span class="comment">// 或者使用 gettext，如果觉得 __ 不好看的话</span></span><br><span class="line">    <span class="comment">// message: this.gettext('Welcome back, %s!', this.user.name)</span></span><br><span class="line">    user: <span class="keyword">this</span>.user,</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h3 id="view-文件下的使用示例"><a class="markdown-anchor" href="#view-文件下的使用示例">#</a> View 文件下的使用示例</h3>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;&#123; __('Email') &#125;&#125;: &#123;&#123; user.email &#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  &#123;&#123; __('Hello %s, how are you today?', user.name) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">li</span>&gt;</span></span><br><span class="line">  &#123;&#123; __('&#123;0&#125; &#123;0&#125; &#123;1&#125; &#123;1&#125;'), ['foo', 'bar']) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="修改应用的默认语言"><a class="markdown-anchor" href="#修改应用的默认语言">#</a> 修改应用的默认语言</h3>
-<p>你可以用下面几种方式修改应用的当前语言（修改或会记录到 Cookie)，下次请求直接用设定好的语言。</p>
-<p>优先级从上到下：</p>
-<ul>
-<li>query: /?locale=en-US</li>
-<li>cookie: locale=zh-TW</li>
-<li>header: Accept-Language: zh-CN,zh;q=0.5</li>
-</ul>
+        <h1>前置代理模式</h1>
+          <p>一般来说我们的服务都不会直接接受外部的请求，而会将服务部署在接入层之后，从而实现多台机器的负载均衡和服务的平滑发布，保证高可用。</p>
+<p>在这个场景下，我们无法直接获取到真实用户请求的连接，从而无法确认用户的真实 IP，请求协议，甚至请求的域名。为了解决这个问题，框架默认提供了一系列配置项来让开发者配置，以便基于和接入层的约定（事实标准）来让应用层获取到真实的用户请求信息。</p>
+<h2 id="开启前置代理模式"><a class="markdown-anchor" href="#开启前置代理模式">#</a> 开启前置代理模式</h2>
+<p>通过 <code>config.proxy = true</code>，可以打开前置代理模式：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.proxy = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<p>注意，开启此模式后，应用就默认自己处于反向代理之后，会支持通过解析约定的请求头来获取用户真实的 IP，协议和域名。如果你的服务未部署在反向代理之后，请不要开启此配置，以防被恶意用户伪造请求 IP 等信息。</p>
+<h3 id="configipheaders"><a class="markdown-anchor" href="#configipheaders">#</a> <code>config.ipHeaders</code></h3>
+<p>开启 proxy 配置后，应用会解析 <a href="https://en.wikipedia.org/wiki/X-Forwarded-For" target="_blank" rel="noopener">X-Forwarded-For</a> 请求头来获取客户端的真实 IP。如果你的前置代理通过其他的请求头来传递该信息，可以通过 <code>config.ipHeaders</code> 来配置，这个配置项支持配置多个头（逗号分开）。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.ipHeaders = <span class="string">'X-Real-Ip, X-Forwarded-For'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="configmaxproxycount"><a class="markdown-anchor" href="#configmaxproxycount">#</a> <code>config.maxProxyCount</code></h3>
+<p><code>X-Forwarded-For</code> 等传递 IP 的头，通用的格式是：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">X-Forwarded-For: client, proxy1, proxy2</span><br></pre></td></tr></table></figure>
+<p>我们可以拿第一个作为请求的真实 IP，但是如果有恶意用户在请求中传递了 <code>X-Forwarded-For</code> 参数来伪造其在反向代理之后，就会导致 <code>X-Forwarded-For</code> 拿到的值不准确了，可以被用来伪造请求 IP 地址，突破应用层的一些 IP 限制。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">X-Forwarded-For: fake, client, proxy1, proxy2</span><br></pre></td></tr></table></figure>
+<p>为了避免此问题，我们可以通过 <code>config.maxProxyCount</code> 来配置前置的反向代理数量，这样在获取请求真实 IP 地址时，就会忽略掉用户多传递的伪造 IP 地址了。例如我们将应用部署在一个统一的接入层之后（例如阿里云 SLB），我们可以将此参数配置为 <code>1</code>，这样用户就无法通过 <code>X-Forwarded-For</code> 请求头来伪造 IP 地址了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.maxProxyCount = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="configprotocolheaders"><a class="markdown-anchor" href="#configprotocolheaders">#</a> <code>config.protocolHeaders</code></h3>
+<p>开启 proxy 配置后，应用会解析 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Proto" target="_blank" rel="noopener">X-Forwarded-Proto</a> 请求头来获取客户端的真实访问协议。如果你的前置代理通过其他的请求头来传递该信息，可以通过 <code>config.protocolHeaders</code> 来配置，这个配置项支持配置多个头（逗号分开）。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.protocolHeaders = <span class="string">'X-Real-Proto, X-Forwarded-Proto'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="confighostheaders"><a class="markdown-anchor" href="#confighostheaders">#</a> <code>config.hostHeaders</code></h3>
+<p>开启 proxy 配置后，应用仍然还是直接读取 <code>host</code> 来获取请求的域名，绝大部分反向代理并不会修改这个值。但是也许有些反向代理会通过 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host" target="_blank" rel="noopener">X-Forwarded-Host</a> 来传递客户端的真实访问域名，可以通过在 <code>config.hostHeaders</code> 中配置，这个配置项支持配置多个头（逗号分开）。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.hostHeaders = <span class="string">'X-Forwarded-Host'</span>;</span><br></pre></td></tr></table></figure>
     
         </article>  
       </div>      
   </div>
 
   <div class="toc" id="toc">
-  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#功能"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 功能</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#配置"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># 配置</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#编写你的-i18n-多语言文件"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># 编写你的 I18n 多语言文件</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#使用-i18n-函数获取语言文本"><span class="toc-detail-number">4.</span> <span class="toc-detail-text"># 使用 I18n 函数获取语言文本</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#controllers-下的使用示例"><span class="toc-detail-number">4.1.</span> <span class="toc-detail-text"># Controllers 下的使用示例</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#view-文件下的使用示例"><span class="toc-detail-number">4.2.</span> <span class="toc-detail-text"># View 文件下的使用示例</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#修改应用的默认语言"><span class="toc-detail-number">4.3.</span> <span class="toc-detail-text"># 修改应用的默认语言</span></a></li></ol></li></ol>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#开启前置代理模式"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># 开启前置代理模式</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configipheaders"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># config.ipHeaders</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configmaxproxycount"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># config.maxProxyCount</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configprotocolheaders"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># config.protocolHeaders</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#confighostheaders"><span class="toc-detail-number">1.4.</span> <span class="toc-detail-text"># config.hostHeaders</span></a></li></ol></li></ol>
 </div>
 
 <script>

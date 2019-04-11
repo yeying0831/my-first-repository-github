@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head><meta name="generator" content="Hexo 3.8.0">
-  <title>What is Egg? - Born to build better enterprise frameworks and apps</title>
+  <title>Behind a Proxy - Born to build better enterprise frameworks and apps</title>
   <meta charset="utf-8">
   <meta name="description" content="index.description">
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -52,7 +52,7 @@
       
         <li class="translations">
           <a class="nav-link">Languages</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/intro/index.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/intro/index.html">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/tutorials/proxy.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/tutorials/proxy.html">中文</a></li></ul>
         </li>
       
       <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
@@ -77,7 +77,7 @@
       
         <li class="translations">
           <a class="nav-link">Languages</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/intro/index.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/intro/index.html">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/tutorials/proxy.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/tutorials/proxy.html">中文</a></li></ul>
         </li>
       
     </ul>
@@ -178,31 +178,36 @@ mobileTrigger.onclick = function(e) {
   <div class="content">
     <div class="doc">
       <article class="markdown-body">
-        <h1>What is Egg?</h1>
-          <p><strong>Egg is born for building enterprise application and framework</strong>，we hope Egg will give birth to more application framework to help developers and developing team reduce development and maintenance costs.</p>
-<h2 id="design-principles"><a class="markdown-anchor" href="#design-principles">#</a> Design principles</h2>
-<p>Since we know well that enterprise applications need to consider how to balance the differences between different teams, seeking common ground while reserving differences in the pursuit of clarifying specification and cooperation, we focus on providing core features for Web development and a flexible and extensible plugin mechanism instead of giant bazaar mode which is popular in common Web frameworks (with integrated such as database, template engine, front-end framework and other functions). We will not make technical selection because default technical selection makes the scalability of the framework too poor to meet a variety of custom requirements. With the help of Egg, it is very easy for architects and technical leaders to build their own framework which is suitable for their business scenarios based on existing technology stack .</p>
-<p>The plugin mechanism of Egg is very extensible, <strong>one purpose for one plugin</strong>(Eg: <a href="https://mozilla.github.io/nunjucks" target="_blank" rel="noopener">Nunjucks</a> is encapsulated into <a href="https://github.com/eggjs/egg-view-nunjucks" target="_blank" rel="noopener">egg-view-nunjucks</a>, and MySQL is encapsulated into <a href="https://github.com/eggjs/egg-mysql" target="_blank" rel="noopener">egg-mysql</a>). Aggregating the plugins and customizing the configurations according to their own business scenarios greatly reduces the development cost.</p>
-<p>Egg is a convention-over-configuration framework, follows the <a href="../advanced/loader.html">Loader</a> to do the development, it helps to reduce the cost of learning. Developers no longer work as 'nails'. The cost of communication is very high for a team without convention. it is easy to get fault without convention. However convention is not equal to diffcult extension, instead, Egg does well in extension part, you can build your own framework according to team convention.  <a href="../advanced/loader.html">Loader</a> can help load different default configuration in different environment, Egg default convention can also be covered by your own.</p>
-<h2 id="differences-between-community-framework"><a class="markdown-anchor" href="#differences-between-community-framework">#</a> Differences Between Community Framework</h2>
-<p><a href="http://expressjs.com" target="_blank" rel="noopener">Express</a> is well used in Node.js community, it is easy and extensible, fit personal project a lot. However, without default convention, standard mvc model has lots of strange impl which would lead to misunderstandings. Egg's teamwork cost is really low by following convention convention-over-configuration.</p>
-<p><a href="http://sailsjs.com" target="_blank" rel="noopener">Sails</a> is a framework that also follows convention-over-configuration,it does well in extensible work. Compared with Egg, <a href="http://sailsjs.com" target="_blank" rel="noopener">Sails</a> supports blueprint REST API, <a href="https://github.com/balderdashy/waterline" target="_blank" rel="noopener">WaterLine</a> , Frontend integration, WebSocket and so on, all of these are provided by <a href="http://sailsjs.com" target="_blank" rel="noopener">Sails</a>. Egg does not provide these functions, it only has integration of different functional extensions, such as egg-blueprint, egg-waterline, if you use sails-egg to integrate these extensions, <a href="http://sailsjs.com" target="_blank" rel="noopener">Sails</a> can be replaced.</p>
-<h2 id="features"><a class="markdown-anchor" href="#features">#</a> Features</h2>
-<ul>
-<li>Provide capability to <a href="../advanced/framework.html">customizd framework</a> base on Egg</li>
-<li>Highly extensible <a href="../basics/plugin.html">plugin mechanism</a></li>
-<li>Built-in <a href="../advanced/cluster-client.html">cluster</a></li>
-<li>Based on <a href="http://koajs.com" target="_blank" rel="noopener">Koa</a> with high performance</li>
-<li>Stable core framework with high test coverage</li>
-<li><a href="../tutorials/progressive.html">Progressive development</a></li>
-</ul>
+        <h1>Behind a Proxy</h1>
+          <p>Generally, our services will not directly accept external requests, but will deploy the services behind the access layer, thus achieving load balancing of multiple machines and smooth distribution of services to ensure high availability.</p>
+<p>In this scenario, we can't directly get the connection to the real user request, so we can't confirm the user's real IP, request protocol, or even the requested host. To solve this problem, the framework provides a set of configuration items by default for developers to configure to enable the application layer to obtain real user request information based on the agreement(de facto) with the access layer.</p>
+<h2 id="enable-proxy-mode"><a class="markdown-anchor" href="#enable-proxy-mode">#</a> Enable Proxy Mode</h2>
+<p>The proxy mode can be enabled by <code>config.proxy = true</code>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.proxy = <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
+<p>Note that after this mode is enabled, the application defaults to being behind the reverse proxy. It will support the request header of the resolved protocol to obtain the real IP, protocol and host of the client. If your service is not deployed behind a reverse proxy, do not enable this configuration in case a malicious user falsifies information such as requesting IP.</p>
+<h3 id="configipheaders"><a class="markdown-anchor" href="#configipheaders">#</a> <code>config.ipHeaders</code></h3>
+<p>When the proxy configuration is enabled, the app parses the <a href="https://en.wikipedia.org/wiki/X-Forwarded-For" target="_blank" rel="noopener">X-Forwarded-For</a> request header to get the real IP of the client. If your reverse proxy passes this information through other request headers, it can be configured via <code>config.ipHeaders</code>, which supports multiple headers (comma separated).</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.ipHeaders = <span class="string">'X-Real-Ip, X-Forwarded-For'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="configmaxproxycount"><a class="markdown-anchor" href="#configmaxproxycount">#</a> <code>config.maxProxyCount</code></h3>
+<p>The general format of the <code>X-Forwarded-For</code> field is:</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">X-Forwarded-For: client, proxy1, proxy2</span><br></pre></td></tr></table></figure>
+<p>We can use the first IP address as the real IP adderess of the request, but if a malicious user passes the <code>X-Forwarded-For</code> header in the request to spoof it after some reverse proxy, it will cause <code>X-Forwarded-For</code> to take The value obtained is inaccurate and can be used to spoof the request IP address, breaking some IP restrictions of the application layer.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">X-Forwarded-For: fake, client, proxy1, proxy2</span><br></pre></td></tr></table></figure>
+<p>In order to avoid this problem, we can configure the number of reverse proxies through <code>config.maxProxyCount</code>, so the fake IP address passed by the user will be ignored. For example, if we deploy the application behind a unified access layer (such as Alibaba Cloud SLB, Amazon ELB), we can configure this configuration to <code>1</code> so that users cannot forge IP addresses through the <code>X-Forwarded-For</code> request header.</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.maxProxyCount = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="configprotocolheaders"><a class="markdown-anchor" href="#configprotocolheaders">#</a> <code>config.protocolHeaders</code></h3>
+<p>When the proxy configuration is enabled, the application will parse the [X-Forwarded-Proto] (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Proto) request header to get the client's Real access protocol. If your reverse proxy passes this information through other request headers, it can be configured via <code>config.protocolHeaders</code>, which supports multiple headers (comma separated).</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.protocolHeaders = <span class="string">'X-Real-Proto, X-Forwarded-Proto'</span>;</span><br></pre></td></tr></table></figure>
+<h3 id="confighostheaders"><a class="markdown-anchor" href="#confighostheaders">#</a> <code>config.hostHeaders</code></h3>
+<p>When the proxy configuration is enabled, the application still reads <code>host</code> directly to get the requested domain name. Most of the reverse proxy does not modify this value. But maybe some reverse proxy will pass the client's real access via [X-Forwarded-Host] (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host) The domain name can be configured via <code>config.hostHeaders</code>, which supports multiple headers (comma separated).</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.default.js</span></span><br><span class="line"></span><br><span class="line">exports.hostHeaders = <span class="string">'X-Forwarded-Host'</span>;</span><br></pre></td></tr></table></figure>
     
         </article>  
       </div>      
   </div>
 
   <div class="toc" id="toc">
-  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#design-principles"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Design principles</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#differences-between-community-framework"><span class="toc-detail-number">2.</span> <span class="toc-detail-text"># Differences Between Community Framework</span></a></li><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#features"><span class="toc-detail-number">3.</span> <span class="toc-detail-text"># Features</span></a></li></ol>
+  <ol class="toc-detail"><li class="toc-detail-item toc-detail-level-2"><a class="toc-detail-link" href="#enable-proxy-mode"><span class="toc-detail-number">1.</span> <span class="toc-detail-text"># Enable Proxy Mode</span></a><ol class="toc-detail-child"><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configipheaders"><span class="toc-detail-number">1.1.</span> <span class="toc-detail-text"># config.ipHeaders</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configmaxproxycount"><span class="toc-detail-number">1.2.</span> <span class="toc-detail-text"># config.maxProxyCount</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#configprotocolheaders"><span class="toc-detail-number">1.3.</span> <span class="toc-detail-text"># config.protocolHeaders</span></a></li><li class="toc-detail-item toc-detail-level-3"><a class="toc-detail-link" href="#confighostheaders"><span class="toc-detail-number">1.4.</span> <span class="toc-detail-text"># config.hostHeaders</span></a></li></ol></li></ol>
 </div>
 
 <script>
