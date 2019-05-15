@@ -214,7 +214,9 @@ mobileTrigger.onclick = function(e) {
 <li><code>--title=egg-server-showcase</code> convenient for <code>ps + grep</code>, default to <code>egg-server-${appname}</code>.</li>
 <li><code>--framework=yadan</code> config <code>egg.framework</code> at <code>package.json</code> or pass this args, when you are using <a href="../advanced/framework.html">Custom Framework</a>.</li>
 <li><code>--ignore-stderr</code> ignore the std err at start up。</li>
-<li>support all options from <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="noopener">egg-cluster</a>, such as <code>--https</code>.</li>
+<li><code>--https.key</code> specify the https key full path, if start the server with https.</li>
+<li><code>--https.cert</code> specify the https certificate full path, if start the server with https.</li>
+<li>support all options from <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="noopener">egg-cluster</a>, such as <code>--port</code>.</li>
 </ul>
 <p>More about <a href="https://github.com/eggjs/egg-scripts" target="_blank" rel="noopener">egg-scripts</a> and <a href="https://github.com/eggjs/egg-cluster" target="_blank" rel="noopener">egg-cluster</a> documents.</p>
 <h4 id="dispatch-with-arguments"><a class="markdown-anchor" href="#dispatch-with-arguments">#</a> Dispatch with Arguments</h4>
