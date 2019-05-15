@@ -55,6 +55,8 @@
         Messenger
         </h2>
         
+            <div class="class-description"><p>Communication between app worker and agent worker by IPC channel</p></div>
+        
     
 </header>
 
@@ -63,6 +65,8 @@
     
         
 
+    
+    <h2>Constructor</h2>
     
 
     <h4 class="name" id="Messenger"><span class="type-signature"></span>new Messenger<span class="signature">()</span><span class="type-signature"></span></h4>
@@ -112,7 +116,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_core_messenger_index.js.html">lib/core/messenger/index.js</a>, <a href="lib_core_messenger_index.js.html#line6">line 6</a>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line13">line 13</a>
     </li></ul></dd>
     
 
@@ -286,7 +290,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line33">line 33</a>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line23">line 23</a>
     </li></ul></dd>
     
 
@@ -442,7 +446,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line23">line 23</a>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -834,6 +838,167 @@
 
 
 <div class="description">
+    <p>send message to one worker by random
+Notice: in single process mode, we only start one agent worker and one app worker</p>
+<ul>
+<li>if it's running in agent, it will send to one of app workers</li>
+<li>if it's running in app, it will send to agent</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line54">line 54</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendRandom"><span class="type-signature"></span>sendRandom<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
     <p>send message to one app worker by random</p>
 <ul>
 <li>if it's running in agent, it will send to one of app workers</li>
@@ -987,19 +1152,16 @@
 
     
 
-    <h4 class="name" id="sendRandom"><span class="type-signature"></span>sendRandom<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+    <h4 class="name" id="sendTo"><span class="type-signature"></span>sendTo<span class="signature">(pid, action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
 
     
 
 
 
 <div class="description">
-    <p>send message to one worker by random
-Notice: in single process mode, we only start one agent worker and one app worker</p>
-<ul>
-<li>if it's running in agent, it will send to one of app workers</li>
-<li>if it's running in app, it will send to agent</li>
-</ul>
+    <p>send message to the specified process
+Notice: in single process mode, it only can send to self process,
+and it will send to both agent and app's messengers.</p>
 </div>
 
 
@@ -1029,6 +1191,32 @@ Notice: in single process mode, we only start one agent worker and one app worke
     </thead>
 
     <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>pid</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>the process id of the receiver</p></td>
+        </tr>
+
     
 
         <tr>
@@ -1119,7 +1307,7 @@ Notice: in single process mode, we only start one agent worker and one app worke
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line54">line 54</a>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line38">line 38</a>
     </li></ul></dd>
     
 
@@ -1330,6 +1518,1742 @@ Notice: in single process mode, we only start one agent worker and one app worke
 
     
 
+    <h4 class="name" id="sendToAgent"><span class="type-signature"></span>sendToAgent<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to agent</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendToAgent"><span class="type-signature"></span>sendToAgent<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to agent</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line91">line 91</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendToApp"><span class="type-signature"></span>sendToApp<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to app</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line79">line 79</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendToApp"><span class="type-signature"></span>sendToApp<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to app</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Messenger
+        </h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="Messenger"><span class="type-signature"></span>new Messenger<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_index.js.html">lib/core/messenger/index.js</a>, <a href="lib_core_messenger_index.js.html#line6">line 6</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="broadcast"><span class="type-signature"></span>broadcast<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Send message to all agent and app</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="broadcast"><span class="type-signature"></span>broadcast<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Send message to all agent and app</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line33">line 33</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="send"><span class="type-signature"></span>send<span class="signature">(action, data, to)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>to</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>let master know how to send message</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line90">line 90</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="send"><span class="type-signature"></span>send<span class="signature">(action, data, to)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>to</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>let master know how to send message</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line103">line 103</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendRandom"><span class="type-signature"></span>sendRandom<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to one worker by random
+Notice: in single process mode, we only start one agent worker and one app worker</p>
+<ul>
+<li>if it's running in agent, it will send to one of app workers</li>
+<li>if it's running in app, it will send to agent</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line54">line 54</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendRandom"><span class="type-signature"></span>sendRandom<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to one app worker by random</p>
+<ul>
+<li>if it's running in agent, it will send to one of app workers</li>
+<li>if it's running in app, it will send to agent</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line65">line 65</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
     <h4 class="name" id="sendTo"><span class="type-signature"></span>sendTo<span class="signature">(pid, action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
 
     
@@ -1486,6 +3410,2294 @@ and it will send to both agent and app's messengers.</p>
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendTo"><span class="type-signature"></span>sendTo<span class="signature">(pid, action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to the specified process</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>pid</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>the process id of the receiver</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line47">line 47</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendToAgent"><span class="type-signature"></span>sendToAgent<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to agent</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line78">line 78</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendToAgent"><span class="type-signature"></span>sendToAgent<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to agent</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line91">line 91</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendToApp"><span class="type-signature"></span>sendToApp<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to app</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line79">line 79</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendToApp"><span class="type-signature"></span>sendToApp<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to app</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line66">line 66</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Messenger
+        </h2>
+        
+            <div class="class-description"><p>Communication between app worker and agent worker with EventEmitter</p></div>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+    <h2>Constructor</h2>
+    
+
+    <h4 class="name" id="Messenger"><span class="type-signature"></span>new Messenger<span class="signature">()</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line12">line 12</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="broadcast"><span class="type-signature"></span>broadcast<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Send message to all agent and app</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="broadcast"><span class="type-signature"></span>broadcast<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>Send message to all agent and app</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line33">line 33</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="send"><span class="type-signature"></span>send<span class="signature">(action, data, to)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>to</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>let master know how to send message</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line90">line 90</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="send"><span class="type-signature"></span>send<span class="signature">(action, data, to)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>to</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>let master know how to send message</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line103">line 103</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendRandom"><span class="type-signature"></span>sendRandom<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to one worker by random
+Notice: in single process mode, we only start one agent worker and one app worker</p>
+<ul>
+<li>if it's running in agent, it will send to one of app workers</li>
+<li>if it's running in app, it will send to agent</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line54">line 54</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendRandom"><span class="type-signature"></span>sendRandom<span class="signature">(action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to one app worker by random</p>
+<ul>
+<li>if it's running in agent, it will send to one of app workers</li>
+<li>if it's running in app, it will send to agent</li>
+</ul>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line65">line 65</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendTo"><span class="type-signature"></span>sendTo<span class="signature">(pid, action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to the specified process
+Notice: in single process mode, it only can send to self process,
+and it will send to both agent and app's messengers.</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>pid</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>the process id of the receiver</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_local.js.html">lib/core/messenger/local.js</a>, <a href="lib_core_messenger_local.js.html#line38">line 38</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="sendTo"><span class="type-signature"></span>sendTo<span class="signature">(pid, action, data)</span><span class="type-signature"> &rarr; {<a href="Messenger.html">Messenger</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    <p>send message to the specified process</p>
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>pid</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>the process id of the receiver</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>action</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message key</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name">
+                  
+                  <code>data</code>
+                  
+                  
+                </td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            <td class="description last"><p>message value</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="lib_core_messenger_ipc.js.html">lib/core/messenger/ipc.js</a>, <a href="lib_core_messenger_ipc.js.html#line47">line 47</a>
     </li></ul></dd>
     
 
@@ -2151,7 +6363,7 @@ and it will send to both agent and app's messengers.</p>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.1</a> on Fri May 10 2019 02:50:11 GMT+0000 (UTC) using the Minami theme.
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.2</a> on Wed May 15 2019 05:42:04 GMT+0000 (UTC) using the Minami theme.
 </footer>
 
 <script>prettyPrint();</script>
