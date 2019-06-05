@@ -235,7 +235,7 @@ All characters will be escaped to <code>\x</code> if there are not in whitelist,
 If you need to output a JSON string for use in JavaScript, please use <code>helper.sjson(variable name)</code> to escape.</p>
 <p><strong>The processing process is more complicated, the performance loss is larger, please use only if necessary</strong></p>
 <p>Example:</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="built_in">window</span>.locals = &#123;&#123; helper.sjson(locals) &#125;&#125;;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">window</span>.locals = &#123;&#123; helper.sjson(locals) &#125;&#125;;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="stored-xss"><a class="markdown-anchor" href="#stored-xss">#</a> Stored XSS</h3>
 <p>Stored XSS attacks are stored on the server by submitting content with malicious scripts that will be launched when others see the content. The content is typically edited through some rich text editors, and it is easy to insert dangerous code.</p>
 <h4 id="prevention-2"><a class="markdown-anchor" href="#prevention-2">#</a> Prevention</h4>

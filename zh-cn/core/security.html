@@ -233,7 +233,7 @@ mobileTrigger.onclick = function(e) {
 若存在模板中输出一个 JSON 字符串给 JavaScript 使用的场景，请使用 <code>helper.sjson(变量名)</code> 进行转义。</p>
 <p><strong>处理过程较复杂，性能损耗较大，请仅在必要时使用。</strong></p>
 <p>实例:</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="javascript">  <span class="built_in">window</span>.locals = &#123;&#123; helper.sjson(locals) &#125;&#125;;</span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="javascript">  <span class="built_in">window</span>.locals = &#123;&#123; helper.sjson(locals) &#125;&#125;;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="stored-xss"><a class="markdown-anchor" href="#stored-xss">#</a> Stored XSS</h3>
 <p>基于存储的 XSS 攻击，是通过提交带有恶意脚本的内容存储在服务器上，当其他人看到这些内容时发起 Web 攻击。一般提交的内容都是通过一些富文本编辑器编辑的，很容易插入危险代码。</p>
 <h4 id="防范方式-2"><a class="markdown-anchor" href="#防范方式-2">#</a> 防范方式</h4>
