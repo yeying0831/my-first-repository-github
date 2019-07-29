@@ -183,7 +183,7 @@ mobileTrigger.onclick = function(e) {
 <p>Node.js is an asynchronous world, asynchronous programming models in official API support are all in callback form ，it brings many problems. For example:</p>
 <ul>
 <li><a href="http://callbackhell.com/" target="_blank" rel="noopener">callback hell</a>: Notorious &quot;callback hell&quot;。</li>
-<li><a href="https://oren.github.io/blog/zalgo.html" target="_blank" rel="noopener">release zalgo</a>: Asynchronous functions may call callback function response data synchronously which would bring inconsistency.</li>
+<li><a href="https://oren.github.io/#/articles/zalgo/" target="_blank" rel="noopener">release zalgo</a>: Asynchronous functions may call callback function response data synchronously which would bring inconsistency.</li>
 </ul>
 <p>The community has provided many solutions for the problems, the winner is Promise, it is built into ECMAScript 2015. On the basis of Promise, and with the ability of Generator to switch context, we can write asynchronous code in synchronous way with <a href="https://github.com/tj/co" target="_blank" rel="noopener">co</a> and other third party libraries. Meanwhile <a href="https://github.com/tc39/ecmascript-asyncawait" target="_blank" rel="noopener">async function</a>, the official solution has been published in ECMAScript 2017 and landed in Node.js 8.</p>
 <h3 id="async-function"><a class="markdown-anchor" href="#async-function">#</a> Async Function</h3>
