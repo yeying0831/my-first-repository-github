@@ -282,7 +282,8 @@ mobileTrigger.onclick = function(e) {
 <p><code>npm scripts</code> 配置的 <code>start</code> 指令无需改变，通过 <code>egg-scripts</code> 即可。</p>
 <p>启动命令需使用 <code>npm start</code>，因为 <code>npm scripts</code> 执行时会把 <code>node_module/.bin</code> 目录加入 <code>PATH</code>，故会优先使用当前项目执行的 Node 版本。</p>
 <p>启动后会看到 master 日志包含以下内容：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ [master] node version v8.9.4</span><br><span class="line">$ [master] alinode version v3.8.4</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ [master] node version v8.9.4</span><br><span class="line">$ [master] alinode version v3.8.4</span><br><span class="line">$ [Tue Aug 06 2019 15:54:25 GMT+0800 (China Standard Time)] Connecting to wss://agentserver.node.aliyun.com:8080...</span><br><span class="line">$ [Tue Aug 06 2019 15:54:26 GMT+0800 (China Standard Time)] agent register ok.</span><br></pre></td></tr></table></figure>
+<p>其中 <code>agent register ok.</code> 表示配置的 <code>egg-alinode</code> 正确连接上了 Node.js 性能平台服务器。</p>
 <h4 id="访问控制台"><a class="markdown-anchor" href="#访问控制台">#</a> 访问控制台</h4>
 <p>控制台地址：<a href="https://node.console.aliyun.com" target="_blank" rel="noopener">https://node.console.aliyun.com</a></p>
     
