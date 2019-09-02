@@ -186,7 +186,7 @@ mobileTrigger.onclick = function(e) {
 <p>那么有没有更好的方法呢？答案是肯定的，我们提供一种新的模式来降低这类客户端封装的复杂度。通过建立 Agent 和 Worker 的 socket 直连跳过 Master 的中转。Agent 作为对外的门面维持多个 Worker 进程的共享连接。</p>
 <h2 id="核心思想"><a class="markdown-anchor" href="#核心思想">#</a> 核心思想</h2>
 <ul>
-<li>受到 <a href="http://www.cs.wustl.edu/~schmidt/PDF/lf.pdf" target="_blank" rel="noopener">Leader/Follower</a> 模式的启发。</li>
+<li>受到 <a href="https://www.dre.vanderbilt.edu/~schmidt/PDF/lf.pdf" target="_blank" rel="noopener">Leader/Follower</a> 模式的启发。</li>
 <li>客户端会被区分为两种角色：
 <ul>
 <li>Leader: 负责和远程服务端维持连接，对于同一类的客户端只有一个 Leader。</li>
