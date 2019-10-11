@@ -410,7 +410,7 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 <p>尽管 HTTPS 并非绝对安全，掌握根证书的机构、掌握加密算法的组织同样可以进行中间人形式的攻击。不过HTTPS是现行架构下最安全的解决方案，并且它大幅增加了中间人攻击的成本。</p>
 <p>因此，请各位使用 Egg 框架开发网站的开发者，务必推动自己的网站升级到 HTTPS。</p>
 <p>对于 HTTPS 来讲，还有一点要注意的是 HTTP 严格传输安全（HSTS），如果不使用 HSTS，当用户在浏览器中输入网址时没有加 HTTPS，浏览器会默认使用 HTTP 访问</p>
-<p>框架提供了 <code>hsts Strict-Transport-Security</code> 这个头的默认开启。让 HTTPS 站点不跳转到 HTTP，如果站点支持 HTTPS，请一定要开启。</p>
+<p>框架默认关闭了 <code>hsts Strict-Transport-Security</code>。使得 HTTPS 站点不跳转到 HTTP，如果站点支持 HTTPS，请一定要开启。</p>
 <p>如果我们的Web 站点是 http 站点，需要关闭这个头。配置如下：</p>
 <ul>
 <li>maxAge 默认一年 <code>365 * 24 * 3600</code>。</li>

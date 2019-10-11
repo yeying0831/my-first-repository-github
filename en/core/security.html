@@ -419,7 +419,7 @@ Use SHTML to output HTML tags, while executing XSS filtering, then it can filter
 <p>Although HTTPS is not absolute security, the organization that holds the root certificate and the organization that controls the encryption algorithm can also conduct a man-in-middle attack. But HTTPS is the most secure solution under the current architecture, and it significantly increases the cost of man-in-middle attack.</p>
 <p>So, if you use the Egg framework to develop web site developers, please be sure to update your website to HTTPS.</p>
 <p>For HTTPS, one should pay attention to is the HTTP transport security (HSTS) strictly, if you don't use HSTS, when a user input url in the browser without HTTPS, the browser will use HTTP access by default.</p>
-<p>Framework provides <code>HSTS Strict-Transport-security</code>, this header will be opened by default, then let the HTTPS site not redirect to HTTP. If your site supports HTTPS, be sure to open it.If our Web site is an HTTP site, we need to close this header.</p>
+<p>Framework has disableb <code>HSTS Strict-Transport-security</code> by default, then make the HTTPS site not redirect to HTTP. If your site supports HTTPS, be sure to open it.If our Web site is an HTTP site, we need to close this header.</p>
 <p>The configuration is as follows:</p>
 <ul>
 <li>maxAge one yeah for default <code>365 * 24 * 3600</code>。</li>
