@@ -1407,22 +1407,6 @@ aside li {
 .banner .banner-button {
   padding-top: 50px;
 }
-.banner .banner-promo-link {
-  padding: 40px 0 0;
-}
-.banner .banner-promo-link img {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 5px;
-}
-.banner .banner-promo-link a {
-  color: #6E717C;
-  display: inline-block;
-  font-size: 16px;
-}
-.banner .banner-promo-link a:hover {
-  color: #148a1a;
-}
 .info h3 {
   font-weight: 500;
   color: #333333;
