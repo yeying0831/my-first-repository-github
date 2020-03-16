@@ -52,7 +52,19 @@
       
         <li class="translations">
           <a class="nav-link">Languages</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/basics/router.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/basics/router.html">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a onclick="rememberLang('en')" id="en" href="/en/basics/router.html" style="color: #22ab28">English</a></li><li><a onclick="rememberLang('zh-cn')" id="zh-cn" href="/zh-cn/basics/router.html">中文</a></li></ul><script type="text/javascript">
+    function rememberLang(lang){
+      localStorage.setItem('lang', lang)
+    }
+
+    var l = localStorage.getItem('lang') || navigator.language.toLowerCase();
+    var clientLanRef = {"zh-cn":"中文","en":"English"};
+    var pageLang = "en"; 
+    
+    if(location.pathname === '/' && !!clientLanRef[l] && l !== pageLang) {
+      location.href='/' + l + '/'
+    }
+</script>
         </li>
       
       <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
@@ -77,7 +89,19 @@
       
         <li class="translations">
           <a class="nav-link">Languages</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/basics/router.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/basics/router.html">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a onclick="rememberLang('en')" id="en" href="/en/basics/router.html" style="color: #22ab28">English</a></li><li><a onclick="rememberLang('zh-cn')" id="zh-cn" href="/zh-cn/basics/router.html">中文</a></li></ul><script type="text/javascript">
+    function rememberLang(lang){
+      localStorage.setItem('lang', lang)
+    }
+
+    var l = localStorage.getItem('lang') || navigator.language.toLowerCase();
+    var clientLanRef = {"zh-cn":"中文","en":"English"};
+    var pageLang = "en"; 
+    
+    if(location.pathname === '/' && !!clientLanRef[l] && l !== pageLang) {
+      location.href='/' + l + '/'
+    }
+</script>
         </li>
       
     </ul>
@@ -118,10 +142,10 @@ mobileAside.onclick = function(e) {
   const targetId = e.target.id;
   if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
     const title = targetId.replace('title-', '').replace('collapse-icon-', '');
-    try { 
-      // the the browser may have no localStroage or JSON.parse may throw exception.
+    try {
+      // the browser may have no localStorage or JSON.parse may throw exception.
       const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
-        
+
       // current menu status
       const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
 
@@ -147,8 +171,8 @@ mobileTrigger.onclick = function(e) {
 (function() {
   // save data to localStorage because the page will refresh when user change the url.
   let menuInfo;
-  try { 
-    // the the browser may have no localStroage or JSON.parse may throw exception.
+  try {
+    // the browser may have no localStorage or JSON.parse may throw exception.
     menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
     if (!menuInfo) {
       menuInfo = {};
@@ -229,7 +253,7 @@ mobileTrigger.onclick = function(e) {
 <p>Here are some examples of writing routing rules:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; router, controller &#125; = app;</span><br><span class="line">  router.get(<span class="string">'/home'</span>, controller.home);</span><br><span class="line">  router.get(<span class="string">'/user/:id'</span>, controller.user.page);</span><br><span class="line">  router.post(<span class="string">'/admin'</span>, isAdmin, controller.admin);</span><br><span class="line">  router.post(<span class="string">'/user'</span>, isLoginUser, hasAdminPermission, controller.user.create);</span><br><span class="line">  router.post(<span class="string">'/api/v1/comments'</span>, controller.v1.comments.create); <span class="comment">// app/controller/v1/comments.js</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <h3 id="restful-style-url-definition"><a class="markdown-anchor" href="#restful-style-url-definition">#</a> RESTful Style URL Definition</h3>
-<p>We provide <code>app.resources('routerName', 'pathMatch', 'controller')</code> to generate <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete" target="_blank" rel="noopener">CRUD</a> structures on a path for convenience if you prefer the RESTful style URL definition.</p>
+<p>We provide <code>app.router.resources('routerName', 'pathMatch', 'controller')</code> to generate <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete" target="_blank" rel="noopener">CRUD</a> structures on a path for convenience if you prefer the RESTful style URL definition.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app/router.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; router, controller &#125; = app;</span><br><span class="line">  router.resources(<span class="string">'posts'</span>, <span class="string">'/posts'</span>, controller.posts);</span><br><span class="line">  router.resources(<span class="string">'users'</span>, <span class="string">'/api/v1/users'</span>, controller.v1.users); <span class="comment">// app/controller/v1/users.js</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>The codes above produce a bunch of CRUD path structures for Controller <code>app/controller/posts.js</code>, and the only thing you should do next is to implement related functions in <code>posts.js</code>.</p>
 <table>

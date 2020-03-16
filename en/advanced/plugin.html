@@ -52,7 +52,19 @@
       
         <li class="translations">
           <a class="nav-link">Languages</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/advanced/plugin.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/advanced/plugin.html">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a onclick="rememberLang('en')" id="en" href="/en/advanced/plugin.html" style="color: #22ab28">English</a></li><li><a onclick="rememberLang('zh-cn')" id="zh-cn" href="/zh-cn/advanced/plugin.html">中文</a></li></ul><script type="text/javascript">
+    function rememberLang(lang){
+      localStorage.setItem('lang', lang)
+    }
+
+    var l = localStorage.getItem('lang') || navigator.language.toLowerCase();
+    var clientLanRef = {"zh-cn":"中文","en":"English"};
+    var pageLang = "en"; 
+    
+    if(location.pathname === '/' && !!clientLanRef[l] && l !== pageLang) {
+      location.href='/' + l + '/'
+    }
+</script>
         </li>
       
       <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
@@ -77,7 +89,19 @@
       
         <li class="translations">
           <a class="nav-link">Languages</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/advanced/plugin.html" style="color: #22ab28">English</a></li><li><a id="zh-cn" href="/zh-cn/advanced/plugin.html">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a onclick="rememberLang('en')" id="en" href="/en/advanced/plugin.html" style="color: #22ab28">English</a></li><li><a onclick="rememberLang('zh-cn')" id="zh-cn" href="/zh-cn/advanced/plugin.html">中文</a></li></ul><script type="text/javascript">
+    function rememberLang(lang){
+      localStorage.setItem('lang', lang)
+    }
+
+    var l = localStorage.getItem('lang') || navigator.language.toLowerCase();
+    var clientLanRef = {"zh-cn":"中文","en":"English"};
+    var pageLang = "en"; 
+    
+    if(location.pathname === '/' && !!clientLanRef[l] && l !== pageLang) {
+      location.href='/' + l + '/'
+    }
+</script>
         </li>
       
     </ul>
@@ -118,10 +142,10 @@ mobileAside.onclick = function(e) {
   const targetId = e.target.id;
   if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
     const title = targetId.replace('title-', '').replace('collapse-icon-', '');
-    try { 
-      // the the browser may have no localStroage or JSON.parse may throw exception.
+    try {
+      // the browser may have no localStorage or JSON.parse may throw exception.
       const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
-        
+
       // current menu status
       const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
 
@@ -147,8 +171,8 @@ mobileTrigger.onclick = function(e) {
 (function() {
   // save data to localStorage because the page will refresh when user change the url.
   let menuInfo;
-  try { 
-    // the the browser may have no localStroage or JSON.parse may throw exception.
+  try {
+    // the browser may have no localStorage or JSON.parse may throw exception.
     menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
     if (!menuInfo) {
       menuInfo = {};
@@ -233,7 +257,7 @@ mobileTrigger.onclick = function(e) {
 </ol>
 <h2 id="dependencies-management-of-plugins"><a class="markdown-anchor" href="#dependencies-management-of-plugins">#</a> Dependencies Management of Plugins</h2>
 <p>The dependencies are managed by plugin himself, which is different from middlewares. Before loading plugins, application will read <code>eggPlugin &gt; dependencies</code> and <code>eggPlugin &gt; optionalDependencies</code> from <code>package.json</code>, and then sort out the loading orders according to their relationships, for example, the loading order of the following plugins is <code>c =&gt; b =&gt; a</code>:</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">// plugin a</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-a"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"a"</span>,</span><br><span class="line">    <span class="attr">"dependencies"</span>: [ <span class="string">"b"</span> ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// plugin b</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-b"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"b"</span>,</span><br><span class="line">    <span class="attr">"optionalDependencies"</span>: [ <span class="string">"c"</span> ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// plugin c</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-c"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"c"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// plugin a</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-a"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"a"</span>,</span><br><span class="line">    <span class="attr">"dependencies"</span>: [ <span class="string">"b"</span> ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// plugin b</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-b"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"b"</span>,</span><br><span class="line">    <span class="attr">"optionalDependencies"</span>: [ <span class="string">"c"</span> ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// plugin c</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-c"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"c"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>Attention: The values in <code>dependencies</code> and <code>optionalDependencies</code> are the <code>eggPlugin.name</code> of plugins, not <code>package.name</code>.</strong></p>
 <p>The <code>dependencies</code> and <code>optionalDependencies</code> are learnt from <code>npm</code>, most time we use <code>dependencies</code>, which is recommended. There are about two situations to apply the <code>optionalDependencies</code>:</p>
 <ul>
@@ -299,7 +323,7 @@ mobileTrigger.onclick = function(e) {
 <p>If each plugin makes their own implementation, all sorts of configs and  initializations will be chaotic. So the framework supplies the <code>app.addSingleton(name, creator)</code> API to unify the creation of this kind of services. Note that while using the <code>app.addSingleton(name, creator)</code> method, the configuration file must have the <code>client</code> or <code>clients</code> key configuration as the <code>config</code> to the <code>creator</code> function.</p>
 <h4 id="ways-of-writing-plugins"><a class="markdown-anchor" href="#ways-of-writing-plugins">#</a> Ways of writing plugins</h4>
 <p>We simplify the <a href="https://github.com/eggjs/egg-mysql" target="_blank" rel="noopener">egg-mysql</a> plugin to see how to write it:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// egg-mysql/app.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// The first parameter mysql defines the field  mounted to app, we can access MySQL singleton instance via `app.mysql`</span></span><br><span class="line">  <span class="comment">// The second parameter createMysql accepts two parameters (config, app), and then returns a MySQL instance</span></span><br><span class="line">  app.addSingleton(<span class="string">'mysql'</span>, createMysql);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param  &#123;Object&#125; config   The config is processed by the framework. If the application is configured with multiple MySQL instances, each config would be passed in and call multiple createMysql</span></span><br><span class="line"><span class="comment"> * @param  &#123;Application&#125; app  the current application</span></span><br><span class="line"><span class="comment"> * @return &#123;Object&#125;          return the created MySQL instance</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createMysql</span>(<span class="params">config, app</span>) </span>&#123;</span><br><span class="line">  assert(config.host &amp;&amp; config.port &amp;&amp; config.user &amp;&amp; config.database);</span><br><span class="line">  <span class="comment">// create instance</span></span><br><span class="line">  <span class="keyword">const</span> client = <span class="keyword">new</span> Mysql(config);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// check before start the application</span></span><br><span class="line">  app.beforeStart(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> rows = <span class="keyword">await</span> client.query(<span class="string">'select now() as currentTime;'</span>);</span><br><span class="line">    app.coreLogger.info(<span class="string">`[egg-mysql] init instance success, rds currentTime: <span class="subst">$&#123;rows[<span class="number">0</span>].currentTime&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> client;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// egg-mysql/app.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// The first parameter mysql defines the field  mounted to app, we can access MySQL singleton instance via `app.mysql`</span></span><br><span class="line">  <span class="comment">// The second parameter createMysql accepts two parameters (config, app), and then returns a MySQL instance</span></span><br><span class="line">  app.addSingleton(<span class="string">'mysql'</span>, createMysql);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;Object&#125;</span> </span>config   The config is processed by the framework. If the application is configured with multiple MySQL instances, each config would be passed in and call multiple createMysql</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;Application&#125;</span> </span>app  the current application</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;Object&#125;</span>          </span>return the created MySQL instance</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createMysql</span>(<span class="params">config, app</span>) </span>&#123;</span><br><span class="line">  assert(config.host &amp;&amp; config.port &amp;&amp; config.user &amp;&amp; config.database);</span><br><span class="line">  <span class="comment">// create instance</span></span><br><span class="line">  <span class="keyword">const</span> client = <span class="keyword">new</span> Mysql(config);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// check before start the application</span></span><br><span class="line">  app.beforeStart(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> rows = <span class="keyword">await</span> client.query(<span class="string">'select now() as currentTime;'</span>);</span><br><span class="line">    app.coreLogger.info(<span class="string">`[egg-mysql] init instance success, rds currentTime: <span class="subst">$&#123;rows[<span class="number">0</span>].currentTime&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> client;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>The initialization function also supports <code>Async function</code>, convenient for some special plugins that need to be asynchronous to get some configuration files.</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">createMysql</span>(<span class="params">config, app</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// get mysql configurations asynchronous</span></span><br><span class="line">  <span class="keyword">const</span> mysqlConfig = <span class="keyword">await</span> app.configManager.getMysqlConfig(config.mysql);</span><br><span class="line">  assert(mysqlConfig.host &amp;&amp; mysqlConfig.port &amp;&amp; mysqlConfig.user &amp;&amp; mysqlConfig.database);</span><br><span class="line">  <span class="comment">// create instance</span></span><br><span class="line">  <span class="keyword">const</span> client = <span class="keyword">new</span> Mysql(mysqlConfig);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// check before start the application</span></span><br><span class="line">  <span class="keyword">const</span> rows = <span class="keyword">await</span> client.query(<span class="string">'select now() as currentTime;'</span>);</span><br><span class="line">  app.coreLogger.info(<span class="string">`[egg-mysql] init instance success, rds currentTime: <span class="subst">$&#123;rows[<span class="number">0</span>].currentTime&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> client;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>As you can see, all we need to do for this plugin is passing the fields that need to be mounted and the corresponding initialization function. Framework will be in charge of managing all the configs and the ways to access the instances.</p>

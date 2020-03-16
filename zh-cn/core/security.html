@@ -52,7 +52,19 @@
       
         <li class="translations">
           <a class="nav-link">切换语言</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/core/security.html">English</a></li><li><a id="zh-cn" href="/zh-cn/core/security.html" style="color: #22ab28">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a onclick="rememberLang('en')" id="en" href="/en/core/security.html">English</a></li><li><a onclick="rememberLang('zh-cn')" id="zh-cn" href="/zh-cn/core/security.html" style="color: #22ab28">中文</a></li></ul><script type="text/javascript">
+    function rememberLang(lang){
+      localStorage.setItem('lang', lang)
+    }
+
+    var l = localStorage.getItem('lang') || navigator.language.toLowerCase();
+    var clientLanRef = {"zh-cn":"中文","en":"English"};
+    var pageLang = "zh-cn"; 
+    
+    if(location.pathname === '/' && !!clientLanRef[l] && l !== pageLang) {
+      location.href='/' + l + '/'
+    }
+</script>
         </li>
       
       <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
@@ -77,7 +89,19 @@
       
         <li class="translations">
           <a class="nav-link">切换语言</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/core/security.html">English</a></li><li><a id="zh-cn" href="/zh-cn/core/security.html" style="color: #22ab28">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a onclick="rememberLang('en')" id="en" href="/en/core/security.html">English</a></li><li><a onclick="rememberLang('zh-cn')" id="zh-cn" href="/zh-cn/core/security.html" style="color: #22ab28">中文</a></li></ul><script type="text/javascript">
+    function rememberLang(lang){
+      localStorage.setItem('lang', lang)
+    }
+
+    var l = localStorage.getItem('lang') || navigator.language.toLowerCase();
+    var clientLanRef = {"zh-cn":"中文","en":"English"};
+    var pageLang = "zh-cn"; 
+    
+    if(location.pathname === '/' && !!clientLanRef[l] && l !== pageLang) {
+      location.href='/' + l + '/'
+    }
+</script>
         </li>
       
     </ul>
@@ -118,10 +142,10 @@ mobileAside.onclick = function(e) {
   const targetId = e.target.id;
   if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
     const title = targetId.replace('title-', '').replace('collapse-icon-', '');
-    try { 
-      // the the browser may have no localStroage or JSON.parse may throw exception.
+    try {
+      // the browser may have no localStorage or JSON.parse may throw exception.
       const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
-        
+
       // current menu status
       const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
 
@@ -147,8 +171,8 @@ mobileTrigger.onclick = function(e) {
 (function() {
   // save data to localStorage because the page will refresh when user change the url.
   let menuInfo;
-  try { 
-    // the the browser may have no localStroage or JSON.parse may throw exception.
+  try {
+    // the browser may have no localStorage or JSON.parse may throw exception.
     menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
     if (!menuInfo) {
       menuInfo = {};
@@ -243,7 +267,7 @@ mobileTrigger.onclick = function(e) {
 <p><strong>由于是一个非常复杂的安全处理过程，对服务器处理性能一定影响，如果不是输出 HTML，请勿使用。</strong></p>
 <p>简单示例：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// js</span></span><br><span class="line"><span class="keyword">const</span> value = <span class="string">`&lt;a href="http://www.domain.com"&gt;google&lt;/a&gt;&lt;script&gt;evilcode…&lt;/script&gt;`</span>;</span><br></pre></td></tr></table></figure>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">// 模板</span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  &#123;&#123; helper.shtml(value) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">// =&gt; <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.domain.com"</span>&gt;</span>google<span class="tag">&lt;/<span class="name">a</span>&gt;</span>&amp;lt;script&amp;gt;evilcode…&amp;lt;/script&amp;gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line">// 模板</span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  &#123;&#123; helper.shtml(value) &#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br><span class="line">// =&gt; <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://www.domain.com"</span>&gt;</span>google<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>evilcode…<span class="symbol">&amp;lt;</span>/script<span class="symbol">&amp;gt;</span></span><br></pre></td></tr></table></figure>
 <p>shtml 在 <a href="https://github.com/leizongmin/js-xss/" target="_blank" rel="noopener">xss</a> 模块基础上增加了针对域名的过滤。</p>
 <ul>
 <li><a href="https://github.com/leizongmin/js-xss/blob/master/lib/default.js" target="_blank" rel="noopener">默认规则</a></li>
@@ -382,7 +406,7 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 <p>使用 surl</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"helper.surl($value)"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>output:</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://ww.safe.com&amp;lt;script&amp;gt;"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://ww.safe.com<span class="symbol">&amp;lt;</span>script<span class="symbol">&amp;gt;</span>"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="iframe-钓鱼"><a class="markdown-anchor" href="#iframe-钓鱼">#</a> iframe 钓鱼</h3>
 <p><a href="https://www.owasp.org/index.php/Cross_Frame_Scripting" target="_blank" rel="noopener">iframe 钓鱼</a>，通过内嵌 iframe 到被攻击的网页中，攻击者可以引导用户去点击 iframe 指向的危险网站，甚至遮盖，影响网站的正常功能，劫持用户的点击操作。</p>
 <p>框架提供了 <code>X-Frame-Options</code> 这个安全头来防止 iframe 钓鱼。默认值为 SAMEORIGIN，只允许同域把本页面当作 iframe 嵌入。</p>
@@ -443,7 +467,7 @@ CSRF 攻击会对网站发起恶意伪造的请求，严重影响网站的安全
 <p>这个函数提供了模板预处理－自动插入 nonce 的能力，如果网站开启了 CSP 安全头，并且想使用 <code>CSP 2.0 nonce</code> 特性，可以使用这个函数。参考 <a href="https://www.zhihu.com/question/21979782" target="_blank" rel="noopener">CSP 是什么</a>。</p>
 <p>这个函数会扫描模板中的 script 标签，并自动加上 nonce 头。</p>
 <h3 id="appinjecthijackingdefensestr"><a class="markdown-anchor" href="#appinjecthijackingdefensestr">#</a> app.injectHijackingDefense(str)</h3>
-<p>对于没有开启 HTTPS 的网站，这个函数可以有限的防止运营商劫持。</p>
+<p>对于没有开启 HTTPS 的网站，这个函数可以有效的防止运营商劫持。</p>
     
         </article>  
       </div>      

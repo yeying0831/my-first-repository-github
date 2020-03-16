@@ -52,7 +52,19 @@
       
         <li class="translations">
           <a class="nav-link">切换语言</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/advanced/plugin.html">English</a></li><li><a id="zh-cn" href="/zh-cn/advanced/plugin.html" style="color: #22ab28">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a onclick="rememberLang('en')" id="en" href="/en/advanced/plugin.html">English</a></li><li><a onclick="rememberLang('zh-cn')" id="zh-cn" href="/zh-cn/advanced/plugin.html" style="color: #22ab28">中文</a></li></ul><script type="text/javascript">
+    function rememberLang(lang){
+      localStorage.setItem('lang', lang)
+    }
+
+    var l = localStorage.getItem('lang') || navigator.language.toLowerCase();
+    var clientLanRef = {"zh-cn":"中文","en":"English"};
+    var pageLang = "zh-cn"; 
+    
+    if(location.pathname === '/' && !!clientLanRef[l] && l !== pageLang) {
+      location.href='/' + l + '/'
+    }
+</script>
         </li>
       
       <li><iframe src="https://ghbtns.com/github-btn.html?user=eggjs&repo=egg&type=star&count=true" frameborder="0" scrolling="0" width="150px" height="20px"></iframe></li>
@@ -77,7 +89,19 @@
       
         <li class="translations">
           <a class="nav-link">切换语言</a>
-          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a id="en" href="/en/advanced/plugin.html">English</a></li><li><a id="zh-cn" href="/zh-cn/advanced/plugin.html" style="color: #22ab28">中文</a></li></ul>
+          <span class="arrow"></span><ul id="dropdownContent" class="dropdown-content"><li><a onclick="rememberLang('en')" id="en" href="/en/advanced/plugin.html">English</a></li><li><a onclick="rememberLang('zh-cn')" id="zh-cn" href="/zh-cn/advanced/plugin.html" style="color: #22ab28">中文</a></li></ul><script type="text/javascript">
+    function rememberLang(lang){
+      localStorage.setItem('lang', lang)
+    }
+
+    var l = localStorage.getItem('lang') || navigator.language.toLowerCase();
+    var clientLanRef = {"zh-cn":"中文","en":"English"};
+    var pageLang = "zh-cn"; 
+    
+    if(location.pathname === '/' && !!clientLanRef[l] && l !== pageLang) {
+      location.href='/' + l + '/'
+    }
+</script>
         </li>
       
     </ul>
@@ -118,10 +142,10 @@ mobileAside.onclick = function(e) {
   const targetId = e.target.id;
   if (targetId && (targetId.indexOf('title-') > -1 || targetId.indexOf('collapse-icon-') > -1)) {
     const title = targetId.replace('title-', '').replace('collapse-icon-', '');
-    try { 
-      // the the browser may have no localStroage or JSON.parse may throw exception.
+    try {
+      // the browser may have no localStorage or JSON.parse may throw exception.
       const menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
-        
+
       // current menu status
       const curClosed = menuInfo[title] ? menuInfo[title].closed : false; // default false
 
@@ -147,8 +171,8 @@ mobileTrigger.onclick = function(e) {
 (function() {
   // save data to localStorage because the page will refresh when user change the url.
   let menuInfo;
-  try { 
-    // the the browser may have no localStroage or JSON.parse may throw exception.
+  try {
+    // the browser may have no localStorage or JSON.parse may throw exception.
     menuInfo = JSON.parse(window.localStorage.getItem('menuInfo'));
     if (!menuInfo) {
       menuInfo = {};
@@ -233,7 +257,7 @@ mobileTrigger.onclick = function(e) {
 </ol>
 <h2 id="插件的依赖管理"><a class="markdown-anchor" href="#插件的依赖管理">#</a> 插件的依赖管理</h2>
 <p>和中间件不同，插件是自己管理依赖的。应用在加载所有插件前会预先从它们的 <code>package.json</code> 中读取 <code>eggPlugin &gt; dependencies</code> 和 <code>eggPlugin &gt; optionalDependencies</code> 节点，然后根据依赖关系计算出加载顺序，举个例子，下面三个插件的加载顺序就应该是 <code>c =&gt; b =&gt; a</code></p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line">// plugin a</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-a"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"a"</span>,</span><br><span class="line">    <span class="attr">"dependencies"</span>: [ <span class="string">"b"</span> ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// plugin b</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-b"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"b"</span>,</span><br><span class="line">    <span class="attr">"optionalDependencies"</span>: [ <span class="string">"c"</span> ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// plugin c</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-c"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"c"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// plugin a</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-a"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"a"</span>,</span><br><span class="line">    <span class="attr">"dependencies"</span>: [ <span class="string">"b"</span> ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// plugin b</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-b"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"b"</span>,</span><br><span class="line">    <span class="attr">"optionalDependencies"</span>: [ <span class="string">"c"</span> ]</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// plugin c</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"egg-plugin-c"</span>,</span><br><span class="line">  <span class="attr">"eggPlugin"</span>: &#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"c"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><strong>注意：<code>dependencies</code> 和 <code>optionalDependencies</code> 的取值是另一个插件的 <code>eggPlugin.name</code>，而不是 <code>package name</code>。</strong></p>
 <p><code>dependencies</code> 和 <code>optionalDependencies</code> 是从 <code>npm</code> 借鉴来的概念，大多数情况下我们都使用 <code>dependencies</code>，这也是我们最推荐的依赖方式。那什么时候可以用 <code>optionalDependencies</code> 呢？大致就两种：</p>
 <ul>
@@ -299,7 +323,7 @@ mobileTrigger.onclick = function(e) {
 <p>如果让插件各自实现，可能会出现各种奇怪的配置方式和初始化方式，所以框架提供了 <code>app.addSingleton(name, creator)</code> 方法来统一这一类服务的创建。需要注意的是在使用 <code>app.addSingleton(name, creator)</code> 方法时，配置文件中一定要有 <code>client</code> 或者 <code>clients</code> 为 key 的配置作为传入 <code>creator</code> 函数 的 <code>config</code>。</p>
 <h4 id="插件写法"><a class="markdown-anchor" href="#插件写法">#</a> 插件写法</h4>
 <p>我们将 <a href="https://github.com/eggjs/egg-mysql" target="_blank" rel="noopener">egg-mysql</a> 的实现简化之后来看看如何编写此类插件：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// egg-mysql/app.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 第一个参数 mysql 指定了挂载到 app 上的字段，我们可以通过 `app.mysql` 访问到 MySQL singleton 实例</span></span><br><span class="line">  <span class="comment">// 第二个参数 createMysql 接受两个参数(config, app)，并返回一个 MySQL 的实例</span></span><br><span class="line">  app.addSingleton(<span class="string">'mysql'</span>, createMysql);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * @param  &#123;Object&#125; config   框架处理之后的配置项，如果应用配置了多个 MySQL 实例，会将每一个配置项分别传入并调用多次 createMysql</span></span><br><span class="line"><span class="comment"> * @param  &#123;Application&#125; app 当前的应用</span></span><br><span class="line"><span class="comment"> * @return &#123;Object&#125;          返回创建的 MySQL 实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createMysql</span>(<span class="params">config, app</span>) </span>&#123;</span><br><span class="line">  assert(config.host &amp;&amp; config.port &amp;&amp; config.user &amp;&amp; config.database);</span><br><span class="line">  <span class="comment">// 创建实例</span></span><br><span class="line">  <span class="keyword">const</span> client = <span class="keyword">new</span> Mysql(config);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 做启动应用前的检查</span></span><br><span class="line">  app.beforeStart(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> rows = <span class="keyword">await</span> client.query(<span class="string">'select now() as currentTime;'</span>);</span><br><span class="line">    app.coreLogger.info(<span class="string">`[egg-mysql] init instance success, rds currentTime: <span class="subst">$&#123;rows[<span class="number">0</span>].currentTime&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> client;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// egg-mysql/app.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 第一个参数 mysql 指定了挂载到 app 上的字段，我们可以通过 `app.mysql` 访问到 MySQL singleton 实例</span></span><br><span class="line">  <span class="comment">// 第二个参数 createMysql 接受两个参数(config, app)，并返回一个 MySQL 的实例</span></span><br><span class="line">  app.addSingleton(<span class="string">'mysql'</span>, createMysql);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;Object&#125;</span> </span>config   框架处理之后的配置项，如果应用配置了多个 MySQL 实例，会将每一个配置项分别传入并调用多次 createMysql</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param  <span class="type">&#123;Application&#125;</span> </span>app 当前的应用</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return <span class="type">&#123;Object&#125;</span>          </span>返回创建的 MySQL 实例</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">createMysql</span>(<span class="params">config, app</span>) </span>&#123;</span><br><span class="line">  assert(config.host &amp;&amp; config.port &amp;&amp; config.user &amp;&amp; config.database);</span><br><span class="line">  <span class="comment">// 创建实例</span></span><br><span class="line">  <span class="keyword">const</span> client = <span class="keyword">new</span> Mysql(config);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 做启动应用前的检查</span></span><br><span class="line">  app.beforeStart(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> rows = <span class="keyword">await</span> client.query(<span class="string">'select now() as currentTime;'</span>);</span><br><span class="line">    app.coreLogger.info(<span class="string">`[egg-mysql] init instance success, rds currentTime: <span class="subst">$&#123;rows[<span class="number">0</span>].currentTime&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> client;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>初始化方法也支持 <code>Async function</code>，便于有些特殊的插件需要异步化获取一些配置文件：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">createMysql</span>(<span class="params">config, app</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 异步获取 mysql 配置</span></span><br><span class="line">  <span class="keyword">const</span> mysqlConfig = <span class="keyword">await</span> app.configManager.getMysqlConfig(config.mysql);</span><br><span class="line">  assert(mysqlConfig.host &amp;&amp; mysqlConfig.port &amp;&amp; mysqlConfig.user &amp;&amp; mysqlConfig.database);</span><br><span class="line">  <span class="comment">// 创建实例</span></span><br><span class="line">  <span class="keyword">const</span> client = <span class="keyword">new</span> Mysql(mysqlConfig);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 做启动应用前的检查</span></span><br><span class="line">  <span class="keyword">const</span> rows = <span class="keyword">await</span> client.query(<span class="string">'select now() as currentTime;'</span>);</span><br><span class="line">  app.coreLogger.info(<span class="string">`[egg-mysql] init instance success, rds currentTime: <span class="subst">$&#123;rows[<span class="number">0</span>].currentTime&#125;</span>`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> client;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到，插件中我们只需要提供要挂载的字段以及对应服务的初始化方法，所有的配置管理、实例获取方式都由框架封装并统一提供了。</p>
