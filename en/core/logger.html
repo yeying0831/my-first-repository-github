@@ -267,8 +267,9 @@ mobileTrigger.onclick = function(e) {
 <h3 id="in-terminal"><a class="markdown-anchor" href="#in-terminal">#</a> In Terminal</h3>
 <p>By default, Egg will only print out <code>INFO</code>, <code>WARN</code> and <code>ERROR</code> in terminal. (Notice: It only works on <code>local</code> and <code>unittest</code> env)</p>
 <ul>
-<li><code>logger.consoleLevel</code>: (default: <code>INFO</code>) Being defined as the logger level in terminal. Similarly, it can be changed as following:</li>
+<li><code>logger.consoleLevel</code>: The logger level in terminal. It defaults to <code>INFO</code>, though it defaults to <code>WARN</code> on both <code>local</code> and <code>unittest</code> environments.</li>
 </ul>
+<p>Similarly, it can be changed in the following ways:</p>
 <p>Print logs in all levels:</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// config/config.$&#123;env&#125;.js</span></span><br><span class="line">exports.logger = &#123;</span><br><span class="line">  consoleLevel: <span class="string">'DEBUG'</span>,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <p>Stop printing logs in all levels:</p>
